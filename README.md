@@ -350,4 +350,103 @@ export default function Page() {
 
 <img src="./img/portfolio05.png" alt="screenshot" width="600px">
 
+プロフィールで使用した3つの紹介（経歴・興味・趣味）の記述部分をコンポーネント化する。
+
+`components/Card.tsx`←新たに作成
+
+```javascript
+// components/Card.tsx
+import { ReactNode } from "react";
+import Image from "next/image";
+
+interface CardProps {
+  title: string;
+  content: ReactNode;
+  imageSrc: string;
+  imageAlt: string;
+}
+
+const Card: React.FC<CardProps> = ({ title, content, imageSrc, imageAlt }) => {
+  return (
+    <div className="card">
+      <h2 className="text-3xl font-bold">{title}</h2>
+      <div className="flex p-10 font-open-sans">
+        <div className="flex w-1/2 text-lg leading-loose items-center">
+          {content}
+        </div>
+        <div className="w-1/2 flex justify-end">
+          <Image src={imageSrc} alt={imageAlt} width={500} height={500} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Card;
+```
+
+`profile/page.tsx`にて、`Card`コンポーネントを使用する。
+
+`profile/page.tsx`
+
+```javascript
+<Card
+  title="経歴"
+  content={
+    <>
+      <p className="mr-6 text-right">
+        1998年<br />
+        2017年<br />
+        2020年<br />
+        2021年<br />
+        2023年<br />
+        現在
+      </p>
+      <p>
+        沖縄に生まれる<br />
+        高校卒業後、広島大学理学部物理学科へ進学する<br />
+        大学休学中にプログラミングを始める<br />
+        長期インターンでWebエンジニアを経験する<br />
+        大学卒業後、エンジニアとして就職する<br />
+        フロントエンドエンジニアとして奮闘中
+      </p>
+    </>
+  }
+  imageSrc="/images/profile_01.jpg"
+  imageAlt="profile img 01"
+/>
+<Card
+  title="興味"
+  content={
+    <>
+      <p>
+        物理学が目に見えない自然法則を記述することのように、<br />
+        データという目に見えない情報を操作する感覚が楽しいです。<br />
+        現在はフロントエンドを中心に学んでいますが、<br />
+        バックエンドやネットワーク分野にも興味があるので、<br />
+        今年はネットワークスペシャリストに挑戦します。<br />
+        もう「ネットワークって何？」とはならないようにしたいです。
+      </p>
+    </>
+  }
+  imageSrc="/images/profile_02.png"
+  imageAlt="profile img 02"
+/>
+<Card
+  title="趣味"
+  content={
+    <>
+      <p>
+        エイサー（沖縄の伝統芸能） ・ 読書（ビジネス書中心） ・<br />
+        散歩 ・ 短歌 ・ ギター（アコギ） ・ ダーツ ・ ボウリング <br />
+        and more<br />
+      </p>
+    </>
+  }
+  imageSrc="/images/profile_03.jpg"
+  imageAlt="profile img 03"
+/>
+```
+
+
 ### To be continued... 🍻
