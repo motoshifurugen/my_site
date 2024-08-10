@@ -9,20 +9,19 @@
   font-style: normal;
 }
 @font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/OpenSans-VariableFont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
   font-family: 'MOBO';
   src: url('/fonts/MOBO-SemiBold.otf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
-@font-face {
-  font-family: 'Stick';
-  src: url('/fonts/Stick-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
 @layer base {
   body {
-    @apply bg-bg-main text-font-main font-mobo font-bold;
+    @apply bg-bg-main text-font-main font-mobo;
   }
 }

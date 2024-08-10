@@ -13,9 +13,9 @@ const config: Config = {
       'white' : '#FFFFFF',
     },
     fontFamily: {
-      'mobo': ['MOBO', 'sans-serif'],
       'dm-sans': ['DMSans', 'sans-serif'],
-      'stick': ['Stick', 'sans-serif'],
+      'open-sans': ['OpenSans', 'sans-serif'],
+      'mobo': ['MOBO', 'sans-serif'],
     }
   },
   plugins: [],

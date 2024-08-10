@@ -12,7 +12,7 @@ const Header = () => {
 		      <Link className="mr-10 hover:opacity-50" href="#">開発ブログ</Link>
 		      <Link className="mr-10 hover:opacity-50" href="#">実績</Link>
 		      <Link className="mr-10 hover:opacity-50" href="#">コンタクト</Link>
-			  <Link className="mr-10 hover:opacity-50" href="#">ソースコード</Link>
+			  	<Link className="mr-10 hover:opacity-50" href="#">ソースコード</Link>
 		    </nav>
 		  </div>
 		</header>
