@@ -1,18 +1,34 @@
+"use client"
+
 import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+
 
 const Header = () => {
+	const pathname = usePathname();
+  const isMainPage = pathname === "/";
+
 	return (
-		<header className="pt-5 pl-5 mb-20">
+		<header className="fixed top-0 left-0 w-full z-50 py-5 pl-5 mb-20 bg-bg-main">
 		  <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-		    {/* <a className="flex font-mobo font-medium items-center mb-4 md:mb-0">
-		      <span className="ml-3 text-xl">Motoshi Furugen</span>
-		    </a> */}
+				{!isMainPage && (
+          <a href="/" className="flex font-mobo items-center mb-4 md:mb-0">
+            <span className="ml-3 text-xl">Furugen's Island</span>
+          </a>
+        )}
 		    <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center font-mobo">
-		      <Link className="mr-10 hover:opacity-50" href="#">プロフィール</Link>
+		      <Link className="mr-10 hover:opacity-50" href="/profile">プロフィール</Link>
 		      <Link className="mr-10 hover:opacity-50" href="#">開発ブログ</Link>
 		      <Link className="mr-10 hover:opacity-50" href="#">実績</Link>
 		      <Link className="mr-10 hover:opacity-50" href="#">コンタクト</Link>
-			  	<Link className="mr-10 hover:opacity-50" href="#">ソースコード</Link>
+			  	<Link className="mr-10 hover:bg-gray" href="https://github.com/motoshifurugen/my_site" target="_blank" rel="noopener noreferrer">
+            <div className="flex items-center border border-gray-300 rounded px-3 py-1">
+              <FontAwesomeIcon icon={faGithub} className="mr-2" />
+              ソースコード
+            </div>
+          </Link>
 		    </nav>
 		  </div>
 		</header>

@@ -14,6 +14,8 @@
 - [TOP | 株式会社パズル](https://puzzle-inc.jp/)
 - [szne](https://szn.jp/)
 
+<!-- 上記サイトや適宜乗せている参考サイト、Github Copilotのおかげで、無事にポートフォリオが完成しました。本当にありがとうございます！ -->
+
 ### キャッチアップ方法
 
 - [【2024年最新】React(v18)完全入門ガイド｜Hooks、Next14、Redux、TypeScript | Udemy](https://www.udemy.com/course/react-complete-guide/?couponCode=KEEPLEARNING)
@@ -419,34 +421,114 @@ export default Card;
   title="興味"
   content={
     <>
-      <p>
-        物理学が目に見えない自然法則を記述することのように、<br />
-        データという目に見えない情報を操作する感覚が楽しいです。<br />
-        現在はフロントエンドを中心に学んでいますが、<br />
-        バックエンドやネットワーク分野にも興味があるので、<br />
-        今年はネットワークスペシャリストに挑戦します。<br />
-        もう「ネットワークって何？」とはならないようにしたいです。
-      </p>
-    </>
-  }
-  imageSrc="/images/profile_02.png"
-  imageAlt="profile img 02"
-/>
-<Card
-  title="趣味"
-  content={
-    <>
-      <p>
-        エイサー（沖縄の伝統芸能） ・ 読書（ビジネス書中心） ・<br />
-        散歩 ・ 短歌 ・ ギター（アコギ） ・ ダーツ ・ ボウリング <br />
-        and more<br />
-      </p>
-    </>
+       <p>
+         物理学が目に見えない自然の法則を解き明かすように、<br />
+         データという見えない情報を扱うことに楽しさを感じています。<br />
+         最近はバックエンドやネットワーク分野に興味があり、<br />
+         今年はネットワークスペシャリストの資格に挑戦します。<br />
+         心が強い方ではないので、メンタルヘルスへの関心も大切にしています。
+       </p>
+     </>
+   }
+   imageSrc="/images/profile_02.png"
+   imageAlt="profile img 02"
+ />
+ <Card
+   title="趣味"
+   content={
+     <>
+       <p>
+         エイサー（沖縄の伝統芸能） ・ 読書（ビジネス書中心） ・<br />
+         散歩 ・ 短歌 ・ ギター（アコギ） ・ ドライブ ・ ボウリング <br />
+         and more<br />
+       </p>
+     </>
   }
   imageSrc="/images/profile_03.jpg"
   imageAlt="profile img 03"
 />
 ```
 
+## ヘッダー修正
+
+ホーム画面以外の時は、ホーム画面へのリンクを左側に表示させる
+
+- [Next.jsで今の場所（current url）を判定して表示を変える](https://zenn.dev/k_neko3/articles/893c2409f405b0)
+- [Functions: useRouter | Next.js](https://nextjs.org/docs/pages/api-reference/functions/use-router)
+
+usePathnameを利用する時は`"use client"を追加してクライアントコンポーネントにする必要がある
+
+- ['use client' ディレクティブ – React](https://ja.react.dev/reference/rsc/use-client)
+
+`component/Header.tsx`
+
+```javascript
+"use client"
+
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+
+const Header = () => {
+	const pathname = usePathname();
+  const isMainPage = pathname === "/";
+
+	return (
+		<header className="pt-5 pl-5 mb-20">
+		  <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+				{!isMainPage && (
+          <a href="/" className="flex font-mobo font-medium items-center mb-4 md:mb-0">
+            <span className="ml-3 text-xl">Motoshi Furugen</span>
+          </a>
+        )}
+		    <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center font-mobo">
+		      <Link className="mr-10 hover:opacity-50" href="/profile">プロフィール</Link>
+		      <Link className="mr-10 hover:opacity-50" href="#">開発ブログ</Link>
+		      <Link className="mr-10 hover:opacity-50" href="#">実績</Link>
+		      <Link className="mr-10 hover:opacity-50" href="#">コンタクト</Link>
+			  	<Link className="mr-10 hover:opacity-50" href="#">ソースコード</Link>
+		    </nav>
+		  </div>
+		</header>
+	)
+}
+
+export default Header
+```
+
+ヘッダーを上部に固定させる。headerに"fixed"を追加して、main要素にpadding-topを追加する。
+
+`component/Header.txs`
+
+```javascript
+<header className="fixed top-0 left-0 w-full z-50 py-5 pl-5 mb-20 bg-bg-main">
+```
+
+`layout.tsx`
+
+```javascript
+<html lang="en">
+  <body className={inter.className}>
+    <Header />
+    <main className="pt-40">
+      {children}
+    </main>
+  </body>
+</html>
+```
+
+Githubへのリンクを設置する
+
+`components/Header.tsx`
+
+```javascript
+<Link className="mr-10 hover:bg-gray" href="https://github.com/motoshifurugen/my_site" target="_blank" rel="noopener noreferrer">
+  <div className="flex items-center border border-gray-300 rounded px-3 py-1">
+    <FontAwesomeIcon icon={faGithub} className="mr-2" />
+    ソースコード
+  </div>
+</Link>
+```
+
+<img src="./img/portfolio06.png" alt="screenshot" width="600px">
 
 ### To be continued... 🍻

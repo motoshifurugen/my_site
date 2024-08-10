@@ -11,6 +11,7 @@ const config: Config = {
       'bg-main' : '#F6F6F6',
       'font-main' : '#1A1C1A',
       'white' : '#FFFFFF',
+      'gray' : '#E5E7E6',
     },
     fontFamily: {
       'dm-sans': ['DMSans', 'sans-serif'],

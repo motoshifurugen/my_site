@@ -5,7 +5,7 @@ import {faArrowRight} from '@fortawesome/free-solid-svg-icons';
 
 export default function Home() {
   return (
-    <section className="main-face flex">
+    <section className="main-face flex my-10">
       <div className="flex-1">
         <TitleAnimation />
       </div>

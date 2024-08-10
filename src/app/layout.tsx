@@ -12,8 +12,8 @@ import Header from "./components/Header";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Motoshi Furugen",
-  description: "This is Motoshi Furugen's personal website.",
+  title: "Furugen's Island",
+  description: "This is Furugen's personal website.",
 };
 
 export default function RootLayout({
@@ -25,7 +25,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Header />
-        {children}
+        <main className="pt-40">
+          {children}
+        </main>
       </body>
     </html>
   );
