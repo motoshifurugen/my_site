@@ -8,7 +8,7 @@ export default function Page() {
       <div className="flex justify-center">
         <MainMessage />
       </div>
-      <div>
+      <div className="card">
         <h2 className="text-3xl font-bold">経歴</h2>
         <div className="flex p-10 font-open-sans">
           <div className="flex w-1/2 text-lg leading-loose items-center">
@@ -30,7 +30,40 @@ export default function Page() {
             </p>
           </div>
           <div className="w-1/2 flex justify-end">
-            <Image src="/images/etsushi.jpg" alt="profile img 01" width={500} height={500} />
+            <Image src="/images/profile_01.jpg" alt="profile img 01" width={500} height={500} />
+          </div>
+        </div>
+      </div>
+      <div className="card">
+        <h2 className="text-3xl font-bold">興味</h2>
+        <div className="flex p-10 font-open-sans">
+          <div className="flex w-1/2 text-lg leading-loose items-center">
+            <p>
+              物理学が目に見えない自然法則を記述することのように、<br />
+              データという目に見えない情報を操作する感覚が楽しいです。<br />
+              現在はフロントエンドを中心に学んでいますが、<br />
+              バックエンドやネットワーク分野にも興味があるので、<br />
+              今年はネットワークスペシャリストに挑戦します。<br />
+              もう「ネットワークって何？」とはならないようにしたいです。
+            </p>
+          </div>
+          <div className="w-1/2 flex justify-end">
+            <Image src="/images/profile_02.png" alt="profile img 02" width={500} height={500} />
+          </div>
+        </div>
+      </div>
+      <div className="card">
+        <h2 className="text-3xl font-bold">趣味</h2>
+        <div className="flex p-10 font-open-sans">
+          <div className="flex w-1/2 text-lg leading-loose items-center">
+            <p>
+              エイサー（沖縄の伝統芸能） ・ 読書（ビジネス書中心） ・<br />
+              散歩 ・ 短歌 ・ ギター（アコギ） ・ ダーツ ・ ボウリング <br />
+              and more<br />
+            </p>
+          </div>
+          <div className="w-1/2 flex justify-end">
+            <Image src="/images/profile_03.jpg" alt="profile img 02" width={500} height={500} />
           </div>
         </div>
       </div>
