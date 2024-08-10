@@ -1,14 +1,15 @@
 import MainMessage from "../components/MainMessage";
-import Image from "next/image";
 import Card from "../components/Card";
+import PageFace from '../components/PageFace';
 
 export default function Page() {
   return (
-    <section className="profile px-20">
-      <h1 className="text-4xl font-bold">プロフィール</h1>
-      <div className="flex justify-center">
-        <MainMessage />
-      </div>
+    <section className="profile">
+      <PageFace
+        title="プロフィール"
+        subtitle="古堅基史（Furugen Motoshi）"
+        mainMessage={<MainMessage />}
+      />
       <Card
         title="経歴"
         content={

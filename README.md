@@ -531,4 +531,59 @@ Githubへのリンクを設置する
 
 <img src="./img/portfolio06.png" alt="screenshot" width="600px">
 
+プロフィール画面の修正
+
+画面説明部分をコンポーネントに切り分ける
+
+`components/PageFace.tsx`←新たに追加
+
+```javascript
+import React from 'react';
+
+interface PageFaceProps {
+  title: string;
+  subtitle: string;
+  mainMessage: React.ReactNode;
+}
+
+const PageFace: React.FC<PageFaceProps> = ({ title, subtitle, mainMessage }) => {
+  return (
+    <div className="flex mb-24">
+      <div className="w-1/2">
+        <h1 className="text-4xl font-bold">{title}</h1>
+        <h2 className="text-2xl font-bold mt-5">{subtitle}</h2>
+      </div>
+      <div className="flex justify-left w-1/2">
+        {mainMessage}
+      </div>
+    </div>
+  );
+};
+
+export default PageFace;
+```
+
+`profile/page.tsx`ではPageFaceコンポーネントを呼ぶ。
+
+```javascript
+<PageFace
+  title="プロフィール"
+  subtitle="古堅基史（Furugen Motoshi）"
+  mainMessage={<MainMessage />}
+/>
+```
+
+PageFaceコンポーネントの下部に直線を表示させる。(アニメーション付き)
+
+`components/PageFace.tsx`
+
+```javascript
+<div
+  ref={lineRef}
+  className="h-0.5 opacity-50 bg-font-main transition-all duration-1000 ease-in-out w-0 mt-4 mb-24"
+></div>
+```
+
+<img src="./img/portfolio_gif02.gif" alt="screenshot" width="600px">
+
 ### To be continued... 🍻

@@ -11,10 +11,10 @@ const Header = () => {
   const isMainPage = pathname === "/";
 
 	return (
-		<header className="fixed top-0 left-0 w-full z-50 py-5 pl-5 mb-20 bg-bg-main">
-		  <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+		<header className="fixed top-0 left-0 w-full z-50 py-3 mb-20 bg-bg-main">
+		  <div className="container mx-auto flex flex-wrap py-5 flex-col md:flex-row items-center">
 				{!isMainPage && (
-          <a href="/" className="flex font-mobo items-center mb-4 md:mb-0">
+          <a href="/" className="flex font-mobo mb-4 md:mb-0">
             <span className="ml-3 text-xl">Furugen's Island</span>
           </a>
         )}
