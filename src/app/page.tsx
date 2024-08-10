@@ -1,9 +1,9 @@
-import Image from "next/image";
+import 'tailwindcss/tailwind.css';
 
 export default function Home() {
   return (
-    <>
-      <h1>Hello My Site!</h1>
-    </>
+    <body>
+      <p>Hello My Site!</p>
+    </body>
   );
 }
