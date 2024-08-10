@@ -218,4 +218,44 @@ export default function TitleAnimation() {
 
 <img src="./img/portfolio_gif01.gif" alt="alt text" width="600px">
 
+## メインメッセージ部分作成
+
+MainMessageコンポーネントにメッセージを書き、フォント・行間を調整する。
+
+`components/MainMessage.txs`←新しく追加
+
+[Line Height - Tailwind CSS](https://tailwindcss.com/docs/line-height)
+
+```javascript
+export default function MainMessage() {
+  return (
+    <>
+      <p className="text-2xl leading-loose">
+        心の健康を支えるために、<br />
+        画面の向こうに広がる世界へ、<br />
+        想いをコードに込め、<br />
+        毎日挑戦し続ける、<br />
+        なんくるないさ系エンジニア。
+      </p>
+    </>
+  );
+}
+```
+
+`page.tsx`にて、`TitleAnimation`コンポーネントと`MainMessage`コンポーネントを横並びにする。
+
+`page.tsx`
+```javascript
+・・・
+<section className="main-face flex">
+  <div className="flex-1">
+    <TitleAnimation />
+  </div>
+  <div className="w-[480px]">
+    <MainMessage />
+  </div>
+</section>
+・・・
+```
+
 ### To be continued... 🍻

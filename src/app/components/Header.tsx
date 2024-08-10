@@ -2,7 +2,7 @@ import Link from "next/link"
 
 const Header = () => {
 	return (
-		<header>
+		<header className="pt-5 pl-5 mb-20">
 		  <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
 		    {/* <a className="flex font-mobo font-medium items-center mb-4 md:mb-0">
 		      <span className="ml-3 text-xl">Motoshi Furugen</span>

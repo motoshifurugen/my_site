@@ -18,16 +18,7 @@ export default function TitleAnimation() {
 
   return (
     <p
-      className="
-        w-full
-        text-[8rem]
-        text-left
-        text-font-main
-        font-dm-sans
-        tracking-widest
-        mx-[100px]
-        opacity-85
-      "
+      className="text-[10rem] text-left text-font-main font-dm-sans tracking-widest mx-[100px] opacity-85"
       ref={textRef}
     ></p>
   );
