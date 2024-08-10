@@ -52,11 +52,11 @@ npm run dev
 
 http://localhost:3000/
 
-<img src="./img/portfolio01.png" width="600px">
+<img src="./img/portfolio01.png" alt="screenshot" width="600px">
 
 いったん、page.tsxのreturn内とglobals.cssを削除した
 
-<img src="./img/portfolio02.png" width="600px">
+<img src="./img/portfolio02.png" alt="screenshot" width="600px">
 
 ## アプリ全体のデザインをglobal.cssに設定
 
@@ -171,7 +171,7 @@ export default function RootLayout({
 }
 ```
 
-<img src="./img/portfolio03.png" width="600px">
+<img src="./img/portfolio03.png" alt="screenshot" width="600px">
 
 ## テキストアニメーションの作成
 
@@ -216,7 +216,7 @@ export default function TitleAnimation() {
 }
 ```
 
-<img src="./img/portfolio_gif01.gif" alt="alt text" width="600px">
+<img src="./img/portfolio_gif01.gif" alt="screenshot" width="600px">
 
 ## メインメッセージ部分作成
 
@@ -257,5 +257,36 @@ export default function MainMessage() {
 </section>
 ・・・
 ```
+
+アイコンを使いたいのでfont 以下を参考にAwesome（無料版）を導入
+
+- [Set Up with React | Font Awesome Docs](https://docs.fontawesome.com/web/use-with/react)
+- [【Next.js】FontAwesomeを導入してアイコンを表示してみよう！ #Next.js - Qiita](https://qiita.com/takakou/items/de4d86f1acad6e4511d5)
+
+メインメッセージの下にプロフィールへのリンクを追加
+
+`MainMessage.tsx`
+
+```javascript
+<>
+  <p className="text-2xl leading-loose mb-12">
+    心の健康を支えるために、<br />
+    画面の向こうに広がる世界へ、<br />
+    想いをコードに込め、<br />
+    毎日挑戦し続ける、<br />
+    なんくるないさ系エンジニア。
+  </p>
+  <a href="#" className="text-xl group">
+    プロフィール
+    <button
+      className="relative align-middle transition-all w-8 max-w-[32px] h-8 max-h-[32px] text-xs border border-font-main border-opacity-20 rounded-full ml-5 group-hover:bg-white"
+      type="button">
+      <span><FontAwesomeIcon icon={faArrowRight} /></span>
+    </button>
+  </a>
+</>
+```
+
+<img src="./img/portfolio04.png" alt="screenshot" width="600px">
 
 ### To be continued... 🍻

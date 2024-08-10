@@ -10,6 +10,7 @@ const config: Config = {
     colors: {
       'bg-main' : '#F6F6F6',
       'font-main' : '#1A1C1A',
+      'white' : '#FFFFFF',
     },
     fontFamily: {
       'mobo': ['MOBO', 'sans-serif'],
