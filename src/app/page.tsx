@@ -1,9 +1,9 @@
-import 'tailwindcss/tailwind.css';
+import TitleAnimation from './components/TitleAnimation';
 
 export default function Home() {
   return (
     <section>
-      <p>Furugen</p>
+      <TitleAnimation />
     </section>
   );
 }

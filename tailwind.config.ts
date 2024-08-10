@@ -9,10 +9,12 @@ const config: Config = {
   theme: {
     colors: {
       'bg-main' : '#F6F6F6',
-      'font-main' : '#161616',
+      'font-main' : '#1A1C1A',
     },
     fontFamily: {
-      'ryo-gothic-plusn': ['"ryo-gothic-plusn"', 'sans-serif'],
+      'mobo': ['MOBO', 'sans-serif'],
+      'dm-sans': ['DMSans', 'sans-serif'],
+      'stick': ['Stick', 'sans-serif'],
     }
   },
   plugins: [],

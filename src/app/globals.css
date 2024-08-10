@@ -1,7 +1,28 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-body {
-  @apply bg-bg-main text-font-main font-ryo-gothic-plusn font-bold;
+@font-face {
+  font-family: 'DMSans';
+  src: url('/fonts/DMSans-VariableFont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'MOBO';
+  src: url('/fonts/MOBO-SemiBold.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Stick';
+  src: url('/fonts/Stick-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-main text-font-main font-mobo font-bold;
+  }
 }
