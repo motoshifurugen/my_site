@@ -8,6 +8,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 config.autoAddCss = false
 
 import Header from "./components/Header";
+import BackgroundWrapper from "./components/BackgroundWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,10 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        <main className="pt-40">
-          {children}
-        </main>
+        <BackgroundWrapper>
+          <Header />
+          <main className="pt-40">
+            {children}
+          </main>
+        </BackgroundWrapper>
       </body>
     </html>
   );

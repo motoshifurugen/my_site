@@ -12,13 +12,19 @@ export default function TitleAnimation() {
   const textRef = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
     if (textRef.current) {
-      gsap.to(textRef.current, { duration: 2.5, text: "Furugen", delay: 0.25, ease: "power4.inOut"});
+      gsap.to(textRef.current, {
+        duration: 1.5,
+        text: "Furugen's<br />Island",
+        delay: 0.5,
+        ease: "power4.inOut",
+        parse: true
+      });
     }
   }, []);
 
   return (
     <p
-      className="text-[10rem] text-left text-font-main font-dm-sans font-bold tracking-widest mx-[100px] opacity-85"
+      className="text-[7.5rem] text-left text-font-main font-dm-sans font-bold tracking-widest mx-[100px] opacity-85"
       ref={textRef}
     ></p>
   );

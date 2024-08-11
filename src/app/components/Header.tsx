@@ -11,7 +11,7 @@ const Header = () => {
   const isMainPage = pathname === "/";
 
 	return (
-		<header className="fixed top-0 left-0 w-full z-50 py-3 mb-20 bg-bg-main">
+		<header className="fixed top-0 left-0 w-full z-50 py-3 mb-20 bg-transparent">
 		  <div className="container mx-auto flex flex-wrap py-5 flex-col md:flex-row items-center">
 				{!isMainPage && (
           <a href="/" className="flex font-mobo mb-4 md:mb-0">

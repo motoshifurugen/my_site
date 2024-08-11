@@ -586,4 +586,56 @@ PageFaceコンポーネントの下部に直線を表示させる。(アニメ�
 
 <img src="./img/portfolio_gif02.gif" alt="screenshot" width="600px">
 
+## トップページ改善
+
+背景画像を適用させる
+
+`components/BackgroundWrapper.tsx`←新たに作成
+
+usePathname()でルートかどうかを判断
+
+```javascript
+"use client";
+
+import { usePathname } from 'next/navigation';
+import React from 'react';
+
+const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const pathname = usePathname();
+  const isRootPath = pathname === '/';
+
+  return (
+    <div className="relative">
+      {isRootPath && (
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50 h-screen" style={{ backgroundImage: "url('/images/back-pic/day_01.jpg')" }}></div>
+      )}
+      <div className={`${isRootPath ? 'relative z-10' : ''}`}>
+        {children}
+      </div>
+    </div>
+  );
+};
+
+export default BackgroundWrapper;
+```
+
+`layout.tsx`でbody内の要素をラップする。
+
+```javascript
+<html lang="en">
+  <body className={inter.className}>
+    <BackgroundWrapper>
+      <Header />
+      <main className="pt-40">
+        {children}
+      </main>
+    </BackgroundWrapper>
+  </body>
+</html>
+```
+
+なんか文字の表示がサイトの読み込み不調？みたいにも見えてきたのでアニメーションを調整する
+
+<img src="./img/portfolio_gif03.gif" alt="screenshot" width="600px">
+
 ### To be continued... 🍻
