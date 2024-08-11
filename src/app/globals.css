@@ -2,24 +2,6 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-@font-face {
-  font-family: 'DMSans';
-  src: url('/fonts/DMSans-VariableFont.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'OpenSans';
-  src: url('/fonts/OpenSans-VariableFont.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'MOBO';
-  src: url('/fonts/MOBO-SemiBold.otf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
 @layer base {
   body {
     @apply bg-bg-main text-font-main font-mobo;
