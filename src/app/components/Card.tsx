@@ -1,6 +1,8 @@
 // components/Card.tsx
 import { ReactNode } from "react";
 import Image from "next/image";
+import nextConfig from "../../../next.config.mjs";
+const BASE_PATH = nextConfig.basePath || "";
 
 interface CardProps {
   title: string;
@@ -18,7 +20,7 @@ const Card: React.FC<CardProps> = ({ title, content, imageSrc, imageAlt }) => {
           {content}
         </div>
         <div className="w-1/2 flex justify-end">
-          <Image src={imageSrc} alt={imageAlt} width={500} height={500} className="rounded-2xl" />
+          <Image src={`${BASE_PATH}${imageSrc}`} alt={imageAlt} width={500} height={500} className="rounded-2xl" />
         </div>
       </div>
     </div>
