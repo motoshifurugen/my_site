@@ -14,7 +14,7 @@ const Header = () => {
 		  <div className="container mx-auto flex flex-wrap py-5 flex-col md:flex-row items-center">
 				{!isMainPage && (
           <a href="/" className="flex font-mobo mb-4 md:mb-0">
-            <span className="ml-3 text-xl">Furugen's Island</span>
+            <span className="ml-3 text-xl">Furugen&apos;s Island</span>
           </a>
         )}
 		    <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center font-mobo">
