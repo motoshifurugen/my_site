@@ -4,16 +4,18 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import nextConfig from "../../../next.config.mjs";
+const BASE_PATH = nextConfig.basePath || "";
 
 const Header = () => {
 	const pathname = usePathname();
-  const isMainPage = pathname === "/";
+	const isMainPage = pathname === `${BASE_PATH}/` || pathname === "/";
 
 	return (
 		<header className={`fixed top-0 left-0 w-full z-50 py-3 mb-20 ${!isMainPage ? 'bg-bg-main' : 'bg-transparent'}`}>
 		  <div className="container mx-auto flex flex-wrap py-5 flex-col md:flex-row items-center">
 				{!isMainPage && (
-          <a href="/" className="flex font-mobo mb-4 md:mb-0">
+          <a href={`${BASE_PATH}/`} className="flex font-mobo mb-4 md:mb-0">
             <span className="ml-3 text-xl">Furugen&apos;s Island</span>
           </a>
         )}

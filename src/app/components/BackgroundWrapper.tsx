@@ -2,10 +2,12 @@
 
 import { usePathname } from 'next/navigation';
 import React from 'react';
+import nextConfig from "../../../next.config.mjs";
+const BASE_PATH = nextConfig.basePath || "";
 
 const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
-  const isRootPath = pathname === '/';
+  const isRootPath = pathname === `${BASE_PATH}/` || pathname === "/";
 
   return (
     <div className="relative min-h-screen">
