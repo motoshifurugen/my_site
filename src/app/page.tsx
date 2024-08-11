@@ -2,8 +2,8 @@ import TitleAnimation from './components/TitleAnimation';
 import MainMessage from './components/MainMessage';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons';
-import nextConfig from "../../next.config.mjs";
-const BASE_PATH = nextConfig.basePath || "";
+import assetPrefix from "../../next.config.mjs";
+const basePath = process.env.NODE_ENV === 'production' ? assetPrefix : '';
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
       </div>
       <div className="w-[480px]">
         <MainMessage />
-        <a href={`${BASE_PATH}/profile`} className="text-xl group font-bold">
+        <a href={`${basePath}/profile`} className="text-xl group font-bold">
           プロフィール
           <button
             className="relative align-middle transition-all w-8 max-w-[32px] h-8 max-h-[32px] text-xs border border-font-main border-opacity-20 rounded-full ml-5 group-hover:bg-white"
