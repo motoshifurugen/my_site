@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
-
 const Header = () => {
 	const pathname = usePathname();
   const isMainPage = pathname === "/";
@@ -22,7 +21,7 @@ const Header = () => {
 		      <Link className="mr-10 hover:opacity-50" href="/profile">プロフィール</Link>
 		      <Link className="mr-10 hover:opacity-50" href="#">開発ブログ</Link>
 		      <Link className="mr-10 hover:opacity-50" href="/skills">実績</Link>
-		      <Link className="mr-10 hover:opacity-50" href="#">コンタクト</Link>
+		      <Link className="mr-10 hover:opacity-50" href="/contact">コンタクト</Link>
 			  	<Link className="mr-10 hover:bg-gray" href="https://github.com/motoshifurugen/my_site" target="_blank" rel="noopener noreferrer">
             <div className="flex items-center border border-gray-300 rounded px-3 py-1">
               <FontAwesomeIcon icon={faGithub} className="mr-2" />
