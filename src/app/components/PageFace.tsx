@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
+import AnimatedLine from './AnimatedLine';
 
 interface PageFaceProps {
   title: string;
@@ -9,15 +10,6 @@ interface PageFaceProps {
 }
 
 const PageFace: React.FC<PageFaceProps> = ({ title, subtitle, mainMessage }) => {
-  const lineRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (lineRef.current) {
-      lineRef.current.classList.remove('w-0');
-      lineRef.current.classList.add('w-full');
-    }
-  }, []);
-
   return (
     <>
       <div className="flex mb-20 px-20">
@@ -29,10 +21,9 @@ const PageFace: React.FC<PageFaceProps> = ({ title, subtitle, mainMessage }) => 
           {mainMessage}
         </div>
       </div>
-      <div
-        ref={lineRef}
-        className="h-0.5 opacity-50 bg-font-main transition-all duration-1000 ease-in-out w-0 mt-4 mb-24"
-      ></div>
+      <div className="mb-24">
+        <AnimatedLine />
+      </div>
     </>
   );
 };

@@ -9,6 +9,7 @@ config.autoAddCss = false
 
 import Header from "./components/Header";
 import BackgroundWrapper from "./components/BackgroundWrapper";
+import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body className={inter.className}>
         <BackgroundWrapper>
           <Header />
@@ -31,6 +32,7 @@ export default function RootLayout({
             {children}
           </main>
         </BackgroundWrapper>
+        <Footer />
       </body>
     </html>
   );

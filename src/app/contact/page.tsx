@@ -2,7 +2,7 @@ import PageFace from '../components/PageFace';
 
 export default function Contact() {
   return (
-    <section className="contact p-6 mb-10">
+    <section className="contact">
       <PageFace
         title="お問い合わせ"
         subtitle=""
@@ -13,7 +13,7 @@ export default function Contact() {
       <form
         action="https://ssgform.com/s/TQptUiQBhkQa"
         method="post"
-        className="space-y-8 mx-auto max-w-4xl bg-white px-16 py-8 rounded-lg dark:bg-font-main dark:text-white"
+        className="space-y-8 mx-auto max-w-4xl bg-white px-16 py-4 rounded-lg dark:bg-font-main dark:text-white mb-20"
       >
         <div className="hidden">
           <input type="text" name="wana" />

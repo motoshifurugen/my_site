@@ -783,4 +783,104 @@ export default SkillTimeline;
 
 <img src="./img/portfolio09.png" alt="screenshot" width="600px">
 
+## フッターを作成
+
+アニメーションのついた横棒（`PageFace.tsx`で使用）をfooterでも使いたいので、コンポーネント化する
+
+`components/AnimatedLine.tsx`←新たに作成
+
+```javascript
+import React, { useEffect, useRef } from 'react';
+
+const AnimatedLine: React.FC = () => {
+  const lineRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (lineRef.current) {
+      lineRef.current.classList.remove('w-0');
+      lineRef.current.classList.add('w-full');
+    }
+  }, []);
+
+  return (
+    <div
+      ref={lineRef}
+      className="h-0.5 opacity-50 bg-font-main transition-all duration-1000 ease-in-out w-0 mt-4"
+    ></div>
+  );
+};
+
+export default AnimatedLine;
+```
+
+フッターコンポーネント作成
+
+`components/Footer.tsx`←新たに作成
+
+```javascript
+"use client";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlane } from '@fortawesome/free-solid-svg-icons';
+import { faGithub, faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import AnimatedLine from './AnimatedLine';
+
+export default function Footer() {
+  return (
+    <>
+      <AnimatedLine />
+      <footer className="p-2 mt-auto">
+        <div className="container mx-auto flex h-32 py-6">
+          <div className="rightFooter w-3/4">
+            <p className="mb-3 text-lg">古堅 基史</p>
+            <p>
+              沖縄
+              <FontAwesomeIcon icon={faPlane} className="mx-3 opacity-70" />
+              広島
+              <FontAwesomeIcon icon={faPlane} className="mx-3 opacity-70" />
+              埼玉
+              <FontAwesomeIcon icon={faPlane} className="mx-3 opacity-70" />
+              広島
+              <FontAwesomeIcon icon={faPlane} className="mx-3 opacity-70" />
+              横浜
+            </p>
+          </div>
+          <div className="border-l-2 opacity-50 mx-8"></div>
+          <div className="leftFooter w-1/4 flex flex-col justify-between">
+            <div className="flex space-x-4">
+              <a href="https://github.com/motoshifurugen" target="_blank" rel="noopener noreferrer">
+                <FontAwesomeIcon icon={faGithub} className="text-2xl" />
+              </a>
+              <a href="https://x.com/cocoahearts21" target="_blank" rel="noopener noreferrer">
+                <FontAwesomeIcon icon={faXTwitter} className="text-2xl" />
+              </a>
+            </div>
+            <p className="self-end opacity-50">&copy; 2024 Furugen</p>
+          </div>
+        </div>
+      </footer>
+    </>
+  )
+}
+```
+
+`layout.tsx`でフッターを利用する。
+
+```javascript
+<html lang="ja">
+  <body className={inter.className}>
+    <BackgroundWrapper>
+      <Header />
+      <main className="pt-40">
+        {children}
+      </main>
+    </BackgroundWrapper>
+    <Footer />
+  </body>
+</html>
+```
+
+<img src="./img/portfolio10.png" alt="screenshot" width="600px">
+
+
 ### To be continued... 🍻
