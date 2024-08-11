@@ -11,7 +11,7 @@ const Header = () => {
   const isMainPage = pathname === "/";
 
 	return (
-		<header className="fixed top-0 left-0 w-full z-50 py-3 mb-20 bg-transparent">
+		<header className={`fixed top-0 left-0 w-full z-50 py-3 mb-20 ${!isMainPage ? 'bg-bg-main' : 'bg-transparent'}`}>
 		  <div className="container mx-auto flex flex-wrap py-5 flex-col md:flex-row items-center">
 				{!isMainPage && (
           <a href="/" className="flex font-mobo mb-4 md:mb-0">
@@ -21,7 +21,7 @@ const Header = () => {
 		    <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center font-mobo">
 		      <Link className="mr-10 hover:opacity-50" href="/profile">プロフィール</Link>
 		      <Link className="mr-10 hover:opacity-50" href="#">開発ブログ</Link>
-		      <Link className="mr-10 hover:opacity-50" href="#">実績</Link>
+		      <Link className="mr-10 hover:opacity-50" href="/skills">実績</Link>
 		      <Link className="mr-10 hover:opacity-50" href="#">コンタクト</Link>
 			  	<Link className="mr-10 hover:bg-gray" href="https://github.com/motoshifurugen/my_site" target="_blank" rel="noopener noreferrer">
             <div className="flex items-center border border-gray-300 rounded px-3 py-1">

@@ -18,7 +18,7 @@ const Card: React.FC<CardProps> = ({ title, content, imageSrc, imageAlt }) => {
           {content}
         </div>
         <div className="w-1/2 flex justify-end">
-          <Image src={imageSrc} alt={imageAlt} width={500} height={500} />
+          <Image src={imageSrc} alt={imageAlt} width={500} height={500} className="rounded-2xl" />
         </div>
       </div>
     </div>

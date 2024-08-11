@@ -638,4 +638,67 @@ export default BackgroundWrapper;
 
 <img src="./img/portfolio_gif03.gif" alt="screenshot" width="600px">
 
+## 実績ページの作成
+
+実績サイト記載用のカードコンポーネントで型を作成する。
+
+`components/WorkCard.tsx`←新たに追加
+
+```javascript
+import Image from "next/image";
+
+interface WorkCardProps {
+  src: string;
+  alt: string;
+  title: string;
+  description: string;
+  tags: string[];
+}
+
+const WorkCard: React.FC<WorkCardProps> = ({ src, alt, title, description, tags }) => {
+  return (
+    <div className="max-w-sm rounded overflow-hidden mb-20">
+      <Image src={src} alt={alt} width={500} height={500} className="w-full" />
+      <div className="px-6 py-4">
+        <div className="font-bold text-xl mb-2">{title}</div>
+        <p className="text-gray-700 text-base">{description}</p>
+      </div>
+      <div className="px-6 pt-4 pb-2">
+        {tags.map((tag, index) => (
+          <span key={index} className="inline-block bg-gray rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default WorkCard;
+```
+
+実績画面内でmapを用いてコンポーネントを利用する。
+
+`works/page.tsx`←新たに作成
+
+```javascript
+<div className="works px-20">
+  <h2 className="text-3xl font-bold">制作実績</h2>
+  <div className="work-list grid grid-cols-3 gap-4 justify-items-center items-center my-10">
+    {works.map((work, index) => (
+      <WorkCard
+        key={index}
+        src={work.src}
+        alt={work.alt}
+        title={work.title}
+        description={work.description}
+        tags={work.tags}
+      />
+    ))}
+  </div>
+</div>
+```
+
+<img src="./img/portfolio07.png" alt="screenshot" width="600px">
+
 ### To be continued... 🍻
