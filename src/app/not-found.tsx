@@ -7,8 +7,10 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <div>
-      <h1>notfound - ページが見つかりません</h1>
-      <p>わーーーーー！ごめんなさい。ページどこだ？どこだ？</p>
+      <p className="text-2xl leading-loose mb-12 font-bold mx-20">
+        「え？404 Not Found？」<br />
+        わーーーーー！ごめんなさい。ページどこだ？どこだ？
+      </p>
     </div>
   );
 }

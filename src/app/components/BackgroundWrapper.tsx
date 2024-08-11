@@ -12,7 +12,10 @@ const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({ children }
   return (
     <div className="relative min-h-screen">
       {isRootPath && (
-        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50 h-screen animate-fade-in" style={{ backgroundImage: "url('/images/back-pic/day_01.jpg')" }}></div>
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50 h-screen animate-fade-in"
+          style={{ backgroundImage: `url('${BASE_PATH}/images/back-pic/day_01.jpg')` }}
+        ></div>
       )}
       <div className={`${isRootPath ? 'relative z-10' : ''}`}>
         {children}
