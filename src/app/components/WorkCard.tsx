@@ -6,15 +6,17 @@ interface WorkCardProps {
   title: string;
   description: string;
   tags: string[];
+  date: string;
 }
 
-const WorkCard: React.FC<WorkCardProps> = ({ src, alt, title, description, tags }) => {
+const WorkCard: React.FC<WorkCardProps> = ({ src, alt, title, description, tags,date }) => {
   return (
-    <div className="max-w-sm rounded overflow-hidden mb-20">
+    <div className="relative max-w-sm rounded overflow-hidden mb-24">
       <Image src={src} alt={alt} width={500} height={500} className="w-full" />
-      <div className="px-6 py-4">
+      <div className="absolute bottom-0 right-0 bg-white bg-opacity-75 text-sm p-1 px-4">{date}</div>
+      <div className="px-6 py-4 my-2">
         <div className="font-bold text-xl mb-2">{title}</div>
-        <p className="text-gray-700 text-base">{description}</p>
+        <p className="text-base">{description}</p>
       </div>
       <div className="px-6 pt-4 pb-2">
         {tags.map((tag, index) => (

@@ -13,6 +13,7 @@ const config: Config = {
         'font-main' : '#1A1C1A',
         'white' : '#FFFFFF',
         'gray' : '#E5E7E6',
+        'teal' : '#008080',
       },
       fontFamily: {
         'dm-sans': ['DMSans', 'sans-serif'],

@@ -701,4 +701,78 @@ export default WorkCard;
 
 <img src="./img/portfolio07.png" alt="screenshot" width="600px">
 
+## スキルを表示する
+
+タイムライン型のスキルマップを作成したい。検索してもヒットしなかったので、ChatGPTに聞く。
+
+> Next.jsを利用したポートフォリオサイトを開発しています。
+> スキル掲載画面にて、各技術に対する経験年数を、タイムライン型のスキルマップグラフで表示させたいです。
+> 学びには中断時期があるため、マップのバーが途切れる箇所があることなども想定してください。
+> 例えば、PHP歴３年（2021年〜2024年）、Vue.js歴2年（2020年〜2021年、2023年~2024年）といったデータを用います。
+> jsxとTypescript形式で教えてください。また、可能であればCSSをTailWindcssで置き換えてください。
+
+
+もらったコードを微調整して、タイムラインチャートを作成
+
+`components/SkillTimeline.tsx`←新たに追加
+
+```javascript
+const SkillTimeline: React.FC = () => {
+  const totalYears = max - 2019 + 1; // グラフの長さ（2024年8月現在は6.6）
+  const sortedSkills = skills.sort((a, b) => b.total - a.total);
+  const years = Array.from({ length: Math.ceil(totalYears) }, (_, i) => 2019 + i);
+
+  return (
+    <div className="w-4/5 mx-auto p-10 border-l-4 border-gray relative my-10">
+      <div className="flex items-center">
+        <div className="bg-teal bg-opacity-80 h-3 rounded w-8"></div>
+        <p className="ml-2">経験時期</p>
+      </div>
+      <div className="relative mb-10 py-4">
+        {years.map((year, index) => {
+          const left = ((year - 2019) / totalYears) * 100;
+          return (
+            <span
+              key={index}
+              className="absolute text-md"
+              style={{ left: `${left}%`}}
+            >
+              {year}
+            </span>
+          );
+        })}
+      </div>
+      {sortedSkills.map((skill, index) => (
+        <div key={index} className="mb-5 pl-5 relative">
+          <div className="bg-white p-4 rounded-lg relative">
+            <h3 className="font-bold">{skill.name}</h3>
+            <div className="flex">
+              {skill.total.toFixed(1)}年
+              {skill.periods.map((period, i) => {
+                const startOffset = ((period.start - 2019) / totalYears) * 100;
+                const width = ((period.end - period.start + 0.1) / totalYears) * 100;
+                return (
+                  <div
+                    key={i}
+                    className="absolute bg-teal bg-opacity-80 h-3 rounded"
+                    style={{
+                      left: `${startOffset}%`,
+                      width: `${width}%`
+                    }}
+                  ></div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default SkillTimeline;
+```
+
+<img src="./img/portfolio08.png" alt="screenshot" width="600px">
+
 ### To be continued... 🍻
