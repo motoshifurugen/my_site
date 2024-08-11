@@ -4,8 +4,9 @@ import { config } from '@fortawesome/fontawesome-svg-core'
 import "./globals.css";
 import 'tailwindcss/tailwind.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import assetPrefix from "../../next.config.mjs";
 import Head from "next/head"; // Import the Head component
+import nextConfig from '../../next.config.mjs';
+const BASE_PATH = nextConfig.basePath || "";
 
 config.autoAddCss = false
 
@@ -25,26 +26,25 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const basePath = process.env.NODE_ENV === 'production' ? assetPrefix : '';
   return (
     <html lang="ja">
       <Head>
         <style>{`
           @font-face {
             font-family: 'DMSans';
-            src: url('${basePath}/fonts/DMSans-VariableFont.ttf') format('truetype');
+            src: url('${BASE_PATH}/fonts/DMSans-VariableFont.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
           }
           @font-face {
             font-family: 'OpenSans';
-            src: url('${basePath}/fonts/OpenSans-VariableFont.ttf') format('truetype');
+            src: url('${BASE_PATH}/fonts/OpenSans-VariableFont.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
           }
           @font-face {
             font-family: 'MOBO';
-            src: url('${basePath}/fonts/MOBO-SemiBold.otf') format('truetype');
+            src: url('${BASE_PATH}/fonts/MOBO-SemiBold.otf') format('truetype');
             font-weight: normal;
             font-style: normal;
           }
