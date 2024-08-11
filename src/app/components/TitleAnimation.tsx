@@ -13,7 +13,7 @@ export default function TitleAnimation() {
   useEffect(() => {
     if (textRef.current) {
       gsap.to(textRef.current, {
-        duration: 1.5,
+        duration: 2,
         text: "Furugen's<br />Island",
         delay: 0.5,
         ease: "power4.inOut",
