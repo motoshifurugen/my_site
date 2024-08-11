@@ -19,7 +19,7 @@ const Header = () => {
         )}
 		    <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center font-mobo">
 		      <Link className="mr-10 hover:opacity-50" href="/profile">プロフィール</Link>
-		      <Link className="mr-10 hover:opacity-50" href="#">開発ブログ</Link>
+		      <Link className="mr-10 hover:opacity-50" href="/blog">開発ブログ</Link>
 		      <Link className="mr-10 hover:opacity-50" href="/skills">実績</Link>
 		      <Link className="mr-10 hover:opacity-50" href="/contact">コンタクト</Link>
 			  	<Link className="mr-10 hover:bg-gray" href="https://github.com/motoshifurugen/my_site" target="_blank" rel="noopener noreferrer">
