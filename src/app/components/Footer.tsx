@@ -13,7 +13,7 @@ export default function Footer() {
         <div className="container mx-auto md:flex h-32 py-6">
           <div className="rightFooter w-full md:w-3/4 mb-10 md:mb-0">
             <p className="mb-1 md:mb-3 text-lg">古堅 基史</p>
-            <p>
+            <p className="text-sm md:text-base">
               沖縄
               <FontAwesomeIcon icon={faPlane} className="mx-3 opacity-70" />
               広島

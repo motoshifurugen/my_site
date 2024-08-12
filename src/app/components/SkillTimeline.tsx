@@ -76,18 +76,18 @@ const SkillTimeline: React.FC = () => {
   const years = Array.from({ length: Math.ceil(totalYears) }, (_, i) => 2019 + i);
 
   return (
-    <div className="w-4/5 mx-auto p-10 border-l-4 border-gray relative my-10">
+    <div className="w-full md:w-4/5 mx-auto p-2 md:p-10 border-l-4 border-gray relative my-5 md:my-10">
       <div className="flex items-center">
         <div className="bg-teal bg-opacity-80 h-3 rounded w-8"></div>
-        <p className="ml-2">経験時期</p>
+        <p className="ml-2 text-sm md:text-base">経験時期</p>
       </div>
-      <div className="relative mb-10 py-4">
+      <div className="relative mb-5 md:mb-10 py-4">
         {years.map((year, index) => {
           const left = ((year - 2019) / totalYears) * 100;
           return (
             <span
               key={index}
-              className="absolute text-md"
+              className="absolute text-xs md:text-md"
               style={{ left: `${left}%`}}
             >
               {year}
@@ -96,9 +96,9 @@ const SkillTimeline: React.FC = () => {
         })}
       </div>
       {sortedSkills.map((skill, index) => (
-        <div key={index} className="mb-5 pl-5 relative">
-          <div className="bg-white p-4 rounded-lg relative">
-            <h3 className="font-bold">{skill.name}</h3>
+        <div key={index} className="mb-5 pl-1 md:pl-5 relative">
+          <div className="bg-white p-3 md:p-4 rounded-lg relative">
+            <h3 className="font-bold text-base">{skill.name}</h3>
             <div className="flex">
               {skill.total.toFixed(1)}年
               {skill.periods.map((period, i) => {

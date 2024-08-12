@@ -1,4 +1,7 @@
 import PageFace from '../components/PageFace';
+import Image from "next/image";
+import nextConfig from "../../../next.config.mjs";
+const BASE_PATH = nextConfig.basePath || "";
 
 export default function Blog() {
   return (
@@ -9,9 +12,9 @@ export default function Blog() {
         mainMessage={<>
         </>}
       />
-      <div className="px-20 flex text-2xl font-bold justify-center">
-      <span>🛠️　🛠️　🛠️　🛠️　🛠️　🛠️　🛠️　🛠️　🛠️　 開発中 　🛠️　🛠️　🛠️　🛠️　🛠️　🛠️　🛠️　🛠️　🛠️</span>
-    </div>
+      <div className="flex w-full justify-center my-5 md:my-0">
+        <Image src={`${BASE_PATH}/images/cats/coming_soon.png`} alt="coming soon" width={500} height={500} className="rounded-2xl" />
+      </div>
     </section>
   );
 }

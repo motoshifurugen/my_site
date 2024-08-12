@@ -106,13 +106,13 @@ export default function Page() {
     <section className="profile">
       <PageFace
         title="実績・スキル"
-        subtitle="404 | Skills Not Found ..."
+        subtitle=""
         mainMessage={<>
         </>}
       />
-      <div className="works px-20">
-        <h2 className="text-3xl font-bold">制作実績</h2>
-        <div className="work-list grid grid-cols-3 gap-4 justify-items-center items-center my-10">
+      <div className="works px-6 md:px-20">
+        <h2 className="text-2xl md:text-3xl font-bold">制作実績</h2>
+        <div className="work-list grid grid-cols-1 md:grid-cols-3 gap-4 justify-items-center items-center my-10">
           {sortedWorks.map((work, index) => (
             <WorkCard
               key={index}
@@ -126,8 +126,8 @@ export default function Page() {
           ))}
         </div>
       </div>
-      <div className="skills px-20">
-        <h2 className="text-3xl font-bold">スキルタイムチャート</h2>
+      <div className="skills px-6 md:px-20">
+        <h2 className="text-2xl md:text-3xl font-bold">スキルタイムチャート</h2>
         <SkillTimeline />
       </div>
     </section>
