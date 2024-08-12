@@ -882,5 +882,77 @@ export default function Footer() {
 
 <img src="./img/portfolio10.png" alt="screenshot" width="600px">
 
+## github pagesにて公開
+
+- [Next.js 14.1 を GitHub Pages にデプロイするガイド](https://zenn.dev/kazzyfrog/articles/8e24dfe951aad9)
+
+path関連でたくさんエラー出たので、以下のように修正
+
+```javascript
+(-) const isRootPath = pathname === '/';
+(+) const isRootPath = pathname === `${BASE_PATH}/` || pathname === "/";
+```
+
+デプロイ成功!
+
+<img src="./img/portfolio11.png" alt="screenshot" width="600px">
+
+### https://motoshifurugen.github.io/my_site/ で公開された🙌
+
+## レスポンシブ対応
+
+ヘッダーメニューをレスポンシブ対応（ハンバーガーメニュー追加）する
+
+`components/Header.tsx`
+
+```javascript
+<header className={`
+			fixed top-0 left-0 w-full z-50
+			py-3 mb-20 px-8
+			${!isMainPage ? 'bg-bg-main' : 'bg-transparent'}
+		`}>
+		  <div className="container mx-auto flex flex-wrap py-5 flex-col md:flex-row items-center">
+				<div className="container mx-auto flex z-50">
+					{!isMainPage && (
+        	  <a href={`${BASE_PATH}/`} className="flex font-mobo my-2 md:mb-0">
+        	    <span className="ml-3 text-3xl md:text-xl">Furugen&apos;s Island</span>
+        	  </a>
+        	)}
+					 <button
+        	  className="md:hidden ml-auto text-2xl bg-white rounded-full w-12 h-12 flex items-center justify-center"
+        	  onClick={toggleMenu}
+        	>
+        	  <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
+        	</button>
+				</div>
+		    <nav className={`
+				  flex flex-wrap flex-col md:flex-row
+					item-left md:items-center text-base md:justify-center
+					font-mobo
+				  fixed top-0 right-0 h-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out
+				  ${menuOpen ? 'translate-x-0' : 'translate-x-full'}
+				  md:relative md:translate-x-0 md:bg-transparent md:shadow-none
+					md:ml-auto
+					w-full md:w-auto
+					pt-40 px-10 md:py-0 md:px-0 md:bg-transparent
+				`}>
+				  <Link className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50" href="/profile">プロフィール</Link>
+				  <Link className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50" href="/blog">開発ブログ</Link>
+				  <Link className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50" href="/skills">実績</Link>
+				  <Link className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50" href="/contact">コンタクト</Link>
+				  <Link className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:bg-gray" href="https://github.com/motoshifurugen/my_site" target="_blank" rel="noopener noreferrer">
+				    <div className="flex items-center border border-gray-300 rounded px-3 py-1">
+				      <FontAwesomeIcon icon={faGithub} className="mr-2" />
+				      ソースコード
+				    </div>
+				  </Link>
+				</nav>
+		  </div>
+		</header>
+```
+
+<img src="./img/portfolio12.png" alt="screenshot" width="600px">
+
+スタイルは`md`をつけるかつけないかで一つ一つやっているので汚い。効率化できないか。
 
 ### To be continued... 🍻
