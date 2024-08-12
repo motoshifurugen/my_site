@@ -957,4 +957,12 @@ path関連でたくさんエラー出たので、以下のように修正
 
 同様に他ページもレスポンシブ対応する。
 
+## Not Found用のページ作成
+
+not found時に表示できる画面をカスタマイズできるらしい
+
+`app/not-found.tsx`←新たに作成
+
+<img src="./img/portfolio13.png" alt="screenshot" width="600px">
+
 ### To be continued... 🍻

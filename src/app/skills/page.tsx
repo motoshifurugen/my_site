@@ -16,7 +16,7 @@ const works: Work[] = [
     src: "/images/works/work_01.png",
     alt: "work01",
     title: "ホームページ（地元スーパー）",
-    description: "地元スーパーのHPを作成しました。スマホユーザーをメインターゲットに、レスポンシブデザインを実装しました。",
+    description: "地元スーパーのホームページを作成しました。スマホユーザーを主なターゲットとし、レスポンシブデザインを採用しました。",
     tags: ["Vue.js", "Laravel", "#個人開発"],
     date: "2022-12"
   },
@@ -24,7 +24,7 @@ const works: Work[] = [
     src: "/images/works/work_02.png",
     alt: "work02",
     title: "ホームページ（デイサービス施設）",
-    description: "エンジニアでなくても運用可能にしたいというご希望があり、WordPressを用いたHPを新たに作成しました。",
+    description: "エンジニアでなくても運用できるようにとの要望を受け、WordPressを使って新たにホームページを作成しました。",
     tags: ["WordPress", "#個人開発"],
     date: "2023-01"
   },
@@ -32,7 +32,7 @@ const works: Work[] = [
     src: "/images/works/work_03.png",
     alt: "work03",
     title: "ホームページ（ウォーターサーバー）",
-    description: "既存サイトの刷新を行いました。Youtubeの埋め込みやスライドショーなど、新しい要素を取り入れました。",
+    description: "既存のサイトを刷新し、YouTube埋め込みやスライドショーなど新しい要素を取り入れました。",
     tags: ["HTML", "CSS", "#個人開発"],
     date: "2020-12"
   },
@@ -40,7 +40,7 @@ const works: Work[] = [
     src: "/images/works/hackathon_01.png",
     alt: "hackathon01",
     title: "今日の飯決めアプリ",
-    description: "その日の気分などからレシピを提案します。楽天レシピAPIからのレスポンス待機時間などを考慮しながら実装を行いました。",
+    description: "その日の気分に合ったレシピを提案するアプリを開発しました。楽天レシピAPIのレスポンス時間を考慮しながら実装を進めました。",
     tags: ["Vue.js", "Docker", "#チーム開発"],
     date: "2021-05"
   },
@@ -48,7 +48,7 @@ const works: Work[] = [
     src: "/images/works/hackathon_02.png",
     alt: "hackathon02",
     title: "チーム開発チュートリアルアプリ",
-    description: "ハッカソンで感じたチームビルディングでの課題をもとに、役割分担やタスク共有が簡単にできるアプリを開発しました。",
+    description: "ハッカソンでのチームビルディングの課題を基に、役割分担やタスク共有を簡単に行えるアプリを開発しました。",
     tags: ["Laravel", "Docker", "#チーム開発"],
     date: "2021-10"
   },
@@ -56,7 +56,7 @@ const works: Work[] = [
     src: "/images/works/hackathon_03.png",
     alt: "hackathon03",
     title: "Pythonで作るトランプゲーム",
-    description: "Pythonを用いてローカル環境で実行するトランプゲームの開発と、それを配布するためのWebサイトの構築を行いました。",
+    description: "Pythonでローカル環境で動作するトランプゲームを開発し、それを配布するためのWebサイトを構築しました。",
     tags: ["Laravel", "Python", "#チーム開発"],
     date: "2021-05"
   },
@@ -64,7 +64,7 @@ const works: Work[] = [
     src: "/images/works/hobby_01.png",
     alt: "hobby01",
     title: "自己探究プログラム振り返りサイト",
-    description: "参加したプログラムの内容やスライド、共に参加したメンバーの情報をまとめたサイトを作成しました。",
+    description: "参加したプログラムの内容やスライド、メンバー情報をまとめたサイトを作成しました。",
     tags: ["Vue.js", "#個人開発"],
     date: "2021-11"
   },
@@ -72,7 +72,7 @@ const works: Work[] = [
     src: "/images/works/hobby_02.png",
     alt: "hobby02",
     title: "あのシーンの吹き出し加工ツール",
-    description: "あのシーンの感動を他場面でも応用したいとき、吹き出しを書き換えて自分好みの演出ができるツールを作成しました。",
+    description: "あの名シーンの感動を他の場面でも応用できるよう、吹き出しを自分好みに書き換えるツールを開発しました。",
     tags: ["HTML", "CSS", "#個人開発"],
     date: "2023-05"
   },
@@ -80,7 +80,7 @@ const works: Work[] = [
     src: "/images/works/hobby_03.png",
     alt: "hobby03",
     title: "あのシーンの緊迫感体験ゲーム",
-    description: "某アニメの名シーンを再現し、世界崩壊の緊迫感を体験できるヌメロン形式のパスワード推測ゲームを作成しました。",
+    description: "某アニメの名シーンを再現し、世界崩壊の緊迫感を体験できるパスワード推測ゲームを作成しました。",
     tags: ["Vue.js", "#個人開発"],
     date: "2023-08"
   },
@@ -88,7 +88,7 @@ const works: Work[] = [
     src: "/images/works/hobby_04.png",
     alt: "hobby04",
     title: "ユニティちゃんのマリオ風ゲーム",
-    description: "Unityの使い方を学ぶことを目的に、2Dのマリオ風ゲームを作成しました。ゲーム制作者の凄さを実感しました。",
+    description: "Unityの基礎を学ぶために、2Dのマリオ風ゲームを作成しました。ゲーム開発者の凄さを強く実感しました。",
     tags: ["Unity", "#個人開発"],
     date: "2021-08"
   }
