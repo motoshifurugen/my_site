@@ -15,7 +15,7 @@ const Card: React.FC<CardProps> = ({ title, content, imageSrc, imageAlt }) => {
   return (
     <div className="card px-20">
       <h2 className="text-3xl font-bold">{title}</h2>
-      <div className="flex p-10 mb-32 font-open-sans">
+      <div className="flex p-10 mb-32 custom-font-open-sans">
         <div className="flex w-1/2 text-lg leading-loose items-center">
           {content}
         </div>

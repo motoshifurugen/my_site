@@ -4,6 +4,21 @@
 
 @layer base {
   body {
-    @apply bg-bg-main text-font-main font-mobo;
+    @apply bg-bg-main text-font-main;
+  }
+
+  .custom-font-open-sans {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400; /* 300から800の間で適切な値を選択 */
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+  }
+
+  .custom-font-dm-sans {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
   }
 }

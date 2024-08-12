@@ -16,8 +16,6 @@ const config: Config = {
         'teal' : '#008080',
       },
       fontFamily: {
-        'dm-sans': ['DMSans', 'sans-serif'],
-        'open-sans': ['OpenSans', 'sans-serif'],
         'mobo': ['MOBO', 'sans-serif'],
       },
       animation: {

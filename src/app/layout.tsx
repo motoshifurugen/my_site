@@ -4,9 +4,9 @@ import { config } from '@fortawesome/fontawesome-svg-core'
 import "./globals.css";
 import 'tailwindcss/tailwind.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import Head from "next/head"; // Import the Head component
-import nextConfig from '../../next.config.mjs';
-const BASE_PATH = nextConfig.basePath || "";
+import assetPrefix from '../../next.config.mjs';
+
+const BASE_PATH = assetPrefix.basePath || "";
 
 config.autoAddCss = false
 
@@ -28,28 +28,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <Head>
-        <style>{`
-          @font-face {
-            font-family: 'DMSans';
-            src: url('${BASE_PATH}/fonts/DMSans-VariableFont.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-          }
-          @font-face {
-            font-family: 'OpenSans';
-            src: url('${BASE_PATH}/fonts/OpenSans-VariableFont.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-          }
-          @font-face {
-            font-family: 'MOBO';
-            src: url('${BASE_PATH}/fonts/MOBO-SemiBold.otf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-          }
-        `}</style>
-      </Head>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Stick&display=swap"
+          rel="stylesheet"
+        />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              @font-face {
+                font-family: 'MOBO';
+                src: url('${BASE_PATH}/fonts/MOBO-SemiBold.otf') format('truetype');
+                font-weight: normal;
+                font-style: normal;
+              }
+            `,
+          }}
+        />
+      </head>
       <body className={inter.className}>
         <BackgroundWrapper>
           <Header />
