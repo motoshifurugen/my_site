@@ -51,7 +51,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <BackgroundWrapper>
           <Header />
-          <main className="pt-40">
+          <main className="pt-32 md:pt-40">
             {children}
           </main>
         </BackgroundWrapper>
