@@ -965,4 +965,8 @@ not found時に表示できる画面をカスタマイズできるらしい
 
 <img src="./img/portfolio13.png" alt="screenshot" width="600px">
 
+## GoogleAnalytics導入
+
+- [【Next.js】Next.js14でGoogleAnalytics（GA4）を導入する方法 | Neightbor. | あなたのビジネスをWEBで支える](https://neightbor.jp/blog/nextjs14-ga4)
+
 ### To be continued... 🍻
