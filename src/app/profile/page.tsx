@@ -3,6 +3,14 @@ import Card from "../components/Card";
 import PageFace from '../components/PageFace';
 
 export default function Page() {
+  const history = [
+    { year: "1998年", description: "沖縄に生まれる" },
+    { year: "2017年", description: "高校卒業後、広島大学理学部物理学科へ進学する" },
+    { year: "2020年", description: "大学休学中にプログラミングを始める" },
+    { year: "2021年", description: "長期インターンでWebエンジニアを経験する" },
+    { year: "2023年", description: "大学卒業後、エンジニアとして就職する" },
+    { year: "〜 現在", description: "フロントエンドエンジニアとして奮闘中" },
+  ];
   return (
     <section className="profile">
       <PageFace
@@ -13,24 +21,18 @@ export default function Page() {
       <Card
         title="経歴"
         content={
-          <>
-            <p className="mr-6 text-right">
-              1998年<br />
-              2017年<br />
-              2020年<br />
-              2021年<br />
-              2023年<br />
-              現在
-            </p>
-            <p>
-              沖縄に生まれる<br />
-              高校卒業後、広島大学理学部物理学科へ進学する<br />
-              大学休学中にプログラミングを始める<br />
-              長期インターンでWebエンジニアを経験する<br />
-              大学卒業後、エンジニアとして就職する<br />
-              フロントエンドエンジニアとして奮闘中
-            </p>
-          </>
+          <div className="flex flex-col space-y-4 md:space-y-0">
+            {history.map((item, index) => (
+              <div key={index} className="flex flex-col md:flex-row md:items-start">
+                <p className="mr-6 text-left">
+                  {item.year}
+                </p>
+                <p className="pl-2 md:pl-0">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
         }
         imageSrc="/images/profile_01.jpg"
         imageAlt="profile img 01"
@@ -40,11 +42,11 @@ export default function Page() {
         content={
           <>
             <p>
-              物理学が目に見えない自然の法則を解き明かすように、<br />
+              物理学が目に見えない自然の法則を解き明かすように、
               データという見えない情報を扱うことに楽しさを感じています。<br />
-              最近はバックエンドやネットワーク分野に興味があり、<br />
+              最近はバックエンドやネットワーク分野に興味があり、
               今年はネットワークスペシャリストの資格に挑戦します。<br />
-              心が強い方ではないので、メンタルヘルスへの関心も大切にしています。
+              心が強い方ではないので、メンタルヘルスも大切にしています。
             </p>
           </>
         }
@@ -56,9 +58,9 @@ export default function Page() {
         content={
           <>
             <p>
-              エイサー（沖縄の伝統芸能） ・ 読書（ビジネス書中心） ・<br />
-              散歩 ・ 短歌 ・ ギター（アコギ） ・ ドライブ ・ ボウリング <br />
-              and more<br />
+              エイサー（沖縄の伝統芸能） ・ 読書（ビジネス書中心） ・ドライブ
+              ・散歩 ・ 短歌 ・ ギター（アコースティック） ・ ボウリング <br />
+              and more
             </p>
           </>
         }
