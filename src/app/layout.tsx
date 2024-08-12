@@ -5,6 +5,7 @@ import "./globals.css";
 import 'tailwindcss/tailwind.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import assetPrefix from '../../next.config.mjs';
+import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
 
 const BASE_PATH = assetPrefix.basePath || "";
 
@@ -57,6 +58,8 @@ export default function RootLayout({
         </BackgroundWrapper>
         <Footer />
       </body>
+      <GoogleTagManager gtmId="G-3B88D979NP" />
+      <GoogleAnalytics gaId="G-3B88D979NP" />
     </html>
   );
 }
