@@ -103,7 +103,7 @@ export default function Page() {
   });
 
   return (
-    <section className="profile">
+    <section className="skills">
       <PageFace
         title="実績・スキル"
         subtitle=""
