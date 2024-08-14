@@ -26,22 +26,25 @@
     main {
       @apply pt-32 md:pt-40; /* ヘッダー分の余白 */
     }
-    .content-wrapper {
-      @apply px-4;
+    section {
+      @apply container mx-auto p-4;
+      h2 {
+        @apply my-8;
+      }
     }
 
     /* 各テキストのフォント（サイズ・種類・太さ） */
     h1 {
-      @apply text-2xl md:text-6xl noto-sans-jp font-bold;
+      @apply text-3xl md:text-4xl noto-sans-jp font-bold;
     }
     h2 {
-      @apply text-xl md:text-4xl noto-sans-jp font-bold;
+      @apply text-2xl md:text-3xl noto-sans-jp font-bold;
     }
     h3 {
       @apply text-lg md:text-2xl leading-loose md:leading-loose noto-sans-jp font-semibold;
     }
     p {
-      @apply text-base md:text-lg noto-sans-jp;
+      @apply text-sm md:text-base leading-snug md:leading-loose noto-sans-jp;
     }
   }
 }

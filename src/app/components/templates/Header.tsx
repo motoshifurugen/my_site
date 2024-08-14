@@ -1,14 +1,13 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import nextConfig from "../../../next.config.mjs";
+import nextConfig from "../../../../next.config.mjs";
 import React, { useState, useEffect } from "react";
 import { faTimes, faBars } from "@fortawesome/free-solid-svg-icons";
-import GithubLinkButton from "./GithubLinkButton";
-import TitleLinkButton from "./TitleLinkButton";
-import HeaderLinkButton from "./HeaderLinkButton";
+import GithubLinkButton from "../molecules/GithubLinkButton";
+import TitleLinkButton from "../atoms/TitleLinkButton";
+import HeaderLinkButton from "../molecules/HeaderLinkButton";
 
 const BASE_PATH = nextConfig.basePath || "";
 
@@ -45,7 +44,7 @@ const Header = () => {
 		`}
     >
       <div className="container flex flex-col md:flex-row mx-auto py-8">
-        <div className="container content-wrapper z-50 flex items-center animate-fade-in-up">
+        <div className="container z-50 flex items-center px-4 animate-fade-in-up">
           {/* タイトルボタン（トップページ以外で表示） */}
           {!isMainPage && (
             <TitleLinkButton href={`${BASE_PATH}/`} text="Furugen's Island" />

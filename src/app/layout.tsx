@@ -8,9 +8,9 @@ import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
 
 config.autoAddCss = false;
 
-import Header from "./components/Header";
-import BackgroundWrapper from "./components/BackgroundWrapper";
-import Footer from "./components/Footer";
+import Header from "./components/templates/Header";
+import BackgroundWrapper from "./components/atoms/BackgroundWrapper";
+import Footer from "./components/templates/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 

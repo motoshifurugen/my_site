@@ -980,4 +980,13 @@ not found時に表示できる画面をカスタマイズできるらしい
   - アニメーション
 - 意味を持たないクラスは当てない
 
+## コンポーネント見直し
+
+Atomic designを参考に、以下のフォルダにコンポーネントを分類する。
+
+- atoms
+- molecules
+- organism
+- templates
+
 ### To be continued... 🍻

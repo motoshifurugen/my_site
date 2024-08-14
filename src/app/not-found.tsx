@@ -1,7 +1,8 @@
-import PageFace from '../app/components/PageFace';
+"use client";
+
 import { Metadata } from 'next';
-import Image from "next/image";
 import nextConfig from "../../next.config.mjs";
+import MaintenanceTemplate from './components/templates/MaintenanceTemplate';
 const BASE_PATH = nextConfig.basePath || "";
 
 export const metadata: Metadata = {
@@ -10,16 +11,11 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <section className="blog">
-      <PageFace
+    <>
+      <MaintenanceTemplate
         title="404"
-        subtitle=""
-        mainMessage={<>
-        </>}
+        imagePath={`${BASE_PATH}/images/cats/page_not_found.png`}
       />
-      <div className="flex w-full justify-center my-5 md:my-0">
-        <Image src={`${BASE_PATH}/images/cats/page_not_found.png`} alt="coming soon" width={500} height={500} className="rounded-2xl" />
-      </div>
-    </section>
+    </>
   );
 }

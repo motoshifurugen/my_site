@@ -11,12 +11,12 @@ const GithubLinkButton = () => {
       target="_blank"
       rel="noopener noreferrer"
     >
-      <div className="group flex items-center border border-gray-300 rounded px-4 py-2 hover:bg-main-black hover:text-main-white">
+      <div className="group flex items-center border border-gray-300 rounded px-4 py-2 hover:bg-main-black hover:text-main-white transition duration-300">
         <FontAwesomeIcon
           icon={faGithub}
-          className="mr-2 group-hover:bg-main-black group-hover:text-main-white"
+          className="mr-2 bg-transparent group-hover:text-main-white transition duration-100"
         />
-        <span className="noto-sans-jp text-lg md:text-base group-hover:bg-main-black group-hover:text-main-white">
+        <span className="noto-sans-jp text-lg md:text-base bg-transparent group-hover:text-main-white font-bold transition duration-300">
           ソースコード
         </span>
       </div>
