@@ -1088,4 +1088,10 @@ devツールで確認する
 
 - [【Safari】MacとiPhone 実機で開発者ツールを使う方法 #Safari - Qiita](https://qiita.com/yutomaeda5510/items/f78d60038e2af34f67f0)
 
+なんか自分の設定が弾かれている
+
+<img src="./img/portfolio15.png" alt="screenshot" width="300px">
+
+`!importtant`つけてみる
+
 ### To be continued... 🍻
