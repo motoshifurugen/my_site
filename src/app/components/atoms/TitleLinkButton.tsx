@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react'
 
 interface TitleButtonProps {
-  href: string;
-  text: string;
+  href: string
+  text: string
 }
 
 const TitleLinkButton: React.FC<TitleButtonProps> = ({ href, text }) => {
@@ -10,7 +10,7 @@ const TitleLinkButton: React.FC<TitleButtonProps> = ({ href, text }) => {
     <a href={href}>
       <span className="dm-sans font-bold text-2xl">{text}</span>
     </a>
-  );
-};
+  )
+}
 
-export default TitleLinkButton;
+export default TitleLinkButton

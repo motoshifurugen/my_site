@@ -13,5 +13,5 @@ export default function MainMessage() {
         なんくるないさ系エンジニア。
       </h3>
     </>
-  );
+  )
 }

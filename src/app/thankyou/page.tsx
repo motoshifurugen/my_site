@@ -1,7 +1,6 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelopeOpen } from "@fortawesome/free-solid-svg-icons";
-import TextArrowLinkButton from "../components/molecules/TextArrowLinkButton";
+import { faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import TextArrowLinkButton from '../components/molecules/TextArrowLinkButton'
 
 const ThankYou = () => {
   return (
@@ -13,9 +12,7 @@ const ThankYou = () => {
             className="text-6xl text-gray"
           />
         </div>
-        <h2 className="my-10 text-center">
-          お問合せありがとうございます
-        </h2>
+        <h2 className="my-10 text-center">お問合せありがとうございます</h2>
         <p className="mt-4 text-center">
           お問合せ内容を確認させていただきますので、
           <br />
@@ -26,7 +23,7 @@ const ThankYou = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default ThankYou;
+export default ThankYou

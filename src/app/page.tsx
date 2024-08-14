@@ -1,6 +1,6 @@
-import TitleAnimation from "./components/atoms/TitleAnimation";
-import MainMessage from "./components/atoms/MainMessage";
-import TextArrowLinkButton from "./components/molecules/TextArrowLinkButton";
+import MainMessage from './components/atoms/MainMessage'
+import TitleAnimation from './components/atoms/TitleAnimation'
+import TextArrowLinkButton from './components/molecules/TextArrowLinkButton'
 
 export default function Home() {
   return (
@@ -15,5 +15,5 @@ export default function Home() {
         </div>
       </div>
     </section>
-  );
+  )
 }

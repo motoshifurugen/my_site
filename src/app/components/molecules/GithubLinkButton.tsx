@@ -1,7 +1,6 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import Link from "next/link";
+import { faGithub } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
 
 const GithubLinkButton = () => {
   return (
@@ -21,7 +20,7 @@ const GithubLinkButton = () => {
         </span>
       </div>
     </Link>
-  );
-};
+  )
+}
 
-export default GithubLinkButton;
+export default GithubLinkButton

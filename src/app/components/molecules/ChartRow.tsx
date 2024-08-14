@@ -1,19 +1,19 @@
-import React from 'react';
+import React from 'react'
 
 interface Period {
-  start: number;
-  end: number;
+  start: number
+  end: number
 }
 
 interface Skill {
-  name: string;
-  periods: Period[];
-  total: number;
+  name: string
+  periods: Period[]
+  total: number
 }
 
 interface ChartRowProps {
-  skill: Skill;
-  totalYears: number;
+  skill: Skill
+  totalYears: number
 }
 
 const ChartRow: React.FC<ChartRowProps> = ({ skill, totalYears }) => {
@@ -24,23 +24,23 @@ const ChartRow: React.FC<ChartRowProps> = ({ skill, totalYears }) => {
         <div className="dm-sans flex">
           {skill.total.toFixed(1)} 年
           {skill.periods.map((period, i) => {
-            const startOffset = ((period.start - 2019) / totalYears) * 100;
-            const width = ((period.end - period.start + 0.1) / totalYears) * 100;
+            const startOffset = ((period.start - 2019) / totalYears) * 100
+            const width = ((period.end - period.start + 0.1) / totalYears) * 100
             return (
               <div
                 key={i}
                 className="absolute bg-teal bg-opacity-80 h-3 rounded"
                 style={{
                   left: `${startOffset}%`,
-                  width: `${width}%`
+                  width: `${width}%`,
                 }}
               ></div>
-            );
+            )
           })}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ChartRow;
+export default ChartRow

@@ -63,15 +63,16 @@ http://localhost:3000/
 ## アプリ全体のデザインをglobal.cssに設定
 
 `page.tsx`にtailwindをimport
+
 ```javascript
-import 'tailwindcss/tailwind.css';
+import 'tailwindcss/tailwind.css'
 
 export default function Home() {
   return (
     <body>
       <h1>Hello My Site!</h1>
     </body>
-  );
+  )
 }
 ```
 
@@ -101,6 +102,7 @@ export default config;
 ```
 
 `globals.css`
+
 ```css
 @tailwind base;
 @tailwind components;
@@ -118,31 +120,40 @@ body {
 `components/Header.tsx`←新規作成
 
 ```javascript
-import Link from "next/link"
-import 'tailwindcss/tailwind.css';
+import Link from 'next/link'
+import 'tailwindcss/tailwind.css'
 
 const Header = () => {
-	return (
-		<header>
-		  <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-		    <a className="flex font-medium items-center mb-4 md:mb-0">
-		      <span className="ml-3 text-xl">Motoshi Furugen</span>
-		    </a>
-		    <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-		      <Link className="mr-10 hover:opacity-50" href="#">プロフィール</Link>
-		      <Link className="mr-10 hover:opacity-50" href="#">開発ブログ</Link>
-		      <Link className="mr-10 hover:opacity-50" href="#">実績</Link>
-		      <Link className="mr-10 hover:opacity-50" href="#">コンタクト</Link>
-		    </nav>
-		  </div>
-		</header>
-	)
+  return (
+    <header>
+      <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a className="flex font-medium items-center mb-4 md:mb-0">
+          <span className="ml-3 text-xl">Motoshi Furugen</span>
+        </a>
+        <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
+          <Link className="mr-10 hover:opacity-50" href="#">
+            プロフィール
+          </Link>
+          <Link className="mr-10 hover:opacity-50" href="#">
+            開発ブログ
+          </Link>
+          <Link className="mr-10 hover:opacity-50" href="#">
+            実績
+          </Link>
+          <Link className="mr-10 hover:opacity-50" href="#">
+            コンタクト
+          </Link>
+        </nav>
+      </div>
+    </header>
+  )
 }
 
 export default Header
 ```
 
 `layout.tsx`を変更
+
 ```javascript
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -182,24 +193,24 @@ npm install gsap
 ```
 
 `components/TitleAnimation.tsx`←新規作成
+
 ```javascript
-"use client";
+'use client'
 
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { TextPlugin } from 'gsap/TextPlugin';
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { TextPlugin } from 'gsap/TextPlugin'
 
-gsap.registerPlugin(TextPlugin);
+gsap.registerPlugin(TextPlugin)
 
 export default function TitleAnimation() {
-
   // 文字を一文字ずつ表示するアニメーション
-  const textRef = useRef<HTMLParagraphElement>(null);
+  const textRef = useRef < HTMLParagraphElement > null
   useEffect(() => {
     if (textRef.current) {
-      gsap.to(textRef.current, { duration: 1.75, text: "Furugen" });
+      gsap.to(textRef.current, { duration: 1.75, text: 'Furugen' })
     }
-  }, []);
+  }, [])
 
   return (
     <p
@@ -214,7 +225,7 @@ export default function TitleAnimation() {
       "
       ref={textRef}
     ></p>
-  );
+  )
 }
 ```
 
@@ -233,20 +244,25 @@ export default function MainMessage() {
   return (
     <>
       <p className="text-2xl leading-loose">
-        心の健康を支えるために、<br />
-        画面の向こうに広がる世界へ、<br />
-        想いをコードに込め、<br />
-        毎日挑戦し続ける、<br />
+        心の健康を支えるために、
+        <br />
+        画面の向こうに広がる世界へ、
+        <br />
+        想いをコードに込め、
+        <br />
+        毎日挑戦し続ける、
+        <br />
         なんくるないさ系エンジニア。
       </p>
     </>
-  );
+  )
 }
 ```
 
 `page.tsx`にて、`TitleAnimation`コンポーネントと`MainMessage`コンポーネントを横並びにする。
 
 `page.tsx`
+
 ```javascript
 ・・・
 <section className="main-face flex">
@@ -272,18 +288,25 @@ export default function MainMessage() {
 ```javascript
 <>
   <p className="text-2xl leading-loose mb-12">
-    心の健康を支えるために、<br />
-    画面の向こうに広がる世界へ、<br />
-    想いをコードに込め、<br />
-    毎日挑戦し続ける、<br />
+    心の健康を支えるために、
+    <br />
+    画面の向こうに広がる世界へ、
+    <br />
+    想いをコードに込め、
+    <br />
+    毎日挑戦し続ける、
+    <br />
     なんくるないさ系エンジニア。
   </p>
   <a href="#" className="text-xl group">
     プロフィール
     <button
       className="relative align-middle transition-all w-8 max-w-[32px] h-8 max-h-[32px] text-xs border border-font-main border-opacity-20 rounded-full ml-5 group-hover:bg-white"
-      type="button">
-      <span><FontAwesomeIcon icon={faArrowRight} /></span>
+      type="button"
+    >
+      <span>
+        <FontAwesomeIcon icon={faArrowRight} />
+      </span>
     </button>
   </a>
 </>
@@ -298,7 +321,7 @@ export default function MainMessage() {
 `app/pofile/page.tsx`←新たに作成
 
 ```javascript
-import MainMessage from "../components/MainMessage";
+import MainMessage from '../components/MainMessage'
 
 export default function Page() {
   return (
@@ -307,7 +330,7 @@ export default function Page() {
         <MainMessage />
       </div>
     </section>
-  );
+  )
 }
 ```
 
@@ -326,24 +349,39 @@ export default function Page() {
     <div className="flex p-10">
       <p className="flex w-1/2 text-lg leading-loose items-center">
         <p className="mr-6 text-right">
-          1998年<br />
-          2017年<br />
-          2020年<br />
-          2021年<br />
-          2023年<br />
+          1998年
+          <br />
+          2017年
+          <br />
+          2020年
+          <br />
+          2021年
+          <br />
+          2023年
+          <br />
           現在
         </p>
         <p>
-          沖縄に生まれる<br />
-          高校卒業後、広島大学理学部物理学科へ進学する<br />
-          大学休学中にプログラミングを始める<br />
-          長期インターンでWebエンジニアを経験する<br />
-          大学卒業後、エンジニアとして就職する<br />
+          沖縄に生まれる
+          <br />
+          高校卒業後、広島大学理学部物理学科へ進学する
+          <br />
+          大学休学中にプログラミングを始める
+          <br />
+          長期インターンでWebエンジニアを経験する
+          <br />
+          大学卒業後、エンジニアとして就職する
+          <br />
           フロントエンドエンジニアとして奮闘中
         </p>
       </p>
       <div className="w-1/2 flex justify-end">
-        <Image src="/images/etsushi.jpg" alt="profile img 01" width={500} height={500} />
+        <Image
+          src="/images/etsushi.jpg"
+          alt="profile img 01"
+          width={500}
+          height={500}
+        />
       </div>
     </div>
   </div>
@@ -463,33 +501,46 @@ usePathnameを利用する時は`"use client"を追加してクライアント�
 `component/Header.tsx`
 
 ```javascript
-"use client"
+'use client'
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 const Header = () => {
-	const pathname = usePathname();
-  const isMainPage = pathname === "/";
+  const pathname = usePathname()
+  const isMainPage = pathname === '/'
 
-	return (
-		<header className="pt-5 pl-5 mb-20">
-		  <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-				{!isMainPage && (
-          <a href="/" className="flex font-mobo font-medium items-center mb-4 md:mb-0">
+  return (
+    <header className="pt-5 pl-5 mb-20">
+      <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        {!isMainPage && (
+          <a
+            href="/"
+            className="flex font-mobo font-medium items-center mb-4 md:mb-0"
+          >
             <span className="ml-3 text-xl">Motoshi Furugen</span>
           </a>
         )}
-		    <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center font-mobo">
-		      <Link className="mr-10 hover:opacity-50" href="/profile">プロフィール</Link>
-		      <Link className="mr-10 hover:opacity-50" href="#">開発ブログ</Link>
-		      <Link className="mr-10 hover:opacity-50" href="#">実績</Link>
-		      <Link className="mr-10 hover:opacity-50" href="#">コンタクト</Link>
-			  	<Link className="mr-10 hover:opacity-50" href="#">ソースコード</Link>
-		    </nav>
-		  </div>
-		</header>
-	)
+        <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center font-mobo">
+          <Link className="mr-10 hover:opacity-50" href="/profile">
+            プロフィール
+          </Link>
+          <Link className="mr-10 hover:opacity-50" href="#">
+            開発ブログ
+          </Link>
+          <Link className="mr-10 hover:opacity-50" href="#">
+            実績
+          </Link>
+          <Link className="mr-10 hover:opacity-50" href="#">
+            コンタクト
+          </Link>
+          <Link className="mr-10 hover:opacity-50" href="#">
+            ソースコード
+          </Link>
+        </nav>
+      </div>
+    </header>
+  )
 }
 
 export default Header
@@ -509,9 +560,7 @@ export default Header
 <html lang="en">
   <body className={inter.className}>
     <Header />
-    <main className="pt-40">
-      {children}
-    </main>
+    <main className="pt-40">{children}</main>
   </body>
 </html>
 ```
@@ -521,7 +570,12 @@ Githubへのリンクを設置する
 `components/Header.tsx`
 
 ```javascript
-<Link className="mr-10 hover:bg-gray" href="https://github.com/motoshifurugen/my_site" target="_blank" rel="noopener noreferrer">
+<Link
+  className="mr-10 hover:bg-gray"
+  href="https://github.com/motoshifurugen/my_site"
+  target="_blank"
+  rel="noopener noreferrer"
+>
   <div className="flex items-center border border-gray-300 rounded px-3 py-1">
     <FontAwesomeIcon icon={faGithub} className="mr-2" />
     ソースコード
@@ -626,9 +680,7 @@ export default BackgroundWrapper;
   <body className={inter.className}>
     <BackgroundWrapper>
       <Header />
-      <main className="pt-40">
-        {children}
-      </main>
+      <main className="pt-40">{children}</main>
     </BackgroundWrapper>
   </body>
 </html>
@@ -710,7 +762,6 @@ export default WorkCard;
 > 学びには中断時期があるため、マップのバーが途切れる箇所があることなども想定してください。
 > 例えば、PHP歴３年（2021年〜2024年）、Vue.js歴2年（2020年〜2021年、2023年~2024年）といったデータを用います。
 > jsxとTypescript形式で教えてください。また、可能であればCSSをTailWindcssで置き換えてください。
-
 
 もらったコードを微調整して、タイムラインチャートを作成
 
@@ -818,12 +869,12 @@ export default AnimatedLine;
 `components/Footer.tsx`←新たに作成
 
 ```javascript
-"use client";
+'use client'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlane } from '@fortawesome/free-solid-svg-icons';
-import { faGithub, faXTwitter } from '@fortawesome/free-brands-svg-icons';
-import AnimatedLine from './AnimatedLine';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlane } from '@fortawesome/free-solid-svg-icons'
+import { faGithub, faXTwitter } from '@fortawesome/free-brands-svg-icons'
+import AnimatedLine from './AnimatedLine'
 
 export default function Footer() {
   return (
@@ -848,10 +899,18 @@ export default function Footer() {
           <div className="border-l-2 opacity-50 mx-8"></div>
           <div className="leftFooter w-1/4 flex flex-col justify-between">
             <div className="flex space-x-4">
-              <a href="https://github.com/motoshifurugen" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://github.com/motoshifurugen"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FontAwesomeIcon icon={faGithub} className="text-2xl" />
               </a>
-              <a href="https://x.com/cocoahearts21" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://x.com/cocoahearts21"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FontAwesomeIcon icon={faXTwitter} className="text-2xl" />
               </a>
             </div>
@@ -871,9 +930,7 @@ export default function Footer() {
   <body className={inter.className}>
     <BackgroundWrapper>
       <Header />
-      <main className="pt-40">
-        {children}
-      </main>
+      <main className="pt-40">{children}</main>
     </BackgroundWrapper>
     <Footer />
   </body>
@@ -906,26 +963,31 @@ path関連でたくさんエラー出たので、以下のように修正
 `components/Header.tsx`
 
 ```javascript
-<header className={`
+<header
+  className={`
 			fixed top-0 left-0 w-full z-50
 			py-3 mb-20 px-8
 			${!isMainPage ? 'bg-bg-main' : 'bg-transparent'}
-		`}>
-		  <div className="container mx-auto flex flex-wrap py-5 flex-col md:flex-row items-center">
-				<div className="container mx-auto flex z-50">
-					{!isMainPage && (
-        	  <a href={`${BASE_PATH}/`} className="flex font-mobo my-2 md:mb-0">
-        	    <span className="ml-3 text-3xl md:text-xl">Furugen&apos;s Island</span>
-        	  </a>
-        	)}
-					 <button
-        	  className="md:hidden ml-auto text-2xl bg-white rounded-full w-12 h-12 flex items-center justify-center"
-        	  onClick={toggleMenu}
-        	>
-        	  <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
-        	</button>
-				</div>
-		    <nav className={`
+		`}
+>
+  <div className="container mx-auto flex flex-wrap py-5 flex-col md:flex-row items-center">
+    <div className="container mx-auto flex z-50">
+      {!isMainPage && (
+        <a href={`${BASE_PATH}/`} className="flex font-mobo my-2 md:mb-0">
+          <span className="ml-3 text-3xl md:text-xl">
+            Furugen&apos;s Island
+          </span>
+        </a>
+      )}
+      <button
+        className="md:hidden ml-auto text-2xl bg-white rounded-full w-12 h-12 flex items-center justify-center"
+        onClick={toggleMenu}
+      >
+        <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
+      </button>
+    </div>
+    <nav
+      className={`
 				  flex flex-wrap flex-col md:flex-row
 					item-left md:items-center text-base md:justify-center
 					font-mobo
@@ -935,20 +997,46 @@ path関連でたくさんエラー出たので、以下のように修正
 					md:ml-auto
 					w-full md:w-auto
 					pt-40 px-10 md:py-0 md:px-0 md:bg-transparent
-				`}>
-				  <Link className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50" href="/profile">プロフィール</Link>
-				  <Link className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50" href="/blog">開発ブログ</Link>
-				  <Link className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50" href="/skills">実績</Link>
-				  <Link className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50" href="/contact">コンタクト</Link>
-				  <Link className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:bg-gray" href="https://github.com/motoshifurugen/my_site" target="_blank" rel="noopener noreferrer">
-				    <div className="flex items-center border border-gray-300 rounded px-3 py-1">
-				      <FontAwesomeIcon icon={faGithub} className="mr-2" />
-				      ソースコード
-				    </div>
-				  </Link>
-				</nav>
-		  </div>
-		</header>
+				`}
+    >
+      <Link
+        className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50"
+        href="/profile"
+      >
+        プロフィール
+      </Link>
+      <Link
+        className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50"
+        href="/blog"
+      >
+        開発ブログ
+      </Link>
+      <Link
+        className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50"
+        href="/skills"
+      >
+        実績
+      </Link>
+      <Link
+        className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50"
+        href="/contact"
+      >
+        コンタクト
+      </Link>
+      <Link
+        className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:bg-gray"
+        href="https://github.com/motoshifurugen/my_site"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div className="flex items-center border border-gray-300 rounded px-3 py-1">
+          <FontAwesomeIcon icon={faGithub} className="mr-2" />
+          ソースコード
+        </div>
+      </Link>
+    </nav>
+  </div>
+</header>
 ```
 
 <img src="./img/portfolio12.png" alt="screenshot" width="600px">

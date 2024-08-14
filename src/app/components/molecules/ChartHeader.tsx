@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
 interface ChartHeaderProps {
-  years: number[];
-  totalYears: number;
+  years: number[]
+  totalYears: number
 }
 
 const ChartHeader: React.FC<ChartHeaderProps> = ({ years, totalYears }) => {
@@ -14,14 +14,20 @@ const ChartHeader: React.FC<ChartHeaderProps> = ({ years, totalYears }) => {
       </div>
       <div className="relative p-6">
         {years.map((year, index) => {
-          const left = ((year - 2019) / totalYears) * 100;
+          const left = ((year - 2019) / totalYears) * 100
           return (
-            <p key={index} className="absolute" style={{ left: `${left}%`, top: '0'}}>{year}</p>
-          );
+            <p
+              key={index}
+              className="absolute"
+              style={{ left: `${left}%`, top: '0' }}
+            >
+              {year}
+            </p>
+          )
         })}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ChartHeader;
+export default ChartHeader

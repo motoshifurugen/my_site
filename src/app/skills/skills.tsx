@@ -1,13 +1,13 @@
 // インターフェースの定義
 export interface Period {
-  start: number;
-  end: number;
+  start: number
+  end: number
 }
 
 export interface Skill {
-  name: string;
-  periods: Period[];
-  total: number;
+  name: string
+  periods: Period[]
+  total: number
 }
 
 // 月と目盛りの対応メモ
@@ -23,53 +23,45 @@ export interface Skill {
 // 10月：+0.8
 // 11月：+0.9
 // 12月：+1.0
-const max = 2024.6;
+const max = 2024.6
 
 const skills: Skill[] = [
   {
     name: 'PHP（Laravel、CakePHP）',
-    periods: [
-      { start: 2020.4, end: max },
-    ],
+    periods: [{ start: 2020.4, end: max }],
     total: max - 2020.4,
   },
   {
     name: 'React',
     periods: [
       { start: 2020.7, end: 2020.8 },
-      { start: 2024.6, end: max }
+      { start: 2024.6, end: max },
     ],
-    total: (max - 2024.6) + (2020.8 - 2020.7),
+    total: max - 2024.6 + (2020.8 - 2020.7),
   },
   {
     name: 'Vue.js',
     periods: [
       { start: 2020.8, end: 2023.6 },
-      { start: 2024.4, end: max }
+      { start: 2024.4, end: max },
     ],
-    total: (max - 2024.4) + (2023.6 - 2020.8),
+    total: max - 2024.4 + (2023.6 - 2020.8),
   },
   {
     name: 'Unity',
-    periods: [
-      { start: 2021.6, end: 2021.7 }
-    ],
+    periods: [{ start: 2021.6, end: 2021.7 }],
     total: 2021.7 - 2021.6,
   },
   {
     name: 'Python',
-    periods: [
-      { start: 2022.8, end: max }
-    ],
+    periods: [{ start: 2022.8, end: max }],
     total: max - 2022.8,
   },
   {
     name: 'Flutter',
-    periods: [
-      { start: 2022.8, end: max }
-    ],
+    periods: [{ start: 2022.8, end: max }],
     total: max - 2022.8,
   },
-];
+]
 
-export const sortedSkills = skills.sort((a, b) => b.total - a.total);
+export const sortedSkills = skills.sort((a, b) => b.total - a.total)

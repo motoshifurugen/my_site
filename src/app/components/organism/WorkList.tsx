@@ -1,6 +1,6 @@
-import React from 'react';
-import WorkCard from '../molecules/WorkCard';
-import { sortedWorks } from '../../skills/works';
+import React from 'react'
+import { sortedWorks } from '../../skills/works'
+import WorkCard from '../molecules/WorkCard'
 
 const WorkList: React.FC = () => {
   return (
@@ -17,7 +17,7 @@ const WorkList: React.FC = () => {
         />
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default WorkList;
+export default WorkList

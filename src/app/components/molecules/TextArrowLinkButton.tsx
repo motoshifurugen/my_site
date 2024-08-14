@@ -1,14 +1,14 @@
 // ProfileLink.tsx
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import nextConfig from "../../../../next.config.mjs";
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
+import nextConfig from '../../../../next.config.mjs'
 
-const BASE_PATH = nextConfig.basePath || "";
+const BASE_PATH = nextConfig.basePath || ''
 
 interface TextArrowLinkButtonProps {
-  text: string;
-  href: string;
+  text: string
+  href: string
 }
 
 const TextArrowLinkButton: React.FC<TextArrowLinkButtonProps> = ({
@@ -38,7 +38,7 @@ const TextArrowLinkButton: React.FC<TextArrowLinkButtonProps> = ({
         </button>
       </a>
     </>
-  );
-};
+  )
+}
 
-export default TextArrowLinkButton;
+export default TextArrowLinkButton

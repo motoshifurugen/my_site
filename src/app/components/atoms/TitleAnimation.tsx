@@ -1,25 +1,25 @@
-"use client";
+'use client'
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { TextPlugin } from "gsap/TextPlugin";
+import gsap from 'gsap'
+import { TextPlugin } from 'gsap/TextPlugin'
+import { useEffect, useRef } from 'react'
 
-gsap.registerPlugin(TextPlugin);
+gsap.registerPlugin(TextPlugin)
 
 export default function TitleAnimation() {
   // 文字を一文字ずつ表示するアニメーション
-  const textRef = useRef<HTMLParagraphElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null)
   useEffect(() => {
     if (textRef.current) {
       gsap.to(textRef.current, {
         duration: 2,
         text: "Furugen's<br />Island",
         delay: 0.5,
-        ease: "power4.inOut",
+        ease: 'power4.inOut',
         parse: true,
-      });
+      })
     }
-  }, []);
+  }, [])
 
   return (
     <div
@@ -28,5 +28,5 @@ export default function TitleAnimation() {
         max-w-full h-[180px]"
       ref={textRef}
     ></div>
-  );
+  )
 }

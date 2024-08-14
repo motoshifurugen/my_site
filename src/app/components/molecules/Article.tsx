@@ -1,13 +1,13 @@
-import { ReactNode } from "react";
-import Image from "next/image";
-import nextConfig from "../../../../next.config.mjs";
-const BASE_PATH = nextConfig.basePath || "";
+import Image from 'next/image'
+import { ReactNode } from 'react'
+import nextConfig from '../../../../next.config.mjs'
+const BASE_PATH = nextConfig.basePath || ''
 
 interface ArticleProps {
-  title: string;
-  content: ReactNode;
-  imageSrc: string;
-  imageAlt: string;
+  title: string
+  content: ReactNode
+  imageSrc: string
+  imageAlt: string
 }
 
 const Article: React.FC<ArticleProps> = ({
@@ -20,7 +20,9 @@ const Article: React.FC<ArticleProps> = ({
     <div>
       <h2>{title}</h2>
       <div className="md:flex pb-12">
-        <div className="flex w-full md:w-1/2 items-center md:pr-10">{content}</div>
+        <div className="flex w-full md:w-1/2 items-center md:pr-10">
+          {content}
+        </div>
         <div className="flex w-full md:w-1/2 justify-center mt-10 md:mt-0">
           <Image
             src={`${BASE_PATH}${imageSrc}`}
@@ -32,7 +34,7 @@ const Article: React.FC<ArticleProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Article;
+export default Article

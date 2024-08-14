@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 
 interface SubmitButtonProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const SubmitButton: React.FC<SubmitButtonProps> = ({ children }) => {
@@ -16,9 +16,11 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ children }) => {
         transition duration-300
         px-20 md:px-32 py-4 my-10"
     >
-      <p className="group-hover:text-main-white font-bold transition duration-300 bg-transparent">{children}</p>
+      <p className="group-hover:text-main-white font-bold transition duration-300 bg-transparent">
+        {children}
+      </p>
     </button>
-  );
-};
+  )
+}
 
-export default SubmitButton;
+export default SubmitButton

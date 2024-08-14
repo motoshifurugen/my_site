@@ -1,18 +1,17 @@
-"use client";
+'use client'
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlane } from "@fortawesome/free-solid-svg-icons";
-import { faGithub, faXTwitter } from "@fortawesome/free-brands-svg-icons";
-import AnimatedLine from "../atoms/AnimatedLine";
-import { usePathname } from "next/navigation";
-import React from "react";
-import nextConfig from "../../../../next.config.mjs";
+import { faGithub, faXTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faPlane } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { usePathname } from 'next/navigation'
+import nextConfig from '../../../../next.config.mjs'
+import AnimatedLine from '../atoms/AnimatedLine'
 
-const BASE_PATH = nextConfig.basePath || "";
+const BASE_PATH = nextConfig.basePath || ''
 
 export default function Footer() {
-  const pathname = usePathname();
-  const isMainPage = pathname === `${BASE_PATH}/` || pathname === "/";
+  const pathname = usePathname()
+  const isMainPage = pathname === `${BASE_PATH}/` || pathname === '/'
 
   return (
     <>
@@ -65,5 +64,5 @@ export default function Footer() {
         </section>
       </footer>
     </>
-  );
+  )
 }

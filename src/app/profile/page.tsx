@@ -1,10 +1,10 @@
-"use client";
+'use client'
 
-import MainMessage from "../components/atoms/MainMessage";
-import Article from "../components/molecules/Article";
-import PageFace from "../components/organism/PageFace";
-import AnimatedLine from "../components/atoms/AnimatedLine";
-import { articles } from "./articles";
+import AnimatedLine from '../components/atoms/AnimatedLine'
+import MainMessage from '../components/atoms/MainMessage'
+import Article from '../components/molecules/Article'
+import PageFace from '../components/organism/PageFace'
+import { articles } from './articles'
 
 export default function Page() {
   return (
@@ -31,5 +31,5 @@ export default function Page() {
         ))}
       </section>
     </>
-  );
+  )
 }
