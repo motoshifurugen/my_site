@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { config } from '@fortawesome/fontawesome-svg-core'
+import { config } from "@fortawesome/fontawesome-svg-core";
 import "./globals.css";
-import 'tailwindcss/tailwind.css';
-import '@fortawesome/fontawesome-svg-core/styles.css';
-import assetPrefix from '../../next.config.mjs';
-import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
+import "tailwindcss/tailwind.css";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
 
-const BASE_PATH = assetPrefix.basePath || "";
-
-config.autoAddCss = false
+config.autoAddCss = false;
 
 import Header from "./components/Header";
 import BackgroundWrapper from "./components/BackgroundWrapper";
@@ -30,31 +27,22 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
+        {/* Google Fonts読み込み */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Stick&display=swap"
-          rel="stylesheet"
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
         />
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-              @font-face {
-                font-family: 'MOBO';
-                src: url('${BASE_PATH}/fonts/MOBO-SemiBold.otf') format('truetype');
-                font-weight: normal;
-                font-style: normal;
-              }
-            `,
-          }}
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Noto+Sans+JP:wght@100..900&display=swap"
+          rel="stylesheet"
         />
       </head>
       <body className={inter.className}>
         <BackgroundWrapper>
           <Header />
-          <main className="pt-32 md:pt-40">
-            {children}
-          </main>
+          <main>{children}</main>
         </BackgroundWrapper>
         <Footer />
       </body>

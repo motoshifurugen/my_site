@@ -969,4 +969,15 @@ not found時に表示できる画面をカスタマイズできるらしい
 
 - [【Next.js】Next.js14でGoogleAnalytics（GA4）を導入する方法 | Neightbor. | あなたのビジネスをWEBで支える](https://neightbor.jp/blog/nextjs14-ga4)
 
+## cssルール決め
+
+- 上下方向の余白は「-top」を使用する。（上下方向は、できるだけy方向指定ではなくtopのみ指定を使う）
+- メインカラーとして「main-white」「main-black」を用意して使用する。
+- classNameの各順序は以下
+  - 特殊なやつ（container、z-indexなど）
+  - flex関係
+  - 幅・高さ
+  - アニメーション
+- 意味を持たないクラスは当てない
+
 ### To be continued... 🍻

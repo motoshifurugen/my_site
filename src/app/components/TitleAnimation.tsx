@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { TextPlugin } from 'gsap/TextPlugin';
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { TextPlugin } from "gsap/TextPlugin";
 
 gsap.registerPlugin(TextPlugin);
 
 export default function TitleAnimation() {
-
   // 文字を一文字ずつ表示するアニメーション
   const textRef = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
@@ -17,20 +16,17 @@ export default function TitleAnimation() {
         text: "Furugen's<br />Island",
         delay: 0.5,
         ease: "power4.inOut",
-        parse: true
+        parse: true,
       });
     }
   }, []);
 
   return (
-    <p
+    <div
       className="
-        text-6xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-[7.5rem]
-        text-left
-        text-font-main custom-font-dm-sans font-bold tracking-widest
-        mx-6 sm:mx-6 md:mx-16 lg:mx-24 xl:mx-32
-        max-w-full"
+        text-6xl md:text-9xl text-left dm-sans font-bold tracking-widest
+        max-w-full h-[180px]"
       ref={textRef}
-    ></p>
+    ></div>
   );
 }

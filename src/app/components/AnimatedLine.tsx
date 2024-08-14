@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
 const AnimatedLine: React.FC = () => {
   const lineRef = useRef<HTMLDivElement>(null);
@@ -9,14 +9,14 @@ const AnimatedLine: React.FC = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             if (entry.target instanceof HTMLElement) {
-              entry.target.classList.remove('w-0');
-              entry.target.classList.add('w-full');
+              entry.target.classList.remove("w-0");
+              entry.target.classList.add("w-full");
             }
             observer.unobserve(entry.target); // アニメーションが実行されたらオブザーバーを停止
           }
         });
       },
-      { threshold: 0.1 } // 要素が10%表示されたらコールバックを実行
+      { threshold: 0.1 }, // 要素が10%表示されたらコールバックを実行
     );
 
     const currentLineRef = lineRef.current;
@@ -34,7 +34,7 @@ const AnimatedLine: React.FC = () => {
   return (
     <div
       ref={lineRef}
-      className="h-0.5 opacity-50 bg-font-main transition-all duration-1000 ease-in-out w-0"
+      className="h-0.5 opacity-50 bg-main-black transition-all duration-1000 ease-in-out w-0"
     ></div>
   );
 };
