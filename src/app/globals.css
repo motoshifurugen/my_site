@@ -2,6 +2,71 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+/* 共通で使用するスタイル */
+.important-bg-main-white {
+  @apply bg-main-white !important;
+}
+.important-pt-32 {
+  @apply pt-32 !important;
+}
+.important-md\:pt-40 {
+  @apply md:pt-40 !important;
+}
+.important-container {
+  @apply container !important;
+}
+.important-mx-auto {
+  @apply mx-auto !important;
+}
+.important-p-4 {
+  @apply p-4 !important;
+}
+.important-my-8 {
+  @apply my-8 !important;
+}
+.important-text-3xl {
+  @apply text-3xl !important;
+}
+.important-md\:text-4xl {
+  @apply md:text-4xl !important;
+}
+.important-font-bold {
+  @apply font-bold !important;
+}
+.important-text-2xl {
+  @apply text-2xl !important;
+}
+.important-md\:text-3xl {
+  @apply md:text-3xl !important;
+}
+.important-text-lg {
+  @apply text-lg !important;
+}
+.important-md\:text-2xl {
+  @apply md:text-2xl !important;
+}
+.important-leading-loose {
+  @apply leading-loose !important;
+}
+.important-md\:leading-loose {
+  @apply md:leading-loose !important;
+}
+.important-font-semibold {
+  @apply font-semibold !important;
+}
+.important-text-sm {
+  @apply text-sm !important;
+}
+.important-md\:text-base {
+  @apply md:text-base !important;
+}
+.important-leading-snug {
+  @apply leading-snug !important;
+}
+.important-md\:leading-loose {
+  @apply md:leading-loose !important;
+}
+
 @layer base {
   /* フォントの設定 */
   .noto-sans-jp {
@@ -17,34 +82,30 @@
     @apply text-main-black;
   }
 
-  /* 共通で使用するスタイル */
   body {
-    /* 背景色と文字色 */
-    @apply bg-main-white;
+    @apply important-bg-main-white;
 
-    /* 縦横の余白 */
     main {
-      @apply pt-32 md:pt-40; /* ヘッダー分の余白 */
+      @apply important-pt-32 important-md:pt-40;
     }
     section {
-      @apply container mx-auto p-4;
+      @apply important-container important-mx-auto important-p-4;
       h2 {
-        @apply my-8;
+        @apply important-my-8;
       }
     }
 
-    /* 各テキストのフォント（サイズ・種類・太さ） */
     h1 {
-      @apply text-3xl md:text-4xl noto-sans-jp font-bold;
+      @apply important-text-3xl important-md:text-4xl noto-sans-jp important-font-bold;
     }
     h2 {
-      @apply text-2xl md:text-3xl noto-sans-jp font-bold;
+      @apply important-text-2xl important-md:text-3xl noto-sans-jp important-font-bold;
     }
     h3 {
-      @apply text-lg md:text-2xl leading-loose md:leading-loose noto-sans-jp font-semibold;
+      @apply important-text-lg important-md:text-2xl important-leading-loose important-md:leading-loose noto-sans-jp important-font-semibold;
     }
     p {
-      @apply text-sm md:text-base leading-snug md:leading-loose noto-sans-jp;
+      @apply important-text-sm important-md:text-base important-leading-snug important-md:leading-loose noto-sans-jp;
     }
   }
 }
