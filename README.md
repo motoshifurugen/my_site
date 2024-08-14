@@ -1039,7 +1039,7 @@ path関連でたくさんエラー出たので、以下のように修正
 </header>
 ```
 
-<img src="./img/portfolio12.png" alt="screenshot" width="600px">
+<img src="./img/portfolio12.png" alt="screenshot" width="300px">
 
 スタイルは`md`をつけるかつけないかで一つ一つやっているので汚い。効率化できないか。
 
@@ -1051,7 +1051,7 @@ not found時に表示できる画面をカスタマイズできるらしい
 
 `app/not-found.tsx`←新たに作成
 
-<img src="./img/portfolio13.png" alt="screenshot" width="600px">
+<img src="./img/portfolio13.png" alt="screenshot" width="300px">
 
 ## GoogleAnalytics導入
 
@@ -1076,5 +1076,16 @@ Atomic designを参考に、以下のフォルダにコンポーネントを分�
 - molecules
 - organism
 - templates
+
+## iphoneでの表示がおかしい
+
+PCではiphoneサイズでも乱れてなかったが、iphoneだとだめ
+→global.cssが効いてなさそう？
+
+<img src="./img/portfolio14.jpeg" alt="screenshot" width="300px">
+
+devツールで確認する
+
+- [【Safari】MacとiPhone 実機で開発者ツールを使う方法 #Safari - Qiita](https://qiita.com/yutomaeda5510/items/f78d60038e2af34f67f0)
 
 ### To be continued... 🍻
