@@ -6,7 +6,7 @@ const ThankYou = () => {
   return (
     <section className="thank-you">
       <div className="mx-auto">
-        <div className="flex justify-center mt-8">
+        <div className="mt-8 flex justify-center">
           <FontAwesomeIcon
             icon={faEnvelopeOpen}
             className="text-6xl text-gray"

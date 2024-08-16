@@ -17,18 +17,17 @@ const TextArrowLinkButton: React.FC<TextArrowLinkButtonProps> = ({
 }) => {
   return (
     <>
-      <a href={`${BASE_PATH}${href}`} className="group flex items-center mt-6">
+      <a href={`${BASE_PATH}${href}`} className="group mt-6 flex items-center">
         <h3>{text}</h3>
 
         {/* テキストの右につける矢印 */}
         <button
           className="
-            relative align-middle transition-all
-            w-8 max-w-[32px]
-            h-8 max-h-[32px]
-            text-xs
-            border border-main-black border-opacity-20 rounded-full
-            ml-5
+            relative ml-5 size-8
+            max-h-[32px] max-w-[32px]
+            rounded-full border
+            border-main-black
+            border-opacity-20 align-middle text-xs transition-all
             group-hover:bg-main-white"
           type="button"
         >

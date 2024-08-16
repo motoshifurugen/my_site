@@ -4,11 +4,11 @@ import TextArrowLinkButton from './components/molecules/TextArrowLinkButton'
 
 export default function Home() {
   return (
-    <section className="flex flex-col md:flex-row items-top">
-      <div className="flex-1 w-full md:w-1/2">
+    <section className="items-top flex flex-col md:flex-row">
+      <div className="w-full flex-1 md:w-1/2">
         <TitleAnimation />
       </div>
-      <div className="flex md:justify-center items-center w-full md:w-1/2">
+      <div className="flex w-full items-center md:w-1/2 md:justify-center">
         <div>
           <MainMessage />
           <TextArrowLinkButton text="プロフィール" href="/profile" />

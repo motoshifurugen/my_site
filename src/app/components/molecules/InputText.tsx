@@ -22,7 +22,7 @@ const InputText: React.FC<InputTextProps> = ({
         name={name}
         id={id}
         required={required}
-        className="mt-1 block w-full px-3 py-2 md:py-4 border border-gray rounded-md focus:outline-none focus:border-main-black text-sm md:text-md"
+        className="mt-1 block w-full rounded-md border border-gray px-3 py-2 text-sm focus:border-main-black focus:outline-none md:py-4 md:text-base"
       />
     </div>
   )

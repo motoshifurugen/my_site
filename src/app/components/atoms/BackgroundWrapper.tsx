@@ -15,7 +15,7 @@ const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({
     <div className="relative min-h-screen">
       {isRootPath && (
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed opacity-50 h-screen animate-fade-in"
+          className="absolute inset-0 h-screen animate-fade-in bg-cover bg-fixed bg-center bg-no-repeat opacity-50"
           style={{
             backgroundImage: `url('${BASE_PATH}/images/back-pic/day_01.jpg')`,
           }}

@@ -18,7 +18,7 @@ const PageFace: React.FC<PageFaceProps> = ({
           <h1>{title}</h1>
           <h3 className="mt-5">{subtitle}</h3>
         </div>
-        <div className="flex w-full md:w-1/2 md:justify-center mt-10 md:mt-0">
+        <div className="mt-10 flex w-full md:mt-0 md:w-1/2 md:justify-center">
           {mainMessage}
         </div>
       </div>

@@ -15,10 +15,10 @@ const HeaderLinkButton: React.FC<HeaderLinkButtonProps> = ({
   return (
     <Link
       key={index}
-      className="flex items-center mt-8 md:mt-0 md:mr-10 animate-fade-in-up hover:opacity-50"
+      className="mt-8 flex animate-fade-in-up items-center hover:opacity-50 md:mr-10 md:mt-0"
       href={href}
     >
-      <span className="noto-sans-jp text-lg md:text-base font-bold">
+      <span className="noto-sans-jp text-lg font-bold md:text-base">
         {text}
       </span>
     </Link>

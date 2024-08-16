@@ -19,11 +19,11 @@ const Article: React.FC<ArticleProps> = ({
   return (
     <div>
       <h2>{title}</h2>
-      <div className="md:flex pb-12">
-        <div className="flex w-full md:w-1/2 items-center md:pr-10">
+      <div className="pb-12 md:flex">
+        <div className="flex w-full items-center md:w-1/2 md:pr-10">
           {content}
         </div>
-        <div className="flex w-full md:w-1/2 justify-center mt-10 md:mt-0">
+        <div className="mt-10 flex w-full justify-center md:mt-0 md:w-1/2">
           <Image
             src={`${BASE_PATH}${imageSrc}`}
             alt={imageAlt}

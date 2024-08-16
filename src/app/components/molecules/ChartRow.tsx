@@ -18,9 +18,9 @@ interface ChartRowProps {
 
 const ChartRow: React.FC<ChartRowProps> = ({ skill, totalYears }) => {
   return (
-    <div className="mb-6 relative">
-      <div className="bg-white p-3 rounded-lg relative">
-        <div className="dm-sans font-bold text-base">{skill.name}</div>
+    <div className="relative mb-6">
+      <div className="relative rounded-lg bg-white p-3">
+        <div className="dm-sans text-base font-bold">{skill.name}</div>
         <div className="dm-sans flex">
           {skill.total.toFixed(1)} 年
           {skill.periods.map((period, i) => {
@@ -29,7 +29,7 @@ const ChartRow: React.FC<ChartRowProps> = ({ skill, totalYears }) => {
             return (
               <div
                 key={i}
-                className="absolute bg-teal bg-opacity-80 h-3 rounded"
+                className="absolute h-3 rounded bg-teal bg-opacity-80"
                 style={{
                   left: `${startOffset}%`,
                   width: `${width}%`,

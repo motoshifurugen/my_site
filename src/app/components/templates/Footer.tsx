@@ -18,9 +18,9 @@ export default function Footer() {
       {!isMainPage && <AnimatedLine />}
       <footer>
         <section>
-          <div className="container md:flex h-32 mt-4">
+          <div className="container mt-4 h-32 md:flex">
             <div className="rightFooter w-full md:w-3/4">
-              <p className="mb-1 md:mb-3 text-lg">古堅 基史</p>
+              <p className="mb-1 text-lg md:mb-3">古堅 基史</p>
               <p>
                 沖縄
                 <FontAwesomeIcon icon={faPlane} className="mx-2 opacity-70" />
@@ -35,14 +35,14 @@ export default function Footer() {
             </div>
             <div
               className="
-              border-l-0 md:border-l-2
-              border-t-2 md:border-t-0
-              opacity-40
-              md:mx-8 my-4 md:my-0
+              my-4 border-l-0
+              border-t-2 opacity-40
+              md:mx-8
+              md:my-0 md:border-l-2 md:border-t-0
             "
             ></div>
-            <div className="leftFooter w-full md:w-1/4 flex flex-col justify-between">
-              <div className="flex space-x-6 mb-6 md:md-0">
+            <div className="leftFooter flex w-full flex-col justify-between md:w-1/4">
+              <div className="mb-6 flex space-x-6 md:mb-0">
                 <a
                   href="https://github.com/motoshifurugen"
                   target="_blank"

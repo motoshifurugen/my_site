@@ -39,12 +39,12 @@ const Header = () => {
   return (
     <header
       className={`
-			z-50 fixed top-0 left-0 w-full
+			fixed left-0 top-0 z-50 w-full
 			${!isMainPage ? 'bg-main-white' : 'bg-transparent'}
 		`}
     >
-      <div className="container flex flex-col md:flex-row mx-auto py-8">
-        <div className="container z-50 flex items-center px-4 animate-fade-in-up">
+      <div className="container mx-auto flex flex-col py-8 md:flex-row">
+        <div className="container z-50 flex animate-fade-in-up items-center px-4">
           {/* タイトルボタン（トップページ以外で表示） */}
           {!isMainPage && (
             <TitleLinkButton href={`${BASE_PATH}/`} text="Furugen's Island" />
@@ -52,7 +52,7 @@ const Header = () => {
 
           {/* ハンバーガーボタン（スマホ画面でのみ表示） */}
           <button
-            className="md:hidden ml-auto text-2xl bg-white rounded-full w-12 h-12 flex items-center justify-center"
+            className="ml-auto flex size-12 items-center justify-center rounded-full bg-white text-2xl md:hidden"
             onClick={toggleMenu}
           >
             <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
@@ -62,10 +62,10 @@ const Header = () => {
         <div className="container flex">
           <nav
             className={`
-					  flex flex-wrap flex-col md:flex-row item-left
-					  fixed top-0 right-0 h-full bg-white transform transition-transform duration-300 ease-in-out
-					  ${menuOpen ? 'translate-x-0' : 'translate-x-full'} md:relative md:translate-x-0 md:bg-transparent
-						pt-32 px-4 md:p-0 w-full
+					  item-left fixed right-0 top-0 flex
+					  h-full flex-col flex-wrap bg-white transition-transform duration-300 ease-in-out md:flex-row
+					  ${menuOpen ? 'translate-x-0' : 'translate-x-full'} w-full px-4 pt-32
+						md:relative md:translate-x-0 md:bg-transparent md:p-0
 					`}
           >
             {links.map((link, index) => (

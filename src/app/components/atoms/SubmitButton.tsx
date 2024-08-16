@@ -10,13 +10,13 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ children }) => {
       type="submit"
       className="
         group
-        shadow-[inset_0_0_0_2px_#4A4A4A] rounded-3xl
-        tracking-widest uppercase
-        hover:bg-main-black hover:text-main-white
-        transition duration-300
-        px-20 md:px-32 py-4 my-10"
+        my-10 rounded-3xl
+        px-20 py-4
+        uppercase tracking-widest
+        shadow-[inset_0_0_0_2px_#4A4A4A] transition
+        duration-300 hover:bg-main-black hover:text-main-white md:px-32"
     >
-      <p className="group-hover:text-main-white font-bold transition duration-300 bg-transparent">
+      <p className="bg-transparent font-bold transition duration-300 group-hover:text-main-white">
         {children}
       </p>
     </button>

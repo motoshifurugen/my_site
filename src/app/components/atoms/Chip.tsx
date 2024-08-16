@@ -8,7 +8,7 @@ interface ChipProps {
 const Chip: React.FC<ChipProps> = ({ children, className = '' }) => {
   return (
     <span
-      className={`inline-block rounded-xl px-3 py-1 ml-2 text-xs md:text-sm noto-sans-jp font-semibold ${className}`}
+      className={`noto-sans-jp ml-2 inline-block rounded-xl px-3 py-1 text-xs font-semibold md:text-sm ${className}`}
     >
       {children}
     </span>

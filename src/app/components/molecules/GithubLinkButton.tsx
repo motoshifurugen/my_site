@@ -5,17 +5,17 @@ import Link from 'next/link'
 const GithubLinkButton = () => {
   return (
     <Link
-      className="mt-8 md:mt-0 mr-auto animate-fade-in-up"
+      className="mr-auto mt-8 animate-fade-in-up md:mt-0"
       href="https://github.com/motoshifurugen/my_site"
       target="_blank"
       rel="noopener noreferrer"
     >
-      <div className="group flex items-center border border-gray-300 rounded px-4 py-2 hover:bg-main-black hover:text-main-white transition duration-300">
+      <div className="group flex items-center rounded border border-gray px-4 py-2 transition duration-300 hover:bg-main-black hover:text-main-white">
         <FontAwesomeIcon
           icon={faGithub}
-          className="mr-2 bg-transparent group-hover:text-main-white transition duration-100"
+          className="mr-2 bg-transparent transition duration-100 group-hover:text-main-white"
         />
-        <span className="noto-sans-jp text-lg md:text-base bg-transparent group-hover:text-main-white font-bold transition duration-300">
+        <span className="noto-sans-jp bg-transparent text-lg font-bold transition duration-300 group-hover:text-main-white md:text-base">
           ソースコード
         </span>
       </div>

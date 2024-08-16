@@ -11,7 +11,7 @@ const SkillTimeline: React.FC = () => {
   )
 
   return (
-    <div className="w-full border-l-4 border-gray relative p-4">
+    <div className="relative w-full border-l-4 border-gray p-4">
       <ChartHeader years={years} totalYears={totalYears} />
       {sortedSkills.map((skill, index) => (
         <ChartRow key={index} skill={skill} totalYears={totalYears} />

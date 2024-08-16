@@ -25,10 +25,10 @@ const InputLongText: React.FC<InputLongTextProps> = ({
         required={required}
         rows={rows}
         className="
-          block w-full
-          px-3 py-2 md:py-4
-          border border-gray rounded-md focus:outline-none focus:border-main-black
-          noto-sans-jp text-sm md:text-md"
+          noto-sans-jp block
+          w-full rounded-md border
+          border-gray px-3 py-2 text-sm focus:border-main-black
+          focus:outline-none md:py-4 md:text-base"
       ></textarea>
     </div>
   )

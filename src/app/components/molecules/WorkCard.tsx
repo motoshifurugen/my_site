@@ -21,7 +21,7 @@ const WorkCard: React.FC<WorkCardProps> = ({
   date,
 }) => {
   return (
-    <div className="relative rounded overflow-hidden p-3 md:p-5 mb-8">
+    <div className="relative mb-8 overflow-hidden rounded p-3 md:p-5">
       <Image
         src={`${BASE_PATH}${src}`}
         alt={alt}
@@ -29,8 +29,8 @@ const WorkCard: React.FC<WorkCardProps> = ({
         height={500}
         className="w-full"
       />
-      <div className="py-2 md:py-4 my-2">
-        <div className="noto-sans-jp font-bold text-lg md:text-xl mb-2">
+      <div className="my-2 py-2 md:py-4">
+        <div className="noto-sans-jp mb-2 text-lg font-bold md:text-xl">
           {title}
         </div>
         <p className="text-sm md:text-base">{description}</p>
@@ -42,7 +42,7 @@ const WorkCard: React.FC<WorkCardProps> = ({
           </Chip>
         ))}
       </div>
-      <div className="absolute bottom-0 right-0 bg-white bg-opacity-75 text-sm px-4 py-1">
+      <div className="absolute bottom-0 right-0 bg-white bg-opacity-75 px-4 py-1 text-sm">
         {date}
       </div>
     </div>

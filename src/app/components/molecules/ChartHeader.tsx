@@ -9,7 +9,7 @@ const ChartHeader: React.FC<ChartHeaderProps> = ({ years, totalYears }) => {
   return (
     <div>
       <div className="flex items-center">
-        <div className="bg-teal bg-opacity-80 h-3 rounded w-10"></div>
+        <div className="h-3 w-10 rounded bg-teal bg-opacity-80"></div>
         <p className="ml-2">経験期間</p>
       </div>
       <div className="relative p-6">

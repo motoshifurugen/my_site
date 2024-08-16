@@ -8,7 +8,7 @@ interface TitleButtonProps {
 const TitleLinkButton: React.FC<TitleButtonProps> = ({ href, text }) => {
   return (
     <a href={href}>
-      <span className="dm-sans font-bold text-2xl">{text}</span>
+      <span className="dm-sans text-2xl font-bold">{text}</span>
     </a>
   )
 }

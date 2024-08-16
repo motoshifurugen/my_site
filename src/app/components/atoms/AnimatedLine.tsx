@@ -34,7 +34,7 @@ const AnimatedLine: React.FC = () => {
   return (
     <div
       ref={lineRef}
-      className="h-0.5 my-6 bg-main-black transition-all duration-1000 ease-in-out w-0"
+      className="my-6 h-0.5 w-0 bg-main-black transition-all duration-1000 ease-in-out"
     ></div>
   )
 }

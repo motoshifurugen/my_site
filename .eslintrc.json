@@ -1,7 +1,27 @@
 {
-  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
-  "plugins": ["prettier"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:prettier/recommended",
+    "plugin:tailwindcss/recommended"
+  ],
+  "plugins": ["prettier", "tailwindcss"],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "tailwindcss/no-custom-classname": [
+      "warn",
+      {
+        "whitelist": [
+          "rightFooter",
+          "leftFooter",
+          "item-left",
+          "items-top",
+          "content-wrapper",
+          "thank-you",
+          "work-list",
+          "border-main-black",
+          "bg-main-white"
+        ]
+      }
+    ]
   }
 }
