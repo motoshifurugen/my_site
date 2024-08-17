@@ -1,6 +1,6 @@
 import { faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import TextArrowLinkButton from '../components/molecules/TextArrowLinkButton'
+import TextArrowLinkButton from '../../components/molecules/TextArrowLinkButton'
 
 const ThankYou = () => {
   return (

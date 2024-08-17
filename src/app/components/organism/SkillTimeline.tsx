@@ -1,4 +1,4 @@
-import { sortedSkills } from '../../skills/skills'
+import { sortedSkills } from '../../(pages)/skills/skills'
 import ChartHeader from '../molecules/ChartHeader'
 import ChartRow from '../molecules/ChartRow'
 

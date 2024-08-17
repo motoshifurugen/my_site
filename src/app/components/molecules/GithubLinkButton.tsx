@@ -10,7 +10,7 @@ const GithubLinkButton = () => {
       target="_blank"
       rel="noopener noreferrer"
     >
-      <div className="group flex items-center rounded border border-gray px-4 py-2 transition duration-300 hover:bg-main-black hover:text-main-white">
+      <div className="group flex items-center rounded border border-main-black px-4 py-2 transition duration-300 hover:bg-main-black hover:text-main-white">
         <FontAwesomeIcon
           icon={faGithub}
           className="mr-2 bg-transparent transition duration-100 group-hover:text-main-white"

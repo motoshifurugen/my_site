@@ -1,5 +1,5 @@
 import React from 'react'
-import { sortedWorks } from '../../skills/works'
+import { sortedWorks } from '../../(pages)/skills/works'
 import WorkCard from '../molecules/WorkCard'
 
 const WorkList: React.FC = () => {

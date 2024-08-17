@@ -21,15 +21,27 @@ export default function Footer() {
           <div className="container mt-4 h-32 md:flex">
             <div className="rightFooter w-full md:w-3/4">
               <p className="mb-1 text-lg md:mb-3">古堅 基史</p>
-              <p>
+              <p className="flex items-center">
                 沖縄
-                <FontAwesomeIcon icon={faPlane} className="mx-2 opacity-70" />
+                <FontAwesomeIcon
+                  icon={faPlane}
+                  className="mx-1 text-xxs opacity-70"
+                />
                 広島
-                <FontAwesomeIcon icon={faPlane} className="mx-2 opacity-70" />
+                <FontAwesomeIcon
+                  icon={faPlane}
+                  className="mx-1 text-xxs opacity-70"
+                />
                 埼玉
-                <FontAwesomeIcon icon={faPlane} className="mx-2 opacity-70" />
+                <FontAwesomeIcon
+                  icon={faPlane}
+                  className="mx-1 text-xxs opacity-70"
+                />
                 広島
-                <FontAwesomeIcon icon={faPlane} className="mx-2 opacity-70" />
+                <FontAwesomeIcon
+                  icon={faPlane}
+                  className="mx-1 text-xxs opacity-70"
+                />
                 横浜
               </p>
             </div>

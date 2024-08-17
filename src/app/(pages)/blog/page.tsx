@@ -1,7 +1,7 @@
 'use client'
 
-import nextConfig from '../../../next.config.mjs'
-import MaintenanceTemplate from '../components/templates/MaintenanceTemplate'
+import nextConfig from '../../../../next.config.mjs'
+import MaintenanceTemplate from '../../components/templates/MaintenanceTemplate'
 const BASE_PATH = nextConfig.basePath || ''
 
 export default function Blog() {
