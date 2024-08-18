@@ -1,9 +1,8 @@
-// import Highlight from '@/app/components/HighRight'
-// import { Post } from "@/types/post";
-// import ProfileCard from '@/app/components/ProfileCard'
-// import { Toc } from '@/app/components/toc' // Tocコンポーネントを追加
-// import 'prismjs/components/prism-python.js'
-// import 'prismjs/themes/prism-tomorrow.css'
+import ProfileCard from '@/app/components/molecules/ProfileCard'
+import { Toc } from '@/app/components/molecules/Toc'
+import 'prismjs'
+import 'prismjs/components/prism-python.js'
+import 'prismjs/themes/prism-tomorrow.css'
 
 type Post = {
   slug: string
@@ -50,8 +49,8 @@ const BlogArticlePage = async ({ params }: { params: { slug: string } }) => {
 
   return (
     <div className="container mx-auto flex w-full justify-end px-2 py-5 lg:px-10">
-      <div className="flex w-full max-w-5xl flex-col">
-        <div className="bg-gray-100 min-h-screen w-full max-w-5xl rounded-lg bg-white p-5 lg:w-4/5">
+      <div className="flex w-full max-w-5xl flex-col lg:w-4/5">
+        <div className="bg-gray-100 min-h-screen w-full max-w-5xl rounded-lg bg-white p-5">
           <h1 className="text-gray-800 text-3xl font-bold">
             {blogArticle.title}
           </h1>
@@ -78,10 +77,10 @@ const BlogArticlePage = async ({ params }: { params: { slug: string } }) => {
           </div>
         </div>
       </div>
-      <aside className="bg-gray-200 mt-5 hidden w-full rounded-lg p-5 lg:mt-0 lg:block lg:w-1/5">
-        {/* <ProfileCard /> */}
+      <aside className="bg-gray-200 hidden w-full rounded-lg px-5 lg:mt-0 lg:block lg:w-1/5">
+        <ProfileCard />
         <div className="sticky top-5 max-h-[80vh] overflow-y-auto">
-          {/* <Toc /> */}
+          <Toc />
         </div>
       </aside>
     </div>

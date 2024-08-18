@@ -1094,4 +1094,13 @@ devツールで確認する
 
 `!importtant`つけてみる
 
+TODO: 原因要調査（他の実機では問題なく表示されていたため一旦保留）
+
+## 技術ブログ作成
+
+以下を参考に作成する
+
+- [cmb-sy/blog at 205add321487d7b292cb272e27fd784831cec902](https://github.com/cmb-sy/blog/tree/205add321487d7b292cb272e27fd784831cec902)
+- [【SSR、SSG、ISRでブログを作る】Nextjs14初心者入門](https://zenn.dev/y_ta/books/eec3b78567aeeb)
+
 ### To be continued... 🍻
