@@ -22,8 +22,10 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@next/third-parties": "^14.2.5",
     "@types/tailwindcss": "^3.1.0",
+    "gray-matter": "^4.0.3",
     "gsap": "^3.12.5",
     "next": "14.2.5",
+    "prismjs": "^1.29.0",
     "react": "^18",
     "react-dom": "^18"
   },
