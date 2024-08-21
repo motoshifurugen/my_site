@@ -1,8 +1,16 @@
-import ProfileCard from '@/app/components/molecules/ProfileCard'
-import { Toc } from '@/app/components/molecules/Toc'
-import 'prismjs'
-import 'prismjs/components/prism-python.js'
-import 'prismjs/themes/prism-tomorrow.css'
+// import Sidebar from '@/app/components/Sidevar'
+import { MDXRemote } from 'next-mdx-remote/rsc'
+import dynamic from 'next/dynamic'
+import rehypeKatex from 'rehype-katex'
+import rehypePrism from 'rehype-prism'
+import rehypeSlug from 'rehype-slug'
+import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
+
+// クライアントサイドでのみPrismJSを読み込む
+const Highlight = dynamic(() => import('@/app/components/atoms/Highlight'), {
+  ssr: false,
+})
 
 type Post = {
   slug: string
@@ -26,31 +34,17 @@ const getBlogArticle = async (slug: string) => {
   const res = await fetch(`http://localhost:3000/my_site/api/blog/${slug}`, {
     cache: 'force-cache',
   })
-
-  // レスポンスの内容をログに出力
-  const text = await res.text()
-  console.log('Response text:', text)
-
-  try {
-    const blogArticle = JSON.parse(text)
-    return blogArticle
-  } catch (error) {
-    console.error('Failed to parse JSON:', error)
-    return null
-  }
+  const blogArticle = await res.json()
+  return blogArticle
 }
 
 const BlogArticlePage = async ({ params }: { params: { slug: string } }) => {
   const blogArticle = await getBlogArticle(params.slug)
 
-  if (!blogArticle) {
-    return <div>記事が見つかりませんでした。</div>
-  }
-
   return (
-    <div className="container mx-auto flex w-full justify-end px-2 py-5 lg:px-10">
-      <div className="flex w-full max-w-5xl flex-col lg:w-4/5">
-        <div className="bg-gray-100 min-h-screen w-full max-w-5xl rounded-lg bg-white p-5">
+    <div className="flex justify-center">
+      <div className="section-style2 mt-20 flex min-h-screen w-full justify-between px-9">
+        <section className="section-style bg-white p-8">
           <h1 className="text-gray-800 text-3xl font-bold">
             {blogArticle.title}
           </h1>
@@ -63,26 +57,24 @@ const BlogArticlePage = async ({ params }: { params: { slug: string } }) => {
             integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X"
             crossOrigin="anonymous"
           />
-          <div className="prose prose-lg text-gray-700 target-toc max-w-5xl">
-            {/* <MDXRemote
-              source={blogArticle.content}
-              components={{ Highlight }}
-              options={{
-                mdxOptions: {
-                  remarkPlugins: [remarkGfm, remarkMath],
-                  rehypePlugins: [rehypePrism, rehypeKatex, rehypeSlug],
-                },
-              }}
-            /> */}
+          {/* 目次表示に必要 */}
+          <div className="target-toc">
+            <div>
+              <MDXRemote
+                source={blogArticle.content}
+                components={{ Highlight }}
+                options={{
+                  mdxOptions: {
+                    remarkPlugins: [remarkGfm, remarkMath],
+                    rehypePlugins: [rehypePrism, rehypeKatex, rehypeSlug],
+                  },
+                }}
+              />
+            </div>
           </div>
-        </div>
+        </section>
+        {/* <Sidebar TocComponent={<Toc />} /> */}
       </div>
-      <aside className="bg-gray-200 hidden w-full rounded-lg px-5 lg:mt-0 lg:block lg:w-1/5">
-        <ProfileCard />
-        <div className="sticky top-5 max-h-[80vh] overflow-y-auto">
-          <Toc />
-        </div>
-      </aside>
     </div>
   )
 }
