@@ -1,16 +1,5 @@
-// import Sidebar from '@/app/components/Sidevar'
-import { MDXRemote } from 'next-mdx-remote/rsc'
-import dynamic from 'next/dynamic'
-import rehypeKatex from 'rehype-katex'
-import rehypePrism from 'rehype-prism'
-import rehypeSlug from 'rehype-slug'
-import remarkGfm from 'remark-gfm'
-import remarkMath from 'remark-math'
-
-// クライアントサイドでのみPrismJSを読み込む
-const Highlight = dynamic(() => import('@/app/components/atoms/Highlight'), {
-  ssr: false,
-})
+import Toc from '@/app/components/molecules/Toc'
+import ArticleContent from '@/app/components/templates/ArticleContent'
 
 type Post = {
   slug: string
@@ -42,40 +31,12 @@ const BlogArticlePage = async ({ params }: { params: { slug: string } }) => {
   const blogArticle = await getBlogArticle(params.slug)
 
   return (
-    <div className="flex justify-center">
-      <div className="section-style2 mt-20 flex min-h-screen w-full justify-between px-9">
-        <section className="section-style bg-white p-8">
-          <h1 className="text-gray-800 text-3xl font-bold">
-            {blogArticle.title}
-          </h1>
-          <br />
-          <div className="text-gray-600">{blogArticle.date}</div>
-          <br />
-          <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
-            integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X"
-            crossOrigin="anonymous"
-          />
-          {/* 目次表示に必要 */}
-          <div className="target-toc">
-            <div>
-              <MDXRemote
-                source={blogArticle.content}
-                components={{ Highlight }}
-                options={{
-                  mdxOptions: {
-                    remarkPlugins: [remarkGfm, remarkMath],
-                    rehypePlugins: [rehypePrism, rehypeKatex, rehypeSlug],
-                  },
-                }}
-              />
-            </div>
-          </div>
-        </section>
-        {/* <Sidebar TocComponent={<Toc />} /> */}
-      </div>
-    </div>
+    <section>
+      <ArticleContent
+        blogArticle={blogArticle}
+        SidebarComponents={[<Toc key="toc" />]}
+      />
+    </section>
   )
 }
 

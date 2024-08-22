@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { FaGithub, FaTwitter } from 'react-icons/fa'
+import { FaGithub } from 'react-icons/fa'
+import { FaXTwitter } from 'react-icons/fa6'
 import nextConfig from '../../../../next.config.mjs'
 const BASE_PATH = nextConfig.basePath || ''
 
@@ -17,21 +18,27 @@ const ProfileCard = () => {
           priority
         />
       </div>
-      <p className="mt-0.5 text-center font-semibold text-main-black">
-        motoshifurugen
-      </p>
-      <p className="mt-1 text-center text-main-black">
-        技術力がほしいエンジニアです。最近は山登りにハマっています。
+      <p className="mt-1 text-center font-semibold">motoshifurugen</p>
+      <p className="mt-1 text-center">
+        考える前に行動しているなんくるないさ系エンジニアです。ココアとブルーハーツで育っています。
       </p>
       <div className="mt-4 flex justify-center space-x-4">
-        <Link href="https://twitter.com/yourprofile">
-          <div className="text-main-black">
-            <FaTwitter size={24} />
-          </div>
-        </Link>
-        <Link href="https://github.com/yourprofile">
+        <Link
+          href="https://github.com/motoshifurugen"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
           <div className="text-main-black">
             <FaGithub size={24} />
+          </div>
+        </Link>
+        <Link
+          href="https://x.com/cocoahearts21"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <div className="text-main-black">
+            <FaXTwitter size={24} />
           </div>
         </Link>
       </div>

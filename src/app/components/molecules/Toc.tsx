@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import tocbot from 'tocbot'
 
-export const Toc = () => {
+const Toc: React.FC = () => {
   useEffect(() => {
     tocbot.init({
       tocSelector: '.toc',
@@ -13,18 +13,11 @@ export const Toc = () => {
       scrollSmoothOffset: -40,
     })
 
-    // 不要となったtocbotインスタンスを削除
+    // 不要となった tocbot インスタンスを削除
     return () => tocbot.destroy()
   }, [])
 
-  return <nav className="toc" />
+  return <nav className="toc bg-gray-100 rounded-lg p-4 shadow-lg"></nav>
 }
 
-export const TocBox = () => {
-  return (
-    <>
-      <p>目次</p>
-      <Toc />
-    </>
-  )
-}
+export default Toc

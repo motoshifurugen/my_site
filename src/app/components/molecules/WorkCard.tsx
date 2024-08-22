@@ -33,7 +33,7 @@ const WorkCard: React.FC<WorkCardProps> = ({
         <div className="noto-sans-jp mb-2 text-lg font-bold md:text-xl">
           {title}
         </div>
-        <p className="text-sm md:text-base">{description}</p>
+        <p>{description}</p>
       </div>
       <div className="pt-2">
         {tags.map((tag, index) => (

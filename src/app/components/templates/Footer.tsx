@@ -1,9 +1,11 @@
 'use client'
 
-import { faGithub, faXTwitter } from '@fortawesome/free-brands-svg-icons'
 import { faPlane } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { FaGithub } from 'react-icons/fa'
+import { FaXTwitter } from 'react-icons/fa6'
 import nextConfig from '../../../../next.config.mjs'
 import AnimatedLine from '../atoms/AnimatedLine'
 
@@ -55,20 +57,24 @@ export default function Footer() {
             ></div>
             <div className="leftFooter flex w-full flex-col justify-between md:w-1/4">
               <div className="mb-6 flex space-x-6 md:mb-0">
-                <a
+                <Link
                   href="https://github.com/motoshifurugen"
-                  target="_blank"
                   rel="noopener noreferrer"
+                  target="_blank"
                 >
-                  <FontAwesomeIcon icon={faGithub} className="text-2xl" />
-                </a>
-                <a
+                  <div className="text-main-black">
+                    <FaGithub size={24} />
+                  </div>
+                </Link>
+                <Link
                   href="https://x.com/cocoahearts21"
-                  target="_blank"
                   rel="noopener noreferrer"
+                  target="_blank"
                 >
-                  <FontAwesomeIcon icon={faXTwitter} className="text-2xl" />
-                </a>
+                  <div className="text-main-black">
+                    <FaXTwitter size={24} />
+                  </div>
+                </Link>
               </div>
               <p className="self-end opacity-50">&copy; 2024 Furugen</p>
             </div>

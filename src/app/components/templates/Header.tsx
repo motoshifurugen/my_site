@@ -43,7 +43,7 @@ const Header = () => {
 			${!isMainPage ? 'bg-main-white' : 'bg-transparent'}
 		`}
     >
-      <div className="container mx-auto flex flex-col py-8 md:flex-row">
+      <div className="container mx-auto flex flex-col py-6 md:flex-row">
         <div className="container z-50 flex animate-fade-in-up items-center px-4">
           {/* タイトルボタン（トップページ以外で表示） */}
           {!isMainPage && (
