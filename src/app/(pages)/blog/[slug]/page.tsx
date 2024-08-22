@@ -10,7 +10,8 @@ type Post = {
 
 // SSG
 export async function generateStaticParams() {
-  const res = await fetch('http://localhost:3000/my_site/api/blog/', {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL
+  const res = await fetch(`${apiUrl}/blog/`, {
     cache: 'force-cache',
   })
   const blogData = await res.json()
@@ -20,7 +21,8 @@ export async function generateStaticParams() {
 }
 
 const getBlogArticle = async (slug: string) => {
-  const res = await fetch(`http://localhost:3000/my_site/api/blog/${slug}`, {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL
+  const res = await fetch(`${apiUrl}/blog/${slug}`, {
     cache: 'force-cache',
   })
   const blogArticle = await res.json()
