@@ -6,6 +6,8 @@
   ],
   "plugins": ["prettier", "tailwindcss"],
   "rules": {
+    "tailwindcss/migration-from-tailwind-2": "off",
+    "@next/next/no-page-custom-font": "off",
     "prettier/prettier": "error",
     "tailwindcss/no-custom-classname": [
       "warn",
@@ -19,7 +21,9 @@
           "thank-you",
           "work-list",
           "border-main-black",
-          "bg-main-white"
+          "bg-main-white",
+          "toc",
+          "target-toc"
         ]
       }
     ]
