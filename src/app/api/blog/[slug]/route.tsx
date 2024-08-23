@@ -6,13 +6,17 @@ const GET = async (
   { params }: { params: { slug: string } },
 ) => {
   const { slug } = params
-  const blogArticle = await getPostBySlug(slug)
+  try {
+    const blogArticle = await getPostBySlug(slug)
 
-  if (!blogArticle) {
-    return new NextResponse(null, { status: 404 })
+    if (!blogArticle) {
+      return new NextResponse(null, { status: 404 })
+    }
+
+    return new NextResponse(JSON.stringify(blogArticle), { status: 200 })
+  } catch (error) {
+    return new NextResponse(null, { status: 500 })
   }
-
-  return new NextResponse(JSON.stringify(blogArticle), { status: 200 })
 }
 
 // generateStaticParams 関数の追加

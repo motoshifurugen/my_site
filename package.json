@@ -24,6 +24,7 @@
     "@next/third-parties": "^14.2.5",
     "@types/react-icons": "^3.0.0",
     "@types/tailwindcss": "^3.1.0",
+    "esprima": "^4.0.1",
     "gray-matter": "^4.0.3",
     "gsap": "^3.12.5",
     "next": "14.2.5",
@@ -41,7 +42,7 @@
     "tocbot": "^4.29.0"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^20.16.1",
     "@types/prismjs": "^1.26.4",
     "@types/react": "^18",
     "@types/react-dom": "^18",
