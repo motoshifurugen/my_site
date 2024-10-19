@@ -17,7 +17,12 @@ const Toc: React.FC = () => {
     return () => tocbot.destroy()
   }, [])
 
-  return <nav className="toc rounded-lg bg-gray p-4 shadow-lg"></nav>
+  return (
+    <div className="mt-5 rounded-lg bg-white p-4 shadow-lg">
+      <span className="text-xl font-bold">目次</span>
+      <nav className="toc m-1 p-1" />
+    </div>
+  )
 }
 
 export default Toc

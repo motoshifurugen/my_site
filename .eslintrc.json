@@ -23,7 +23,12 @@
           "border-main-black",
           "bg-main-white",
           "toc",
-          "target-toc"
+          "target-toc",
+          "code-block-wrapper",
+          "code-block-title",
+          "code-block-container",
+          "copy-button",
+          "copy-message"
         ]
       }
     ]

@@ -7,7 +7,7 @@ const BASE_PATH = nextConfig.basePath || ''
 
 const ProfileCard = () => {
   return (
-    <div className="mx-auto max-w-sm rounded-lg bg-white p-6 shadow-lg">
+    <div className="mx-auto max-w-sm rounded-lg bg-white px-6 py-10 shadow-lg">
       <div className="flex justify-center">
         <Image
           src={`${BASE_PATH}/images/profile_icon.png`}
@@ -19,8 +19,8 @@ const ProfileCard = () => {
         />
       </div>
       <p className="mt-1 text-center font-semibold">motoshifurugen</p>
-      <p className="mt-1 text-center">
-        考える前に行動しているなんくるないさ系エンジニアです。ココアとブルーハーツで育っています。
+      <p className="mt-1 text-left">
+        考える前に行動するなんくるないさ系エンジニアです。ココアとブルーハーツで育っています。
       </p>
       <div className="mt-4 flex justify-center space-x-4">
         <Link
