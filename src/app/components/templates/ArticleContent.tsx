@@ -13,6 +13,8 @@ import 'prismjs/components/prism-python.js'
 import 'prismjs/themes/prism-tomorrow.css'
 import { ReactNode } from 'react'
 
+import styles from './ArticleContent.module.css'
+
 interface BlogContentProps {
   blogArticle: any
   SidebarComponents: React.ReactNode[]
@@ -33,7 +35,9 @@ const BlogContent: React.FC<BlogContentProps> = ({
 }) => {
   return (
     <div className="mb-10 flex min-h-screen w-full max-w-screen-lg justify-start md:max-w-full">
-      <div className="max-w-full bg-white p-10 lg:min-w-[900px] lg:max-w-[900px]">
+      <div
+        className={`max-w-full bg-white p-10 lg:min-w-[900px] lg:max-w-[900px] ${styles.articleContent}`}
+      >
         <h1>{blogArticle.title}</h1>
         <br />
         <p>{blogArticle.date}</p>

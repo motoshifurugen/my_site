@@ -1,0 +1,121 @@
+/* styles/ArticleContent.css */
+
+.articleContent {
+  padding: 2rem;
+  background-color: white;
+  margin-bottom: 2rem;
+}
+
+/* ------------------------- */
+/* 見出し */
+/* ------------------------- */
+.articleContent h2 {
+  border-bottom: 2px solid teal;
+  font-size: 1.5em;
+  margin-bottom: 1.1rem;
+  margin-top: 2.3em;
+  padding-bottom: 0.3em;
+}
+
+.articleContent h3 {
+  font-size: 1.75em;
+  font-weight: bold;
+  margin: 0.75em 0;
+}
+
+/* ------------------------- */
+/* 文字関係 */
+/* ------------------------- */
+.articleContent p {
+  margin: 16px 0;
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+/* ------------------------- */
+/* リスト */
+/* ------------------------- */
+.articleContent ol,
+.articleContent ul {
+  list-style: initial;
+  padding-left: 1rem;
+  margin: 0.5rem;
+}
+
+.articleContent ol {
+  list-style-type: decimal;
+  margin-left: 20px;
+}
+
+.articleContent ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.articleContent li {
+  margin-bottom: 0.5rem;
+}
+
+/* ------------------------- */
+/* 引用 */
+/* ------------------------- */
+.articleContent blockquote {
+  border-left: 4px solid #ccc;
+  padding-left: 1rem;
+  margin: 0.5rem 0;
+  color: #555;
+}
+
+.articleContent blockquote blockquote {
+  border-left: 4px solid #aaa;
+  padding-left: 16px;
+  margin-left: 0;
+  color: #333;
+}
+
+/* ------------------------- */
+/* コードブロック */
+/* ------------------------- */
+.articleContent code {
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+}
+
+/* ------------------------- */
+/* 表 */
+/* ------------------------- */
+.articleContent table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.articleContent th,
+.articleContent td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.articleContent th {
+  background-color: #f3f4f6;
+  color: teal;
+}
+
+.articleContent td {
+  background-color: white;
+  color: #4b5563;
+}
+
+/* ------------------------- */
+/* 埋め込み */
+/* ------------------------- */
+.articleContent a {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+.articleContent a:hover {
+  color: teal;
+  text-decoration: none;
+}
