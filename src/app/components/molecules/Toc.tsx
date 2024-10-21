@@ -1,9 +1,14 @@
 'use client'
 
 import React, { useEffect } from 'react'
+import { useInView } from 'react-intersection-observer'
 import tocbot from 'tocbot'
 
 const Toc: React.FC = () => {
+  const { ref, inView } = useInView({
+    threshold: 0,
+    triggerOnce: false,
+  })
   useEffect(() => {
     tocbot.init({
       tocSelector: `.toc`,
@@ -18,10 +23,17 @@ const Toc: React.FC = () => {
   }, [])
 
   return (
-    <div className="mt-5 bg-white p-4 shadow-lg">
-      <span className="text-xl font-bold">目次</span>
-      <nav className="toc m-1 p-1" />
-    </div>
+    <>
+      <div ref={ref} className="mt-5"></div> {/* スクロール監視用 */}
+      <div
+        className={`rounded-lg bg-white p-4 shadow-sm transition-all duration-300 ${
+          !inView ? 'fixed top-20 z-50 w-[312px]' : ''
+        }`}
+      >
+        <span className="text-xl font-bold">目次</span>
+        <nav className="toc m-1 p-1" />
+      </div>
+    </>
   )
 }
 

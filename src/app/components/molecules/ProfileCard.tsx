@@ -7,7 +7,7 @@ const BASE_PATH = nextConfig.basePath || ''
 
 const ProfileCard = () => {
   return (
-    <div className="mx-auto max-w-sm rounded-lg bg-white px-6 py-10 shadow-lg">
+    <div className="rounded-lg bg-white px-6 py-10 shadow-sm">
       <div className="flex items-center">
         <Image
           src={`${BASE_PATH}/images/profile_icon.png`}

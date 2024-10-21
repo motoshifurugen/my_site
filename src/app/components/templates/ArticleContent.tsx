@@ -36,7 +36,7 @@ const BlogContent: React.FC<BlogContentProps> = ({
   return (
     <div className="mb-10 flex min-h-screen w-full max-w-screen-lg justify-start md:max-w-full">
       <div
-        className={`max-w-full bg-white p-10 lg:min-w-[900px] lg:max-w-[900px] ${styles.articleContent}`}
+        className={`max-w-full rounded-lg bg-white p-10 shadow-sm lg:w-[1152px] ${styles.articleContent}`}
       >
         <h1>{blogArticle.title}</h1>
         <br />
@@ -62,7 +62,7 @@ const BlogContent: React.FC<BlogContentProps> = ({
           />
         </div>
       </div>
-      <div className="lg:ml-10">
+      <div className="flex-grow lg:ml-10">
         <Sidebar SidebarComponents={SidebarComponents} />
       </div>
     </div>
