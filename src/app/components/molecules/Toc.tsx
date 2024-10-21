@@ -6,7 +6,7 @@ import tocbot from 'tocbot'
 const Toc: React.FC = () => {
   useEffect(() => {
     tocbot.init({
-      tocSelector: '.toc',
+      tocSelector: `.toc`,
       contentSelector: '.target-toc',
       headingSelector: 'h2, h3, h4',
       headingsOffset: 100,
@@ -18,7 +18,7 @@ const Toc: React.FC = () => {
   }, [])
 
   return (
-    <div className="mt-5 rounded-lg bg-white p-4 shadow-lg">
+    <div className="mt-5 bg-white p-4 shadow-lg">
       <span className="text-xl font-bold">目次</span>
       <nav className="toc m-1 p-1" />
     </div>
