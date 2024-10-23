@@ -43,6 +43,7 @@
     "tocbot": "^4.29.0"
   },
   "devDependencies": {
+    "@types/marked": "^6.0.0",
     "@types/node": "^20.16.1",
     "@types/prismjs": "^1.26.4",
     "@types/react": "^18",
