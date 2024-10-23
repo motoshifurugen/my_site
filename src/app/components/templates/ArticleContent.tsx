@@ -36,7 +36,7 @@ const BlogContent: React.FC<BlogContentProps> = ({
   return (
     <div className="mb-10 flex min-h-screen w-full max-w-screen-lg justify-start md:max-w-full">
       <div
-        className={`max-w-full rounded-lg bg-white p-10 shadow-sm lg:w-[1152px] ${styles.articleContent}`}
+        className={`w-full max-w-full rounded-lg bg-white p-10 shadow-sm ${styles.articleContent}`}
       >
         <h1>{blogArticle.title}</h1>
         <br />
