@@ -9,9 +9,10 @@ import Highlight from '@/app/components/atoms/Highlight'
 import CodeBlock from '@/app/components/molecules/CodeBlock'
 import Sidebar from '@/app/components/templates/Sidebar'
 
+import EmbedArticle from '@/app/components/molecules/EmbedArticle'
 import 'prismjs/components/prism-python.js'
 import 'prismjs/themes/prism-tomorrow.css'
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 
 import styles from './ArticleContent.module.css'
 
@@ -27,6 +28,15 @@ const codeBlockComponents = {
   p: (props: JSX.IntrinsicAttributes & { children?: ReactNode }) => (
     <div {...props} />
   ),
+  a: (
+    props: JSX.IntrinsicAttributes & { href?: string; children?: ReactNode },
+  ) => {
+    const { href, children } = props
+    if (href && href.startsWith('http')) {
+      return <EmbedArticle url={href} />
+    }
+    return <a {...props}>{children}</a>
+  },
 }
 
 const BlogContent: React.FC<BlogContentProps> = ({
@@ -40,7 +50,7 @@ const BlogContent: React.FC<BlogContentProps> = ({
       >
         <h1>{blogArticle.title}</h1>
         <br />
-        <p>{blogArticle.date}</p>
+        <p>更新日：{blogArticle.date}</p>
         <br />
         <link
           rel="stylesheet"
