@@ -13,8 +13,8 @@ interface OpenGraphData {
   ogTitle?: string
   ogDescription?: string
   ogImage?: { url: string }
-  ogUrl?: string
   requestUrl?: string
+  favicon?: string
 }
 
 const EmbedArticle: React.FC<EmbedArticleProps> = ({ url }) => {
@@ -46,23 +46,58 @@ const EmbedArticle: React.FC<EmbedArticleProps> = ({ url }) => {
   if (!ogData) {
     return <div>Loading...</div>
   }
+  const faviconUrl = ogData.favicon
+    ? new URL(ogData.favicon, ogData.requestUrl).toString()
+    : null
+  const ogImageUrl = Array.isArray(ogData.ogImage)
+    ? ogData.ogImage[0].url
+    : ogData.ogImage?.url
+
   console.log('Open Graph data in EmbedArticle:', ogData)
+  console.log('favicon:', faviconUrl)
 
   return (
     <>
-      <a href={ogData.requestUrl} target="_blank" rel="noopener noreferrer">
-        <div className={`${styles.embedArticle}`}>
-          <h3>{ogData.ogTitle}</h3>
-          <p>{ogData.ogDescription}</p>
-          {ogData.ogImage && (
-            <Image
-              src={ogData.ogImage.url}
-              alt={ogData.ogTitle || 'Image'}
-              layout="responsive"
-            />
-          )}
-        </div>
-      </a>
+      <div className={`${styles.embedArticle_container}`}>
+        <a
+          href={ogData.requestUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${styles.embedArticleCard_link}`}
+        >
+          <div className={`${styles.embedArticle_main}`}>
+            <div className={`${styles.embedArticle_title}`}>
+              {ogData.ogTitle}
+            </div>
+            <div className={`${styles.embedArticle_description}`}>
+              {ogData.ogDescription}
+            </div>
+            <div className={`${styles.embedArticle_meta}`}>
+              {faviconUrl && (
+                <Image
+                  src={faviconUrl || ''}
+                  alt={ogData.ogTitle || 'Image'}
+                  width={14}
+                  height={14}
+                  className={`${styles.embedArticle_favicon}`}
+                />
+              )}
+              {ogData.requestUrl}
+            </div>
+          </div>
+          <div className={`${styles.embedArticle_img}`}>
+            {ogImageUrl && (
+              <Image
+                src={ogImageUrl}
+                alt={ogData.ogTitle || 'Image'}
+                width={230}
+                height={120}
+                className={`${styles.embedArticle_img}`}
+              />
+            )}
+          </div>
+        </a>
+      </div>
     </>
   )
 }

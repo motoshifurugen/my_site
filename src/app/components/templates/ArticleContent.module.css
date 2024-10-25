@@ -109,16 +109,3 @@
   background-color: white;
   color: #4b5563;
 }
-
-/* ------------------------- */
-/* 埋め込み */
-/* ------------------------- */
-.articleContent a {
-  color: #3b82f6;
-  text-decoration: underline;
-}
-
-.articleContent a:hover {
-  color: teal;
-  text-decoration: none;
-}
