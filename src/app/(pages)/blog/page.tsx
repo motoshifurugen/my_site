@@ -1,11 +1,16 @@
 'use client'
 
-import ArticleList from '@/app/components/templates/ArticleList'
+import dynamic from 'next/dynamic'
 import nextConfig from '../../../../next.config.mjs'
 import MaintenanceTemplate from '../../components/templates/MaintenanceTemplate'
 
 const BASE_PATH = nextConfig.basePath || ''
 const public_flag = true
+
+const ArticleList = dynamic(
+  () => import('@/app/components/templates/ArticleList'),
+  { ssr: false },
+)
 
 export default function Blog() {
   return (
