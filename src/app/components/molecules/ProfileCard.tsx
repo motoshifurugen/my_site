@@ -50,9 +50,7 @@ const ProfileCard = () => {
       </p>
       <div className="mt-3">
         <Link href="/profile">
-          <div className="text-blue-500 hover:underline">
-            motoshifurugenについて詳しく
-          </div>
+          <div className="text-teal hover:underline">View Profile</div>
         </Link>
       </div>
     </div>

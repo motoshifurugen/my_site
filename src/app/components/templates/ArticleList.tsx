@@ -21,7 +21,7 @@ const ArticleList = async () => {
   return (
     <div className="flex justify-center">
       <div className="flex min-h-screen justify-between">
-        <BlogGrid blogData={blogData} label={'Furugen’s 開発ブログ'} />
+        <BlogGrid blogData={blogData} />
       </div>
     </div>
   )

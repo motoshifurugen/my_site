@@ -7,6 +7,7 @@ import remarkMath from 'remark-math'
 
 import Highlight from '@/app/components/atoms/Highlight'
 import CodeBlock from '@/app/components/molecules/CodeBlock'
+import Tags from '@/app/components/molecules/Tags'
 import Sidebar from '@/app/components/templates/Sidebar'
 
 import EmbedArticle from '@/app/components/molecules/EmbedArticle'
@@ -46,12 +47,11 @@ const BlogContent: React.FC<BlogContentProps> = ({
   return (
     <div className="mb-10 flex min-h-screen w-full max-w-screen-lg justify-start md:max-w-full">
       <div
-        className={`w-full max-w-full rounded-lg bg-white p-10 shadow-sm ${styles.articleContent}`}
+        className={`w-full max-w-full rounded-lg bg-white p-10 shadow-sm xl:px-[10em] ${styles.articleContent}`}
       >
+        <p>{blogArticle.date}</p>
         <h1>{blogArticle.title}</h1>
-        <br />
-        <p>更新日：{blogArticle.date}</p>
-        <br />
+        {blogArticle.tags && <Tags tags={blogArticle.tags} />}
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"

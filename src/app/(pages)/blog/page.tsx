@@ -1,5 +1,7 @@
 'use client'
 
+import AnimatedLine from '@/app/components/atoms/AnimatedLine'
+import PageFace from '@/app/components/organism/PageFace'
 import dynamic from 'next/dynamic'
 import nextConfig from '../../../../next.config.mjs'
 import MaintenanceTemplate from '../../components/templates/MaintenanceTemplate'
@@ -16,7 +18,15 @@ export default function Blog() {
   return (
     <>
       {public_flag ? (
-        <ArticleList />
+        <>
+          <section>
+            <PageFace title="開発ブログ" subtitle="" mainMessage={<></>} />
+          </section>
+
+          <AnimatedLine />
+
+          <ArticleList />
+        </>
       ) : (
         <MaintenanceTemplate
           title="開発ブログ"
