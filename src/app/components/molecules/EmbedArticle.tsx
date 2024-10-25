@@ -13,6 +13,7 @@ interface OpenGraphData {
   ogTitle?: string
   ogDescription?: string
   ogImage?: { url: string }
+  ogUrl?: string
   requestUrl?: string
   favicon?: string
 }
@@ -28,9 +29,9 @@ const EmbedArticle: React.FC<EmbedArticleProps> = ({ url }) => {
       try {
         const response = await fetch(
           `${apiUrl}/blog/og-fetch?url=${encodeURIComponent(url)}`,
-          // {
-          //   cache: 'force-cache',
-          // },
+          {
+            cache: 'force-cache',
+          },
         )
         const data = await response.json()
         setOgData(data)
@@ -46,8 +47,10 @@ const EmbedArticle: React.FC<EmbedArticleProps> = ({ url }) => {
   if (!ogData) {
     return <div>Loading...</div>
   }
+
+  const srcUrl = ogData.ogUrl || ogData.requestUrl
   const faviconUrl = ogData.favicon
-    ? new URL(ogData.favicon, ogData.requestUrl).toString()
+    ? new URL(ogData.favicon, srcUrl).toString()
     : null
   const ogImageUrl = Array.isArray(ogData.ogImage)
     ? ogData.ogImage[0].url
@@ -60,7 +63,7 @@ const EmbedArticle: React.FC<EmbedArticleProps> = ({ url }) => {
     <>
       <div className={`${styles.embedArticle_container}`}>
         <a
-          href={ogData.requestUrl}
+          href={srcUrl}
           target="_blank"
           rel="noopener noreferrer"
           className={`${styles.embedArticleCard_link}`}
@@ -82,7 +85,7 @@ const EmbedArticle: React.FC<EmbedArticleProps> = ({ url }) => {
                   className={`${styles.embedArticle_favicon}`}
                 />
               )}
-              {ogData.requestUrl}
+              {srcUrl}
             </div>
           </div>
           <div className={`${styles.embedArticle_img}`}>
