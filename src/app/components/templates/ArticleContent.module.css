@@ -12,10 +12,9 @@
 /* ------------------------- */
 .articleContent h2 {
   border-bottom: 2px solid teal;
-  font-size: 1.5em;
-  margin-bottom: 1.1rem;
-  margin-top: 2.3em;
-  padding-bottom: 0.3em;
+  margin-bottom: 1.1rem !important;
+  margin-top: 2.3em !important;
+  padding-bottom: 0.3em !important;
 }
 
 .articleContent h3 {
@@ -31,6 +30,14 @@
   margin: 16px 0;
   font-size: 16px;
   line-height: 1.9;
+}
+
+.truncate2Lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ------------------------- */
@@ -88,7 +95,7 @@
 .articleContent table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 }
 
 .articleContent th,
@@ -108,10 +115,10 @@
   color: #4b5563;
 }
 
-.truncate2Lines {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* ------------------------- */
+/* 画像 */
+/* ------------------------- */
+.articleContent img {
+  margin: 16px 0;
+  border: 1px solid #ddd;
 }

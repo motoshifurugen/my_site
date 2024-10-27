@@ -1,0 +1,404 @@
+---
+title: 'Next.jsで開発ブログ付きのポートフォリオサイトを作成したい 🚀'
+date: '2024-10-27'
+tags:
+  - 'React'
+  - 'JavaScript'
+  - 'ポートフォリオ'
+---
+
+## はじめに
+
+「Vueに比べてReactは良い」という話を聞いたため（抽象的すぎる）、Reactを使ってポートフォリオサイトを作成してみることにしました。
+複数記事に分けて、作成過程を記録していきます。この記事では以下の内容を記載します。
+
+- Nextアプリ作成
+- サイト共通デザインの設定
+- Headerの作成
+- 【TOP画面】テキストアニメーションの作成
+- 【TOP画面】メインメッセージ部分作成
+- 【TOP画面】背景画像の設定
+
+今回の開発環境は以下の通りです。
+
+| 利用環境    | バージョン              |
+| ----------- | ----------------------- |
+| macOS       | Sonoma 14.5（M1チップ） |
+| Node.js     | 20.12.2                 |
+| React       | 18                      |
+| Next.js     | 14.2.5                  |
+| TypeScript  | 5                       |
+| tailwindcss | 3.4.1                   |
+
+### デザインの参考にするサイト（完成イメージ）
+
+[TOP | 株式会社パズル](https://puzzle-inc.jp/)
+[szne](https://szn.jp/)
+
+参考にした上記サイトやGithub Copilotを活用し、無事にポートフォリオを完成させることができました。本当にありがとうございます！
+
+### キャッチアップ方法
+
+[【2024年最新】React(v18)完全入門ガイド｜Hooks、Next14、Redux、TypeScript | Udemy](https://www.udemy.com/course/react-complete-guide/?couponCode=KEEPLEARNING)
+
+## Nextアプリ作成
+
+```zsh:ターミナル
+npx create-next-app@latest
+```
+
+```zsh:ターミナル
+Need to install the following packages:
+create-next-app@14.2.5
+Ok to proceed? (y)
+```
+
+yを入力してエンターを押し、続けて聞かれる質問には好みで答えます。
+意味については以下を参考にしました。
+
+[create-next-appで訊かれていること](https://zenn.dev/ikkik/articles/51d97ff70bd0da)
+
+```zsh:ターミナル
+✔ What is your project named? … my-site
+✔ Would you like to use TypeScript? … Yes
+✔ Would you like to use ESLint? … Yes
+✔ Would you like to use Tailwind CSS? … Yes
+✔ Would you like to use `src/` directory? … Yes
+✔ Would you like to use App Router? (recommended) … Yes
+✔ Would you like to customize the default import alias (@/*)? … No
+```
+
+```zsh:ターミナル
+cd my-site
+npm run dev
+```
+
+この状態で`http://localhost:3000/`にアクセスすると、初のnext.jsと対面できました。
+
+<img
+  src="https://github.com/motoshifurugen/my_site/blob/main/img/portfolio01.png"
+  alt="screenshot"
+  width="600px"
+/>
+
+page.tsxのreturn内とglobals.cssにいなくなってもらい、`Hello My Site!`を表示させました。
+
+<img
+  src="https://github.com/motoshifurugen/my_site/blob/main/img/portfolio02.png"
+  alt="screenshot"
+  width="600px"
+/>
+
+## サイト共通デザインの設定
+
+tailwindcssは、あらかじめ用意されたCSSクラスをタグに指定してスタイルを適用させることができます。利用方法は`tailwind.css`をimportして、適用させたいスタイルのクラスを`className`を指定するだけです。
+
+```javascript:page.tsx
+import 'tailwindcss/tailwind.css'
+
+export default function Home() {
+  return (
+    <body>
+      <h1 className="text-black">Hello My Site!</h1>
+    </body>
+  )
+}
+```
+
+ここでは、サイト全体で使用するカラーとフォントを`tailwind.config.ts`に定義し、`globals.css`でbodyにスタイルを適用しました。
+
+```javascript:tailwind.config.ts
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    colors: {
+      'bg-main' : '#F6F6F6',
+      'font-main' : '#161616',
+    },
+    fontFamily: {
+      'ryo-gothic-plusn': ['"ryo-gothic-plusn"', 'sans-serif'],
+    }
+  },
+  plugins: [],
+};
+export default config;
+```
+
+```css:globals.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-bg-main text-font-main font-ryo-gothic-plusn;
+}
+```
+
+## Headerの作成
+
+ヘッダー用に`components/Header.tsx`を新規で作成しました。
+
+```javascript:Header.tsx
+import Link from 'next/link'
+import 'tailwindcss/tailwind.css'
+
+const Header = () => {
+  return (
+    <header>
+      <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a className="flex font-medium items-center mb-4 md:mb-0">
+          <span className="ml-3 text-xl">Motoshi Furugen</span>
+        </a>
+        <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
+          <Link className="mr-10 hover:opacity-50" href="#">
+            プロフィール
+          </Link>
+          <Link className="mr-10 hover:opacity-50" href="#">
+            開発ブログ
+          </Link>
+          <Link className="mr-10 hover:opacity-50" href="#">
+            実績
+          </Link>
+          <Link className="mr-10 hover:opacity-50" href="#">
+            コンタクト
+          </Link>
+        </nav>
+      </div>
+    </header>
+  )
+}
+
+export default Header
+```
+
+`layout.tsx`でHeaderコンポーネントを呼び出しました。
+
+```javascript:layout.tsx
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+
+import Header from "./components/Header";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Motoshi Furugen",
+  description: "This is Motoshi Furugen's personal website.",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <Header />
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+<img
+  src="https://github.com/motoshifurugen/my_site/blob/main/img/portfolio03.png"
+  alt="screenshot"
+  width="600px"
+/>
+
+## 【TOP画面】テキストアニメーションの作成
+
+TOPページのタイトルにどうしてもアニメーションを入れたかったので、GSAPを導入しました。
+
+https://gsap.com/
+
+```zsh:ターミナル
+npm install gsap
+```
+
+`components/TitleAnimation.tsx`を新規で作成し、GSAPを使って文字を一文字ずつ表示させるアニメーションを実現しました。
+
+```javascript:TitleAnimation.tsx
+'use client'
+
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { TextPlugin } from 'gsap/TextPlugin'
+
+gsap.registerPlugin(TextPlugin)
+
+export default function TitleAnimation() {
+  // 文字を一文字ずつ表示するアニメーション
+  const textRef = useRef < HTMLParagraphElement > null
+  useEffect(() => {
+    if (textRef.current) {
+      gsap.to(textRef.current, { duration: 1.75, text: 'Furugen' })
+    }
+  }, [])
+
+  return (
+    <p
+      className="
+        w-full
+        text-[8rem]
+        text-left
+        text-font-main
+        font-dm-sans
+        tracking-widest
+        mx-[100px]
+      "
+      ref={textRef}
+    ></p>
+  )
+}
+```
+
+<img
+  src="https://github.com/motoshifurugen/my_site/blob/main/img/portfolio_gif01.gif"
+  alt="screenshot"
+  width="600px"
+/>
+
+## 【TOP画面】メインメッセージ部分作成
+
+`components/MainMessage.txs`を作成し、メインメッセージを記述しました。
+
+```javascript:MainMessage.tsx
+export default function MainMessage() {
+  return (
+    <>
+      <p className="text-2xl leading-loose">
+        心の健康を支えるために、
+        <br />
+        画面の向こうに広がる世界へ、
+        <br />
+        想いをコードに込め、
+        <br />
+        毎日挑戦し続ける、
+        <br />
+        なんくるないさ系エンジニア。
+      </p>
+    </>
+  )
+}
+```
+
+`page.tsx`にて、`TitleAnimation`コンポーネントと`MainMessage`コンポーネントを横並びに表示しました。
+
+```javascript:page.tsx
+・・・
+<section className="main-face flex">
+  <div className="flex-1">
+    <TitleAnimation />
+  </div>
+  <div className="w-[480px]">
+    <MainMessage />
+  </div>
+</section>
+・・・
+```
+
+アイコンを使いたいので、以下を参考にfont Awesome（無料版）を導入しました。
+
+- [Set Up with React | Font Awesome Docs](https://docs.fontawesome.com/web/use-with/react)
+- [【Next.js】FontAwesomeを導入してアイコンを表示してみよう！ #Next.js - Qiita](https://qiita.com/takakou/items/de4d86f1acad6e4511d5)
+
+メインメッセージの下には、次回作成するプロフィール画面へのリンクを設置しました。
+
+```javascript:MainMessage.tsx
+<>
+  <p className="text-2xl leading-loose mb-12">
+    心の健康を支えるために、
+    <br />
+    画面の向こうに広がる世界へ、
+    <br />
+    想いをコードに込め、
+    <br />
+    毎日挑戦し続ける、
+    <br />
+    なんくるないさ系エンジニア。
+  </p>
+  <a href="#" className="text-xl group">
+    プロフィール
+    <button
+      className="relative align-middle transition-all w-8 max-w-[32px] h-8 max-h-[32px] text-xs border border-font-main border-opacity-20 rounded-full ml-5 group-hover:bg-white"
+      type="button"
+    >
+      <span>
+        <FontAwesomeIcon icon={faArrowRight} />
+      </span>
+    </button>
+  </a>
+</>
+```
+
+<img
+  src="https://github.com/motoshifurugen/my_site/blob/main/img/portfolio04.png"
+  alt="screenshot"
+  width="600px"
+/>
+
+## 【TOP画面】背景画像の設定
+
+トップ画面で大きく海の画像を載せたいと思い、背景画像用のコンポーネント`components/BackgroundWrapper.tsx`を新たに作成しました。
+
+`usePathname()`を用いて現在のパスを取得し、トップページの場合のみ背景画像を表示させるようにしました。
+
+```javascript:BackgroundWrapper.tsx
+"use client";
+
+import { usePathname } from 'next/navigation';
+import React from 'react';
+
+const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const pathname = usePathname();
+  const isRootPath = pathname === '/';
+
+  return (
+    <div className="relative">
+      {isRootPath && (
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50 h-screen" style={{ backgroundImage: "url('/images/back-pic/day_01.jpg')" }}></div>
+      )}
+      <div className={`${isRootPath ? 'relative z-10' : ''}`}>
+        {children}
+      </div>
+    </div>
+  );
+};
+
+export default BackgroundWrapper;
+```
+
+`layout.tsx`でbody内の要素を`BackgroundWrapper`コンポーネントで囲い、トップ画面にドーンと表示させました。
+
+```javascript:layout.tsx
+<html lang="en">
+  <body className={inter.className}>
+    <BackgroundWrapper>
+      <Header />
+      <main className="pt-40">{children}</main>
+    </BackgroundWrapper>
+  </body>
+</html>
+```
+
+なんか文字のアニメーションがバグみたいに見えてきたので（笑）アニメーションの速度を調整して、トップ画面の実装が完了しました。
+
+<img
+  src="https://github.com/motoshifurugen/my_site/blob/main/img/portfolio_gif03.gif"
+  alt="screenshot"
+  width="600px"
+/>
+
+### to be continued...
+
+次回はプロフィール画面の作成を行います。
