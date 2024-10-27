@@ -23,9 +23,17 @@ interface BlogContentProps {
 }
 
 const codeBlockComponents = {
-  code: (props: JSX.IntrinsicAttributes & { children?: ReactNode }) => (
-    <CodeBlock {...props} />
-  ),
+  code: (
+    props: JSX.IntrinsicAttributes & {
+      className?: string
+      children?: ReactNode
+    },
+  ) => {
+    if (props.className) {
+      return <CodeBlock {...props} />
+    }
+    return <code {...props} />
+  },
   p: (props: JSX.IntrinsicAttributes & { children?: ReactNode }) => (
     <div {...props} />
   ),
@@ -47,7 +55,7 @@ const BlogContent: React.FC<BlogContentProps> = ({
   return (
     <div className="mb-10 flex min-h-screen w-full max-w-screen-lg justify-start md:max-w-full">
       <div
-        className={`w-full max-w-full rounded-lg bg-white p-10 shadow-sm xl:px-[10em] ${styles.articleContent}`}
+        className={`w-full max-w-full rounded-lg bg-white p-10 shadow-sm xl:px-[4em] ${styles.articleContent}`}
       >
         <p>{blogArticle.date}</p>
         <h1>{blogArticle.title}</h1>

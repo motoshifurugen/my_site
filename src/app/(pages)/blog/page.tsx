@@ -25,7 +25,9 @@ export default function Blog() {
 
           <AnimatedLine />
 
-          <ArticleList />
+          <section>
+            <ArticleList />
+          </section>
         </>
       ) : (
         <MaintenanceTemplate
