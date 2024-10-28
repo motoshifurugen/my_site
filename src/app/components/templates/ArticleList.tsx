@@ -27,8 +27,9 @@ const ArticleList: React.FC = () => {
   const [blogData, setBlogData] = useState<any[]>([])
   const [filteredData, setFilteredData] = useState<any[]>([])
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
-  const serchParams = useSearchParams()
-  const tagName = serchParams.get('tag')
+  const [isLoading, setIsLoading] = useState(true)
+  const searchParams = useSearchParams()
+  const tagName = searchParams.get('tag')
   const router = useRouter()
 
   useEffect(() => {
@@ -40,6 +41,7 @@ const ArticleList: React.FC = () => {
       )
       setBlogData(sortedData)
       setFilteredData(sortedData)
+      setIsLoading(false)
     })
   }, [])
 
@@ -57,6 +59,10 @@ const ArticleList: React.FC = () => {
     setSelectedTag(null)
     setFilteredData(blogData)
     router.push('/blog')
+  }
+
+  if (isLoading) {
+    return <div></div> // ローディング中は何も表示しない
   }
 
   return (

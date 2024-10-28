@@ -2,6 +2,8 @@
 
 .articleContent {
   margin-bottom: 2rem;
+  font-family: "Noto Sans JP", sans-serif;
+  font-optical-sizing: auto;
   @media (min-width: 1024px) {
     width: calc(100% - 352px);
   }
@@ -38,6 +40,13 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.articleContent p + img,
+.articleContent div + img,
+.articleContent img + p,
+.articleContent img + div {
+  padding-top: 16px; /* 画像の前後にスペースを追加 */
 }
 
 /* ------------------------- */
@@ -112,11 +121,4 @@
 .articleContent td {
   background-color: white;
   color: #4b5563;
-}
-
-/* ------------------------- */
-/* 画像 */
-/* ------------------------- */
-.articleContent img {
-  padding: 16px;
 }
