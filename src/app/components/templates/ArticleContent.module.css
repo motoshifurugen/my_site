@@ -85,7 +85,6 @@
 /* コードブロック */
 /* ------------------------- */
 .articleContent code {
-  padding: 0.2rem 0.4rem;
   border-radius: 0.25rem;
 }
 
@@ -119,6 +118,5 @@
 /* 画像 */
 /* ------------------------- */
 .articleContent img {
-  margin: 16px 0;
-  border: 1px solid #ddd;
+  padding: 16px;
 }

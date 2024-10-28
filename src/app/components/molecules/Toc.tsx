@@ -14,8 +14,8 @@ const Toc: React.FC = () => {
       tocSelector: `.toc`,
       contentSelector: '.target-toc',
       headingSelector: 'h2, h3, h4',
-      headingsOffset: 100,
-      scrollSmoothOffset: -40,
+      headingsOffset: 100, // ヘッダーの高さに応じて調整
+      scrollSmoothOffset: -100,
     })
 
     // 不要となった tocbot インスタンスを削除
