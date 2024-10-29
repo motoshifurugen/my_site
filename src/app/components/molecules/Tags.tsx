@@ -1,17 +1,17 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 interface TagsProps {
   tags: string[]
-  onClickTag?: (tag: string) => void
 }
 
-const Tags: React.FC<TagsProps> = ({ tags, onClickTag }) => {
-  const handleClick = (tag: string) => {
-    if (onClickTag) {
-      onClickTag(tag)
-    }
+const Tags: React.FC<TagsProps> = ({ tags }) => {
+  const router = useRouter()
+
+  const handleClickTag = (tag: string) => {
+    router.push(`/blog?tag=${encodeURIComponent(tag)}`)
   }
 
   return (
@@ -20,7 +20,7 @@ const Tags: React.FC<TagsProps> = ({ tags, onClickTag }) => {
         <span
           key={index}
           className="inline-block cursor-pointer rounded bg-teal px-2.5 py-1.5 text-xs text-main-white"
-          onClick={() => handleClick(tag)}
+          onClick={() => handleClickTag(tag)}
         >
           {tag}
         </span>
