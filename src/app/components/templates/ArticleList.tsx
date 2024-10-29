@@ -61,10 +61,6 @@ const ArticleList: React.FC = () => {
     router.push('/blog')
   }
 
-  const handleTagClick = (tag: string) => {
-    router.push(`/blog?tag=${encodeURIComponent(tag)}`)
-  }
-
   if (isLoading) {
     return <div></div> // ローディング中は何も表示しない
   }
@@ -91,7 +87,7 @@ const ArticleList: React.FC = () => {
               <div className="py-3 text-xl font-bold">最新記事一覧</div>
             )}
           </div>
-          <BlogGrid blogData={filteredData} onTagClick={handleTagClick} />
+          <BlogGrid blogData={filteredData} />
         </div>
         <div className="mt-16 flex-grow lg:ml-10">
           <Sidebar SidebarComponents={[]} />
