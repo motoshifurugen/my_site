@@ -1,34 +1,47 @@
-import Tags from '@/app/components/molecules/Tags'
-import Link from 'next/link'
-
-import styles from '@/app/components/templates/ArticleContent.module.css'
+import BlogCard from '@/app/components/molecules/BlogCard'
+import { useEffect, useState } from 'react'
 
 interface BlogGridProps {
   blogData: any
 }
 
-const BlogGrid: React.FC<BlogGridProps> = async ({ blogData }) => {
+const BlogGrid: React.FC<BlogGridProps> = ({ blogData }) => {
+  const [loadIndex, setLoadIndex] = useState(10)
+  const [isEmpty, setIsEmpty] = useState(false)
+  const [currentPost, setCurrentPost] = useState(blogData.slice(0, 10))
+
+  useEffect(() => {
+    if (blogData.length <= 10) {
+      setIsEmpty(true)
+    }
+  }, [blogData])
+
+  const displayMore = () => {
+    const newLoadIndex = loadIndex + 10
+    const newPosts = blogData.slice(0, newLoadIndex)
+    setCurrentPost(newPosts)
+    setLoadIndex(newLoadIndex)
+    if (newLoadIndex >= blogData.length) {
+      setIsEmpty(true)
+    }
+  }
+
   return (
     <>
       <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2">
-        {blogData &&
-          blogData.length > 0 &&
-          blogData.map((post: any, index: number) => (
-            <div
-              key={index}
-              className="relative mx-auto h-[210px] w-full rounded bg-white p-5 shadow-sm"
-            >
-              <Link href={`/blog/${post.slug}`}>
-                <span>{post.date}</span>
-                <div
-                  className={`mt-4 text-2xl font-bold ${styles.truncate2Lines}`}
-                >
-                  {post.title}
-                </div>
-              </Link>
-              {post.tags && <Tags tags={post.tags} />}
-            </div>
-          ))}
+        {currentPost.map((post: any) => (
+          <BlogCard key={post.id} post={post} />
+        ))}
+      </div>
+      <div className="mt-4 flex justify-center">
+        {!isEmpty && (
+          <button
+            onClick={displayMore}
+            className="relative rounded px-6 py-3 text-lg text-main-black transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-teal after:transition-all after:duration-300 hover:after:w-full"
+          >
+            Find Out More
+          </button>
+        )}
       </div>
     </>
   )
