@@ -26,3 +26,18 @@
 // }
 
 // export { GET }
+
+import { NextRequest, NextResponse } from 'next/server'
+
+const GET = async (
+  req: NextRequest,
+  context: { params?: { slug?: string } } = {},
+) => {
+  const { params } = context
+  const slug = params?.slug || 'default-slug'
+  return new NextResponse(`This is a placeholder response for slug: ${slug}`, {
+    status: 200,
+  })
+}
+
+export { GET }

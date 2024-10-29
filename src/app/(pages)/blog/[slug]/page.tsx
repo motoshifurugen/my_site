@@ -65,3 +65,14 @@
 // }
 
 // export default BlogArticlePage
+
+const BlogArticlePage = () => {
+  return (
+    <section>
+      <h1>仮のページ</h1>
+      <p>このページは仮のページです。</p>
+    </section>
+  )
+}
+
+export default BlogArticlePage
