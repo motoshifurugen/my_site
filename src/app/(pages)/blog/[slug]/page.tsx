@@ -66,11 +66,20 @@
 
 // export default BlogArticlePage
 
-const BlogArticlePage = () => {
+// 仮の静的パラメータを生成
+export async function generateStaticParams() {
+  return [
+    { slug: 'sample-slug-1' },
+    { slug: 'sample-slug-2' },
+    { slug: 'sample-slug-3' },
+  ]
+}
+
+const BlogArticlePage = ({ params }: { params: { slug: string } }) => {
   return (
     <section>
       <h1>仮のページ</h1>
-      <p>このページは仮のページです。</p>
+      <p>このページは仮のページです。スラッグ: {params.slug}</p>
     </section>
   )
 }
