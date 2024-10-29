@@ -10,7 +10,7 @@ import CodeBlock from '@/app/components/molecules/CodeBlock'
 import Tags from '@/app/components/molecules/Tags'
 import Sidebar from '@/app/components/templates/Sidebar'
 
-import EmbedArticle from '@/app/components/molecules/EmbedArticle'
+// import EmbedArticle from '@/app/components/molecules/EmbedArticle'
 import 'prismjs/components/prism-python.js'
 import 'prismjs/themes/prism-tomorrow.css'
 import React, { ReactNode } from 'react'
@@ -41,9 +41,9 @@ const codeBlockComponents = {
     props: JSX.IntrinsicAttributes & { href?: string; children?: ReactNode },
   ) => {
     const { href, children } = props
-    if (href && href.startsWith('http')) {
-      return <EmbedArticle url={href} />
-    }
+    // if (href && href.startsWith('http')) {
+    //   return <EmbedArticle url={href} />
+    // }
     return <a {...props}>{children}</a>
   },
 }

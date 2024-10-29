@@ -84,8 +84,8 @@ jobs:
       #   run: |
       #     nohup npm run start:api &
       #     sleep 5
-      - name: Set environment variable for local API
-        run: echo "NEXT_PUBLIC_API_URL=http://localhost:3000/my_site/api" >> $GITHUB_ENV
+      # - name: Set environment variable for local API
+      #   run: echo "NEXT_PUBLIC_API_URL=https://motoshifurugen.github.io/my_site/api" >> $GITHUB_ENV
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
