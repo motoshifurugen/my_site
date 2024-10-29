@@ -4,6 +4,7 @@ import BlogGrid from '@/app/components/organism/BlogGrid'
 import Sidebar from '@/app/components/templates/Sidebar'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import { FiRefreshCw } from 'react-icons/fi'
 
 import styles from '@/app/components/templates/ArticleContent.module.css'
 
@@ -61,6 +62,10 @@ const ArticleList: React.FC = () => {
     router.push('/blog')
   }
 
+  const handleTagClick = (tag: string) => {
+    router.push(`/blog?tag=${encodeURIComponent(tag)}`)
+  }
+
   if (isLoading) {
     return <div></div> // ローディング中は何も表示しない
   }
@@ -69,22 +74,27 @@ const ArticleList: React.FC = () => {
     <div className="flex justify-center">
       <div className="my-5 flex min-h-screen w-full max-w-screen-lg justify-start md:max-w-full">
         <div className={`w-full max-w-full px-10 ${styles.articleContent}`}>
-          {selectedTag && (
-            <div className="mb-4 flex items-center justify-between">
-              <div className="text-xl font-bold">
-                『{selectedTag}』の記事一覧
-              </div>
-              <button
-                onClick={resetFilter}
-                className="ml-4 rounded px-4 py-2 text-main-black hover:bg-gray"
-              >
-                最新記事一覧
-              </button>
-            </div>
-          )}
-          <BlogGrid blogData={filteredData} />
+          <div className="mb-4 flex items-center justify-between">
+            {selectedTag ? (
+              <>
+                <div className="text-xl font-bold">
+                  『{selectedTag}』の記事一覧
+                </div>
+                <button
+                  onClick={resetFilter}
+                  className="relative flex items-center rounded px-6 py-3 text-lg text-main-black transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-teal after:transition-all after:duration-300 hover:after:w-full"
+                >
+                  最新記事一覧
+                  <FiRefreshCw className="ml-2" />
+                </button>
+              </>
+            ) : (
+              <div className="py-3 text-xl font-bold">最新記事一覧</div>
+            )}
+          </div>
+          <BlogGrid blogData={filteredData} onTagClick={handleTagClick} />
         </div>
-        <div className="flex-grow lg:ml-10">
+        <div className="mt-16 flex-grow lg:ml-10">
           <Sidebar SidebarComponents={[]} />
         </div>
       </div>

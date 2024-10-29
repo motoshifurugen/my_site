@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react'
 
 interface BlogGridProps {
   blogData: any
+  onTagClick: (tag: string) => void
 }
 
-const BlogGrid: React.FC<BlogGridProps> = ({ blogData }) => {
+const BlogGrid: React.FC<BlogGridProps> = ({ blogData, onTagClick }) => {
   const [loadIndex, setLoadIndex] = useState(10)
   const [isEmpty, setIsEmpty] = useState(false)
   const [currentPost, setCurrentPost] = useState(blogData.slice(0, 10))
@@ -26,11 +27,15 @@ const BlogGrid: React.FC<BlogGridProps> = ({ blogData }) => {
     }
   }
 
+  useEffect(() => {
+    setCurrentPost(blogData.slice(0, loadIndex))
+  }, [blogData, loadIndex])
+
   return (
     <>
       <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2">
         {currentPost.map((post: any) => (
-          <BlogCard key={post.id} post={post} />
+          <BlogCard key={post.id} post={post} onTagClick={onTagClick} />
         ))}
       </div>
       <div className="mt-4 flex justify-center">

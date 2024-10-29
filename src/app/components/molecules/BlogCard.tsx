@@ -4,9 +4,10 @@ import Link from 'next/link'
 
 interface BlogPostProps {
   post: any
+  onTagClick: (tag: string) => void
 }
 
-const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
+const BlogPost: React.FC<BlogPostProps> = ({ post, onTagClick }) => {
   return (
     <div className="relative mx-auto h-[210px] w-full rounded bg-white p-5 shadow-sm">
       <Link href={`/blog/${post.slug}`}>
@@ -15,7 +16,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
           {post.title}
         </div>
       </Link>
-      {post.tags && <Tags tags={post.tags} />}
+      {post.tags && <Tags tags={post.tags} onClickTag={onTagClick} />}
     </div>
   )
 }
