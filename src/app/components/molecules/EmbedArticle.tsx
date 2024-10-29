@@ -24,7 +24,6 @@ const EmbedArticle: React.FC<EmbedArticleProps> = ({ url }) => {
   useEffect(() => {
     const apiUrl =
       process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/my_site/api'
-    console.log('API URL in EmbedArticle:', apiUrl) // 環境変数をコンソールに出力
     const fetchOgData = async () => {
       try {
         const response = await fetch(
@@ -35,7 +34,6 @@ const EmbedArticle: React.FC<EmbedArticleProps> = ({ url }) => {
         )
         const data = await response.json()
         setOgData(data)
-        console.log('Open Graph data:', data)
       } catch (error) {
         console.error('Failed to fetch Open Graph data', error)
       }
@@ -55,9 +53,6 @@ const EmbedArticle: React.FC<EmbedArticleProps> = ({ url }) => {
   const ogImageUrl = Array.isArray(ogData.ogImage)
     ? ogData.ogImage[0].url
     : ogData.ogImage?.url
-
-  console.log('Open Graph data in EmbedArticle:', ogData)
-  console.log('favicon:', faviconUrl)
 
   return (
     <>

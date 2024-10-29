@@ -11,7 +11,6 @@ import styles from '@/app/components/templates/ArticleContent.module.css'
 const getBlogData = async () => {
   const apiUrl =
     process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/my_site/api'
-  console.log('API URL:', apiUrl) // 環境変数をコンソールに出力
   try {
     const res = await fetch(`${apiUrl}/blog/`, {
       cache: 'force-cache',

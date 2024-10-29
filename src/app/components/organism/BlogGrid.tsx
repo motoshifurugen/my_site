@@ -35,7 +35,7 @@ const BlogGrid: React.FC<BlogGridProps> = ({ blogData, onTagClick }) => {
     <>
       <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2">
         {currentPost.map((post: any) => (
-          <BlogCard key={post.id} post={post} onTagClick={onTagClick} />
+          <BlogCard key={post.slug} post={post} onTagClick={onTagClick} />
         ))}
       </div>
       <div className="mt-4 flex justify-center">

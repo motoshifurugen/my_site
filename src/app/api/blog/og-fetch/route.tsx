@@ -17,7 +17,6 @@ export const GET = async (req: NextRequest) => {
         { status: 500 },
       )
     }
-    console.log('Open Graph data:', result)
     return NextResponse.json(result)
   } catch (error) {
     console.error('Error fetching Open Graph data:', error)

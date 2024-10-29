@@ -1,20 +1,9 @@
-import { MDXRemote } from 'next-mdx-remote/rsc'
-import rehypeKatex from 'rehype-katex'
-import rehypePrism from 'rehype-prism'
-import rehypeSlug from 'rehype-slug'
-import remarkGfm from 'remark-gfm'
-import remarkMath from 'remark-math'
+'use client'
 
-import Highlight from '@/app/components/atoms/Highlight'
-import CodeBlock from '@/app/components/molecules/CodeBlock'
+import MDXContent from '@/app/components/atoms/MDXContent'
 import Tags from '@/app/components/molecules/Tags'
-import Sidebar from '@/app/components/templates/Sidebar'
-
-import EmbedArticle from '@/app/components/molecules/EmbedArticle'
-import 'prismjs/components/prism-python.js'
-import 'prismjs/themes/prism-tomorrow.css'
-import React, { ReactNode } from 'react'
-
+import { useRouter } from 'next/navigation'
+import React from 'react'
 import styles from './ArticleContent.module.css'
 
 interface BlogContentProps {
@@ -22,36 +11,16 @@ interface BlogContentProps {
   SidebarComponents: React.ReactNode[]
 }
 
-const codeBlockComponents = {
-  code: (
-    props: JSX.IntrinsicAttributes & {
-      className?: string
-      children?: ReactNode
-    },
-  ) => {
-    if (props.className) {
-      return <CodeBlock {...props} />
-    }
-    return <code {...props} />
-  },
-  p: (props: JSX.IntrinsicAttributes & { children?: ReactNode }) => (
-    <div {...props} />
-  ),
-  a: (
-    props: JSX.IntrinsicAttributes & { href?: string; children?: ReactNode },
-  ) => {
-    const { href, children } = props
-    if (href && href.startsWith('http')) {
-      return <EmbedArticle url={href} />
-    }
-    return <a {...props}>{children}</a>
-  },
-}
-
 const BlogContent: React.FC<BlogContentProps> = ({
   blogArticle,
   SidebarComponents,
 }) => {
+  const router = useRouter()
+
+  const handleTagClick = (tag: string) => {
+    router.push(`/blog?tag=${encodeURIComponent(tag)}`)
+  }
+
   return (
     <div className="mb-10 flex min-h-screen w-full max-w-screen-lg justify-start md:max-w-full">
       <div
@@ -59,7 +28,9 @@ const BlogContent: React.FC<BlogContentProps> = ({
       >
         <p>{blogArticle.date}</p>
         <h1>{blogArticle.title}</h1>
-        {blogArticle.tags && <Tags tags={blogArticle.tags} />}
+        {blogArticle.tags && (
+          <Tags tags={blogArticle.tags} onClickTag={handleTagClick} />
+        )}
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
@@ -68,21 +39,10 @@ const BlogContent: React.FC<BlogContentProps> = ({
         />
         {/* 目次表示に必要 */}
         <div className="target-toc">
-          <MDXRemote
-            source={blogArticle.content}
-            components={{ ...codeBlockComponents, Highlight }}
-            options={{
-              mdxOptions: {
-                remarkPlugins: [remarkGfm, remarkMath],
-                rehypePlugins: [rehypePrism, rehypeKatex, rehypeSlug],
-              },
-            }}
-          />
+          <MDXContent content={blogArticle.content} />
         </div>
       </div>
-      <div className="flex-grow lg:ml-10">
-        <Sidebar SidebarComponents={SidebarComponents} />
-      </div>
+      <div className="flex-grow lg:ml-10">{SidebarComponents}</div>
     </div>
   )
 }
