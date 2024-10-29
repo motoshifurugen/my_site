@@ -1,0 +1,237 @@
+---
+title: 'CakePHP3.9にMySQLを接続する（Homebrew使用）'
+date: '2020-10-11'
+tags:
+  - 'PHP'
+  - '環境構築'
+  - 'MySQL'
+---
+
+### 環境
+
+OS：MacOS Catalina 10.15.4
+PHP：7.3.22
+Composer：1.10.13
+Homebrew：2.5.5
+MySQL：8.0.21
+
+- 前回の記事：[CakePHP3.9をMacにインストールする（MAMP使用）](https://qiita.com/motoshi_cocoa/items/6b2c3065e23d1bd05be5)
+
+以下のようにデータベース設定が未完了。今回はCakePHPでMySQLに接続するのが目的。
+![データベース接続前のCakePHPの画面](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/594194/b7069ac5-b646-dcc6-3495-fad05a6ad1e9.png)
+
+### この記事の流れ
+
+1. MySQLをインストール・起動
+
+1. エラーが出た（エラーなしなら飛ばす）
+
+1. MySQL初期設定
+
+1. CakePHPのデータベース設定
+
+1. CakePHP起動
+
+## 1. MySQLをインストール・起動
+
+パッケージ管理ツールHomebrewを使用してMysqlをインストールする。
+参考記事▼
+[【簡単】MacにHomebrewをインストールする方法と基本的な使い方](https://fukatsu.tech/homebrew)
+
+```bash:ターミナル
+$ brew install mysql
+```
+
+```bash:ターミナル
+$ mysql --version
+mysql  Ver 8.0.21 for osx10.15 on x86_64 (Homebrew)
+```
+
+インストールされたらCakePHPのアプリまで移動してからMySQLを起動。
+
+```bash:ターミナル
+$ mysql.server start
+```
+
+## 2. エラーが出た（エラーなしなら飛ばす）
+
+MySQLを起動しようとしたらエラーが出たので、手当たり次第ボタンがあれば連打した。
+
+▼エラー内容
+
+```bash:ターミナル
+./usr/local/Cellar/mysql/8.0.21_1/bin/mysqld_safe: line 144: /usr/local/var/mysql/[コンピュータ名].local.err: Permission denied
+/usr/local/Cellar/mysql/8.0.21_1/bin/mysqld_safe: line 144: /usr/local/var/mysql/[コンピュータ名].local.err: Permission denied
+/usr/local/Cellar/mysql/8.0.21_1/bin/mysqld_safe: line 199: /usr/local/var/mysql/[コンピュータ名].local.err: Permission denied
+/usr/local/Cellar/mysql/8.0.21_1/bin/mysqld_safe: line 144: /usr/local/var/mysql/[コンピュータ名].local.err: Permission denied
+ERROR! The server quit without updating PID file (/usr/local/var/mysql/[コンピュータ名].local.pid).
+```
+
+- 権限がない
+  → sudoコマンドで実行する。
+
+- PIDファイルが .... ?
+  → このエラー文は様々な要因が考えられるらしい。
+  → そもそもファイルがなかったので作成。
+
+```bash:ターミナル
+$ sudo touch /usr/local/var/mysql/[コンピュータ名].local.pid
+```
+
+それでもエラーは消えなかった。
+
+/usr/local/var/mysql/[コンピュータ名].local.err という場所に詳しいエラーが書いてあるらしいので確認しにいく。
+
+```bash:ターミナル
+$ sudo cat /usr/local/var/mysql/[コンピュータ名].local.err
+```
+
+[ERROR]となっているところを発見！
+
+```bash:ターミナル
+2020-10-10T16:38:01.565742Z 0 [ERROR] [MY-010274] [Server] Could not open unix socket lock file /tmp/mysql.sock.lock.
+2020-10-10T16:38:01.566306Z 0 [ERROR] [MY-010268] [Server] Unable to setup unix socket lock file.
+2020-10-10T16:38:01.567056Z 0 [ERROR] [MY-010119] [Server] Aborting
+```
+
+/tmp/mysql.sock.lockファイルにいなくなってもらう。
+
+```bash:ターミナル
+$ sudo rm /tmp/mysql.sock.lock
+```
+
+いざ、（sudoで）MySQL起動！
+
+```bash:ターミナル
+$ sudo mysql.server start
+Starting MySQL
+.. SUCCESS!
+```
+
+## 3. MySQL初期設定
+
+パスワードなしでMySQLにログインする。
+
+```bash:ターミナル
+$ mysql -uroot
+```
+
+- パスワード設定
+
+使うデータベースを指定して
+
+```bash:ターミナル
+mysql> use mysql;
+```
+
+rootユーザーのパスワードを [設定したいパスワード] に変更する。
+
+```bash:ターミナル
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '[設定したいパスワード]';
+```
+
+一旦、退出。
+
+```bash:ターミナル
+mysql> exit
+```
+
+パスワード使用でログインする。
+
+```bash:ターミナル
+$ mysql -uroot -p
+Enter password: [設定したパスワード]
+```
+
+## 4. CakePHPのデータベース設定
+
+- データベース作成
+
+MySQLでデータベース一覧を確認する。
+
+```bash:ターミナル
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+```
+
+CakePHPで使用するデータベースを新規で作成する。（今回はcake_sampleという名前で作成）
+
+```bash:ターミナル
+mysql> create database cake_sample;
+```
+
+先ほど作成したデータベースを一覧で確認する。
+
+```bash:ターミナル
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| cake_sample        |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+```
+
+MySQLは設定完了。
+
+```bash:ターミナル
+mysql> exit
+```
+
+- CakePHPのデータベース設定
+
+CakePHPアプリの config/app.local.php をテキストエディタで開き、username, password, databaseを変更する。
+
+```php:/config/app.local.php（変更後）
+    'Datasources' => [
+        'default' => [
+            'host' => 'localhost',
+            'username' => 'root', //変更
+            'password' => '[設定したパスワード]', //変更
+            'database' => 'cake_sample', //変更
+            'log' => true,
+            'url' => env('DATABASE_URL', null),
+        ],
+    ],
+```
+
+mysqlを再起動させる。
+
+```bash:ターミナル
+$ sudo mysql.serve restart
+Shutting down MySQL
+.. SUCCESS!
+Starting MySQL
+. SUCCESS!
+```
+
+## 5. CakePHP起動
+
+```bash:ターミナル
+$ bin/cake server
+```
+
+ブラウザで `http://localhost:8765/` にアクセスして以下のようにdatabaseのアイコンが緑色になれば成功！
+![データベース接続完了後のCakePHPの画面](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/594194/4183987c-0420-33f5-4065-d1e207f7b8a4.png)
+
+ここまで。
+
+接続はできたけど、毎回sudo使うことになったり、そもそも[Homebrewでsudoは使ってはいけないという情報](https://teratail.com/questions/263973)を発見。課題。
+
+### 参考記事
+
+- データベース設定について：[MySQL8.0 認証方式を変更する(Laravel5)](https://qiita.com/ucan-lab/items/3ae911b7e13287a5b917)
+
+- MySQLエラーについて：[MySQL5.7が起動できない。](https://qiita.com/gaogaomango/items/933a1f55004920a4323d)
+
+ありがとうございました。

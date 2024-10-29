@@ -11,8 +11,7 @@ type Post = {
 // SSG
 export async function generateStaticParams() {
   const apiUrl =
-    process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/my_site/api'
-  console.log('API URL:', apiUrl) // 環境変数をコンソールに出力
+    process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/my_site/api'
   try {
     const res = await fetch(`${apiUrl}/blog/`, {
       cache: 'force-cache',
@@ -33,8 +32,7 @@ export async function generateStaticParams() {
 
 const getBlogArticle = async (slug: string) => {
   const apiUrl =
-    process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/my_site/api'
-  console.log('API URL:', apiUrl) // 環境変数をコンソールに出力
+    process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/my_site/api'
   try {
     const res = await fetch(`${apiUrl}/blog/${slug}`, {
       cache: 'force-cache',

@@ -6,27 +6,60 @@ import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 
 import Highlight from '@/app/components/atoms/Highlight'
+import CodeBlock from '@/app/components/molecules/CodeBlock'
+import Tags from '@/app/components/molecules/Tags'
 import Sidebar from '@/app/components/templates/Sidebar'
 
+import EmbedArticle from '@/app/components/molecules/EmbedArticle'
 import 'prismjs/components/prism-python.js'
 import 'prismjs/themes/prism-tomorrow.css'
+import React, { ReactNode } from 'react'
 
-interface BlogContentProps {
+import styles from './ArticleContent.module.css'
+
+interface ArticleContentProps {
   blogArticle: any
   SidebarComponents: React.ReactNode[]
 }
 
-const BlogContent: React.FC<BlogContentProps> = ({
+const codeBlockComponents = {
+  code: (
+    props: JSX.IntrinsicAttributes & {
+      className?: string
+      children?: ReactNode
+    },
+  ) => {
+    if (props.className) {
+      return <CodeBlock {...props} />
+    }
+    return <code {...props} />
+  },
+  p: (props: JSX.IntrinsicAttributes & { children?: ReactNode }) => (
+    <div {...props} />
+  ),
+  a: (
+    props: JSX.IntrinsicAttributes & { href?: string; children?: ReactNode },
+  ) => {
+    const { href, children } = props
+    if (href && href.startsWith('http')) {
+      return <EmbedArticle url={href} />
+    }
+    return <a {...props}>{children}</a>
+  },
+}
+
+const ArticleContent: React.FC<ArticleContentProps> = ({
   blogArticle,
   SidebarComponents,
 }) => {
   return (
     <div className="mb-10 flex min-h-screen w-full max-w-screen-lg justify-start md:max-w-full">
-      <div className="max-w-full bg-white p-10 lg:max-w-[900px]">
-        <h1>{blogArticle.title}</h1>
-        <br />
+      <div
+        className={`w-full max-w-full rounded-lg bg-white p-10 pb-24 shadow-sm xl:px-[4em] ${styles.articleContent}`}
+      >
         <p>{blogArticle.date}</p>
-        <br />
+        <h1>{blogArticle.title}</h1>
+        {blogArticle.tags && <Tags tags={blogArticle.tags} />}
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
@@ -35,25 +68,23 @@ const BlogContent: React.FC<BlogContentProps> = ({
         />
         {/* 目次表示に必要 */}
         <div className="target-toc">
-          <div>
-            <MDXRemote
-              source={blogArticle.content}
-              components={{ Highlight }}
-              options={{
-                mdxOptions: {
-                  remarkPlugins: [remarkGfm, remarkMath],
-                  rehypePlugins: [rehypePrism, rehypeKatex, rehypeSlug],
-                },
-              }}
-            />
-          </div>
+          <MDXRemote
+            source={blogArticle.content}
+            components={{ ...codeBlockComponents, Highlight }}
+            options={{
+              mdxOptions: {
+                remarkPlugins: [remarkGfm, remarkMath],
+                rehypePlugins: [rehypePrism, rehypeKatex, rehypeSlug],
+              },
+            }}
+          />
         </div>
       </div>
-      <div className="lg:ml-10">
-        <Sidebar SidebarComponents={[SidebarComponents]} />
+      <div className="flex-grow lg:ml-10">
+        <Sidebar SidebarComponents={SidebarComponents} />
       </div>
     </div>
   )
 }
 
-export default BlogContent
+export default ArticleContent

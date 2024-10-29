@@ -1,0 +1,121 @@
+---
+title: 'CakePHP3.9をMacにインストールする（MAMP使用）'
+date: '2020-10-02'
+tags:
+  - 'PHP'
+  - 'MAMP'
+  - '環境構築'
+---
+
+## 環境
+
+バージョンは下記
+
+- OS：MacOS Catalina 10.15.4
+
+- PHP：7.3.22
+
+- Composer：1.10.13
+
+今回はデータベースについては触れません
+
+以下記事でデータベース入れました▼
+[CakePHP3.9にMySQLを接続する（Homebrew使用）](https://qiita.com/motoshi_cocoa/items/0e2489bfe4ae9cf9d5a9)
+
+## MAMPのダウンロード
+
+- MAMP参考
+  https://qiita.com/kuro-wassan/items/1cb32995acc07a4b4cc6
+
+- MAMPのサイト
+  https://www.mamp.info/en/downloads/ からMac用のMAMPをダウンロードする。
+
+- ApplicationsフォルダのなかにMAMPがダウンロードされる。
+
+## CakePHPのアプリの作成
+
+- CakePHP3.9 公式
+  https://book.cakephp.org/3/ja/installation.html
+
+- MAMPが落ちたところへ行く
+
+```bash:ターミナル
+$ cd Applications
+$ ls
+$ cd MAMP
+```
+
+↑MAMPが複数ある場合は名前が違うことがあるので注意
+
+- htdocsに入る（この中にCakePHPアプリをおきたい）
+
+```bash:ターミナル
+$ cd htdocs
+```
+
+- CakePHPアプリの作成
+
+```bash:ターミナル
+$ php composer.phar create-project --prefer-dist cakephp/app:^3.8 app_name
+```
+
+または
+
+```bash:ターミナル
+$ composer self-update && composer create-project --prefer-dist cakephp/app:^3.8 app_name
+```
+
+でCakePHPのアプリが作られる（`app_name`のところには任意のアプリ名を入れる）
+
+```bash:ターミナル
+Updating to version 1.10.13 (stable channel).
+   Downloading (100%)
+Use composer self-update --rollback to return to version 1.10.5
+Creating a "cakephp/app:^3.8" project at "./app_name"
+Installing cakephp/app (3.9.0)
+.
+.
+. 省略
+.
+.
+> App\Console\Installer::postInstall
+Created `config/app_local.php` file
+Created `/Applications/MAMP/htdocs/app_name/tmp/cache/views` directory
+Set Folder Permissions ? (Default to Y) [Y,n]?
+```
+
+↑ファイルの権限を設定していいかcomposerに聞かれるけどYと答えてEnter。
+
+- アプリが作成されているか確認してアプリフォルダに入る
+
+```bash:ターミナル
+$ ls
+app_name
+$ cd app_name
+```
+
+- 起動！
+
+```bash:ターミナル
+$ bin/cake server
+```
+
+```bash:ターミナル
+Welcome to CakePHP v3.9.2 Console
+---------------------------------------------------------------
+App : src
+Path: /Applications/MAMP/htdocs/app_name/src/
+DocumentRoot: /Applications/MAMP/htdocs/app_name/webroot
+Ini Path:
+---------------------------------------------------------------
+built-in server is running in http://localhost:8765/
+You can exit with `CTRL-C`
+```
+
+- 上記のような表示が出たら成功
+
+- ブラウザで `http://localhost:8765/` にアクセスしてみる
+
+![スクリーンショット 2020-10-02 0.29.04.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/594194/247bd690-37dd-fd2a-bb64-e5fff6e7d92f.png)
+
+ここまで。

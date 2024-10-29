@@ -1,0 +1,113 @@
+---
+title: 'reCAPTCHA(リキャプチャ)導入'
+date: '2021-03-18'
+tags:
+  - 'reCAPTCHA'
+  - 'PHP'
+  - 'セキュリティ'
+---
+
+## reCAPTCHAとは
+
+reCAPTCHA（リキャプチャ）とは、CAPTCHAと呼ばれる
+ボットの攻撃からWebサイトを守る機能の一種。
+
+CAPTCHAとは「completely automated public Turing test to tell computers and humans apart 」の略で、人間とコンピュータを区別するためのテストというような意味を持つ。
+
+具体的な方法としては、下の画像のように崩れた文字を認識させたり、あてはまる画像を選択させたりする。
+
+![reCAPTCHAv1の例](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/594194/a219bdd0-62ec-4a2c-7fb2-24c5432211c8.png)
+![reCAPTCHAv2の例](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/594194/43588993-9150-4b6b-ef14-c7631dfc7021.png)
+
+2021年2月現在、reCAPTCHAはv1（提供停止）、v2、v3まで開発されてGoogleが提供している。
+
+reCAPTCHAについて詳しく書かれた記事はこちら▼
+[「reCAPTCHA」って？スパム対策に効果的なreCAPTCHAをフォームに入れてみた](https://www.synergy-marketing.co.jp/blog/using_recaptcha_on_form)
+
+## reCAPTCHA v2 導入手順
+
+クライアント側につける「サイトキー」とサーバー側につける「シークレットキー」によって機能をつけることができる。メール送信フォームを参考に、鍵を作成→クライアント側(HTMLとjQuery)を記述→サーバー側(PHP)を記述という流れで実装する。
+
+1. Google reCAPTCHA にアクセス
+   https://www.google.com/recaptcha/about/
+   ![スクリーンショット 2021-02-04 23.55.32.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/594194/55e07f03-c734-1bb2-eefc-f2cabb7c1d10.png)
+
+1. Admin Consoleをクリックしたあと「＋」ボタンから新規作成ページへ行く。
+   ![スクリーンショット 2021-02-05 0.03.14.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/594194/18fa70ed-2711-683a-9a33-86cefc9bc9d8.png)
+
+1. 名前、バージョン（今回はv2をチェック）、ドメインをそれぞれ入力して送信。
+   ![スクリーンショット 2021-02-05 0.01.21.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/594194/b52d85bf-3223-7a57-1502-1441e218132c.png)
+
+1. サイトキーとシークレットキーが表示されるので、閉じずにそのままにしておく。
+
+1. HTMLでメール送信フォームを作り、サーバー側でreCAPCHAのデータをチェックする
+
+```HTML:html
+<html>
+<head>
+    <!-- reCAPTCHAapi読み込み -->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <!-- jQuery読み込み -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+    <form id="form" method="post">
+        <div>
+            <label for="name">名前</label>
+            <input type="text" id="name">
+        </div>
+        <div>
+            <label for="email">メールアドレス</label>
+            <input  type="email" id="email">
+        </div>
+        <div>
+            <label for="body">本文</label>
+            <textarea id="body"></textarea>
+        </div>
+        <!-- formタグの内側でreCAPTHA登場場所を記述 サイトキーを入れる-->
+        <div class="g-recaptcha" data-callback="onSubmit" data-sitekey=""></div>
+        <!-- 送信ボタンのデフォルトをdisaledにする -->
+        <button type="submit" class="submit-button" disabled>送信</button>
+    </form>
+    <script>
+    function onSubmit(recaptcha) {
+        if (recaptcha !== ''){
+            // reCAPTHAによるチェックをしたあとは送信ボタンを押せるようにする
+            $('.submit-button').removeAttr('disabled');
+        }
+    }
+    </script>
+</body>
+</html>
+```
+
+```php:php
+// メール送信処理の中で
+
+    $recaptcha = h($this->request->data['g-recaptcha-response']);
+    if (isset($recaptcha)) {
+        $captcha = $recaptcha;
+    } else {
+        $captcha = '';
+    }
+    // シークレットキーを入れる
+    $secretKey = "";
+    $resp = @file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secretKey}&response={$captcha}");
+    $resp_result = json_decode($resp,true);
+    if(intval($resp_result["success"]) !== 1) {
+        // reCAPTCHA承認失敗時の処理
+    } else {
+        // reCAPTCHA承認成功時の処理
+    }
+```
+
+これで、v2のreCAPTHAを実装できた。
+![スクリーンショット 2021-02-05 1.04.38.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/594194/1a4ac286-bcfe-85dc-d10a-de22ebdae845.png)
+
+ただし日々のコンピュータの進化は早く、これらを突破するソフトウェアやreCAPCHTAの脆弱性についてもすでにいくつか報告されている。
+
+コンピュータと人を見分けるテスト。熱い戦いが続きそう。
+
+### 参考にさせてもらった記事
+
+[Googleの「reCAPTCHA」を5分で実装する](https://liapoc.com/recaptcha.html)

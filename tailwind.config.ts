@@ -16,7 +16,7 @@ const config: Config = {
         teal: '#008080',
       },
       animation: {
-        'fade-in': 'fadeIn 2s ease-in-out',
+        'fade-in': 'fadeIn 10s ease-in-out',
         'fade-in-up': 'fadeInUp 1s ease-in-out',
       },
       keyframes: {

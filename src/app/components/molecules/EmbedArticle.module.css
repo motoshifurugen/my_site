@@ -1,0 +1,90 @@
+.embedArticle_container {
+  border: 0.5px solid rgba(92, 147, 187, 0.5);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin: 1em 0;
+  position: relative;
+}
+
+.embedArticleCard_link {
+  display: flex;
+  aling-items: center;
+  font-size: 1em;
+  height: 140px;
+  line-height: 1.5;
+  transition-behavior: normal;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+  transition-delay: 0s;
+  transition-property: all;
+  color: rgba(0, 0, 0, 0.82);
+  text-decoration: none;
+  background: #fff;
+  word-break: break-all;
+}
+
+.embedArticleCard_link:hover {
+  background: rgba(246, 246, 246, 0.8);
+}
+
+.embedArticle_main {
+  flex: 1 1;
+  padding: 0.6em 1.2em;
+  min-width: 0;
+}
+
+.embedArticle_title,
+.embedArticle_description {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.embedArticle_title {
+  margin: 0;
+  font-size: 1em;
+  -webkit-line-clamp: 2;
+  max-height: 3em;
+  user-select: none;
+  word-break: break-word;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-line-start: 0;
+  margin-line-end: 0;
+  font-weight: bold;
+  unicode-bidi: isolate;
+}
+
+.embedArticle_description {
+  margin-top: 0.5em;
+  color: #77838c;
+  font-size: 0.8em;
+  -webkit-line-clamp: 1;
+  max-height: 1.55em;
+}
+
+.embedArticle_meta {
+  margin-top: 0.5em;
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute; /* 固定 */
+  bottom: 0; /* 親要素の下に固定 */
+  left: 0;
+  right: 0;
+  padding: 1.2em;
+}
+
+.embedArticle_favicon {
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.embedArticle_img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
