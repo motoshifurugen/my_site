@@ -7,7 +7,7 @@ import nextConfig from '../../../../next.config.mjs'
 import MaintenanceTemplate from '../../components/templates/MaintenanceTemplate'
 
 const BASE_PATH = nextConfig.basePath || ''
-const public_flag = false
+const public_flag = true
 
 const ArticleList = dynamic(
   () => import('@/app/components/templates/ArticleList'),
