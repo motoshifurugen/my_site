@@ -28,6 +28,7 @@ export async function getPostBySlug(slug: string) {
     slug: realSlug,
     ...matterResult.data,
     content: matterResult.content,
+    date: matterResult.data.date.toISOString(),
   }
 }
 
