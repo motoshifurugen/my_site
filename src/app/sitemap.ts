@@ -2,25 +2,26 @@ import { getAllPosts } from '@/app/api/utils/getPostData'
 import { MetadataRoute } from 'next'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = 'https://furugen-island.com/my_site'
   const defaultPages: MetadataRoute.Sitemap = [
     {
-      url: 'https://furugen-island.com/my_site/',
+      url: `${baseUrl}/`,
       lastModified: new Date(),
     },
     {
-      url: 'https://furugen-island.com/my_site/profile',
+      url: `${baseUrl}/profile`,
       lastModified: new Date(),
     },
     {
-      url: 'https://furugen-island.com/my_site/blog',
+      url: `${baseUrl}/blog`,
       lastModified: new Date(),
     },
     {
-      url: 'https://furugen-island.com/my_site/skills',
+      url: `${baseUrl}/skills`,
       lastModified: new Date(),
     },
     {
-      url: 'https://furugen-island.com/my_site/contact',
+      url: `${baseUrl}/contact`,
       lastModified: new Date(),
     },
   ]
@@ -28,7 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getAllPosts()
 
   const blogPages: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `https://furugen-island.com/my_site/api/blog/${post.slug}`,
+    url: `${baseUrl}/blog/${post.slug}`,
     lastModified: new Date(post.date),
   }))
 
