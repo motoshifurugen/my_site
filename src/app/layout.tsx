@@ -8,6 +8,7 @@ import './globals.css'
 
 config.autoAddCss = false
 
+import siteConfig from '@/app/config/siteConfig'
 import BackgroundWrapper from './components/atoms/BackgroundWrapper'
 import Footer from './components/templates/Footer'
 import Header from './components/templates/Header'
@@ -15,9 +16,8 @@ import Header from './components/templates/Header'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Furugen's Island",
-  description:
-    '青い海と白い砂浜の合間にそっと溶け込むメロディのように、静かなワクワク感を届けるフロントエンドエンジニア Furugen のポートフォリオサイト。開発への情熱と遊び心を込めたプロジェクトやブログをぜひご覧ください。',
+  title: siteConfig.title,
+  description: siteConfig.description,
 }
 
 export default function RootLayout({

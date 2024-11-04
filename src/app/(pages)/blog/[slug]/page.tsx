@@ -1,57 +1,27 @@
 import Toc from '@/app/components/molecules/Toc'
 import ArticleContent from '@/app/components/templates/ArticleContent'
+import { Metadata } from 'next'
+import { getBlogArticle } from './page.server'
 
-type Post = {
-  slug: string
-  title: string
-  date: string
-  blogContentsHTML: string
-}
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string }
+}): Promise<Metadata> {
+  const blogArticle = await getBlogArticle(params.slug)
+  const description = blogArticle.content.slice(0, 50)
 
-// SSG
-export async function generateStaticParams() {
-  const apiUrl =
-    process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/my_site/api'
-  try {
-    const res = await fetch(`${apiUrl}/blog/`, {
-      cache: 'force-cache',
-    })
-    if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(`Failed to fetch data from ${apiUrl}/blog/: ${errorText}`)
-    }
-    const blogData = await res.json()
-    return blogData.map((blog: Post) => ({
-      slug: blog.slug,
-    }))
-  } catch (error) {
-    console.error('Error fetching blog data:', error)
-    throw new Error('Failed to fetch blog data')
+  return {
+    title: blogArticle.title,
+    description: description,
   }
 }
 
-const getBlogArticle = async (slug: string) => {
-  const apiUrl =
-    process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/my_site/api'
-  try {
-    const res = await fetch(`${apiUrl}/blog/${slug}`, {
-      cache: 'force-cache',
-    })
-    if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(
-        `Failed to fetch data from ${apiUrl}/blog/${slug}: ${errorText}`,
-      )
-    }
-    const blogArticle = await res.json()
-    return blogArticle
-  } catch (error) {
-    console.error('Error fetching blog article:', error)
-    throw new Error('Failed to fetch blog article')
-  }
-}
-
-const BlogArticlePage = async ({ params }: { params: { slug: string } }) => {
+export default async function BlogArticlePage({
+  params,
+}: {
+  params: { slug: string }
+}) {
   const blogArticle = await getBlogArticle(params.slug)
 
   return (
@@ -63,5 +33,3 @@ const BlogArticlePage = async ({ params }: { params: { slug: string } }) => {
     </section>
   )
 }
-
-export default BlogArticlePage

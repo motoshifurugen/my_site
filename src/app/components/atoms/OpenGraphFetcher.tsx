@@ -1,4 +1,3 @@
-import ogs from 'open-graph-scraper'
 import React, { useEffect } from 'react'
 
 interface OpenGraphData {
@@ -21,16 +20,16 @@ const OpenGraphFetcher: React.FC<OpenGraphFetcherProps> = ({
 }) => {
   useEffect(() => {
     const fetchOgData = async () => {
+      const apiUrl =
+        process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/my_site/api'
       try {
-        const { result, error } = await ogs({ url })
-        if (error) {
-          console.error('Failed to fetch Open Graph data', error)
-          onFetch(null)
-        } else {
-          onFetch(result as OpenGraphData)
-        }
+        const response = await fetch(
+          `${apiUrl}/og-fetch?url=${encodeURIComponent(url)}`,
+        )
+        const data = await response.json()
+        onFetch(data)
       } catch (error) {
-        console.error('Error fetching Open Graph data:', error)
+        console.error('Failed to fetch Open Graph data', error)
         onFetch(null)
       }
     }
