@@ -1,0 +1,16 @@
+{
+  "title": "Furugen's Island",
+  "description": "青い海と白い砂浜の合間にそっと溶け込むメロディのように、静かなワクワク感を届けるフロントエンドエンジニア Furugen のポートフォリオサイト。開発への情熱と遊び心を込めたプロジェクトやブログをぜひご覧ください。",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

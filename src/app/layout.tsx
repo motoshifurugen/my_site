@@ -16,7 +16,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: "Furugen's Island",
-  description: "This is Furugen's personal website.",
+  description:
+    '青い海と白い砂浜の合間にそっと溶け込むメロディのように、静かなワクワク感を届けるフロントエンドエンジニア Furugen のポートフォリオサイト。開発への情熱と遊び心を込めたプロジェクトやブログをぜひご覧ください。',
 }
 
 export default function RootLayout({
