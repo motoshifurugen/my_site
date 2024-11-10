@@ -1,6 +1,11 @@
+import { usePathname } from 'next/navigation'
 import React, { useEffect, useRef } from 'react'
+import nextConfig from '../../../../next.config.mjs'
+const BASE_PATH = nextConfig.basePath || ''
 
 const AnimatedLine: React.FC = () => {
+  const pathname = usePathname()
+  const isRootPath = pathname === `${BASE_PATH}/` || pathname === '/'
   const lineRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -32,10 +37,12 @@ const AnimatedLine: React.FC = () => {
   }, [])
 
   return (
-    <div
-      ref={lineRef}
-      className="my-6 h-0.5 w-0 bg-main-black transition-all duration-1000 ease-in-out"
-    ></div>
+    <div className={`${isRootPath ? 'hidden' : 'bg-main-white py-8'}`}>
+      <div
+        ref={lineRef}
+        className="h-0.5 w-0 bg-main-black transition-all duration-1000 ease-in-out"
+      ></div>
+    </div>
   )
 }
 

@@ -1,5 +1,6 @@
 'use client'
 
+import SketchCloud from '@/app/components/atoms/SketchCloud'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 import nextConfig from '../../../../next.config.mjs'
@@ -14,14 +15,23 @@ const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({
   return (
     <div className="relative min-h-screen">
       {isRootPath && (
-        <div
-          className="absolute inset-0 h-screen animate-fade-in bg-cover bg-fixed bg-center bg-no-repeat opacity-50"
-          style={{
-            backgroundImage: `url('${BASE_PATH}/images/back-pic/day_01.jpg')`,
-          }}
-        ></div>
+        <>
+          <div className="min-h-screen"></div>
+          <div className="fixed inset-0 z-0">
+            <SketchCloud />
+          </div>
+        </>
       )}
-      <div className={`${isRootPath ? 'relative z-10' : ''}`}>{children}</div>
+      <div
+        className={`${isRootPath ? 'relative z-10 pb-16' : ''}`}
+        style={{
+          backgroundColor: isRootPath
+            ? 'rgba(246, 246, 246, 0.5)'
+            : 'transparent',
+        }}
+      >
+        {children}
+      </div>
     </div>
   )
 }

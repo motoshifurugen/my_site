@@ -9,7 +9,7 @@ import './globals.css'
 config.autoAddCss = false
 
 import siteConfig from '@/app/config/siteConfig'
-import BackgroundWrapper from './components/atoms/BackgroundWrapper'
+import BackgroundWrapper from './components/molecules/BackgroundWrapper'
 import Footer from './components/templates/Footer'
 import Header from './components/templates/Header'
 
