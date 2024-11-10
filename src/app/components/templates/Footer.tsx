@@ -10,10 +10,10 @@ import AnimatedLine from '../atoms/AnimatedLine'
 export default function Footer() {
   return (
     <>
-      <div className="relative z-20 bg-main-white">
+      <div className="relative z-20 bg-main-white py-10">
         <AnimatedLine />
         <footer>
-          <section>
+          <div className="container mx-auto p-4">
             <div className="container mt-4 h-32 md:flex">
               <div className="rightFooter w-full md:w-3/4">
                 <p className="mb-1 text-lg md:mb-3">古堅 基史</p>
@@ -73,7 +73,7 @@ export default function Footer() {
                 <p className="self-end opacity-50">&copy; 2024 furugen</p>
               </div>
             </div>
-          </section>
+          </div>
         </footer>
       </div>
     </>
