@@ -23,7 +23,7 @@ const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({
         </>
       )}
       <div
-        className={`${isRootPath ? 'relative z-10 pb-16' : ''}`}
+        className={`${isRootPath ? 'relative z-10 pb-32' : ''}`}
         style={{
           backgroundColor: isRootPath
             ? 'rgba(246, 246, 246, 0.5)'

@@ -25,7 +25,7 @@ export default function TitleAnimation() {
     <div
       className="
         dm-sans h-[180px] max-w-full text-left text-6xl font-bold
-        tracking-widest md:h-screen md:text-9xl"
+        tracking-widest md:h-[320px] md:text-9xl"
       ref={textRef}
     ></div>
   )

@@ -8,19 +8,19 @@ const BASE_PATH = nextConfig.basePath || ''
 export default function Home() {
   return (
     <section>
-      <div className="hidden min-h-10 w-full md:block">
+      <div className="hidden w-full md:block">
         <TitleAnimation />
       </div>
       <div className="items-top flex flex-col md:flex-row">
         <div className="w-full flex-1 md:hidden">
           <TitleAnimation />
         </div>
-        <div className="mx-auto hidden w-1/2 md:flex md:justify-center">
+        <div className="mx-auto hidden w-1/2 md:flex md:justify-end">
           <Image
             src={`${BASE_PATH}/images/island.png`}
             alt="island"
-            width={400}
-            height={400}
+            width={320}
+            height={320}
             priority
           />
         </div>
