@@ -11,6 +11,7 @@ const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const pathname = usePathname()
   const isRootPath = pathname === `${BASE_PATH}/` || pathname === '/'
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
 
   return (
     <div className="relative min-h-screen">
@@ -18,7 +19,7 @@ const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({
         <>
           <div className="min-h-screen"></div>
           <div className="fixed inset-0 z-0">
-            <SketchCloud />
+            <SketchCloud mode={isMobile ? 'light' : 'normal'} />
           </div>
         </>
       )}

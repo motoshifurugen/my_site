@@ -12,7 +12,11 @@ const ReactP5Wrapper = dynamic(
   },
 )
 
-const SketchCloud: React.FC = () => {
+interface SketchCloudProps {
+  mode: 'normal' | 'light'
+}
+
+const SketchCloud: React.FC<SketchCloudProps> = ({ mode }) => {
   const [isMounted, setIsMounted] = useState(false)
   useEffect(() => {
     setIsMounted(true)
@@ -33,6 +37,11 @@ const SketchCloud: React.FC = () => {
     }
 
     p.draw = () => {
+      // 描画の頻度をモードに応じて調整
+      if (mode === 'light' && p.frameCount % 4 !== 0) {
+        return
+      }
+
       p.background(134, 179, 224) // 空色
       p.fill(246, 246, 246, 200)
       p.circle(p.mouseX, p.mouseY, 24)
@@ -67,9 +76,11 @@ const SketchCloud: React.FC = () => {
 
       p.noStroke()
 
-      if (p.mouseIsPressed) {
+      if (p.mouseIsPressed || p.touches.length > 0) {
         clicked = true
-        cloud_box.push({ x: p.mouseX, y: p.mouseY, size: 75, alpha: 255 })
+        const x = p.mouseIsPressed ? p.mouseX : p.touches[0].x
+        const y = p.mouseIsPressed ? p.mouseY : p.touches[0].y
+        cloud_box.push({ x, y, size: 75, alpha: 255 })
       }
 
       for (let i = 0; i < cloud_box.length; i++) {
@@ -87,12 +98,13 @@ const SketchCloud: React.FC = () => {
 
       p.filter(p.BLUR, 3)
 
+      // クリックされるまでのメッセージ
       if (!clicked) {
         p.textAlign(p.CENTER, p.CENTER)
         p.textSize(32)
         p.textStyle(p.BOLD)
         p.fill(246)
-        p.text('Click!', p.width / 2, p.height / 2)
+        p.text('Under the blue sky,', p.width / 2, p.height / 2)
       }
     }
 
