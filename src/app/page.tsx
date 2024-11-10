@@ -7,7 +7,7 @@ const BASE_PATH = nextConfig.basePath || ''
 
 export default function Home() {
   return (
-    <section>
+    <div className="container mx-auto p-4">
       <div className="hidden w-full md:block">
         <TitleAnimation />
       </div>
@@ -31,6 +31,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }

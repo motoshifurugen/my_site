@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning={true}>
       <head>
         {/* Google Fonts読み込み */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

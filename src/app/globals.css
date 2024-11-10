@@ -89,7 +89,7 @@
       @apply important-pt-28 important-md:pt-28;
     }
     section {
-      @apply important-container important-mx-auto important-p-4;
+      @apply important-container important-mx-auto important-p-4 important-bg-main-white;
       h2 {
         @apply important-my-8;
       }
