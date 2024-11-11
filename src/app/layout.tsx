@@ -1,30 +1,36 @@
+'use client'
+
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
-import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import 'tailwindcss/tailwind.css'
 import './globals.css'
 
 config.autoAddCss = false
 
+import LoadingCircle from '@/app/components/atoms/LoadingCircle'
 import siteConfig from '@/app/config/siteConfig'
+import React, { useEffect, useState } from 'react'
 import BackgroundWrapper from './components/molecules/BackgroundWrapper'
 import Footer from './components/templates/Footer'
 import Header from './components/templates/Header'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: siteConfig.title,
-  description: siteConfig.description,
-}
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 1500) // 2秒後にローディングを終了
+  }, [])
+
   return (
     <html lang="ja" suppressHydrationWarning={true}>
       <head>
@@ -40,8 +46,11 @@ export default function RootLayout({
           rel="stylesheet"
         />
         <link rel="manifest" href="/my_site/manifest.json" />
+        <title>{siteConfig.title}</title>
+        <meta name="description" content={siteConfig.description} />
       </head>
       <body className={inter.className}>
+        <LoadingCircle isLoading={isLoading} />
         <BackgroundWrapper>
           <Header />
           <main>{children}</main>

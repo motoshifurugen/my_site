@@ -28,7 +28,13 @@
           "code-block-title",
           "code-block-container",
           "copy-button",
-          "copy-message"
+          "copy-message",
+          "seagull",
+          "seagull-1",
+          "seagull-2",
+          "wing",
+          "left-wing",
+          "right-wing"
         ]
       }
     ]
