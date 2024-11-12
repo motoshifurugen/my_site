@@ -21,18 +21,42 @@ const LoadingCircle: React.FC<LoadingCircleProps> = ({ isLoading }) => {
       <div
         className={`fixed inset-0 z-50 flex items-center justify-center bg-main-white transition-opacity duration-1000 ${isLoading ? 'opacity-100' : 'opacity-0'}`}
       >
-        <div className="seagull seagull-1">
-          <div className="wing left-wing"></div>
-          <div className="wing right-wing"></div>
-        </div>
-        <div className="seagull seagull-2">
-          <div className="wing left-wing"></div>
-          <div className="wing right-wing"></div>
+        <div className="relative flex items-center justify-center">
+          <div className="circle"></div>
+          <div className="seagull seagull-1">
+            <div className="wing left-wing"></div>
+            <div className="wing right-wing"></div>
+          </div>
+          <div className="seagull seagull-2">
+            <div className="wing left-wing"></div>
+            <div className="wing right-wing"></div>
+          </div>
         </div>
         <style jsx>{`
+          .circle {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: #86b3e0;
+            border-radius: 50%;
+            animation: grow 2s infinite ease-in-out;
+          }
+
+          @keyframes grow {
+            0% {
+              transform: scale(1);
+            }
+            50% {
+              transform: scale(1.5);
+            }
+            100% {
+              transform: scale(1);
+            }
+          }
+
           .seagull {
             position: relative;
-            width: 40px;
+            width: 60px;
             height: 30px;
           }
 
@@ -46,8 +70,8 @@ const LoadingCircle: React.FC<LoadingCircleProps> = ({ isLoading }) => {
 
           .wing {
             position: absolute;
-            width: 20px;
-            height: 10px;
+            width: 30px;
+            height: 8px;
             background: #4a4a4a;
             border-radius: 90% 90% 0 0;
             animation: flap 0.6s infinite ease-in-out;

@@ -28,7 +28,7 @@ export default function RootLayout({
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false)
-    }, 1500) // 2秒後にローディングを終了
+    }, 2000) // 2秒後にローディングを終了
   }, [])
 
   return (

@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { FiRefreshCw } from 'react-icons/fi'
 
+import LoadingCircle from '@/app/components/atoms/LoadingCircle'
 import styles from '@/app/components/templates/ArticleContent.module.css'
 
 const getBlogData = async () => {
@@ -62,7 +63,7 @@ const ArticleList: React.FC = () => {
   }
 
   if (isLoading) {
-    return <div></div> // ローディング中は何も表示しない
+    return <LoadingCircle isLoading={isLoading} />
   }
 
   return (
