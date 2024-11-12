@@ -32,8 +32,8 @@ const LoadingCircle: React.FC<LoadingCircleProps> = ({ isLoading }) => {
         <style jsx>{`
           .seagull {
             position: relative;
-            width: 80px;
-            height: 60px;
+            width: 40px;
+            height: 30px;
           }
 
           .seagull-1 {
@@ -46,8 +46,8 @@ const LoadingCircle: React.FC<LoadingCircleProps> = ({ isLoading }) => {
 
           .wing {
             position: absolute;
-            width: 40px;
-            height: 15px;
+            width: 20px;
+            height: 10px;
             background: #4a4a4a;
             border-radius: 90% 90% 0 0;
             animation: flap 0.6s infinite ease-in-out;

@@ -23,6 +23,8 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@next/third-parties": "^14.2.5",
     "@p5-wrapper/react": "^4.4.2",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.5.0",
     "@types/react-icons": "^3.0.0",
     "@types/tailwindcss": "^3.1.0",
     "esprima": "^4.0.1",
