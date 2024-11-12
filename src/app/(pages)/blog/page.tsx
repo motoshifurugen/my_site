@@ -20,7 +20,7 @@ export default function Blog() {
       {public_flag ? (
         <>
           <section>
-            <PageFace title="開発ブログ" subtitle="" mainMessage={<></>} />
+            <PageFace title="Blog" subtitle="" mainMessage={<></>} />
           </section>
 
           <AnimatedLine />
@@ -31,7 +31,7 @@ export default function Blog() {
         </>
       ) : (
         <MaintenanceTemplate
-          title="開発ブログ"
+          title="Blog"
           imagePath={`${BASE_PATH}/images/cats/coming_soon.png`}
         />
       )}

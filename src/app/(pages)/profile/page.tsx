@@ -11,8 +11,8 @@ export default function Page() {
     <>
       <section className="content-wrapper container mx-auto">
         <PageFace
-          title="プロフィール"
-          subtitle="古堅基史（Furugen Motoshi）"
+          title="Profile"
+          subtitle="古堅基史（Furugen, Motoshi）"
           mainMessage={<MainMessage />}
         />
       </section>

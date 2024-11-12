@@ -9,18 +9,18 @@ export default function Page() {
   return (
     <>
       <section>
-        <PageFace title="実績・スキル" subtitle="" mainMessage={<></>} />
+        <PageFace title="Portfolio" subtitle="" mainMessage={<></>} />
       </section>
 
       <AnimatedLine />
 
       <section>
-        <h2>制作実績</h2>
+        <h2>Projects</h2>
         <WorkList />
       </section>
 
       <section>
-        <h2>スキルタイムチャート</h2>
+        <h2>Skills</h2>
         <SkillTimeline />
       </section>
     </>

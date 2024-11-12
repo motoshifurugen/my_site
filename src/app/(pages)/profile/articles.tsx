@@ -2,7 +2,7 @@ const history = [
   { year: '1998年', description: '沖縄に生まれる' },
   {
     year: '2017年',
-    description: '高校卒業後、広島大学理学部物理学科へ進学する',
+    description: '高校卒業後、理学部物理学科へ進学する',
   },
   { year: '2020年', description: '大学休学中にプログラミングを始める' },
   { year: '2021年', description: '長期インターンでWebエンジニアを経験する' },
@@ -12,7 +12,7 @@ const history = [
 
 export const articles = [
   {
-    title: '経歴',
+    title: 'Carrer',
     content: (
       <div className="flex flex-col space-y-4 md:space-y-0">
         {history.map((item, index) => (
@@ -27,7 +27,7 @@ export const articles = [
     imageAlt: 'profile img 01',
   },
   {
-    title: '興味',
+    title: 'Interest',
     content: (
       <p>
         物理学が目に見えない自然の法則を解き明かすように、
@@ -43,7 +43,7 @@ export const articles = [
     imageAlt: 'profile img 02',
   },
   {
-    title: '趣味',
+    title: 'Hobby',
     content: (
       <p>
         読書（ビジネス書中心） ・ 短歌 ・ 散歩 ・ ドライブ ・

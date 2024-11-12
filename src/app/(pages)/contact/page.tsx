@@ -8,7 +8,7 @@ export default function Contact() {
   return (
     <>
       <section>
-        <PageFace title="お問い合わせ" subtitle="" mainMessage={<></>} />
+        <PageFace title="Contact" subtitle="" mainMessage={<></>} />
       </section>
 
       <AnimatedLine />

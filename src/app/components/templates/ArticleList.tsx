@@ -72,19 +72,17 @@ const ArticleList: React.FC = () => {
           <div className="mb-4 flex items-center justify-between">
             {selectedTag ? (
               <>
-                <div className="text-xl font-bold">
-                  『{selectedTag}』の記事一覧
-                </div>
+                <div className="text-xl font-bold">『{selectedTag}』</div>
                 <button
                   onClick={resetFilter}
                   className="relative flex items-center rounded px-6 py-3 text-lg text-main-black transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-teal after:transition-all after:duration-300 hover:after:w-full"
                 >
-                  最新記事一覧
+                  All
                   <FiRefreshCw className="ml-2" />
                 </button>
               </>
             ) : (
-              <div className="py-3 text-xl font-bold">最新記事一覧</div>
+              <div className="py-3 text-xl font-bold">All</div>
             )}
           </div>
           <BlogGrid blogData={filteredData} />

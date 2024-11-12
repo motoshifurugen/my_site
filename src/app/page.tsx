@@ -27,7 +27,7 @@ export default function Home() {
         <div className="flex w-full items-center md:w-1/2 md:justify-center">
           <div>
             <MainMessage />
-            <TextArrowLinkButton text="プロフィール" href="/profile" />
+            <TextArrowLinkButton text="Profile" href="/profile" />
           </div>
         </div>
       </div>

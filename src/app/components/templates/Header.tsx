@@ -13,10 +13,10 @@ const BASE_PATH = nextConfig.basePath || ''
 
 // ヘッダーリンク
 const links = [
-  { href: '/profile', text: 'プロフィール' },
-  { href: '/blog', text: '開発ブログ' },
-  { href: '/skills', text: '実績' },
-  { href: '/contact', text: 'コンタクト' },
+  { href: '/profile', text: 'Profile' },
+  { href: '/blog', text: 'Blog' },
+  { href: '/skills', text: 'Portfolio' },
+  { href: '/contact', text: 'Contact' },
 ]
 
 const Header = () => {
