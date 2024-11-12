@@ -51,7 +51,7 @@ const ParticleBackground = () => {
       },
       detectRetina: true,
       duration: 0,
-      fpsLimit: 120,
+      fpsLimit: 30, // フレームレートを制限
       interactivity: {
         detectsOn: 'window',
         events: {
@@ -264,7 +264,7 @@ const ParticleBackground = () => {
           },
           decay: 0,
           distance: {},
-          direction: 'left', // 左向きに設定
+          direction: 'left', // 左向きに移動
           drift: 0,
           enable: true,
           gravity: {
@@ -290,7 +290,7 @@ const ParticleBackground = () => {
           },
           random: false,
           size: false,
-          speed: 1.6, // スピードをゆっくりに設定
+          speed: 0.5, // スピード
           spin: {
             acceleration: 0,
             enable: false,
@@ -314,7 +314,7 @@ const ParticleBackground = () => {
             mode: 'delete',
             value: 0,
           },
-          value: 20, // 点の数を減らす
+          value: 10, // 雲の数
         },
         opacity: {
           value: 0.9,
@@ -349,7 +349,7 @@ const ParticleBackground = () => {
           type: 'circle',
         },
         size: {
-          value: 60, // 点を大きく設定
+          value: 30, // 雲のサイズ
           animation: {
             count: 0,
             enable: false,
