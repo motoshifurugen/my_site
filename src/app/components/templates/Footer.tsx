@@ -18,27 +18,27 @@ export default function Footer() {
               <div className="rightFooter w-full md:w-3/4">
                 <p className="mb-1 text-lg md:mb-3">Motoshi Furugen</p>
                 <p className="flex items-center">
-                  Okinawa
+                  OKA
                   <FontAwesomeIcon
                     icon={faPlane}
                     className="mx-1 text-xxs opacity-70"
                   />
-                  Hiroshima
+                  HIJ
                   <FontAwesomeIcon
                     icon={faPlane}
                     className="mx-1 text-xxs opacity-70"
                   />
-                  Saitama
+                  TYO
                   <FontAwesomeIcon
                     icon={faPlane}
                     className="mx-1 text-xxs opacity-70"
                   />
-                  Hiroshima
+                  HIJ
                   <FontAwesomeIcon
                     icon={faPlane}
                     className="mx-1 text-xxs opacity-70"
                   />
-                  Yokohama
+                  TYO
                 </p>
               </div>
               <div
