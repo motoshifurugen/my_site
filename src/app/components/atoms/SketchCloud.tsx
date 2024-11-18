@@ -34,6 +34,12 @@ const SketchCloud: React.FC<SketchCloudProps> = ({ mode }) => {
     p.setup = () => {
       p.createCanvas(p.windowWidth, p.windowHeight)
       p.noStroke() // 枠線を描かない
+
+      for (let i = 0; i < 3; i++) {
+        const x = p.random(p.windowWidth)
+        const y = p.random(p.windowHeight)
+        cloud_box.push({ x, y, size: 180, alpha: 255 })
+      }
     }
 
     p.draw = () => {
@@ -47,7 +53,7 @@ const SketchCloud: React.FC<SketchCloudProps> = ({ mode }) => {
       p.circle(p.mouseX, p.mouseY, 24)
 
       // ランダムなタイミングで飛行機雲を描画
-      if (contrailTimer <= 0 && p.random() < 0.01) {
+      if (contrailTimer <= 0 && p.random() < 0.05) {
         if (p.random() < 0.5) {
           let position = p.random(100, p.windowHeight)
           contrail = { x1: 0, y1: position, x2: 0, y2: position, alpha: 255 }
@@ -97,15 +103,6 @@ const SketchCloud: React.FC<SketchCloudProps> = ({ mode }) => {
       cloud_box = cloud_box.filter((cloud) => cloud.alpha > 0)
 
       p.filter(p.BLUR, 3)
-
-      // クリックされるまでのメッセージ
-      if (!clicked) {
-        p.textAlign(p.CENTER, p.CENTER)
-        p.textSize(32)
-        p.textStyle(p.BOLD)
-        p.fill(246)
-        p.text('Under the blue sky,', p.width / 2, p.height / 2)
-      }
     }
 
     p.windowResized = () => {

@@ -14,19 +14,18 @@ const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({
   const isRootPath = pathname === `${BASE_PATH}/` || pathname === '/'
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative">
       {isRootPath && (
         <>
-          <div className="hidden md:block md:min-h-screen"></div>
           <div className="fixed inset-0 z-0 hidden md:block">
             <SketchCloud mode="normal" />
           </div>
           <div className="fixed inset-0 z-0 md:hidden">
             {/* <ParticleBackground /> */}
-            <div
+            {/* <div
               className="absolute inset-0"
               style={{ backgroundColor: '#86b3e0' }}
-            ></div>
+            ></div> */}
           </div>
         </>
       )}
@@ -34,7 +33,7 @@ const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({
         className={`${isRootPath ? 'relative z-10 min-h-screen pb-32' : ''}`}
         style={{
           backgroundColor: isRootPath
-            ? 'rgba(246, 246, 246, 0.5)'
+            ? 'rgba(246, 246, 246, 0.3)'
             : 'transparent',
         }}
       >
