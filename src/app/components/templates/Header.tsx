@@ -25,7 +25,6 @@ const Header = () => {
   const toggleMenu = () => setMenuOpen(!menuOpen)
   const pathname = usePathname()
   const isMainPage = pathname === `${BASE_PATH}/` || pathname === '/'
-  const isBlogPage = pathname.startsWith('/blog/')
 
   useEffect(() => {
     // ページ遷移後にスクロール位置をトップにリセット
@@ -61,26 +60,24 @@ const Header = () => {
         </div>
 
         <div className="flex md:ml-auto md:justify-end">
-          {!isBlogPage && (
-            <nav
-              className={`
+          <nav
+            className={`
             item-left fixed right-0 top-0 flex
             h-full flex-col flex-wrap bg-white transition-transform duration-300 ease-in-out md:flex-row
             ${menuOpen ? 'translate-x-0' : 'translate-x-full'} w-full px-4 pt-32
             md:relative md:translate-x-0 md:bg-transparent md:p-0
           `}
-            >
-              {links.map((link, index) => (
-                <HeaderLinkButton
-                  key={index}
-                  href={link.href}
-                  text={link.text}
-                  index={index}
-                />
-              ))}
-              <GithubLinkButton />
-            </nav>
-          )}
+          >
+            {links.map((link, index) => (
+              <HeaderLinkButton
+                key={index}
+                href={link.href}
+                text={link.text}
+                index={index}
+              />
+            ))}
+            <GithubLinkButton />
+          </nav>
         </div>
       </div>
     </header>

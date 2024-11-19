@@ -34,7 +34,7 @@ export default function TitleAnimation() {
   }, [])
 
   return (
-    <div className="relative mb-24 h-[70vh]">
+    <div className="relative mb-24 h-[80vh]">
       <div
         className="
           dm-sans mt-10 max-w-full text-left text-5xl font-bold
