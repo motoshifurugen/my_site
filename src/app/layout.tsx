@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title:
     "Furugen's Island | なんくるないさ系エンジニアの開発ポートフォリオサイト",
   description:
-    'ワクワクを届けたいフロントエンドエンジニア Furugen のポートフォリオサイトです。開発への情熱と遊び心を込めたプロジェクトやブログをぜひご覧ください。',
+    'Welcome to the portfolio site of Furugen, a front-end engineer.Take a look at projects and blog posts with passion for development and playful spirit.',
   icons: [
     {
       rel: 'icon',

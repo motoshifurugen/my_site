@@ -1,5 +1,3 @@
-'use client'
-
 // import ParticleBackground from '@/app/components/atoms/ParticlesBackground'
 import SketchCloud from '@/app/components/atoms/SketchCloud'
 import { usePathname } from 'next/navigation'
