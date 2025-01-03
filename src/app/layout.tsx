@@ -18,25 +18,25 @@ export const metadata: Metadata = {
       rel: 'icon',
       type: 'image/png',
       sizes: '16x16',
-      url: '/favicon/icon-16x16.png',
+      url: '/my_site/favicon/icon-16x16.png',
     },
     {
       rel: 'icon',
       type: 'image/png',
       sizes: '32x32',
-      url: '/favicon/icon-32x32.png',
+      url: '/my_site/favicon/icon-32x32.png',
     },
     {
       rel: 'apple-touch-icon',
-      url: '/favicon/apple-icon.png',
+      url: '/my_site/favicon/apple-icon.png',
     },
     {
       rel: 'shortcut icon',
-      url: '/favicon/favicon.ico',
+      url: '/my_site/favicon/favicon.ico',
     },
     {
       rel: 'manifest',
-      url: '/favicon/site.webmanifest',
+      url: '/my_site/favicon/site.webmanifest',
     },
   ],
 }
