@@ -1,7 +1,7 @@
 export default function MainMessage() {
   return (
     <>
-      <h3>
+      <h3 className="leading-relaxed">
         心の健康を支えるために、
         <br />
         画面の向こうに広がる世界へ、
