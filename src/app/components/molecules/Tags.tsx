@@ -19,7 +19,7 @@ const Tags: React.FC<TagsProps> = ({ tags }) => {
       {tags.map((tag: string, index: number) => (
         <span
           key={index}
-          className="inline-block cursor-pointer rounded bg-teal px-2.5 py-1.5 text-xs text-main-white"
+          className="inline-block cursor-pointer rounded bg-teal px-2.5 py-1.5 text-xxs text-main-white md:text-xs"
           onClick={() => handleClickTag(tag)}
         >
           {tag}

@@ -14,7 +14,7 @@ const MessageBoard = () => {
             key={index}
             className={`border-b border-gray ${index === 0 ? 'border-t' : ''}`}
           >
-            <div className="flex flex-wrap border-b border-gray p-4 text-main-black no-underline md:flex-nowrap">
+            <div className="flex flex-wrap items-center border-b border-gray p-4 text-main-black no-underline md:flex-nowrap">
               <p className="m-0 min-w-[80px] text-sm">{announcement.date}</p>
               <p className="m-0 min-w-[120px] text-center">
                 <span className="inline-block bg-gray px-4 py-1 text-center text-xs leading-none text-main-black">

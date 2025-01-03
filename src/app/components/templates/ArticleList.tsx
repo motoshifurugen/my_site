@@ -69,7 +69,7 @@ const ArticleList: React.FC = () => {
   return (
     <div className="flex justify-center">
       <div className="my-5 flex min-h-screen w-full max-w-screen-lg justify-start md:max-w-full">
-        <div className={`w-full max-w-full px-10 ${styles.articleContent}`}>
+        <div className={`w-full max-w-full md:px-10 ${styles.articleContent}`}>
           <div className="mb-4 flex items-center justify-between">
             {selectedTag ? (
               <>

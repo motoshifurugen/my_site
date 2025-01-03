@@ -55,7 +55,7 @@ const ArticleContent: React.FC<ArticleContentProps> = ({
   return (
     <div className="mb-10 flex min-h-screen w-full max-w-screen-lg justify-start md:max-w-full">
       <div
-        className={`w-full max-w-full rounded-lg bg-white p-10 pb-24 shadow-sm xl:px-[4em] ${styles.articleContent}`}
+        className={`w-full max-w-full rounded-lg bg-white p-2 pb-24 shadow-sm md:p-10 xl:px-[4em] ${styles.articleContent}`}
       >
         <p>{blogArticle.date}</p>
         <h1>{blogArticle.title}</h1>

@@ -19,7 +19,7 @@ const Article: React.FC<ArticleProps> = ({
   return (
     <div>
       <h2>{title}</h2>
-      <div className="pb-12 md:flex">
+      <div className="pb-12 pt-4 md:flex">
         <div className="flex w-full items-center md:w-1/2 md:pr-10">
           {content}
         </div>

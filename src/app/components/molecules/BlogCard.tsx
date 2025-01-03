@@ -24,7 +24,9 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
       <div className="relative mx-auto h-[210px] w-full rounded bg-white p-5 shadow-sm">
         <a href={`/blog/${post.slug}`} onClick={handleClick}>
           <span>{post.date}</span>
-          <div className={`mt-4 text-2xl font-bold ${styles.truncate2Lines}`}>
+          <div
+            className={`mt-4 text-xl font-bold md:text-2xl ${styles.truncate2Lines}`}
+          >
             {post.title}
           </div>
         </a>
