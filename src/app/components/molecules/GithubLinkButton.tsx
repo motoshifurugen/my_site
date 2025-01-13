@@ -16,7 +16,7 @@ const GithubLinkButton = () => {
           className="mr-2 bg-transparent transition duration-100 group-hover:text-main-white"
         />
         <span className="noto-sans-jp bg-transparent text-lg font-bold transition duration-300 group-hover:text-main-white md:text-base">
-          code of this app
+          Repository
         </span>
       </div>
     </Link>
