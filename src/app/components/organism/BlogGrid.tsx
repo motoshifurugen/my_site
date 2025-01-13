@@ -27,7 +27,13 @@ const BlogGrid: React.FC<BlogGridProps> = ({ blogData }) => {
   }
 
   useEffect(() => {
-    setCurrentPost(blogData.slice(0, loadIndex))
+    const sortedData = blogData
+      .slice(0, loadIndex)
+      .sort(
+        (a: any, b: any) =>
+          new Date(b.date).getTime() - new Date(a.date).getTime(),
+      )
+    setCurrentPost(sortedData)
   }, [blogData, loadIndex])
 
   return (
