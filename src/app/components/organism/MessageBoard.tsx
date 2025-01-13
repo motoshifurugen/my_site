@@ -1,9 +1,9 @@
 import { announcements } from './MessageData'
 
 const MessageBoard = () => {
-  if (announcements.length > 5) {
-    throw new Error('お知らせは5件までです。')
-  }
+  // if (announcements.length > 5) {
+  //   throw new Error('お知らせは5件までです。')
+  // }
 
   return (
     <div className="py-24">
@@ -23,6 +23,17 @@ const MessageBoard = () => {
               </p>
               <p className="m-0 mt-2 w-full text-base md:mt-0">
                 {announcement.title}
+                {announcement.link && (
+                  <>
+                    {' '}
+                    <a
+                      href={announcement.link.url}
+                      className="text-teal underline"
+                    >
+                      {announcement.link.text}
+                    </a>
+                  </>
+                )}
               </p>
             </div>
           </li>
