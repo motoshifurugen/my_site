@@ -21,7 +21,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
   return (
     <>
       {isLoading && <LoadingCircle isLoading={isLoading} />}
-      <div className="relative mx-auto h-[210px] w-full rounded bg-white p-5 shadow-sm">
+      <div className="relative mx-auto h-[210px] w-full rounded bg-white p-5 text-main-black shadow-sm">
         <a href={`/blog/${post.slug}`} onClick={handleClick}>
           <span>{post.date}</span>
           <div

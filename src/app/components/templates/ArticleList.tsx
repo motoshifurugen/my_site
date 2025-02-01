@@ -70,13 +70,13 @@ const ArticleList: React.FC = () => {
     <div className="flex justify-center">
       <div className="my-5 flex min-h-screen w-full max-w-screen-lg justify-start md:max-w-full">
         <div className={`w-full max-w-full md:px-10 ${styles.articleContent}`}>
-          <div className="mb-4 flex items-center justify-between">
+          <div className="mb-4 flex items-center justify-between text-main-black dark:text-main-white">
             {selectedTag ? (
               <>
                 <div className="text-xl font-bold">『{selectedTag}』</div>
                 <button
                   onClick={resetFilter}
-                  className="relative flex items-center rounded px-6 py-3 text-lg text-main-black transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-teal after:transition-all after:duration-300 hover:after:w-full"
+                  className="relative flex items-center rounded px-6 py-3 text-lg text-main-black transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-teal after:transition-all after:duration-300 hover:after:w-full dark:text-main-white dark:after:bg-night-teal"
                 >
                   All
                   <FiRefreshCw className="ml-2" />

@@ -18,7 +18,9 @@ const ProfileCard = () => {
           priority
         />
         <div className="ml-4">
-          <p className="text-lg font-semibold">motoshifurugen</p>
+          <p className="text-lg font-semibold text-main-black dark:text-main-black">
+            motoshifurugen
+          </p>
           <div className="mt-4 flex justify-center space-x-4">
             <Link
               href="https://github.com/motoshifurugen"
@@ -41,7 +43,7 @@ const ProfileCard = () => {
           </div>
         </div>
       </div>
-      <p className="mt-3 text-sm leading-6">
+      <p className="mt-3 text-sm leading-6 text-main-black dark:text-main-black">
         沖縄生まれ、ブルーハーツ育ち。
         <br />
         考える前に行動する、
