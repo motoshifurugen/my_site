@@ -56,7 +56,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    <div className="text-main-black dark:text-main-white">
+                    <div className="text-main-black dark:text-night-white">
                       <FaGithub size={24} />
                     </div>
                   </Link>
@@ -65,7 +65,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    <div className="text-main-black dark:text-main-white">
+                    <div className="text-main-black dark:text-night-white">
                       <FaXTwitter size={24} />
                     </div>
                   </Link>

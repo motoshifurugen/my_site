@@ -53,7 +53,7 @@ const Header = () => {
 
           {/* ハンバーガーボタン（スマホ画面でのみ表示） */}
           <button
-            className="ml-auto flex size-12 items-center justify-center rounded-full bg-white text-2xl text-main-black dark:bg-night-black dark:text-main-white md:hidden"
+            className="ml-auto flex size-12 items-center justify-center rounded-full bg-white text-2xl text-main-black dark:bg-night-black dark:text-night-white md:hidden"
             onClick={toggleMenu}
           >
             <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
@@ -81,7 +81,7 @@ const Header = () => {
               <GithubLinkButton />
             </div>
             <div className="mb-8 mt-auto flex w-full justify-end md:my-0 md:w-auto">
-              <div className="ml-4 text-main-black dark:text-main-white">
+              <div className="ml-4 text-main-black dark:text-night-white">
                 <ThemeSwitch />
               </div>
             </div>

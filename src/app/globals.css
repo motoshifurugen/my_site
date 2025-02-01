@@ -20,7 +20,7 @@
   body {
     @apply bg-main-white;
     .dark & {
-      @apply bg-night-black text-main-white;
+      @apply bg-night-black text-night-white;
     }
 
     main {
@@ -46,7 +46,7 @@
       @apply text-sm md:text-base leading-snug md:leading-loose noto-sans-jp;
     }
     .dark & h1, .dark & h2, .dark & h3, .dark & p {
-      @apply text-main-white;
+      @apply text-night-white;
     }
 
     /* ------------------------- */
@@ -56,7 +56,7 @@
       @apply w-full my-0 px-0;
     }
     .toc-link {
-      @apply noto-sans-jp text-main-black text-sm font-normal no-underline transition-colors duration-200 rounded-md inline-block w-full py-1 pl-2;
+      @apply noto-sans-jp text-main-black dark:text-night-white text-sm font-normal no-underline transition-colors duration-200 rounded-md inline-block w-full py-1 pl-2;
     }
     .is-collapsible .toc-link {
       @apply ml-2 font-light text-xs;
@@ -65,13 +65,13 @@
       @apply list-none w-full rounded-md py-0 my-0;
     }
     .toc-link::before {
-      @apply content-[''] w-2 h-2 bg-teal inline-block mr-2 rounded-full;
+      @apply content-[''] w-2 h-2 bg-teal dark:bg-night-teal inline-block mr-2 rounded-full;
     }
     .is-active-link {
-      @apply bg-main-white font-bold text-main-black;
+      @apply bg-main-white dark:bg-night-black font-bold text-main-black dark:text-night-white;
     }
     .is-active-link::before {
-      @apply content-[''] w-3 h-3 bg-teal inline-block mr-2 rounded-full;
+      @apply content-[''] w-3 h-3 bg-teal dark:bg-night-teal inline-block mr-2 rounded-full;
     }
     .is-collapsible .toc-link::before {
       @apply w-0 h-0;

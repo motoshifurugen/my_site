@@ -30,7 +30,7 @@ const WorkCard: React.FC<WorkCardProps> = ({
         className="w-full"
       />
       <div className="my-2 py-2 md:py-4">
-        <div className="noto-sans-jp mb-2 text-lg font-bold text-main-black dark:text-main-white md:text-xl">
+        <div className="noto-sans-jp mb-2 text-lg font-bold text-main-black dark:text-night-white md:text-xl">
           {title}
         </div>
         <p>{description}</p>
