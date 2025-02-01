@@ -52,7 +52,7 @@ const SketchNightSky: React.FC<SketchNightSkyProps> = ({ mode }) => {
         return
       }
 
-      p.background(10, 10, 30) // 夜空の色
+      p.background(46, 46, 63) // 夜空の色
 
       // 星の描画
       for (let star of stars) {

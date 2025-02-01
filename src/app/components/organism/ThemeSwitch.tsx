@@ -33,12 +33,18 @@ const ThemeSwitch = () => {
   }
 
   return (
-    <button onClick={toggleTheme} className="ml-4 p-2">
+    <button onClick={toggleTheme} className="ml-4 p-2 pr-6 md:pr-0">
       <div className="block dark:hidden">
-        <FiSun className="text-2xl" />
+        <div className="flex">
+          <span className="mr-4 md:hidden">ダークモード：オフ</span>
+          <FiSun className="text-2xl" />
+        </div>
       </div>
       <div className="hidden dark:block">
-        <FiMoon className="text-2xl" />
+        <div className="flex">
+          <span className="mr-4 md:hidden">ダークモード：オン</span>
+          <FiMoon className="text-2xl" />
+        </div>
       </div>
     </button>
   )

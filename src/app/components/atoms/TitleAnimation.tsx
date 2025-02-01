@@ -47,12 +47,15 @@ export default function TitleAnimation() {
       ></div>
       <div className="absolute bottom-10 right-0 flex flex-col items-center">
         <div
-          className="text-lg tracking-widest md:text-2xl"
+          className="text-lg tracking-widest text-main-black dark:text-main-white md:text-2xl"
           style={{ writingMode: 'vertical-rl' }}
         >
           scroll
         </div>
-        <div ref={arrowRef} className="mt-3 text-lg md:text-2xl">
+        <div
+          ref={arrowRef}
+          className="mt-3 text-lg text-main-black dark:text-main-white md:text-2xl"
+        >
           ↓
         </div>
       </div>
