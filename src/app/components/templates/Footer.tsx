@@ -10,7 +10,7 @@ import AnimatedLine from '../atoms/AnimatedLine'
 export default function Footer() {
   return (
     <>
-      <div className="relative z-20 bg-main-white py-10">
+      <div className="relative z-20 bg-main-white py-10 dark:bg-night-black">
         <AnimatedLine />
         <footer>
           <div className="container mx-auto p-4">
@@ -56,7 +56,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    <div className="text-main-black">
+                    <div className="text-main-black dark:text-main-white">
                       <FaGithub size={24} />
                     </div>
                   </Link>
@@ -65,7 +65,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    <div className="text-main-black">
+                    <div className="text-main-black dark:text-main-white">
                       <FaXTwitter size={24} />
                     </div>
                   </Link>
