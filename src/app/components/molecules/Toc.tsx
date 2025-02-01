@@ -30,7 +30,9 @@ const Toc: React.FC = () => {
           !inView ? 'fixed top-20 z-50 w-[312px]' : ''
         }`}
       >
-        <span className="text-xl font-bold">目次</span>
+        <span className="text-xl font-bold text-main-black dark:text-main-black">
+          目次
+        </span>
         <nav className="toc m-1 p-1" />
       </div>
     </>

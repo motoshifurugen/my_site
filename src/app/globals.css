@@ -19,6 +19,9 @@
 
   body {
     @apply bg-main-white;
+    .dark & {
+      @apply bg-night-black text-main-white;
+    }
 
     main {
       @apply pt-28;
@@ -41,6 +44,9 @@
     }
     p {
       @apply text-sm md:text-base leading-snug md:leading-loose noto-sans-jp;
+    }
+    .dark & h1, .dark & h2, .dark & h3, .dark & p {
+      @apply text-main-white;
     }
 
     /* ------------------------- */

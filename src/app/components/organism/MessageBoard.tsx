@@ -28,7 +28,7 @@ const MessageBoard = () => {
                     {' '}
                     <a
                       href={announcement.link.url}
-                      className="text-teal underline"
+                      className="text-teal underline dark:text-night-teal"
                     >
                       {announcement.link.text}
                     </a>

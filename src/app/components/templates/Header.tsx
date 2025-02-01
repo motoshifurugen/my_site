@@ -1,13 +1,14 @@
 'use client'
 
+import TitleLinkButton from '@/app/components/atoms/TitleLinkButton'
+import GithubLinkButton from '@/app/components/molecules/GithubLinkButton'
+import HeaderLinkButton from '@/app/components/molecules/HeaderLinkButton'
+import ThemeSwitch from '@/app/components/organism/ThemeSwitch'
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import nextConfig from '../../../../next.config.mjs'
-import TitleLinkButton from '../atoms/TitleLinkButton'
-import GithubLinkButton from '../molecules/GithubLinkButton'
-import HeaderLinkButton from '../molecules/HeaderLinkButton'
 
 const BASE_PATH = nextConfig.basePath || ''
 
@@ -40,14 +41,14 @@ const Header = () => {
     <header
       className={`
 			fixed left-0 top-0 z-50 w-full
-			${!isMainPage ? 'bg-main-white' : 'bg-transparent'}
+			${!isMainPage ? 'bg-main-white dark:bg-night-black' : 'bg-transparent'}
 		`}
     >
       <div className="container mx-auto flex flex-col py-6 md:flex-row">
         <div className="z-50 flex animate-fade-in-up items-center px-4">
           {/* タイトルボタン（トップページ以外で表示） */}
           {!isMainPage && (
-            <TitleLinkButton href={`${BASE_PATH}/`} text="Furugen's Island" />
+            <TitleLinkButton href={`/`} text="Furugen's Island" />
           )}
 
           {/* ハンバーガーボタン（スマホ画面でのみ表示） */}
@@ -77,6 +78,9 @@ const Header = () => {
               />
             ))}
             <GithubLinkButton />
+            <div className="hidden text-main-black dark:text-main-white md:block">
+              <ThemeSwitch />
+            </div>
           </nav>
         </div>
       </div>

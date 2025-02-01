@@ -30,7 +30,7 @@ const WorkCard: React.FC<WorkCardProps> = ({
         className="w-full"
       />
       <div className="my-2 py-2 md:py-4">
-        <div className="noto-sans-jp mb-2 text-lg font-bold md:text-xl">
+        <div className="noto-sans-jp mb-2 text-lg font-bold text-main-black dark:text-main-white md:text-xl">
           {title}
         </div>
         <p>{description}</p>
@@ -42,7 +42,7 @@ const WorkCard: React.FC<WorkCardProps> = ({
           </Chip>
         ))}
       </div>
-      <div className="absolute bottom-0 right-0 bg-white bg-opacity-75 px-4 py-1 text-sm">
+      <div className="absolute bottom-0 right-0 bg-white bg-opacity-75 px-4 py-1 text-sm text-main-black dark:text-main-black">
         {date}
       </div>
     </div>

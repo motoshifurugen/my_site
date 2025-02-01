@@ -19,10 +19,11 @@ const LoadingCircle: React.FC<LoadingCircleProps> = ({ isLoading }) => {
   return (
     isVisible && (
       <div
-        className={`fixed inset-0 z-50 flex items-center justify-center bg-main-white transition-opacity duration-1000 ${isLoading ? 'opacity-100' : 'opacity-0'}`}
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-main-white transition-opacity duration-1000 dark:bg-night-black ${isLoading ? 'opacity-100' : 'opacity-0'}`}
       >
         <div className="relative flex items-center justify-center">
-          <div className="circle"></div>
+          <div className="circle block dark:hidden"></div>
+          <div className="night-circle hidden dark:block"></div>
           <div className="seagull seagull-1">
             <div className="wing left-wing"></div>
             <div className="wing right-wing"></div>
@@ -38,6 +39,14 @@ const LoadingCircle: React.FC<LoadingCircleProps> = ({ isLoading }) => {
             width: 100px;
             height: 100px;
             background: #86b3e0;
+            border-radius: 50%;
+            animation: grow 2s infinite ease-in-out;
+          }
+          .night-circle {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: #f4d06f;
             border-radius: 50%;
             animation: grow 2s infinite ease-in-out;
           }

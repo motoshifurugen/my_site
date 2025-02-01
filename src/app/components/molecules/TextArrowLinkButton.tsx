@@ -26,9 +26,9 @@ const TextArrowLinkButton: React.FC<TextArrowLinkButtonProps> = ({
             relative ml-5 size-8
             max-h-[32px] max-w-[32px]
             rounded-full border
-            border-main-black
-            border-opacity-20 align-middle text-xs transition-all
-            group-hover:bg-main-white"
+            border-main-black border-opacity-20
+            align-middle text-xs transition-all group-hover:bg-main-white dark:border-main-white
+            dark:group-hover:bg-main-black"
           type="button"
         >
           <span>

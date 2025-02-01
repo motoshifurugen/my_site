@@ -8,7 +8,7 @@ const Form: React.FC = () => {
     <form
       action="https://ssgform.com/s/TQptUiQBhkQa"
       method="post"
-      className="mx-auto space-y-8 rounded-lg bg-white p-4 md:p-8"
+      className="mx-auto space-y-8 rounded-lg bg-white p-4 dark:bg-main-white md:p-8"
     >
       <div className="hidden">
         <input type="text" name="trap-column" />

@@ -13,13 +13,17 @@ export default function TitleAnimation() {
 
   useEffect(() => {
     if (textRef.current) {
-      gsap.to(textRef.current, {
-        duration: 2,
-        text: "Furugen's<br />Island",
-        delay: 1.5,
-        ease: 'power4.inOut',
-        parse: true,
-      })
+      gsap.fromTo(
+        textRef.current,
+        { opacity: 0 },
+        {
+          duration: 1.5,
+          text: "Furugen's<br />Island",
+          ease: 'power4.inOut',
+          parse: true,
+          opacity: 1,
+        },
+      )
     }
 
     if (arrowRef.current) {
@@ -38,7 +42,7 @@ export default function TitleAnimation() {
       <div
         className="
           dm-sans mt-10 max-w-full text-left text-5xl font-bold
-          tracking-widest md:text-9xl"
+          tracking-widest text-main-black dark:text-main-white md:text-9xl"
         ref={textRef}
       ></div>
       <div className="absolute bottom-10 right-0 flex flex-col items-center">

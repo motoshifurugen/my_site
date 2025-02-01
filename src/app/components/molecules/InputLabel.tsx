@@ -14,7 +14,7 @@ const InputLabel: React.FC<InputLabelProps> = ({
 }) => {
   return (
     <label htmlFor={id} className="mb-2 block text-sm font-bold md:text-base">
-      <p>
+      <p className="text-main-black dark:text-main-black">
         {label}
         {required && <Chip className="bg-red-500 text-white">必須</Chip>}
       </p>
