@@ -12,11 +12,15 @@ const config: Config = {
       colors: {
         'main-white': '#F6F6F6',
         'main-black': '#4A4A4A',
-        'night-black': '#51515F',
-        'night-teal': '#80CBC4',
+        'night-white': '#E0E0E0',
+        'night-black': '#2E2E3F',
+        'night-teal': '#388E8E',
+        'night-gray': '#6B6B7A',
+        'night-orange': '#E69500',
         white: '#FFFFFF',
         gray: '#E5E7E6',
         teal: '#008080',
+        orange: '#FF8C00',
       },
       animation: {
         'fade-in': 'fadeIn 10s ease-in-out',

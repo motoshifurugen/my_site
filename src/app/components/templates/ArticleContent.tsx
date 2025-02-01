@@ -55,12 +55,12 @@ const ArticleContent: React.FC<ArticleContentProps> = ({
   return (
     <div className="mb-10 flex min-h-screen w-full max-w-screen-lg justify-start md:max-w-full">
       <div
-        className={`w-full max-w-full rounded-lg bg-white p-2 pb-24 text-main-black shadow-sm dark:text-main-black md:p-10 xl:px-[4em] ${styles.articleContent}`}
+        className={`w-full max-w-full rounded-lg bg-white p-2 pb-24 text-main-black shadow-sm dark:bg-night-gray dark:text-night-white md:p-10 xl:px-[4em] ${styles.articleContent}`}
       >
-        <p className="text-main-black dark:text-main-black">
+        <p className="text-main-black dark:text-night-white">
           {blogArticle.date}
         </p>
-        <h1 className="text-main-black dark:text-main-black">
+        <h1 className="text-main-black dark:text-night-white">
           {blogArticle.title}
         </h1>
         {blogArticle.tags && <Tags tags={blogArticle.tags} />}

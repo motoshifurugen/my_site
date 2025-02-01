@@ -4,7 +4,6 @@
   margin-bottom: 2rem;
   font-family: "Noto Sans JP", sans-serif;
   font-optical-sizing: auto;
-  color: #4A4A4A;
   @media (min-width: 1024px) {
     width: calc(100% - 352px);
   }
@@ -18,14 +17,17 @@
   margin-bottom: 1.1rem !important;
   margin-top: 2.3em !important;
   padding-bottom: 0.3em !important;
-  color: #4A4A4A !important;
+}
+@media (prefers-color-scheme: dark) {
+  .articleContent h2 {
+    border-bottom: 2px solid #80CBC4;
+  }
 }
 
 .articleContent h3 {
   font-weight: bold;
   margin-top: 1.5em;
   margin-bottom: 1em;
-  color: #4A4A4A !important;
 }
 
 /* ------------------------- */
@@ -35,7 +37,6 @@
   margin: 16px 0;
   font-size: 16px;
   line-height: 1.9;
-  color: #4A4A4A !important;
 }
 
 .truncate2Lines {

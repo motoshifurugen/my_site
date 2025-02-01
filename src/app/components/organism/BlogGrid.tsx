@@ -47,7 +47,7 @@ const BlogGrid: React.FC<BlogGridProps> = ({ blogData }) => {
         {!isEmpty && (
           <button
             onClick={displayMore}
-            className="relative rounded px-6 py-3 text-lg text-main-black transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-teal after:transition-all after:duration-300 hover:after:w-full dark:text-main-white"
+            className="relative rounded px-6 py-3 text-lg text-main-black transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-teal after:transition-all after:duration-300 hover:after:w-full dark:text-night-white dark:after:bg-night-teal"
           >
             Find Out More
           </button>

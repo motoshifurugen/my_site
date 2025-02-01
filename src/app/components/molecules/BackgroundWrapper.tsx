@@ -29,12 +29,7 @@ const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({
         </>
       )}
       <div
-        className={`${isRootPath ? 'relative min-h-screen pb-32' : ''}`}
-        style={{
-          backgroundColor: isRootPath
-            ? 'rgba(246, 246, 246, 0.3)'
-            : 'transparent',
-        }}
+        className={`${isRootPath ? 'relative min-h-screen bg-transparent pb-32' : 'bg-transparent'}`}
       >
         {children}
       </div>

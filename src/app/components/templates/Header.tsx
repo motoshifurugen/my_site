@@ -53,7 +53,7 @@ const Header = () => {
 
           {/* ハンバーガーボタン（スマホ画面でのみ表示） */}
           <button
-            className="ml-auto flex size-12 items-center justify-center rounded-full bg-white text-2xl md:hidden"
+            className="ml-auto flex size-12 items-center justify-center rounded-full bg-white text-2xl text-main-black dark:bg-night-black dark:text-night-white md:hidden"
             onClick={toggleMenu}
           >
             <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
@@ -64,8 +64,8 @@ const Header = () => {
           <nav
             className={`
             item-left fixed right-0 top-0 flex
-            h-full flex-col flex-wrap bg-white transition-transform duration-300 ease-in-out md:flex-row
-            ${menuOpen ? 'translate-x-0' : 'translate-x-full'} w-full px-4 pt-32
+            h-full flex-col flex-wrap bg-transparent transition-transform duration-300 ease-in-out md:flex-row
+            ${menuOpen ? 'translate-x-0 bg-white dark:bg-night-black' : 'translate-x-full'} w-full px-4 pt-32
             md:relative md:translate-x-0 md:bg-transparent md:p-0
           `}
           >
@@ -77,9 +77,13 @@ const Header = () => {
                 index={index}
               />
             ))}
-            <GithubLinkButton />
-            <div className="hidden text-main-black dark:text-main-white md:block">
-              <ThemeSwitch />
+            <div className="ml-auto mt-8 pr-7 md:m-0 md:pr-0">
+              <GithubLinkButton />
+            </div>
+            <div className="mb-8 mt-auto flex w-full justify-end md:my-0 md:w-auto">
+              <div className="ml-4 text-main-black dark:text-night-white">
+                <ThemeSwitch />
+              </div>
             </div>
           </nav>
         </div>

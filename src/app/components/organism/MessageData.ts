@@ -1,6 +1,11 @@
 export const announcements = [
   {
-    date: '2025/1/13',
+    date: '2025/02/02',
+    category: 'お知らせ',
+    title: 'ダークモードを実装しました。',
+  },
+  {
+    date: '2025/01/13',
     category: 'ブログ更新',
     title: '記事を追加しました。',
     link: {
@@ -9,7 +14,7 @@ export const announcements = [
     },
   },
   {
-    date: '2025/1/1',
+    date: '2025/01/01',
     category: 'ブログ更新',
     title: 'あけましておめでとうございます。記事を追加しました。',
     link: {

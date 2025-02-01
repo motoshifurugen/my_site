@@ -20,7 +20,9 @@ const Tags: React.FC<TagsProps> = ({ tags }) => {
         <span
           key={index}
           className={`inline-block cursor-pointer rounded px-2.5 py-1.5 text-xxs text-main-white md:text-xs ${
-            tag === 'ブログ' ? 'bg-orange-600' : 'bg-teal'
+            tag === 'ブログ'
+              ? 'bg-orange dark:bg-night-orange'
+              : 'bg-teal dark:bg-night-teal'
           }`}
           onClick={() => handleClickTag(tag)}
         >
