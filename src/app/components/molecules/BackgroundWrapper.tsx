@@ -1,5 +1,6 @@
 // import ParticleBackground from '@/app/components/atoms/ParticlesBackground'
 import SketchCloud from '@/app/components/atoms/SketchCloud'
+import SketchNight from '@/app/components/atoms/SketchNight'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 import nextConfig from '../../../../next.config.mjs'
@@ -16,7 +17,12 @@ const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({
       {isRootPath && (
         <>
           <div className="fixed inset-0 z-0 hidden md:block">
-            <SketchCloud mode="normal" />
+            <div className="block dark:hidden">
+              <SketchCloud mode="normal" />
+            </div>
+            <div className="hidden dark:block">
+              <SketchNight mode="normal" />
+            </div>
           </div>
           <div className="fixed inset-0 z-0 md:hidden">
             {/* <ParticleBackground /> */}

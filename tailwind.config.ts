@@ -12,6 +12,8 @@ const config: Config = {
       colors: {
         'main-white': '#F6F6F6',
         'main-black': '#4A4A4A',
+        'night-black': '#51515F',
+        'night-teal': '#80CBC4',
         white: '#FFFFFF',
         gray: '#E5E7E6',
         teal: '#008080',

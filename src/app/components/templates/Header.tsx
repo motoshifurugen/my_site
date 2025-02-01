@@ -41,7 +41,7 @@ const Header = () => {
     <header
       className={`
 			fixed left-0 top-0 z-50 w-full
-			${!isMainPage ? 'bg-main-white dark:bg-main-black' : 'bg-transparent'}
+			${!isMainPage ? 'bg-main-white dark:bg-night-black' : 'bg-transparent'}
 		`}
     >
       <div className="container mx-auto flex flex-col py-6 md:flex-row">

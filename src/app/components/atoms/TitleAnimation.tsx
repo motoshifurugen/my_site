@@ -38,7 +38,7 @@ export default function TitleAnimation() {
       <div
         className="
           dm-sans mt-10 max-w-full text-left text-5xl font-bold
-          tracking-widest md:text-9xl"
+          tracking-widest text-main-black dark:text-main-white md:text-9xl"
         ref={textRef}
       ></div>
       <div className="absolute bottom-10 right-0 flex flex-col items-center">

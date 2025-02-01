@@ -20,7 +20,7 @@
   body {
     @apply bg-main-white;
     .dark & {
-      @apply bg-main-black text-main-white;
+      @apply bg-night-black text-main-white;
     }
 
     main {

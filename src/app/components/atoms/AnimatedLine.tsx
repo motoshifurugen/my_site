@@ -37,10 +37,12 @@ const AnimatedLine: React.FC = () => {
   }, [])
 
   return (
-    <div className={`${isRootPath ? 'hidden' : 'bg-main-white py-8'}`}>
+    <div
+      className={`${isRootPath ? 'hidden' : 'bg-main-white py-8 dark:bg-night-black'}`}
+    >
       <div
         ref={lineRef}
-        className="h-0.5 w-0 bg-main-black transition-all duration-1000 ease-in-out"
+        className="h-0.5 w-0 bg-main-black transition-all duration-1000 ease-in-out dark:bg-main-white"
       ></div>
     </div>
   )
