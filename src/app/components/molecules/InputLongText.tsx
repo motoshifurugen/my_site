@@ -27,8 +27,8 @@ const InputLongText: React.FC<InputLongTextProps> = ({
         className="
           noto-sans-jp block
           w-full rounded-md border
-          border-gray px-3 py-2 text-sm focus:border-main-black
-          focus:outline-none md:py-4 md:text-base"
+          border-gray bg-white px-3 py-2 text-sm
+          focus:border-main-black focus:outline-none md:py-4 md:text-base"
       ></textarea>
     </div>
   )

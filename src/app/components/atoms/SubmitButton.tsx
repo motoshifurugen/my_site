@@ -16,7 +16,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ children }) => {
         shadow-[inset_0_0_0_2px_#4A4A4A] transition
         duration-300 hover:bg-main-black hover:text-main-white md:px-32"
     >
-      <p className="bg-transparent font-bold transition duration-300 group-hover:text-main-white">
+      <p className="bg-transparent font-bold text-main-black transition duration-300 group-hover:text-main-white dark:text-main-black">
         {children}
       </p>
     </button>
