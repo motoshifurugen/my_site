@@ -3,7 +3,6 @@ export const announcements = [
     date: '2025/02/02',
     category: 'お知らせ',
     title: 'ダークモードを実装しました。',
-    link: '',
   },
   {
     date: '2025/01/13',
