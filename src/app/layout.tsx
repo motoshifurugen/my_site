@@ -2,6 +2,7 @@ import ClientWrapper from '@/app/components/templates/ClientWrapper'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import type { Metadata } from 'next'
+import { ThemeProvider } from 'next-themes'
 import { Inter } from 'next/font/google'
 import 'tailwindcss/tailwind.css'
 import './globals.css'
@@ -62,7 +63,9 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
-        <ClientWrapper>{children}</ClientWrapper>
+        <ThemeProvider attribute="class">
+          <ClientWrapper>{children}</ClientWrapper>
+        </ThemeProvider>
       </body>
       <GoogleTagManager gtmId="G-3B88D979NP" />
       <GoogleAnalytics gaId="G-3B88D979NP" />

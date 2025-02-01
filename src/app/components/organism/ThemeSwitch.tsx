@@ -34,11 +34,12 @@ const ThemeSwitch = () => {
 
   return (
     <button onClick={toggleTheme} className="ml-4 p-2">
-      {theme === 'light' ? (
+      <div className="block dark:hidden">
         <FiSun className="text-2xl" />
-      ) : (
+      </div>
+      <div className="hidden dark:block">
         <FiMoon className="text-2xl" />
-      )}
+      </div>
     </button>
   )
 }

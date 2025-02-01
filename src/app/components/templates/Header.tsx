@@ -48,7 +48,7 @@ const Header = () => {
         <div className="z-50 flex animate-fade-in-up items-center px-4">
           {/* タイトルボタン（トップページ以外で表示） */}
           {!isMainPage && (
-            <TitleLinkButton href={`${BASE_PATH}/`} text="Furugen's Island" />
+            <TitleLinkButton href={`/`} text="Furugen's Island" />
           )}
 
           {/* ハンバーガーボタン（スマホ画面でのみ表示） */}

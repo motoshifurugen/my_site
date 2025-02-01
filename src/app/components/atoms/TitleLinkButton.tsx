@@ -1,17 +1,18 @@
+import Link from 'next/link'
 import React from 'react'
 
-interface TitleButtonProps {
+interface TitleLinkButtonProps {
   href: string
   text: string
 }
 
-const TitleLinkButton: React.FC<TitleButtonProps> = ({ href, text }) => {
+const TitleLinkButton: React.FC<TitleLinkButtonProps> = ({ href, text }) => {
   return (
-    <a href={href}>
+    <Link href={href}>
       <span className="dm-sans text-2xl font-bold text-main-black dark:text-main-white">
         {text}
       </span>
-    </a>
+    </Link>
   )
 }
 

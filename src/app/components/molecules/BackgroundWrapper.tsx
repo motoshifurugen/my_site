@@ -1,4 +1,6 @@
 // import ParticleBackground from '@/app/components/atoms/ParticlesBackground'
+'use client'
+
 import SketchCloud from '@/app/components/atoms/SketchCloud'
 import SketchNight from '@/app/components/atoms/SketchNight'
 import { usePathname } from 'next/navigation'
@@ -23,13 +25,6 @@ const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({
             <div className="hidden dark:block">
               <SketchNight mode="normal" />
             </div>
-          </div>
-          <div className="fixed inset-0 z-0 md:hidden">
-            {/* <ParticleBackground /> */}
-            {/* <div
-              className="absolute inset-0"
-              style={{ backgroundColor: '#86b3e0' }}
-            ></div> */}
           </div>
         </>
       )}
