@@ -7,14 +7,14 @@ const MessageBoard = () => {
 
   return (
     <div className="py-24">
-      <h3 className="mb-2">News</h3>
+      <h3 className="mb-2 select-none">News</h3>
       <ul className="m-0 list-none p-0">
         {announcements.map((announcement, index) => (
           <li
             key={index}
             className={`border-b border-gray ${index === 0 ? 'border-t' : ''}`}
           >
-            <div className="flex flex-wrap items-center border-b border-gray p-4 text-main-black no-underline md:flex-nowrap">
+            <div className="flex select-none flex-wrap items-center border-b border-gray p-4 text-main-black no-underline md:flex-nowrap">
               <p className="m-0 min-w-[80px] text-sm">{announcement.date}</p>
               <p className="m-0 min-w-[120px] text-center">
                 <span className="inline-block bg-gray px-4 py-1 text-center text-xs leading-none text-main-black">

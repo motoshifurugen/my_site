@@ -15,7 +15,7 @@ export default function Footer() {
         <footer>
           <div className="container mx-auto p-4">
             <div className="container mt-4 h-32 md:flex">
-              <div className="rightFooter w-full md:w-3/4">
+              <div className="rightFooter w-full select-none md:w-3/4">
                 <p className="mb-1 text-lg md:mb-3">Motoshi Furugen</p>
                 <p className="flex items-center">
                   OKA
@@ -70,7 +70,9 @@ export default function Footer() {
                     </div>
                   </Link>
                 </div>
-                <p className="self-end opacity-50">&copy; 2024 furugen</p>
+                <p className="select-none self-end opacity-50">
+                  &copy; 2024 furugen
+                </p>
               </div>
             </div>
           </div>
