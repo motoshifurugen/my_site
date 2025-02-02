@@ -18,7 +18,7 @@ const HeaderLinkButton: React.FC<HeaderLinkButtonProps> = ({
       className="mt-8 flex animate-fade-in-up items-center pr-8 hover:opacity-50 md:mr-10 md:mt-0 md:pr-0"
       href={href}
     >
-      <span className="noto-sans-jp ml-auto text-lg font-bold text-main-black dark:text-night-white md:ml-0 md:text-base">
+      <span className="noto-sans-jp ml-auto select-none text-lg font-bold text-main-black dark:text-night-white md:ml-0 md:text-base">
         {text}
       </span>
     </Link>

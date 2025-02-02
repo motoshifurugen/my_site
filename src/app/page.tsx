@@ -16,7 +16,7 @@ export default function Home() {
         <div className="w-full flex-1 md:hidden">
           <TitleAnimation />
         </div>
-        <div className="mx-auto hidden w-1/2 md:flex md:justify-end">
+        <div className="mx-auto hidden w-1/2 select-none md:flex md:justify-end">
           <Image
             src={`${BASE_PATH}/images/island.png`}
             alt="island"
