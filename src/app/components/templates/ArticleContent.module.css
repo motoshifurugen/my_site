@@ -22,10 +22,9 @@
   white-space: pre-wrap;
   word-wrap: break-word;
 }
-@media (prefers-color-scheme: dark) {
-  .articleContent h2 {
-    border-bottom: 2px solid #80CBC4;
-  }
+
+:global(.dark) .articleContent h2 {
+  border-bottom: 2px solid #80CBC4;
 }
 
 .articleContent h3 {
@@ -84,11 +83,21 @@
   word-wrap: break-word;
 }
 
+:global(.dark) .articleContent blockquote {
+  border-left: 4px solid #80CBC4;
+  color: #e0e0e0;
+}
+
 .articleContent blockquote blockquote {
   border-left: 4px solid #aaa;
   padding-left: 16px;
   margin-left: 0;
   color: #333;
+}
+
+:global(.dark) .articleContent blockquote blockquote {
+  border-left: 4px solid #80CBC4;
+  color: #e0e0e0;
 }
 
 /* ------------------------- */
