@@ -4,6 +4,8 @@
   margin-bottom: 2rem;
   font-family: "Noto Sans JP", sans-serif;
   font-optical-sizing: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
   @media (min-width: 1024px) {
     width: calc(100% - 352px);
   }
@@ -17,6 +19,8 @@
   margin-bottom: 1.1rem !important;
   margin-top: 2.3em !important;
   padding-bottom: 0.3em !important;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 @media (prefers-color-scheme: dark) {
   .articleContent h2 {
@@ -28,6 +32,8 @@
   font-weight: bold;
   margin-top: 1.5em;
   margin-bottom: 1em;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 /* ------------------------- */
@@ -37,6 +43,8 @@
   margin: 16px 0;
   font-size: 16px;
   line-height: 1.9;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .truncate2Lines {
@@ -45,6 +53,7 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: normal;
 }
 
 .articleContent p + img,
@@ -62,6 +71,8 @@
   list-style: initial;
   padding-left: 1rem;
   margin: 0.5rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .articleContent ol {
@@ -86,6 +97,8 @@
   padding-left: 1rem;
   margin: 0.5rem 0;
   color: #555;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .articleContent blockquote blockquote {
@@ -100,6 +113,8 @@
 /* ------------------------- */
 .articleContent code {
   border-radius: 0.25rem;
+  white-space: pre;
+  word-wrap: break-word;
 }
 
 /* ------------------------- */
@@ -109,6 +124,8 @@
   width: 100%;
   border-collapse: collapse;
   margin: 1rem 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .articleContent th,
