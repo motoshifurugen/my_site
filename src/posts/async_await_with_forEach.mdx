@@ -1,0 +1,227 @@
+---
+title: 'forEach内でasync awaitはなぜ使えないのか'
+date: '2025-03-08'
+tags:
+  - 'Vue.js'
+---
+
+Vue.jsの関数forEach内でasync awaitを使用している処理がうまく動作していませんでした。
+調べてみると、「forEachでasync awaitは使うな」ということを見たので、その理由を考えてみました。
+
+## 結論
+
+`forEach`内で`async/await`を使用すると、`await`が期待通りに機能せず、非同期処理が並列実行されます。そのため、処理の順序が保証されず、意図しない動作になる可能性があるため、「forEachでasync awaitは使うな」です。
+
+## 実行環境
+
+- Vue2
+
+## 同期処理と非同期処理
+
+### 同期処理とは
+同期処理は、コードが上から順番に実行され、前の処理が完了しない限り次の処理が実行されない仕組みです。
+
+### 非同期処理とは
+非同期処理は、処理の完了を待たずに次の処理が進む仕組みです。（例：APIリクエストやタイマー処理）
+
+### `Promise`とは
+`Promise`は非同期処理の結果を表すオブジェクトで、`resolve`されると成功、`reject`されると失敗となります。`async/await`は`Promise`を使って非同期処理を直感的に書くための構文です。（参考：[await - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/await#%E8%A7%A3%E8%AA%AC)）
+
+### `forEach`は同期処理
+
+> `forEach()`は同期関数を期待します。プロミスを待ちません。`forEach`のコールバックとしてプロミス（または非同期関数）を使用する場合は、その意味合いを理解しておくようにしてください。
+> ```javascript
+> const ratings = [5, 4, 5];
+> let sum = 0;
+> 
+> const sumFunction = async (a, b) => a + b;
+> 
+> ratings.forEach(async (rating) => {
+>   sum = await sumFunction(sum, rating);
+> });
+> 
+> console.log(sum);
+> // 本来期待される出力: 14
+> // 実際の出力: 0
+> ```
+> 引用：[Array.prototype.forEach() - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
+
+## 今回の例
+
+今回は以下のような「メニューの表示を制御する処理」の実装部分で、async awaitを使用していました。
+
+```javascript
+const ROOT_MENU = {
+ ROOT_A: { MENUCODE: "MainMenu2" },
+ ROOT_B: { MENUCODE: "MainMenu3" }
+}
+
+// setting submenu with filter
+Object.values(ROOT_MENU).forEach(async root => {
+ const rootMenuIndex = tempMenu.findIndex(
+  menuItem => menuItem.menuCode === root.MENUCODE
+ );
+ if (rootMenuIndex > -1) {
+  const newSubmenu = [];
+  for (const submenu of tempMenu[rootMenuIndex].submenus) {
+   if (await this.isDisplaySubmenu(submenu, menu)) {
+    newSubmenu.push(submenu);
+   }
+  }
+  if (newSubmenu.length) {
+   tempMenu[rootMenuIndex].submenus = newSubmenu;
+  } else {
+   tempMenu.splice(rootMenuIndex, 1);
+  }
+ }
+});
+```
+
+tempMenuは以下のような配列です。
+
+```
+tempMenu = [
+ { menuCode: "MainMenu1" },
+ {
+   menuCode: "MainMenu2",
+   submenus: [
+    { menuCode: "SubMenu2_1" },
+    { menuCode: "SubMenu2_2" }
+   ]
+ },
+ {
+   menuCode: "MainMenu3",
+   submenus: [
+    { menuCode: "SubMenu3_1" },
+    { menuCode: "SubMenu3_2" }
+   ]
+ },
+ { menuCode: "MainMenu4" }
+]
+```
+ 
+## 何が起きているのか？
+
+`forEach`は`Promise`を返さないため、`await`を使用しても`forEach`自体の処理が同期的に進んでしまいます。その結果、`await`で非同期処理を待っている間に `forEach` のループが進行し、意図した順序で処理されない可能性がある。
+
+今回の例の場合、forEachの中で以下のようなことが起きていたと考えられます。
+
+#### 1. `forEach`ステップ1：`ROOT_A`（"MainMenu2"）開始
+1. rootMenuIndex = 1 → if文の中に入る
+1. "MainMenu2"のsubmenus `for`ステップ1：`"SubMenu2_1"`開始
+1. **`await this.isDisplaySubmenu(submenu, menu)`を待たずに、"MainMenu2"のsubmenus `for`ステップ2：`"SubMenu2_2"`開始** ・・・(A)
+1. **`await this.isDisplaySubmenu(submenu, menu)`を待たずに、"MainMenu2"のsubmenus `for`ステップ終了** ・・・(B)
+1. `newSubmenu`には何も入っておらず、`tempMenu.splice(rootMenuIndex, 1);`が実行される
+
+→ `ROOT_A`（"MainMenu2"）が`tempMenu`から欠落
+
+```
+tempMenu = [
+ { menuCode: "MainMenu1" },
+ {
+   menuCode: "MainMenu3",
+   submenus: [
+    { menuCode: "SubMenu3_1" },
+    { menuCode: "SubMenu3_2" }
+   ]
+ },
+ { menuCode: "MainMenu4" }
+]
+```
+
+#### 2. `forEach`ステップ1：`ROOT_B`（"MainMenu3"）開始
+1. rootMenuIndex = 1 → if文の中に入る
+1. "MainMenu3"のsubmenus `for`ステップ1：`"SubMenu3_1"`開始
+1. **このタイミングで(A)の処理が終了した場合、`newSubMenu`に"SubMenu2_1"が追加される**
+1. **このタイミングで(B)の処理が終了した場合、`newSubMenu`に"SubMenu2_2"が追加される**
+1. `await this.isDisplaySubmenu(submenu, menu)`を待たずに、"MainMenu2"のsubmenus `for`ステップ2：`"SubMenu3_2"`開始
+1. `await this.isDisplaySubmenu(submenu, menu)`を待たずに、"MainMenu2"のsubmenus `for`ステップ終了
+1. `newSubmenu`には"SubMenu2_1"、"SubMenu2_2"が入っている
+
+→ `tempMenu[rootMenuIndex].submenus = newSubmenu;`が実行される。
+
+```
+tempMenu = [
+ { menuCode: "MainMenu1" },
+ {
+   menuCode: "MainMenu3",
+   submenus: [
+    { menuCode: "SubMenu2_1" }, // ←違うメインメニューのサブメニュー
+    { menuCode: "SubMenu2_2" }  // ←違うメインメニューのサブメニュー
+   ]
+ },
+ { menuCode: "MainMenu4" }
+]
+```
+
+## 期待値
+
+各`isDisplaySubmenu`の非同期処理が順番に実行されて、最終的に以下のようなメニュー構造となることを期待していました。
+
+```
+tempMenu = [
+ { menuCode: "MainMenu1" },
+ {
+   menuCode: "MainMenu2",
+   submenus: [
+    { menuCode: "SubMenu2_1" },
+    { menuCode: "SubMenu2_2" }
+   ]
+ },
+ {
+   menuCode: "MainMenu3",
+   submenus: [
+    { menuCode: "SubMenu3_1" },
+    { menuCode: "SubMenu3_2" }
+   ]
+ },
+ { menuCode: "MainMenu4" }
+]
+```
+
+## 解決策
+
+### `for await...of`を使用
+`for await...of`は各ループの非同期的部分を同期的部分と同様に処理するため、`forEach`のように非同期処理が並列に動作して順序が崩れることがありません。（参考：[for await...of - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/for-await...of)）
+
+```javascript
+(async () => {
+  for await (const root of Object.values(ROOT_MENU)) {
+    const rootMenuIndex = tempMenu.findIndex(
+      menuItem => menuItem.menuCode === root.MENUCODE
+    );
+    if (rootMenuIndex > -1) {
+      const newSubmenu = [];
+      for (const submenu of tempMenu[rootMenuIndex].submenus) {
+        if (await this.isDisplaySubmenu(submenu, menu)) {
+          newSubmenu.push(submenu);
+        }
+      }
+      if (newSubmenu.length) {
+        tempMenu[rootMenuIndex].submenus = newSubmenu;
+      } else {
+        tempMenu.splice(rootMenuIndex, 1);
+      }
+    }
+  }
+})();
+```
+
+（他にも、`Promise.all`を用いた解決方法もあります。（参考：[Promise.all() - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)））
+
+### `async`の前にある`(` と末尾の`()`の意味
+
+細かいですが`async`の前にある`(` と末尾の`()`について気になったので調べてみました。
+これには、`async/await`をすぐに実行するための2つの要素が含まれています。
+
+- `(async () => { ... })` → `async`を含む無名関数を定義
+- `()()` → 定義した関数をすぐに実行（参考：[IIFE (即時実行関数式) - MDN Web Docs 用語集: ウェブ関連用語の定義 | MDN](https://developer.mozilla.org/ja/docs/Glossary/IIFE)）
+
+以上です。
+便利だからという理由で安易に`async/await`を使うとこのようなことが起きてしまうので、きちんとした理解と注意が必要だと感じました。
+
+## 参考記事
+
+- [[小ネタ]forEachではasync/awaitが使えない | DevelopersIO](https://dev.classmethod.jp/articles/foreach-async-await/)
+- [[javascript] なぜ「forEachでasync/awaitは使えない」と言われるのか #JavaScript - Qiita](https://qiita.com/tawatawa/items/c458f76ff364bf9f5781)
+- [asyncな無名関数を使って非同期処理を書く #JavaScript - Qiita](https://qiita.com/xx2xyyy/items/5ca790efe3e07a92e865)
