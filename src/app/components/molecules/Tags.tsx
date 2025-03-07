@@ -15,7 +15,7 @@ const Tags: React.FC<TagsProps> = ({ tags }) => {
   }
 
   return (
-    <div className="mb-16 mt-8 flex flex-wrap gap-2">
+    <div className="my-6 flex flex-wrap gap-2">
       {tags.map((tag: string, index: number) => (
         <span
           key={index}
