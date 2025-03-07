@@ -14,6 +14,8 @@ const LikeButton: React.FC<LikeButtonProps> = ({
 }) => {
   const [isLiked, setIsLiked] = useState(initialLiked)
   const [likeCount, setLikeCount] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
 
   useEffect(() => {
     const fetchLikeInfo = async () => {
@@ -41,8 +43,13 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   }, [articleId])
 
   const handleToggleLike = async () => {
+    if (isLoading) return
+
     try {
+      setIsLoading(true)
+      setIsAnimating(true)
       const newLikedState = !isLiked
+
       // ローカルストレージにいいね状態を保存
       const userLikes = JSON.parse(
         localStorage.getItem('article_likes') || '{}',
@@ -81,25 +88,45 @@ const LikeButton: React.FC<LikeButtonProps> = ({
         delete userLikes[articleId]
       }
       localStorage.setItem('article_likes', JSON.stringify(userLikes))
+    } finally {
+      setIsLoading(false)
+      // アニメーション終了後に状態をリセット
+      setTimeout(() => {
+        setIsAnimating(false)
+      }, 300)
     }
   }
 
   return (
     <button
       onClick={handleToggleLike}
-      className="group flex items-center gap-2 rounded-md p-2"
+      disabled={isLoading}
+      className="group relative flex items-center gap-2 rounded-md p-2 transition-all duration-300 hover:scale-105 disabled:opacity-50"
       aria-label={isLiked ? 'いいねを取り消す' : 'いいねする'}
     >
-      <Heart
-        size={20}
-        className={`transition-all ${
-          isLiked
-            ? 'fill-like-pink text-like-pink'
-            : 'fill-none text-black group-hover:text-like-pink dark:text-night-white dark:group-hover:text-like-pink'
+      <div className="relative">
+        <Heart
+          size={20}
+          className={`transition-all duration-300 ${
+            isLiked
+              ? 'fill-like-pink text-like-pink'
+              : 'fill-none text-black group-hover:text-like-pink dark:text-night-white dark:group-hover:text-like-pink'
+          }`}
+        />
+        {isAnimating && (
+          <div
+            className={`absolute inset-0 animate-ping rounded-full bg-like-pink/30 transition-all duration-300 ${
+              isLiked ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        )}
+      </div>
+      <span
+        className={`text-sm transition-all duration-300 ${
+          isLiked ? 'text-like-pink' : 'text-black dark:text-night-white'
         }`}
-      />
-      <span className="text-sm text-black dark:text-night-white">
-        {likeCount}
+      >
+        {isLoading ? '...' : likeCount}
       </span>
     </button>
   )
