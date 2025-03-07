@@ -16,42 +16,71 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   const [likeCount, setLikeCount] = useState(0)
 
   useEffect(() => {
-    const likes = JSON.parse(localStorage.getItem('article_likes') || '{}')
-    setIsLiked(!!likes[articleId])
-    // APIから現在のいいね数を取得
-    // 今回はローカル実装としてランダムな数字を設定
-    const savedLikeCount = localStorage.getItem(`like_count_${articleId}`)
-    setLikeCount(
-      savedLikeCount
-        ? parseInt(savedLikeCount)
-        : Math.floor(Math.random() * 50),
-    )
+    const fetchLikeInfo = async () => {
+      try {
+        const userLikes = JSON.parse(
+          localStorage.getItem('article_likes') || '{}',
+        )
+        const hasLiked = !!userLikes[articleId]
+        setIsLiked(hasLiked)
+
+        // APIからいいね数を取得
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/likes?articleId=${articleId}`,
+        )
+
+        if (response.ok) {
+          const data = await response.json()
+          setLikeCount(data.likeCount)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchLikeInfo()
   }, [articleId])
 
   const handleToggleLike = async () => {
     try {
+      const newLikedState = !isLiked
       // ローカルストレージにいいね状態を保存
-      const likes = JSON.parse(localStorage.getItem('article_likes') || '{}')
-      if (isLiked) {
-        delete likes[articleId]
-        setLikeCount((prev) => prev - 1)
+      const userLikes = JSON.parse(
+        localStorage.getItem('article_likes') || '{}',
+      )
+      if (newLikedState) {
+        userLikes[articleId] = true
       } else {
-        likes[articleId] = true
-        setLikeCount((prev) => prev + 1)
+        delete userLikes[articleId]
       }
 
-      localStorage.setItem('article_likes', JSON.stringify(likes))
-      localStorage.setItem(`like_count_${articleId}`, likeCount.toString())
-      setIsLiked(!isLiked)
+      localStorage.setItem('article_likes', JSON.stringify(userLikes))
 
-      // ここで実際のAPIリクエストを送信する場合
-      // await fetch('/api/likes', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json'},
-      //   body: JSON.stringify({ articleId, liked: !isLiked })
-      // })
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/likes`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ articleId, liked: newLikedState }),
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        setLikeCount(data.likeCount)
+        setIsLiked(newLikedState)
+      } else {
+        throw new Error('APIリクエストが失敗しました')
+      }
     } catch (error) {
       console.error(error)
+
+      // 失敗時にローカルストレージを元に戻す
+      const userLikes = JSON.parse(
+        localStorage.getItem('article_likes') || '{}',
+      )
+      if (isLiked) {
+        userLikes[articleId] = true
+      } else {
+        delete userLikes[articleId]
+      }
+      localStorage.setItem('article_likes', JSON.stringify(userLikes))
     }
   }
 
