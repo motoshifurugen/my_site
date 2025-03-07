@@ -24,6 +24,20 @@ const getBlogData = async () => {
   }
 }
 
+const parseDate = (dateString: string): Date => {
+  try {
+    const date = new Date(dateString)
+    if (isNaN(date.getTime())) {
+      console.error('Invalid date:', dateString)
+      return new Date(0) // 無効な日付の場合は最小値を返す
+    }
+    return date
+  } catch (error) {
+    console.error('Error parsing date:', dateString)
+    return new Date(0)
+  }
+}
+
 const ArticleList: React.FC = () => {
   const [blogData, setBlogData] = useState<any[]>([])
   const [filteredData, setFilteredData] = useState<any[]>([])
@@ -35,11 +49,12 @@ const ArticleList: React.FC = () => {
 
   useEffect(() => {
     getBlogData().then((data) => {
-      // 日付の新しい順に並び替え
-      const sortedData = data.sort(
-        (a: any, b: any) =>
-          new Date(b.date).getTime() - new Date(a.date).getTime(),
-      )
+      // 日付の新しい順に並び替え（新しい配列を作成）
+      const sortedData = [...data].sort((a: any, b: any) => {
+        const dateA = parseDate(a.date)
+        const dateB = parseDate(b.date)
+        return dateB.getTime() - dateA.getTime()
+      })
       setBlogData(sortedData)
       setFilteredData(sortedData)
       setIsLoading(false)
@@ -49,7 +64,8 @@ const ArticleList: React.FC = () => {
   useEffect(() => {
     if (tagName) {
       setSelectedTag(tagName)
-      setFilteredData(blogData.filter((post) => post.tags.includes(tagName)))
+      const filtered = blogData.filter((post) => post.tags.includes(tagName))
+      setFilteredData(filtered)
     } else {
       setSelectedTag(null)
       setFilteredData(blogData)
