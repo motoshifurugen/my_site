@@ -8,7 +8,7 @@ interface BlogGridProps {
 const BlogGrid: React.FC<BlogGridProps> = ({ blogData }) => {
   const [loadIndex, setLoadIndex] = useState(10)
   const [isEmpty, setIsEmpty] = useState(false)
-  const [currentPost, setCurrentPost] = useState(blogData.slice(0, 10))
+  const [currentPost, setCurrentPost] = useState<any[]>([])
 
   useEffect(() => {
     if (blogData.length <= 10) {
@@ -18,8 +18,6 @@ const BlogGrid: React.FC<BlogGridProps> = ({ blogData }) => {
 
   const displayMore = () => {
     const newLoadIndex = loadIndex + 10
-    const newPosts = blogData.slice(0, newLoadIndex)
-    setCurrentPost(newPosts)
     setLoadIndex(newLoadIndex)
     if (newLoadIndex >= blogData.length) {
       setIsEmpty(true)
@@ -27,13 +25,16 @@ const BlogGrid: React.FC<BlogGridProps> = ({ blogData }) => {
   }
 
   useEffect(() => {
-    const sortedData = blogData
-      .slice(0, loadIndex)
-      .sort(
-        (a: any, b: any) =>
-          new Date(b.date).getTime() - new Date(a.date).getTime(),
-      )
-    setCurrentPost(sortedData)
+    // 日付の新しい順にソート
+    const sortedData = [...blogData].sort((a, b) => {
+      const dateA = new Date(a.date).getTime()
+      const dateB = new Date(b.date).getTime()
+      return dateB - dateA
+    })
+
+    // 現在の表示件数分のデータを取得
+    const currentData = sortedData.slice(0, loadIndex)
+    setCurrentPost(currentData)
   }, [blogData, loadIndex])
 
   return (

@@ -20,7 +20,7 @@ const Tags: React.FC<TagsProps> = ({ tags }) => {
         <span
           key={index}
           className={`inline-block cursor-pointer rounded px-2.5 py-1.5 text-xxs text-main-white md:text-xs ${
-            tag === 'ブログ'
+            tag === 'ブログ' || tag === '短編小説'
               ? 'bg-orange dark:bg-night-orange'
               : 'bg-teal dark:bg-night-teal'
           }`}

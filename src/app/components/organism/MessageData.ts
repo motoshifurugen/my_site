@@ -1,5 +1,14 @@
 export const announcements = [
   {
+    date: '2025/03/08',
+    category: 'お知らせ',
+    title: 'ブログへのいいね機能を実装しました。',
+    link: {
+      url: 'https://furugen-island.com/my_site/blog',
+      text: 'ブログ',
+    },
+  },
+  {
     date: '2025/02/02',
     category: 'お知らせ',
     title: 'ダークモードを実装しました。',
