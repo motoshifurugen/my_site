@@ -30,10 +30,6 @@
 
 .articleContent h3 {
   font-weight: bold;
-  margin-top: 1.5em;
-  margin-bottom: 1em;
-  white-space: pre-wrap;
-  word-wrap: break-word;
 }
 
 /* ------------------------- */
@@ -56,13 +52,6 @@
   white-space: normal;
 }
 
-.articleContent p + img,
-.articleContent div + img,
-.articleContent img + p,
-.articleContent img + div {
-  padding-top: 16px; /* 画像の前後にスペースを追加 */
-}
-
 /* ------------------------- */
 /* リスト */
 /* ------------------------- */
@@ -70,9 +59,7 @@
 .articleContent ul {
   list-style: initial;
   padding-left: 1rem;
-  margin: 0.5rem;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+  white-space: normal;
 }
 
 .articleContent ol {
@@ -83,10 +70,6 @@
 .articleContent ul {
   list-style-type: disc;
   margin-left: 20px;
-}
-
-.articleContent li {
-  margin-bottom: 0.5rem;
 }
 
 /* ------------------------- */
