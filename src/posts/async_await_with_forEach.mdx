@@ -25,21 +25,21 @@ Vue.jsの関数forEach内でasync awaitを使用している処理がうまく�
 非同期処理は、処理の完了を待たずに次の処理が進む仕組みです。（例：APIリクエストやタイマー処理）
 
 ### `Promise`とは
-`Promise`は非同期処理の結果を表すオブジェクトで、`resolve`されると成功、`reject`されると失敗となります。`async/await`は`Promise`を使って非同期処理を直感的に書くための構文です。（参考：[await - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/await#%E8%A7%A3%E8%AA%AC)）
+`Promise`は非同期処理の結果を表すオブジェクトで、`resolve`されると成功、`reject`されると失敗となります。`async/await`は`Promise`を使って非同期処理を直感的に書くための構文です。参考▼ [await - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/await#%E8%A7%A3%E8%AA%AC)
 
 ### `forEach`は同期処理
 
 > `forEach()`は同期関数を期待します。プロミスを待ちません。`forEach`のコールバックとしてプロミス（または非同期関数）を使用する場合は、その意味合いを理解しておくようにしてください。
-> ```javascript
+> ```javascript:例
 > const ratings = [5, 4, 5];
 > let sum = 0;
-> 
+>
 > const sumFunction = async (a, b) => a + b;
-> 
+>
 > ratings.forEach(async (rating) => {
 >   sum = await sumFunction(sum, rating);
 > });
-> 
+>
 > console.log(sum);
 > // 本来期待される出力: 14
 > // 実際の出力: 0
@@ -50,7 +50,7 @@ Vue.jsの関数forEach内でasync awaitを使用している処理がうまく�
 
 今回は以下のような「メニューの表示を制御する処理」の実装部分で、async awaitを使用していました。
 
-```javascript
+```javascript:script.js
 const ROOT_MENU = {
  ROOT_A: { MENUCODE: "MainMenu2" },
  ROOT_B: { MENUCODE: "MainMenu3" }
@@ -79,7 +79,7 @@ Object.values(ROOT_MENU).forEach(async root => {
 
 tempMenuは以下のような配列です。
 
-```
+```json:tempMenu
 tempMenu = [
  { menuCode: "MainMenu1" },
  {
@@ -99,7 +99,7 @@ tempMenu = [
  { menuCode: "MainMenu4" }
 ]
 ```
- 
+
 ## 何が起きているのか？
 
 `forEach`は`Promise`を返さないため、`await`を使用しても`forEach`自体の処理が同期的に進んでしまいます。その結果、`await`で非同期処理を待っている間に `forEach` のループが進行し、意図した順序で処理されない可能性がある。
@@ -115,7 +115,7 @@ tempMenu = [
 
 → `ROOT_A`（"MainMenu2"）が`tempMenu`から欠落
 
-```
+```json:tempMenu
 tempMenu = [
  { menuCode: "MainMenu1" },
  {
@@ -140,7 +140,7 @@ tempMenu = [
 
 → `tempMenu[rootMenuIndex].submenus = newSubmenu;`が実行される。
 
-```
+```json:tempMenu
 tempMenu = [
  { menuCode: "MainMenu1" },
  {
@@ -158,7 +158,7 @@ tempMenu = [
 
 各`isDisplaySubmenu`の非同期処理が順番に実行されて、最終的に以下のようなメニュー構造となることを期待していました。
 
-```
+```json:tempMenu
 tempMenu = [
  { menuCode: "MainMenu1" },
  {
@@ -182,9 +182,9 @@ tempMenu = [
 ## 解決策
 
 ### `for await...of`を使用
-`for await...of`は各ループの非同期的部分を同期的部分と同様に処理するため、`forEach`のように非同期処理が並列に動作して順序が崩れることがありません。（参考：[for await...of - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/for-await...of)）
+`for await...of`は各ループの非同期的部分を同期的部分と同様に処理するため、`forEach`のように非同期処理が並列に動作して順序が崩れることがありません。参考▼ [for await...of - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/for-await...of)
 
-```javascript
+```javascript:script.js
 (async () => {
   for await (const root of Object.values(ROOT_MENU)) {
     const rootMenuIndex = tempMenu.findIndex(
@@ -207,7 +207,7 @@ tempMenu = [
 })();
 ```
 
-（他にも、`Promise.all`を用いた解決方法もあります。（参考：[Promise.all() - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)））
+他にも、`Promise.all`を用いた解決方法もあります。参考▼ [Promise.all() - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)
 
 ### `async`の前にある`(` と末尾の`()`の意味
 
@@ -215,7 +215,7 @@ tempMenu = [
 これには、`async/await`をすぐに実行するための2つの要素が含まれています。
 
 - `(async () => { ... })` → `async`を含む無名関数を定義
-- `()()` → 定義した関数をすぐに実行（参考：[IIFE (即時実行関数式) - MDN Web Docs 用語集: ウェブ関連用語の定義 | MDN](https://developer.mozilla.org/ja/docs/Glossary/IIFE)）
+- `()()` → 定義した関数をすぐに実行：参考▼ [IIFE (即時実行関数式) - MDN Web Docs 用語集: ウェブ関連用語の定義 | MDN](https://developer.mozilla.org/ja/docs/Glossary/IIFE)
 
 以上です。
 便利だからという理由で安易に`async/await`を使うとこのようなことが起きてしまうので、きちんとした理解と注意が必要だと感じました。
