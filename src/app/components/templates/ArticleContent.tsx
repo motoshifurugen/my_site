@@ -7,6 +7,7 @@ import remarkMath from 'remark-math'
 
 import Highlight from '@/app/components/atoms/Highlight'
 import CodeBlock from '@/app/components/molecules/CodeBlock'
+import LikeButton from '@/app/components/molecules/LikeButton'
 import Tags from '@/app/components/molecules/Tags'
 import Sidebar from '@/app/components/templates/Sidebar'
 
@@ -57,9 +58,12 @@ const ArticleContent: React.FC<ArticleContentProps> = ({
       <div
         className={`w-full max-w-full rounded-lg bg-white p-2 pb-24 text-main-black shadow-sm dark:bg-night-gray dark:text-night-white md:p-10 xl:px-[4em] ${styles.articleContent}`}
       >
-        <p className="text-main-black dark:text-night-white">
-          {blogArticle.date}
-        </p>
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+          <p className="text-main-black dark:text-night-white">
+            {blogArticle.date}
+          </p>
+          <LikeButton articleId={blogArticle.id || blogArticle.slug} />
+        </div>
         <h1 className="text-main-black dark:text-night-white">
           {blogArticle.title}
         </h1>
