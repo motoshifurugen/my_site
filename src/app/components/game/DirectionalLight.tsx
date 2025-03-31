@@ -1,8 +1,12 @@
 'use client'
 
-export function DirectionalLight() {
+import * as THREE from 'three'
+import { forwardRef } from 'react'
+
+export const DirectionalLight = forwardRef<THREE.DirectionalLight>((_, ref) => {
   return (
     <directionalLight
+      ref={ref}
       position={[-100, -100, 200]}
       up={[0, 0, 1]}
       castShadow
@@ -15,4 +19,4 @@ export function DirectionalLight() {
       shadow-camera-far={400}
     />
   )
-}
+})

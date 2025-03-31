@@ -1,6 +1,5 @@
 'use client'
 
-import { DirectionalLight } from '@/app/components/game/DirectionalLight'
 import { Canvas } from '@react-three/fiber'
 
 export const Scene = ({ children }: { children: React.ReactNode }) => {
@@ -14,7 +13,6 @@ export const Scene = ({ children }: { children: React.ReactNode }) => {
       }}
     >
       <ambientLight />
-      <DirectionalLight />
       {children}
     </Canvas>
   )
