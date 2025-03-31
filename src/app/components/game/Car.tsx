@@ -1,7 +1,9 @@
 'use client'
 
 import { tileSize } from '@/app/components/game/const'
+import useVehicleAnimation from '@/app/components/game/hooks/useVehicleAnimation'
 import { Wheel } from '@/app/components/game/Wheel'
+import { useRef } from 'react'
 import * as THREE from 'three'
 
 type Props = {
@@ -19,10 +21,14 @@ export function Car({
   speed,
   color,
 }: Props) {
+  const car = useRef<THREE.Group>(null)
+  useVehicleAnimation(car, direction, speed)
+
   return (
     <group
+      ref={car}
       position-x={initialTileIndex * tileSize}
-      position-z={direction ? 0 : Math.PI}
+      rotation-z={direction ? 0 : Math.PI}
     >
       <mesh position={[0, 0, 12]} castShadow receiveShadow>
         <boxGeometry args={[60, 30, 15]} />
