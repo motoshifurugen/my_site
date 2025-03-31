@@ -1,0 +1,35 @@
+.chip {
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background-color: var(--bg-gray);
+  color: var(--main-black);
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.chip:hover {
+  background-color: var(--teal);
+  color: white;
+}
+
+.selected {
+  background-color: var(--teal);
+  color: white;
+}
+
+:global(.dark) .chip {
+  background-color: var(--night-bg-gray);
+  color: var(--night-white);
+}
+
+:global(.dark) .chip:hover {
+  background-color: var(--night-teal);
+}
+
+:global(.dark) .selected {
+  background-color: var(--night-teal);
+} 
