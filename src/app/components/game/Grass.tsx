@@ -1,6 +1,6 @@
 'use client'
 
-import { tileSize, tilesPerRow } from '@/const/game-const'
+import { tileSize, tilesPerRow } from '@/app/components/game/const'
 
 type Props = {
   rowIndex: number

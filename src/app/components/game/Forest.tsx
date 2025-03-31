@@ -1,7 +1,7 @@
 'use client'
 
-import { Grass } from '@/app/components/atoms/Grass'
-import { Tree } from '@/app/components/atoms/Tree'
+import { Grass } from '@/app/components/game/Grass'
+import { Tree } from '@/app/components/game/Tree'
 import type { Row } from '@/types/game-objects'
 
 type Props = {

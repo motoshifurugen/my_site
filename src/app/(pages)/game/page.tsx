@@ -1,8 +1,8 @@
 'use client'
 
-import { Map } from '@/app/components/organism/Map'
-import { Player } from '@/app/components/organism/Player'
-import { Scene } from '@/app/components/templates/Scene'
+import { Map } from '@/app/components/game/Map'
+import { Player } from '@/app/components/game/Player'
+import { Scene } from '@/app/components/game/Scene'
 
 export default function GamePage() {
   return (
