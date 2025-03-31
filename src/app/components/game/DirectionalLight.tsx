@@ -1,7 +1,7 @@
 'use client'
 
-import * as THREE from 'three'
 import { forwardRef } from 'react'
+import * as THREE from 'three'
 
 export const DirectionalLight = forwardRef<THREE.DirectionalLight>((_, ref) => {
   return (
@@ -20,3 +20,5 @@ export const DirectionalLight = forwardRef<THREE.DirectionalLight>((_, ref) => {
     />
   )
 })
+
+DirectionalLight.displayName = 'DirectionalLight'

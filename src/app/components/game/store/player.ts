@@ -1,28 +1,23 @@
-import type { MoveDirection } from '@/types/game-objects'
 import { endsUpInValidPosition } from '@/app/components/game/utilities/endsUpInValidPosition'
+import type { MoveDirection } from '@/types/game-objects'
 
-export const state: {
-  currentRow: number
-  currentTile: number
-  movesQueue: MoveDirection[]
-} = {
+export const state = {
   currentRow: 0,
   currentTile: 0,
-  movesQueue: [],
+  movesQueue: [] as MoveDirection[],
 }
 
 export function queueMove(direction: MoveDirection) {
-  const isValidMove = endsUpInValidPosition(
+  if (!endsUpInValidPosition(
     { rowIndex: state.currentRow, tileIndex: state.currentTile },
     [...state.movesQueue, direction]
-  )
-
-  if (!isValidMove) return
+  )) return
   state.movesQueue.push(direction)
 }
 
 export function stepCompleted() {
   const direction = state.movesQueue.shift()
+  if (!direction) return
 
   if (direction === 'forward') state.currentRow += 1
   if (direction === 'backward') state.currentRow -= 1

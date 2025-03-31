@@ -1,36 +1,37 @@
+import { maxTileIndex, minTileIndex } from '@/app/components/game/const'
+import { rows } from '@/app/components/game/metadata'
 import type { MoveDirection } from '@/types/game-objects'
-import { calculateFinalPosition } from '@/app/components/game/utilities/calculateFinalPosition'
-import { minTileIndex, maxTileIndex } from '@/app/components/game/const'
-import { rows } from '@/app/components/game/metadata';
+
+type Position = {
+  rowIndex: number
+  tileIndex: number
+}
 
 export function endsUpInValidPosition(
-  currentPosition: { rowIndex: number; tileIndex: number },
-  moves: MoveDirection[],
-) {
-  // Calculate where the player would end up after the move
-  const finalPosition = calculateFinalPosition(currentPosition, moves)
+  currentPosition: Position,
+  moves: MoveDirection[]
+): boolean {
+  let finalPosition = { ...currentPosition }
 
-  // Detect if we hit the edge of the map
+  for (const move of moves) {
+    if (move === 'forward') finalPosition.rowIndex += 1
+    if (move === 'backward') finalPosition.rowIndex -= 1
+    if (move === 'left') finalPosition.tileIndex -= 1
+    if (move === 'right') finalPosition.tileIndex += 1
+  }
+
   if (
-    finalPosition.rowIndex === -1 ||
-    finalPosition.tileIndex === minTileIndex - 1 ||
-    finalPosition.tileIndex === maxTileIndex + 1
+    finalPosition.rowIndex < 0 ||
+    finalPosition.rowIndex >= rows.length ||
+    finalPosition.tileIndex < minTileIndex ||
+    finalPosition.tileIndex > maxTileIndex
   ) {
-    // Invalid move, ignore move command
     return false
   }
 
-  // Detect if we hit a tree
-  const finalRow = rows[finalPosition.rowIndex - 1]
-  if (
-    finalRow &&
-    finalRow.type === 'forest' &&
-    finalRow.trees.some(
-      (tree) => tree.tileIndex === finalPosition.tileIndex
-    )
-  ) {
-    // Invalid move, ignore move command
-    return false
+  const row = rows[finalPosition.rowIndex]
+  if (row.type === 'forest') {
+    return !row.trees.some((tree) => tree.tileIndex === finalPosition.tileIndex)
   }
 
   return true

@@ -1,11 +1,11 @@
 'use client'
 
-import usePlayerAnimation from '@/app/components/game/hooks/usePlayerAnimation'
 import { Bounds } from '@react-three/drei'
+import { DirectionalLight } from '@/app/components/game/DirectionalLight'
 import { useRef, useEffect } from 'react'
 import { useThree } from '@react-three/fiber'
+import usePlayerAnimation from './hooks/usePlayerAnimation'
 import * as THREE from 'three'
-import { DirectionalLight } from '@/app/components/game/DirectionalLight'
 
 export function Player() {
   const player = useRef<THREE.Group>(null)
@@ -20,7 +20,7 @@ export function Player() {
 
     player.current.add(camera)
     lightRef.current.target = player.current
-  });
+  })
 
   return (
     <Bounds fit clip observe margin={10}>
