@@ -1,8 +1,10 @@
 'use client'
 
+import { Controls } from '@/app/components/game/controls'
 import { Map } from '@/app/components/game/Map'
 import { Player } from '@/app/components/game/Player'
 import { Scene } from '@/app/components/game/Scene'
+import './Game.css'
 
 export default function GamePage() {
   return (
@@ -11,6 +13,7 @@ export default function GamePage() {
         <Player />
         <Map />
       </Scene>
+      <Controls />
     </div>
   )
 }
