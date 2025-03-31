@@ -24,11 +24,11 @@ export function Truck({
       position-x={initialTileIndex * tileSize}
       position-z={direction ? 0 : Math.PI}
     >
-      <mesh position={[-15, 0, 25]}>
+      <mesh position={[-15, 0, 25]} castShadow receiveShadow>
         <boxGeometry args={[70, 35, 35]} />
         <meshLambertMaterial color={0xb4c6fc} flatShading />
       </mesh>
-      <mesh position={[35, 0, 20]}>
+      <mesh position={[35, 0, 20]} castShadow receiveShadow>
         <boxGeometry args={[30, 30, 30]} />
         <meshLambertMaterial color={color} flatShading />
       </mesh>

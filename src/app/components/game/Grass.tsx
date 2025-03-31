@@ -10,7 +10,7 @@ type Props = {
 export function Grass({ rowIndex, children }: Props) {
   return (
     <group position={[0, rowIndex * tileSize, 0]}>
-      <mesh>
+      <mesh receiveShadow>
         <boxGeometry args={[tilesPerRow * tileSize, tileSize, 3]} />
         <meshLambertMaterial color={0xbaf455} flatShading />
       </mesh>
