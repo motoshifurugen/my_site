@@ -9,7 +9,7 @@ type Position = {
 
 export function endsUpInValidPosition(
   currentPosition: Position,
-  moves: MoveDirection[]
+  moves: MoveDirection[],
 ): boolean {
   let finalPosition = { ...currentPosition }
 

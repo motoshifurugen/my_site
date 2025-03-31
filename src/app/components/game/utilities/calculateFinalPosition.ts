@@ -2,7 +2,7 @@ import type { MoveDirection } from '@/types/game-objects'
 
 export function calculateFinalPosition(
   currentPosition: { rowIndex: number; tileIndex: number },
-  moves: MoveDirection[]
+  moves: MoveDirection[],
 ) {
   return moves.reduce((position, direction) => {
     if (direction === 'forward')
