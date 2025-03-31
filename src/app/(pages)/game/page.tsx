@@ -1,6 +1,6 @@
 'use client'
 
-import { Controls } from '@/app/components/game/controls'
+import { Controls } from '@/app/components/game/Controls'
 import { Map } from '@/app/components/game/Map'
 import { Player } from '@/app/components/game/Player'
 import { Scene } from '@/app/components/game/Scene'
