@@ -8,10 +8,13 @@ export const state = {
 }
 
 export function queueMove(direction: MoveDirection) {
-  if (!endsUpInValidPosition(
-    { rowIndex: state.currentRow, tileIndex: state.currentTile },
-    [...state.movesQueue, direction],
-  )) return
+  if (
+    !endsUpInValidPosition(
+      { rowIndex: state.currentRow, tileIndex: state.currentTile },
+      [...state.movesQueue, direction],
+    )
+  )
+    return
   state.movesQueue.push(direction)
 }
 

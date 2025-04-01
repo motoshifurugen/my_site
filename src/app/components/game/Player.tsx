@@ -1,10 +1,10 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
-import * as THREE from 'three'
-import { useThree } from '@react-three/fiber'
-import { Bounds } from '@react-three/drei'
 import { DirectionalLight } from '@/app/components/game/DirectionalLight'
+import { Bounds } from '@react-three/drei'
+import { useThree } from '@react-three/fiber'
+import { useEffect, useRef } from 'react'
+import * as THREE from 'three'
 import usePlayerAnimation from './hooks/usePlayerAnimation'
 
 export function Player() {

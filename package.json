@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prettier --write \"src/**/*.{ts,tsx}\" && next build",
     "start": "next start",
     "start:api": "next dev -p 3001",
     "lint": "run-p -l -c --aggregate-output lint:*",
