@@ -20,18 +20,23 @@ export function endsUpInValidPosition(
     if (move === 'right') finalPosition.tileIndex += 1
   }
 
+  // マップの端に当たった場合
   if (
-    finalPosition.rowIndex < 0 ||
-    finalPosition.rowIndex >= rows.length ||
-    finalPosition.tileIndex < minTileIndex ||
-    finalPosition.tileIndex > maxTileIndex
+    finalPosition.rowIndex === -1 ||
+    finalPosition.tileIndex === minTileIndex - 1 ||
+    finalPosition.tileIndex === maxTileIndex + 1
   ) {
     return false
   }
 
-  const row = rows[finalPosition.rowIndex]
-  if (row.type === 'forest') {
-    return !row.trees.some((tree) => tree.tileIndex === finalPosition.tileIndex)
+  // 木に当たった場合
+  const finalRow = rows[finalPosition.rowIndex - 1]
+  if (
+    finalRow &&
+    finalRow.type === 'forest' &&
+    finalRow.trees.some((tree) => tree.tileIndex === finalPosition.tileIndex)
+  ) {
+    return false
   }
 
   return true

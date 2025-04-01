@@ -20,7 +20,7 @@ export function Player() {
 
     player.current.add(camera)
     lightRef.current.target = player.current
-  })
+  }, [])
 
   return (
     <Bounds fit clip observe margin={10}>
