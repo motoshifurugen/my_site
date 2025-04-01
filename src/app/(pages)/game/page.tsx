@@ -5,6 +5,7 @@ import { Map } from '@/app/components/game/Map'
 import { Player } from '@/app/components/game/Player'
 import { Scene } from '@/app/components/game/Scene'
 import { Score } from '@/app/components/game/Score'
+import { Result } from '@/app/components/game/Result'
 import './Game.css'
 
 export default function GamePage() {
@@ -17,6 +18,7 @@ export default function GamePage() {
         </Scene>
         <Score />
         <Controls />
+        <Result />
       </div>
     </div>
   )

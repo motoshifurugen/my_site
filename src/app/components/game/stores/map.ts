@@ -5,6 +5,7 @@ import type { Row } from "@/types/game-objects";
 interface StoreState {
   rows: Row[];
   addRows: () => void;
+  reset: () => void;
 }
 
 const useStore = create<StoreState>((set) => ({
@@ -13,6 +14,7 @@ const useStore = create<StoreState>((set) => ({
     const newRows = generateRows(20);
     set((state) => ({ rows: [...state.rows, ...newRows] }));
   },
+  reset: () => set({ rows: generateRows(20) }),
 }));
 
 export default useStore;
