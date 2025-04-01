@@ -1,4 +1,4 @@
-import { queueMove } from '@/app/components/game/store/player'
+import { queueMove } from '@/app/components/game/stores/player'
 import { useEffect } from 'react'
 
 export default function useEventListeners() {

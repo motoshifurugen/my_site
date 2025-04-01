@@ -5,6 +5,7 @@ import useVehicleAnimation from '@/app/components/game/hooks/useVehicleAnimation
 import { Wheel } from '@/app/components/game/Wheel'
 import { useRef } from 'react'
 import * as THREE from 'three'
+import useHitDetection from '@/app/components/game/hooks/useHitDetection'
 
 type Props = {
   rowIndex: number
@@ -23,12 +24,13 @@ export function Truck({
 }: Props) {
   const truck = useRef<THREE.Group>(null)
   useVehicleAnimation(truck, direction, speed)
+  useHitDetection(truck, rowIndex)
 
   return (
     <group
       ref={truck}
       position-x={initialTileIndex * tileSize}
-      position-y={direction ? 0 : Math.PI}
+      rotation-z={direction ? 0 : Math.PI}
     >
       <mesh position={[-15, 0, 25]} castShadow receiveShadow>
         <boxGeometry args={[70, 35, 35]} />

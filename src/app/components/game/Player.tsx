@@ -6,6 +6,7 @@ import { useThree } from '@react-three/fiber'
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import usePlayerAnimation from './hooks/usePlayerAnimation'
+import { setRef } from './stores/player'
 
 export function Player() {
   const player = useRef<THREE.Group>(null)
@@ -20,6 +21,8 @@ export function Player() {
 
     player.current.add(camera)
     lightRef.current.target = player.current
+
+    setRef(player.current)
   }, [])
 
   return (
