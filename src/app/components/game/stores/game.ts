@@ -20,9 +20,17 @@ const useStore = create<StoreState>((set) => ({
     set({ status: "over" });
   },
   reset: () => {
+    // まずゲームを一時停止
+    set({ status: "over" });
+
+    // すべてのリセット処理を実行
     useMapStore.getState().reset();
     resetPlayerStore();
-    set({ status: "running", score: 0 });
+
+    // リセット完了後にゲームを開始
+    requestAnimationFrame(() => {
+      set({ status: "running", score: 0 });
+    });
   },
 }))
 
