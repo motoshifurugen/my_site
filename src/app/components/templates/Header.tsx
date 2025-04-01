@@ -17,6 +17,7 @@ const links = [
   { href: '/profile', text: 'Profile' },
   { href: '/blog', text: 'Blog' },
   { href: '/skills', text: 'Portfolio' },
+  { href: '/game', text: 'Game' },
   { href: '/contact', text: 'Contact' },
 ]
 
