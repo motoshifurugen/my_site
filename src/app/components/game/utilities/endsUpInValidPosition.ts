@@ -1,6 +1,7 @@
 import { maxTileIndex, minTileIndex } from '@/app/components/game/const'
-import { rows } from '@/app/components/game/metadata'
 import type { MoveDirection } from '@/types/game-objects'
+import useMapStore from '@/app/components/game/stores/map'
+import { calculateFinalPosition } from '@/app/components/game/utilities/calculateFinalPosition'
 
 type Position = {
   rowIndex: number
@@ -11,14 +12,7 @@ export function endsUpInValidPosition(
   currentPosition: Position,
   moves: MoveDirection[],
 ): boolean {
-  let finalPosition = { ...currentPosition }
-
-  for (const move of moves) {
-    if (move === 'forward') finalPosition.rowIndex += 1
-    if (move === 'backward') finalPosition.rowIndex -= 1
-    if (move === 'left') finalPosition.tileIndex -= 1
-    if (move === 'right') finalPosition.tileIndex += 1
-  }
+  const finalPosition = calculateFinalPosition(currentPosition, moves)
 
   // マップの端に当たった場合
   if (
@@ -30,7 +24,7 @@ export function endsUpInValidPosition(
   }
 
   // 木に当たった場合
-  const finalRow = rows[finalPosition.rowIndex - 1]
+  const finalRow = useMapStore.getState().rows[finalPosition.rowIndex - 1]
   if (
     finalRow &&
     finalRow.type === 'forest' &&

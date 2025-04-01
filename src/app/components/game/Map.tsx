@@ -2,9 +2,11 @@
 
 import { Grass } from '@/app/components/game/Grass'
 import { Row } from '@/app/components/game/Row'
-import { rows } from '@/app/components/game/metadata'
+import useStore from '@/app/components/game/stores/map'
 
 export function Map() {
+  const rows = useStore((state) => state.rows);
+
   return (
     <>
       <Grass rowIndex={0} />

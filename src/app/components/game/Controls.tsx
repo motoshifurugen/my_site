@@ -1,7 +1,7 @@
 'use client'
 
 import useEventListeners from '@/app/components/game/hooks/useEventListeners'
-import { queueMove } from '@/app/components/game/store/player'
+import { queueMove } from '@/app/components/game/stores/player'
 import './Controls.css'
 
 export function Controls() {

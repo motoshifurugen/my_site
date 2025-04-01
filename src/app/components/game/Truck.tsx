@@ -28,7 +28,7 @@ export function Truck({
     <group
       ref={truck}
       position-x={initialTileIndex * tileSize}
-      position-y={direction ? 0 : Math.PI}
+      rotation-z={direction ? 0 : Math.PI}
     >
       <mesh position={[-15, 0, 25]} castShadow receiveShadow>
         <boxGeometry args={[70, 35, 35]} />

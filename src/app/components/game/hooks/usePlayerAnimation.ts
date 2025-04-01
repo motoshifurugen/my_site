@@ -1,5 +1,5 @@
 import { tileSize } from '@/app/components/game/const'
-import { state, stepCompleted } from '@/app/components/game/store/player'
+import { state, stepCompleted } from '@/app/components/game/stores/player'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
