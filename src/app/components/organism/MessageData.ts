@@ -4,7 +4,7 @@ export const announcements = [
     category: 'お知らせ',
     title: 'ゲーム（クロッシーロード）画面を追加しました。',
     link: {
-      url: 'https://furugen-island.com/game',
+      url: 'https://furugen-island.com/my_site/game',
       text: 'Game',
     },
   },
