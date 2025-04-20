@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import AnimatedLine from '../atoms/AnimatedLine'
-import PageFace from '../organism/PageFace'
+import PageFace from '../organisms/PageFace'
 
 interface MaintenanceTemplateProps {
   title: string

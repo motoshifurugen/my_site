@@ -3,7 +3,7 @@
 import AnimatedLine from '../../components/atoms/AnimatedLine'
 import MainMessage from '../../components/atoms/MainMessage'
 import Article from '../../components/molecules/Article'
-import PageFace from '../../components/organism/PageFace'
+import PageFace from '../../components/organisms/PageFace'
 import { articles } from './articles'
 
 export default function Page() {

@@ -1,0 +1,273 @@
+---
+title: 'Reactでポートフォリオサイトを作成する 🚀（3）'
+date: '2025-04-21'
+tags:
+  - 'React'
+  - 'Next.js'
+  - 'ポートフォリオ'
+---
+
+## はじめに
+
+「自分にとって新しい技術をインプットしたい」と「長く残るアウトプットを作りたい」という思いから、Reactを使ってポートフォリオサイトの作成に挑戦してみることにしました。
+この記事を含め、複数回に分けて作成過程を記録していきます。ここまでの記事は以下です。
+
+https://furugen-island.com/my_site/blog/create_my_site
+
+https://furugen-island.com/my_site/blog/create_my_site_2
+
+今回は以下の内容についてご紹介します。
+
+- 【ポートフォリオ画面】ポートフォリオ一覧を表示
+- 【ポートフォリオ画面】スキルタイムラインチャートを作成
+- 【コンタクト画面】SSGformを用いてフォームを作成
+- 【フッター】フッターを作成
+
+## 【ポートフォリオ画面】ポートフォリオ一覧を表示
+
+ポートフォリオ一覧のコンポーネントを、カードコンポーネントを用いて作成する
+
+```typescript:WorkCard.tsx
+import Image from "next/image";
+
+interface WorkCardProps {
+  src: string;
+  alt: string;
+  title: string;
+  description: string;
+  tags: string[];
+}
+
+const WorkCard: React.FC<WorkCardProps> = ({ src, alt, title, description, tags }) => {
+  return (
+    <div className="max-w-sm rounded overflow-hidden mb-20">
+      <Image src={src} alt={alt} width={500} height={500} className="w-full" />
+      <div className="px-6 py-4">
+        <div className="font-bold text-xl mb-2">{title}</div>
+        <p className="text-gray-700 text-base">{description}</p>
+      </div>
+      <div className="px-6 pt-4 pb-2">
+        {tags.map((tag, index) => (
+          <span key={index} className="inline-block bg-gray rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default WorkCard;
+```
+
+ポートフォリオ一覧画面にて、mapを用いて`WorkCard`コンポーネントを表示する
+
+```typescript:works/page.tsx```
+<div className="works px-20">
+  <h2 className="text-3xl font-bold">制作実績</h2>
+  <div className="work-list grid grid-cols-3 gap-4 justify-items-center items-center my-10">
+    {works.map((work, index) => (
+      <WorkCard
+        key={index}
+        src={work.src}
+        alt={work.alt}
+        title={work.title}
+        description={work.description}
+        tags={work.tags}
+      />
+    ))}
+  </div>
+</div>
+```
+
+<img
+  src="https://i.gyazo.com/b6ecf6f028688362af8775fd113729c6.png"
+  alt="screenshot"
+  width="600px"
+/>
+
+## 【ポートフォリオ画面】スキルタイムラインチャートを作成
+
+タイムライン型のスキルマップを作成したい
+
+```typescript:SkillTimeline.tsx
+const SkillTimeline: React.FC = () => {
+  const totalYears = max - 2019 + 1; // グラフの長さ（2024年8月現在は6.6）
+  const sortedSkills = skills.sort((a, b) => b.total - a.total);
+  const years = Array.from({ length: Math.ceil(totalYears) }, (_, i) => 2019 + i);
+
+  return (
+    <div className="w-4/5 mx-auto p-10 border-l-4 border-gray relative my-10">
+      <div className="flex items-center">
+        <div className="bg-teal bg-opacity-80 h-3 rounded w-8"></div>
+        <p className="ml-2">経験時期</p>
+      </div>
+      <div className="relative mb-10 py-4">
+        {years.map((year, index) => {
+          const left = ((year - 2019) / totalYears) * 100;
+          return (
+            <span
+              key={index}
+              className="absolute text-md"
+              style={{ left: `${left}%`}}
+            >
+              {year}
+            </span>
+          );
+        })}
+      </div>
+      {sortedSkills.map((skill, index) => (
+        <div key={index} className="mb-5 pl-5 relative">
+          <div className="bg-white p-4 rounded-lg relative">
+            <h3 className="font-bold">{skill.name}</h3>
+            <div className="flex">
+              {skill.total.toFixed(1)}年
+              {skill.periods.map((period, i) => {
+                const startOffset = ((period.start - 2019) / totalYears) * 100;
+                const width = ((period.end - period.start + 0.1) / totalYears) * 100;
+                return (
+                  <div
+                    key={i}
+                    className="absolute bg-teal bg-opacity-80 h-3 rounded"
+                    style={{
+                      left: `${startOffset}%`,
+                      width: `${width}%`
+                    }}
+                  ></div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default SkillTimeline;
+```
+
+<img
+  src="https://i.gyazo.com/e49a223bf4912250bd1d218053b17c20.png"
+  alt="screenshot"
+  width="600px"
+/>
+
+※更新が手間なので、今後改良したい
+
+## 【コンタクト画面】SSGformを用いてフォームを作成
+
+SSGformを用いてフォームを作成する
+
+https://ssgform.com/
+
+<img
+  src="https://i.gyazo.com/98d6f642940f259487b2fd3d357ea272.png"
+  alt="screenshot"
+  width="600px"
+/>
+
+## 【フッター】フッターを作成
+
+アニメーションのついた横棒（PageFace.tsxで使用）をフッターでも使いたいので、コンポーネント化する
+
+```typescript:components/AnimatedLine.tsx
+import React, { useEffect, useRef } from 'react';
+
+const AnimatedLine: React.FC = () => {
+  const lineRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (lineRef.current) {
+      lineRef.current.classList.remove('w-0');
+      lineRef.current.classList.add('w-full');
+    }
+  }, []);
+
+  return (
+    <div
+      ref={lineRef}
+      className="h-0.5 opacity-50 bg-font-main transition-all duration-1000 ease-in-out w-0 mt-4"
+    ></div>
+  );
+};
+
+export default AnimatedLine;
+```
+
+フッターコンポーネントを作成する
+
+```typescript:Footer.tsx
+'use client'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlane } from '@fortawesome/free-solid-svg-icons'
+import { faGithub, faXTwitter } from '@fortawesome/free-brands-svg-icons'
+import AnimatedLine from './AnimatedLine'
+
+export default function Footer() {
+  return (
+    <>
+      <AnimatedLine />
+      <footer className="p-2 mt-auto">
+        <div className="container mx-auto flex h-32 py-6">
+          <div className="rightFooter w-3/4">
+            <p className="mb-3 text-lg">古堅 基史</p>
+            <p>
+              沖縄
+              <FontAwesomeIcon icon={faPlane} className="mx-3 opacity-70" />
+              広島
+              <FontAwesomeIcon icon={faPlane} className="mx-3 opacity-70" />
+              埼玉
+              <FontAwesomeIcon icon={faPlane} className="mx-3 opacity-70" />
+              広島
+              <FontAwesomeIcon icon={faPlane} className="mx-3 opacity-70" />
+              横浜
+            </p>
+          </div>
+          <div className="border-l-2 opacity-50 mx-8"></div>
+          <div className="leftFooter w-1/4 flex flex-col justify-between">
+            <div className="flex space-x-4">
+              <a
+                href="https://github.com/motoshifurugen"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faGithub} className="text-2xl" />
+              </a>
+              <a
+                href="https://x.com/cocoahearts21"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faXTwitter} className="text-2xl" />
+              </a>
+            </div>
+            <p className="self-end opacity-50">&copy; 2024 Furugen</p>
+          </div>
+        </div>
+      </footer>
+    </>
+  )
+}
+```
+
+フッターを表示する
+
+```typescript:layout.tsx
+<html lang="ja">
+  <body className={inter.className}>
+    <BackgroundWrapper>
+      <Header />
+      <main className="pt-40">{children}</main>
+    </BackgroundWrapper>
+    <Footer />
+  </body>
+</html>
+```
+
+<img
+  src="https://i.gyazo.com/8f6a2c6442d24f1a56f38d63d2ce4eeb.png"
+  alt="screenshot"
+  width="600px"
+/>

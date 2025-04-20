@@ -1,6 +1,6 @@
 'use client'
 
-import BlogGrid from '@/app/components/organism/BlogGrid'
+import BlogGrid from '@/app/components/organisms/BlogGrid'
 import Sidebar from '@/app/components/templates/Sidebar'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'

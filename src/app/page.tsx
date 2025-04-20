@@ -1,4 +1,4 @@
-import MessageBoard from '@/app/components/organism/MessageBoard'
+import MessageBoard from '@/app/components/organisms/MessageBoard'
 import Image from 'next/image'
 import nextConfig from '../../next.config.mjs'
 import MainMessage from './components/atoms/MainMessage'

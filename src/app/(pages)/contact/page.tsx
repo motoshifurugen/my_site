@@ -1,8 +1,8 @@
 'use client'
 
 import AnimatedLine from '../../components/atoms/AnimatedLine'
-import Form from '../../components/organism/Form'
-import PageFace from '../../components/organism/PageFace'
+import Form from '../../components/organisms/Form'
+import PageFace from '../../components/organisms/PageFace'
 
 export default function Contact() {
   return (

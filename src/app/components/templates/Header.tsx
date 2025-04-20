@@ -3,7 +3,7 @@
 import TitleLinkButton from '@/app/components/atoms/TitleLinkButton'
 import GithubLinkButton from '@/app/components/molecules/GithubLinkButton'
 import HeaderLinkButton from '@/app/components/molecules/HeaderLinkButton'
-import ThemeSwitch from '@/app/components/organism/ThemeSwitch'
+import ThemeSwitch from '@/app/components/organisms/ThemeSwitch'
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { usePathname } from 'next/navigation'
@@ -66,7 +66,7 @@ const Header = () => {
             className={`
             item-left fixed right-0 top-0 flex
             h-full flex-col flex-wrap bg-transparent transition-transform duration-300 ease-in-out md:flex-row
-            ${menuOpen ? 'translate-x-0 bg-white dark:bg-night-black' : 'translate-x-full'} w-full px-4 pt-32
+            ${menuOpen ? 'translate-x-0 bg-white dark:bg-night-black' : 'translate-x-full'} w-full px-4 pt-16
             md:relative md:translate-x-0 md:bg-transparent md:p-0
           `}
           >
