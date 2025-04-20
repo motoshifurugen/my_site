@@ -1,11 +1,11 @@
 'use client'
 
 import { tileSize } from '@/app/components/game/const'
+import useHitDetection from '@/app/components/game/hooks/useHitDetection'
 import useVehicleAnimation from '@/app/components/game/hooks/useVehicleAnimation'
 import { Wheel } from '@/app/components/game/Wheel'
 import { useRef } from 'react'
 import * as THREE from 'three'
-import useHitDetection from '@/app/components/game/hooks/useHitDetection'
 
 type Props = {
   rowIndex: number

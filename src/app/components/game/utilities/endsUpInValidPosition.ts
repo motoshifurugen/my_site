@@ -1,7 +1,7 @@
 import { maxTileIndex, minTileIndex } from '@/app/components/game/const'
-import type { MoveDirection } from '@/types/game-objects'
 import useMapStore from '@/app/components/game/stores/map'
 import { calculateFinalPosition } from '@/app/components/game/utilities/calculateFinalPosition'
+import type { MoveDirection } from '@/types/game-objects'
 
 type Position = {
   rowIndex: number

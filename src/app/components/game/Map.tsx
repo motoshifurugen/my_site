@@ -5,7 +5,7 @@ import { Row } from '@/app/components/game/Row'
 import useStore from '@/app/components/game/stores/map'
 
 export function Map() {
-  const rows = useStore((state) => state.rows);
+  const rows = useStore((state) => state.rows)
 
   return (
     <>
