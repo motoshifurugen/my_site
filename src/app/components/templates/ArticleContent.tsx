@@ -24,16 +24,31 @@ interface ArticleContentProps {
 }
 
 const codeBlockComponents = {
-  code: (
-    props: JSX.IntrinsicAttributes & {
-      className?: string
-      children?: ReactNode
-    },
-  ) => {
-    if (props.className) {
-      return <CodeBlock {...props} />
+  code: (props: JSX.IntrinsicAttributes & { className?: string; children?: ReactNode }) => {
+    // インラインコードの場合（preタグでラップされていない場合）
+    if (!props.className) {
+      return (
+        <code className="bg-slate-100 text-rose-600 dark:bg-slate-800 dark:text-rose-400 rounded px-1.5 py-0.5 text-[0.9em] font-mono">
+          {String(props.children)}
+        </code>
+      );
     }
-    return <code {...props} />
+
+    // コードブロックの場合
+    const content = String(props.children || '');
+    const [lang, file] = (props.className || '').replace('language-', '').split(':');
+    
+    return (
+      <CodeBlock
+        className={props.className}
+        fileName={file}
+      >
+        {content}
+      </CodeBlock>
+    );
+  },
+  pre: (props: JSX.IntrinsicAttributes & { children?: ReactNode }) => {
+    return <div {...props} />;
   },
   p: (props: JSX.IntrinsicAttributes & { children?: ReactNode }) => (
     <div {...props} />

@@ -6,18 +6,18 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 type Props = {
-  className?: string
-  children?: React.ReactNode
+  className?: string;
+  children?: React.ReactNode;
+  fileName?: string;
 }
 
-const CodeBlock: React.FC<Props> = ({ className, children = '' }: Props) => {
+const CodeBlock: React.FC<Props> = ({ className, children = '', fileName }: Props) => {
   // コピー状態を管理するためのフック
   const [isCopied, setIsCopied] = useState(false)
 
-  // クラス名から言語とファイル名を抽出
-  const match = /language-(\w+):(.+)/.exec(className || '')
-  const language = match && match[1] ? match[1] : ''
-  const fileName = match && match[2] ? match[2] : ''
+  // クラス名から言語を抽出
+  const match = className ? /language-(\w+)/.exec(className) : null
+  const language = match ? match[1] : ''
   const code = String(children).replace(/\n$/, '')
   const syntaxHighlighterClass = fileName
     ? 'code-block-with-title'
