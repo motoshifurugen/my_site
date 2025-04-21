@@ -3,26 +3,28 @@ import { MetadataRoute } from 'next'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://furugen-island.com/my_site'
+  const currentDate = new Date().toISOString()
+
   const defaultPages: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/`,
-      lastModified: new Date(),
+      lastModified: currentDate,
     },
     {
       url: `${baseUrl}/profile`,
-      lastModified: new Date(),
+      lastModified: currentDate,
     },
     {
       url: `${baseUrl}/blog`,
-      lastModified: new Date(),
+      lastModified: currentDate,
     },
     {
       url: `${baseUrl}/skills`,
-      lastModified: new Date(),
+      lastModified: currentDate,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified: new Date(),
+      lastModified: currentDate,
     },
   ]
 
@@ -30,7 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const blogPages: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
+    lastModified: post.date ? new Date(post.date).toISOString() : currentDate,
   }))
 
   return [...defaultPages, ...blogPages]
