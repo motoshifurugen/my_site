@@ -1,0 +1,189 @@
+---
+title: 'Reactでポートフォリオサイトを作成する 🚀（4）'
+date: '2025-04-22'
+tags:
+  - 'React'
+  - 'Next.js'
+  - 'ポートフォリオ'
+---
+
+## はじめに
+
+「自分にとって新しい技術をインプットしたい」と「長く残るアウトプットを作りたい」という思いから、Reactを使ってポートフォリオサイトの作成に挑戦してみることにしました。
+この記事を含め、複数回に分けて作成過程を記録していきます。ここまでの記事は以下です。
+
+https://furugen-island.com/my_site/blog/create_my_site
+
+https://furugen-island.com/my_site/blog/create_my_site_2
+
+https://furugen-island.com/my_site/blog/create_my_site_3
+
+今回は以下の内容についてご紹介します。
+
+- 【デプロイ】Github pagesにてデプロイ
+- 【レイアウト調整】レスポンシブ対応
+- 【レイアウト調整】not foundページの作成
+- その他
+
+## 【デプロイ】Github pagesにてデプロイ
+
+以下の記事を参考に、Github pagesにてデプロイを行う。
+
+https://zenn.dev/kazzyfrog/articles/8e24dfe951aad9
+
+path関連でたくさんエラーが出たので、修正
+
+```typescript:各コンポーネント
+(-) const isRootPath = pathname === '/';
+(+) const isRootPath = pathname === `${BASE_PATH}/` || pathname === "/";
+```
+
+デプロイ成功🙌
+
+<img
+  src="https://i.gyazo.com/e68f61f81a7f7366fa0b0531f721ba21.png"
+  alt="screenshot"
+  width="600px"
+/>
+
+## 【レイアウト調整】レスポンシブ対応
+
+ヘッダーメニューをレスポンシブ対応（ハンバーガーメニュー追加）する
+
+```typescript:Header.tsx
+<header
+  className={`
+			fixed top-0 left-0 w-full z-50
+			py-3 mb-20 px-8
+			${!isMainPage ? 'bg-bg-main' : 'bg-transparent'}
+		`}
+>
+  <div className="container mx-auto flex flex-wrap py-5 flex-col md:flex-row items-center">
+    <div className="container mx-auto flex z-50">
+      {!isMainPage && (
+        <a href={`${BASE_PATH}/`} className="flex font-mobo my-2 md:mb-0">
+          <span className="ml-3 text-3xl md:text-xl">
+            Furugen&apos;s Island
+          </span>
+        </a>
+      )}
+      <button
+        className="md:hidden ml-auto text-2xl bg-white rounded-full w-12 h-12 flex items-center justify-center"
+        onClick={toggleMenu}
+      >
+        <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
+      </button>
+    </div>
+    <nav
+      className={`
+				  flex flex-wrap flex-col md:flex-row
+					item-left md:items-center text-base md:justify-center
+					font-mobo
+				  fixed top-0 right-0 h-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out
+				  ${menuOpen ? 'translate-x-0' : 'translate-x-full'}
+				  md:relative md:translate-x-0 md:bg-transparent md:shadow-none
+					md:ml-auto
+					w-full md:w-auto
+					pt-40 px-10 md:py-0 md:px-0 md:bg-transparent
+				`}
+    >
+      <Link
+        className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50"
+        href="/profile"
+      >
+        プロフィール
+      </Link>
+      <Link
+        className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50"
+        href="/blog"
+      >
+        開発ブログ
+      </Link>
+      <Link
+        className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50"
+        href="/skills"
+      >
+        実績
+      </Link>
+      <Link
+        className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:opacity-50"
+        href="/contact"
+      >
+        コンタクト
+      </Link>
+      <Link
+        className="mb-8 md:mb-0 md:mr-10 text-xl md:text-base hover:bg-gray"
+        href="https://github.com/motoshifurugen/my_site"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div className="flex items-center border border-gray-300 rounded px-3 py-1">
+          <FontAwesomeIcon icon={faGithub} className="mr-2" />
+          ソースコード
+        </div>
+      </Link>
+    </nav>
+  </div>
+</header>
+```
+
+<img
+  src="https://i.gyazo.com/8aa9ddea1793b9485c4972739e8d50a8.png"
+  alt="screenshot"
+  width="600px"
+/>
+
+スタイルは`md`（画面サイズのクラス）をつけるかつけないかで一つ一つやっているので汚い。効率化できないか。
+
+同様に他ページもレスポンシブ対応する。
+
+## 【レイアウト調整】not foundページの作成
+
+not foundページを作成する
+
+404 not found時に表示できる画面をカスタマイズできるらしい
+
+<img
+  src="https://i.gyazo.com/6cc2a8e9b59c6a0edbeb481993e27ec3.png"
+  alt="screenshot"
+  width="600px"
+/>
+
+## その他
+
+### GoogleAnalytics導入
+
+以下記事を参考に、GoogleAnalyticsを導入する
+
+https://neightbor.jp/blog/nextjs14-ga4
+
+### CSSルール決め
+
+- 上下方向の余白は「-top」を使用する。（上下方向は、できるだけy方向指定ではなくtopのみ指定を使う）
+- メインカラーとして「main-white」「main-black」を用意して使用する。
+- classNameの各順序は以下
+  - 特殊なやつ（container、z-indexなど）
+  - flex関係
+  - 幅・高さ
+  - アニメーション
+- 意味を持たないクラスは当てない
+
+### コンポーネント構造見直し
+
+Atomic designを参考に、以下のフォルダにコンポーネントを分類する。
+
+- components/atoms
+- components/molecules
+- components/organisms
+- components/templates
+- components/pages
+
+### ブログ画面作成
+
+以下を参考に作成する
+
+https://github.com/cmb-sy/kunstSite/tree/205add321487d7b292cb272e27fd784831cec902
+
+https://zenn.dev/y_ta/books/eec3b78567aeeb
+
+以上です。ここまで読んでいただきありがとうございました。
