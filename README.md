@@ -1,3 +1,5 @@
+WellCom to [Furugen's Island](https://furugen-island.com/my_site)！
+
 # Next.jsで作る、技術ブログ付きポートフォリオサイト
 
 | 利用環境                                      | バージョン              |
