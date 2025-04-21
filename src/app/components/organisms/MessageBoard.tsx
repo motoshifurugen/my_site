@@ -6,7 +6,7 @@ const MessageBoard = () => {
   // }
 
   return (
-    <div className="py-24">
+    <div className="px-2 py-4 my-20 bg-white/15 dark:bg-night-black/50 rounded-md">
       <h3 className="mb-2 select-none">News</h3>
       <ul className="m-0 list-none p-0">
         {announcements.map((announcement, index) => (
