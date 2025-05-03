@@ -11,3 +11,16 @@
   border-radius: 8px;
   backdrop-filter: blur(4px);
 }
+
+.score--high {
+  background: linear-gradient(90deg, #ffe259, #ffa751 60%, #ffd700 100%);
+  color: #fff8dc;
+  box-shadow: 0 0 12px 2px #ffd700, 0 0 24px 4px #ffa751;
+  animation: shine 2.5s linear infinite;
+}
+
+@keyframes shine {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.15); }
+  100% { filter: brightness(1); }
+}
