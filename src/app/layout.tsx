@@ -11,9 +11,9 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title:
-    "Furugen's Island | なんくるないさ系エンジニアの開発ポートフォリオサイト",
+    "Furugen's Island | 古堅基史（なんくるないさ系エンジニア）の開発ポートフォリオサイト",
   description:
-    'Welcome to the portfolio site of Furugen, a front-end engineer.Take a look at projects and blog posts with passion for development and playful spirit.',
+    '古堅基史（ふるげんもとし）のポートフォリオサイト。Furugen Motoshi, フロントエンドエンジニアの開発実績やブログを掲載。情熱と遊び心を持って日々挑戦しています。',
   icons: [
     {
       rel: 'icon',
