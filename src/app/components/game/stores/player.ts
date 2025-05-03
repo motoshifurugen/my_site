@@ -17,6 +17,7 @@ export const state: {
 }
 
 export function queueMove(direction: MoveDirection) {
+  if (useGameStore.getState().status === 'over') return;
   if (
     !endsUpInValidPosition(
       { rowIndex: state.currentRow, tileIndex: state.currentTile },

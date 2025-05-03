@@ -83,3 +83,17 @@
     transform: translateY(0);
   }
 }
+
+.retry-hint-pc {
+  color: #888;
+  font-size: 1em;
+  margin-top: 10px;
+  letter-spacing: 0.05em;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .retry-hint-pc {
+    display: none;
+  }
+}
