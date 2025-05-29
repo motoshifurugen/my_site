@@ -1,6 +1,6 @@
 import useStore from '@/app/components/game/stores/game'
-import './Result.css'
 import { useEffect, useState } from 'react'
+import './Result.css'
 
 export function Result() {
   const status = useStore((state) => state.status)
@@ -62,28 +62,58 @@ export function Result() {
     <div id="result-container">
       <div id="result">
         <h1>Game Over</h1>
-        <p style={{ fontWeight: 'bold', fontSize: '1.5em', color: '#222', marginBottom: 4 }}>
+        <p
+          style={{
+            fontWeight: 'bold',
+            fontSize: '1.5em',
+            color: '#222',
+            marginBottom: 4,
+          }}
+        >
           Your score: {score}
         </p>
-        <div style={{ minHeight: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24 }}>
+        <div
+          style={{
+            minHeight: 32,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: 24,
+          }}
+        >
           {loading ? (
-            <span className="inline-block mr-2" style={{ width: 20, height: 20 }}>
-              <span className="score-spinner" style={{
-                display: 'inline-block',
-                width: 20,
-                height: 20,
-                border: '3px solid #eab308',
-                borderTop: '3px solid transparent',
-                borderRadius: '50%',
-                animation: 'spin 1s linear infinite',
-                verticalAlign: 'middle',
-              }} />
+            <span
+              className="inline-block mr-2"
+              style={{ width: 20, height: 20 }}
+            >
+              <span
+                className="score-spinner"
+                style={{
+                  display: 'inline-block',
+                  width: 20,
+                  height: 20,
+                  border: '3px solid #eab308',
+                  borderTop: '3px solid transparent',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite',
+                  verticalAlign: 'middle',
+                }}
+              />
               <style>{`@keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }`}</style>
             </span>
-          ) : highScore !== null && (
-            <p style={{ fontWeight: 500, color: isNewRecord ? '#eab308' : '#888', fontSize: '1em', margin: 0 }}>
-              High Score: {highScore} {isNewRecord && <span>🎉 New!</span>}
-            </p>
+          ) : (
+            highScore !== null && (
+              <p
+                style={{
+                  fontWeight: 500,
+                  color: isNewRecord ? '#eab308' : '#888',
+                  fontSize: '1em',
+                  margin: 0,
+                }}
+              >
+                High Score: {highScore} {isNewRecord && <span>🎉 New!</span>}
+              </p>
+            )
           )}
         </div>
         <button onClick={reset}>Retry</button>

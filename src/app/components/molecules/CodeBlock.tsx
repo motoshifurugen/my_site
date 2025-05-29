@@ -6,12 +6,16 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 type Props = {
-  className?: string;
-  children?: React.ReactNode;
-  fileName?: string;
+  className?: string
+  children?: React.ReactNode
+  fileName?: string
 }
 
-const CodeBlock: React.FC<Props> = ({ className, children = '', fileName }: Props) => {
+const CodeBlock: React.FC<Props> = ({
+  className,
+  children = '',
+  fileName,
+}: Props) => {
   // コピー状態を管理するためのフック
   const [isCopied, setIsCopied] = useState(false)
 

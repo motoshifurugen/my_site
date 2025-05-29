@@ -14,7 +14,7 @@ MDX対応の技術ブログで日々の開発を記録しながら、ジェネ�
 
 [🚀 サイトはこちら](https://furugen-island.com/my_site)
 
-<img src="https://i.gyazo.com/b29ef2cfe77ffa5e03b0ee54ebff187e.png" alt="Image from Gyazo" width="1634"/>
+<a href="https://furugen-island.com/my_site"><img src="https://i.gyazo.com/bdb601b0458020da488c43e11b905ba6.png" alt="Image from Gyazo" width="1649"/></a>
 
 ## 🛠️ 主な使用技術
 - **Next.js**

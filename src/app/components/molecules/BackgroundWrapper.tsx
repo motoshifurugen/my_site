@@ -27,7 +27,7 @@ const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({
               <SketchNight mode="normal" />
             </div>
           </div>
-          
+
           {/* モバイル用の背景 */}
           <div className="fixed inset-0 z-0 block overflow-hidden bg-sky-mobile dark:bg-night-mobile md:hidden">
             {/* 昼モードの雲 */}
@@ -37,7 +37,7 @@ const BackgroundWrapper: React.FC<{ children: React.ReactNode }> = ({
               <div className="cloud animate-cloud-move-3" />
               <div className="cloud animate-cloud-move-4" />
             </div>
-            
+
             {/* 夜モードの星 */}
             <div className="hidden dark:block">
               <div className="star animate-twinkle-1" />

@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function PrivacyPage() {
   return (
     <main className="max-w-2xl mx-auto py-12 px-4">
@@ -21,9 +19,7 @@ export default function PrivacyPage() {
           ※本アプリでは、これらの情報を外部のサーバーに送信することはありません。
         </p>
         <h2 className="text-xl font-semibold mt-6 mb-2">2. 情報の利用目的</h2>
-        <p>
-          取得した情報は、以下の目的で利用されます：
-        </p>
+        <p>取得した情報は、以下の目的で利用されます：</p>
         <ul className="list-disc pl-6 mb-4">
           <li>ユーザーが登録したルーティン情報の表示・管理</li>
           <li>通知機能の実行（朝／夜のリマインダー）</li>
@@ -48,5 +44,5 @@ export default function PrivacyPage() {
         <p className="text-sm text-gray-500 mt-8">制定日: 2024年6月</p>
       </section>
     </main>
-  );
-} 
+  )
+}

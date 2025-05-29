@@ -8,7 +8,7 @@ interface PostData {
   date?: string
   tags?: string[]
   content: string
-  [key: string]: any  // その他のメタデータに対応
+  [key: string]: any // その他のメタデータに対応
 }
 
 // posts ディレクトリのパスを取得

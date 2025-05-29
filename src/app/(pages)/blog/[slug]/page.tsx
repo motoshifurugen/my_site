@@ -12,7 +12,10 @@ export async function generateMetadata({
   const description = blogArticle.content.slice(0, 50)
 
   // noindexタグが含まれている場合はrobotsにnoindexを追加
-  const robots = blogArticle.tags && blogArticle.tags.includes('noindex') ? { index: false, follow: false } : undefined
+  const robots =
+    blogArticle.tags && blogArticle.tags.includes('noindex')
+      ? { index: false, follow: false }
+      : undefined
 
   return {
     title: blogArticle.title,

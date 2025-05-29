@@ -91,4 +91,4 @@ async function setHighScore(score: number, issueNumber: number) {
 function parseHighScore(body: string): number {
   const n = parseInt(body.trim(), 10)
   return isNaN(n) ? 0 : n
-} 
+}
