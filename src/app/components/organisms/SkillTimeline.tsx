@@ -3,8 +3,8 @@ import ChartHeader from '../molecules/ChartHeader'
 import ChartRow from '../molecules/ChartRow'
 
 const SkillTimeline: React.FC = () => {
-  const max = 2024.6
-  const totalYears = max - 2019 + 1 // グラフの長さ（2024年8月現在は6.6）
+  const max = 2024.9
+  const totalYears = max - 2019 + 1 // グラフの長さ
   const years = Array.from(
     { length: Math.ceil(totalYears) },
     (_, i) => 2019 + i,
