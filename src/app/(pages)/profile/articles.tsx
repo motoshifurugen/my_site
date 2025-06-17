@@ -65,7 +65,8 @@ export const articles = [
     content: (
       <p>
         <strong>INFP-A</strong>（仲介者）
-        <br /><br />
+        <br />
+        <br />
         内向型（I）：散歩や読書など、一人で過ごす時間が好き
         <br />
         直感型（N）：短歌やエイサーなど、創造や表現活動が好き

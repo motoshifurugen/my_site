@@ -115,7 +115,12 @@ const works: Work[] = [
     src: '/images/works/work_04.png',
     alt: 'work04',
     title: (
-      <a href="https://kobayashi2103.co.jp/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+      <a
+        href="https://kobayashi2103.co.jp/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-1"
+      >
         ホームページ（不動産会社）
         <BiLinkExternal className="inline-block" />
       </a>
@@ -129,7 +134,12 @@ const works: Work[] = [
     src: '/images/works/hobby_06.png',
     alt: 'hobby06',
     title: (
-      <a href="https://apps.apple.com/us/app/hugmi-%E3%83%8F%E3%82%B0%E3%83%9F%E3%83%BC/id6745621864" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+      <a
+        href="https://apps.apple.com/us/app/hugmi-%E3%83%8F%E3%82%B0%E3%83%9F%E3%83%BC/id6745621864"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-1"
+      >
         朝のルーティン スマホアプリ
         <BiLinkExternal className="inline-block" />
       </a>
