@@ -1,8 +1,11 @@
 // works.ts
+import { ReactElement } from 'react'
+import { BiLinkExternal } from 'react-icons/bi'
+
 type Work = {
   src: string
   alt: string
-  title: string
+  title: string | ReactElement
   description: string
   tags: string[]
   date: string
@@ -15,7 +18,7 @@ const works: Work[] = [
     title: 'ホームページ（地元スーパー）',
     description:
       '地元スーパーのホームページを作成しました。スマホユーザーを主なターゲットとし、レスポンシブデザインを採用しました。',
-    tags: ['Vue.js', 'Laravel', '#個人開発'],
+    tags: ['Vue.js', 'Laravel'],
     date: '2022-12',
   },
   {
@@ -24,7 +27,7 @@ const works: Work[] = [
     title: 'ホームページ（デイサービス施設）',
     description:
       'エンジニアでなくても運用できるようにとの要望を受け、WordPressを使って新たにホームページを作成しました。',
-    tags: ['WordPress', '#個人開発'],
+    tags: ['WordPress'],
     date: '2023-01',
   },
   {
@@ -33,7 +36,7 @@ const works: Work[] = [
     title: 'ホームページ（ウォーターサーバー）',
     description:
       '既存のサイトを刷新し、YouTube埋め込みやスライドショーなど新しい要素を取り入れました。',
-    tags: ['HTML', 'CSS', '#個人開発'],
+    tags: ['HTML', 'CSS'],
     date: '2020-12',
   },
   {
@@ -98,6 +101,53 @@ const works: Work[] = [
       'Unityの基礎を学ぶために、2Dのマリオ風ゲームを作成しました。ゲーム開発者の凄さを強く実感しました。',
     tags: ['Unity', '#個人開発'],
     date: '2021-08',
+  },
+  {
+    src: '/images/works/hobby_05.png',
+    alt: 'hobby05',
+    title: '開発ポートフォリオサイト',
+    description:
+      'Reactを使ったブログサイト構築を目指し、ジェネラティブアートの使用やゲーム画面など、遊び心もこめて作成しました。',
+    tags: ['React', 'Next.js', 'Vercel'],
+    date: '2025-01',
+  },
+  {
+    src: '/images/works/work_04.png',
+    alt: 'work04',
+    title: (
+      <a
+        href="https://kobayashi2103.co.jp/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-1"
+      >
+        ホームページ（不動産会社）
+        <BiLinkExternal className="inline-block" />
+      </a>
+    ),
+    description:
+      'Figmaでのデザイン作成から機能提案まで、依頼者の要望を反映したホームページを作成しました。',
+    tags: ['Figma', 'Next.js', 'Vercel'],
+    date: '2025-03',
+  },
+  {
+    src: '/images/works/hobby_06.png',
+    alt: 'hobby06',
+    title: (
+      <a
+        href="https://apps.apple.com/us/app/hugmi-%E3%83%8F%E3%82%B0%E3%83%9F%E3%83%BC/id6745621864"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-1"
+      >
+        朝のルーティン スマホアプリ
+        <BiLinkExternal className="inline-block" />
+      </a>
+    ),
+    description:
+      '朝が苦手な自分を救うために、名言で始まる朝のルーティンアプリを作成しました。開発したのはほぼAIです。',
+    tags: ['React Native', 'Expo', '#Cursor開発'],
+    date: '2025-05',
   },
 ]
 

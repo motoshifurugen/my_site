@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { ReactElement } from 'react'
 import nextConfig from '../../../../next.config.mjs'
 import Chip from '../atoms/Chip'
 const BASE_PATH = nextConfig.basePath || ''
@@ -6,7 +7,7 @@ const BASE_PATH = nextConfig.basePath || ''
 interface WorkCardProps {
   src: string
   alt: string
-  title: string
+  title: string | ReactElement
   description: string
   tags: string[]
   date: string

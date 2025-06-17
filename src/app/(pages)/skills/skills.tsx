@@ -23,13 +23,13 @@ export interface Skill {
 // 10月：+0.8
 // 11月：+0.9
 // 12月：+1.0
-const max = 2024.6
+const max = 2025.6
 
 const skills: Skill[] = [
   {
     name: 'PHP（Laravel、CakePHP）',
-    periods: [{ start: 2020.4, end: max }],
-    total: max - 2020.4,
+    periods: [{ start: 2020.4, end: 2024.6 }],
+    total: 2024.6 - 2020.4,
   },
   {
     name: 'React',
@@ -59,8 +59,13 @@ const skills: Skill[] = [
   },
   {
     name: 'Flutter',
-    periods: [{ start: 2022.8, end: max }],
-    total: max - 2022.8,
+    periods: [{ start: 2022.8, end: 2024.6 }],
+    total: 2024.6 - 2022.8,
+  },
+  {
+    name: 'React Native',
+    periods: [{ start: 2025.5, end: max }],
+    total: max - 2025.5,
   },
 ]
 
