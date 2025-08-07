@@ -43,7 +43,7 @@ export const articles = [
     imageAlt: 'profile img 02',
   },
   {
-    title: 'Hobby',
+    title: 'Passion',
     content: (
       <ul>
         <li>・読書　　　：不定期で友達と読書会を開催しています。</li>
