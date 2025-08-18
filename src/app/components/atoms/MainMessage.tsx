@@ -1,16 +1,22 @@
+'use client'
+
+import { useI18n } from '@/i18n'
+
 export default function MainMessage() {
+  const { t } = useI18n()
+  
+  // 改行文字で分割して配列にする
+  const messageLines = t.home.mainMessage.split('\n')
+  
   return (
     <>
       <h3 className="select-none leading-relaxed">
-        心の健康を支えるために、
-        <br />
-        画面の向こうに広がる世界へ、
-        <br />
-        想いをコードに込め、
-        <br />
-        日々挑戦を続ける、
-        <br />
-        なんくるないさ系エンジニア。
+        {messageLines.map((line, index) => (
+          <span key={index}>
+            {line}
+            {index < messageLines.length - 1 && <br />}
+          </span>
+        ))}
       </h3>
     </>
   )

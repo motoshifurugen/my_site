@@ -1,8 +1,13 @@
+'use client'
+
 import { faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import TextArrowLinkButton from '../../components/molecules/TextArrowLinkButton'
+import { useI18n } from '../../../i18n/context'
 
 const ThankYou = () => {
+  const { t } = useI18n()
+
   return (
     <section className="thank-you">
       <div className="mx-auto">
@@ -12,14 +17,12 @@ const ThankYou = () => {
             className="text-6xl text-gray"
           />
         </div>
-        <h2 className="my-10 text-center">お問合せありがとうございます</h2>
+        <h2 className="my-10 text-center">{t.contact.thankYou.title}</h2>
         <p className="mt-4 text-center">
-          お問合せ内容を確認させていただきますので、
-          <br />
-          しばらくお待ちください。
+          {t.contact.thankYou.message}
         </p>
         <div className="flex justify-center">
-          <TextArrowLinkButton text="トップページへ戻る" href="/" />
+          <TextArrowLinkButton text={t.contact.thankYou.backToTop} href="/" />
         </div>
       </div>
     </section>

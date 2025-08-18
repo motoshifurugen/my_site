@@ -1,13 +1,19 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaGithub } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
 import nextConfig from '../../../../next.config.mjs'
+import { useI18n } from '../../../i18n/context'
+
 const BASE_PATH = nextConfig.basePath || ''
 
 const ProfileCard = () => {
+  const { t } = useI18n()
+
   return (
-    <div className="w-full rounded-lg bg-white px-6 py-10 shadow-sm dark:bg-night-gray">
+    <div className="w-80 rounded-lg bg-white px-6 py-10 shadow-sm dark:bg-night-gray">
       <div className="flex items-center">
         <Image
           src={`${BASE_PATH}/images/profile_icon.png`}
@@ -44,17 +50,13 @@ const ProfileCard = () => {
         </div>
       </div>
       <p className="mt-3 text-sm leading-6 text-main-black dark:text-night-white">
-        沖縄生まれ、ブルーハーツ育ち。
-        <br />
-        考える前に行動する、
-        <br />
-        なんくるないさ系エンジニアです。
+        {t.profileCard.description}
       </p>
       <div className="mt-3">
         <Link href="/profile">
-          <div className="text-teal hover:underline dark:text-night-teal">
-            View Profile
-          </div>
+        <div className="text-teal hover:underline dark:text-night-teal">
+          {t.profileCard.viewProfile}
+        </div>
         </Link>
       </div>
     </div>

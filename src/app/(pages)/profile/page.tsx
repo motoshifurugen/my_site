@@ -4,15 +4,19 @@ import AnimatedLine from '../../components/atoms/AnimatedLine'
 import MainMessage from '../../components/atoms/MainMessage'
 import Article from '../../components/molecules/Article'
 import PageFace from '../../components/organisms/PageFace'
-import { articles } from './articles'
+import { useArticles } from './articles'
+import { useI18n } from '../../../i18n/context'
 
 export default function Page() {
+  const { t } = useI18n()
+  const articles = useArticles()
+
   return (
     <>
       <section className="content-wrapper container mx-auto">
         <PageFace
-          title="Profile"
-          subtitle="古堅基史（Furugen, Motoshi）"
+          title={t.profile.title}
+          subtitle={t.profile.subtitle}
           mainMessage={<MainMessage />}
         />
       </section>

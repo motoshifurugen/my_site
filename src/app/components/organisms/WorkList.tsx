@@ -1,11 +1,13 @@
 import React from 'react'
-import { sortedWorks } from '../../(pages)/skills/works'
+import { useWorks } from '../../(pages)/skills/works'
 import WorkCard from '../molecules/WorkCard'
 
 const WorkList: React.FC = () => {
+  const works = useWorks()
+  
   return (
     <div className="work-list grid grid-cols-1 items-center justify-items-center gap-8 md:grid-cols-3">
-      {sortedWorks.map((work, index) => (
+      {works.map((work, index) => (
         <WorkCard
           key={index}
           src={work.src}

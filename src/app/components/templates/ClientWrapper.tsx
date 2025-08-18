@@ -1,9 +1,11 @@
 'use client'
 
 import LoadingCircle from '@/app/components/atoms/LoadingCircle'
+import HtmlLangUpdater from '@/app/components/atoms/HtmlLangUpdater'
 import BackgroundWrapper from '@/app/components/molecules/BackgroundWrapper'
 import Footer from '@/app/components/templates/Footer'
 import Header from '@/app/components/templates/Header'
+import { I18nProvider } from '@/i18n'
 import React, { useEffect, useState } from 'react'
 
 const ClientWrapper: React.FC<{ children: React.ReactNode }> = ({
@@ -18,14 +20,15 @@ const ClientWrapper: React.FC<{ children: React.ReactNode }> = ({
   }, [])
 
   return (
-    <>
+    <I18nProvider>
+      <HtmlLangUpdater />
       <LoadingCircle isLoading={isLoading} />
       <BackgroundWrapper>
         <Header />
         <main>{children}</main>
       </BackgroundWrapper>
       <Footer />
-    </>
+    </I18nProvider>
   )
 }
 

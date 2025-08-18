@@ -1,4 +1,7 @@
+'use client';
+
 import MessageBoard from '@/app/components/organisms/MessageBoard'
+import { useI18n } from '@/i18n'
 import Image from 'next/image'
 import nextConfig from '../../next.config.mjs'
 import MainMessage from './components/atoms/MainMessage'
@@ -7,6 +10,8 @@ import TextArrowLinkButton from './components/molecules/TextArrowLinkButton'
 const BASE_PATH = nextConfig.basePath || ''
 
 export default function Home() {
+  const { t } = useI18n()
+
   return (
     <div className="container mx-auto p-4">
       <div className="hidden w-full md:block">
@@ -28,7 +33,7 @@ export default function Home() {
         <div className="flex w-full items-center md:w-1/2 md:justify-center">
           <div>
             <MainMessage />
-            <TextArrowLinkButton text="Profile" href="/profile" />
+            <TextArrowLinkButton text={t.common.about} href="/profile" />
           </div>
         </div>
       </div>
