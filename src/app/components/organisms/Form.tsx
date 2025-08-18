@@ -2,8 +2,11 @@ import React from 'react'
 import SubmitButton from '../atoms/SubmitButton'
 import InputLongText from '../molecules/InputLongText'
 import InputText from '../molecules/InputText'
+import { useI18n } from '../../../i18n/context'
 
 const Form: React.FC = () => {
+  const { t } = useI18n()
+
   return (
     <form
       action="https://ssgform.com/s/TQptUiQBhkQa"
@@ -13,21 +16,21 @@ const Form: React.FC = () => {
       <div className="hidden">
         <input type="text" name="trap-column" />
       </div>
-      <InputText label="お名前" name="お名前" id="name" required />
+      <InputText label={t.contact.form.name} name={t.contact.form.name} id="name" required />
       <InputText
-        label="メールアドレス"
-        name="メールアドレス"
+        label={t.contact.form.email}
+        name={t.contact.form.email}
         id="email"
         required
       />
       <InputLongText
-        label="お問い合わせ内容"
-        name="お問い合わせ内容"
+        label={t.contact.form.message}
+        name={t.contact.form.message}
         id="message"
         required
       />
       <div className="flex justify-center">
-        <SubmitButton>送信する</SubmitButton>
+        <SubmitButton>{t.contact.form.submit}</SubmitButton>
       </div>
     </form>
   )

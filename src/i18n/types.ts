@@ -104,6 +104,24 @@ export type TranslationKeys = {
        experiencePeriod: string;
      };
    };
+   contact: {
+     title: string;
+     form: {
+       name: string;
+       email: string;
+       message: string;
+       submit: string;
+     };
+     thankYou: {
+       title: string;
+       message: string;
+       backToTop: string;
+     };
+   };
+   profileCard: {
+     description: string;
+     viewProfile: string;
+   };
 };
 
 export type Translations = Record<Locale, TranslationKeys>; 

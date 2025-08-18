@@ -125,27 +125,45 @@ export const translations: Translations = {
           description: '朝が苦手な自分を救うために、名言で始まる朝のルーティンアプリを作成しました。',
         },
       },
-             skillNames: {
-         php: 'PHP（Laravel、CakePHP）',
-         react: 'React',
-         vue: 'Vue.js',
-         unity: 'Unity',
-         python: 'Python',
-         flutter: 'Flutter',
-         reactNative: 'React Native',
-       },
-       tags: {
-         teamDevelopment: '#チーム開発',
-         personalDevelopment: '#個人開発',
-         cursorDevelopment: '#Cursor開発',
-       },
-       timeline: {
-         year: '年',
-         experiencePeriod: '経験期間',
-       },
+      skillNames: {
+        php: 'PHP（Laravel、CakePHP）',
+        react: 'React',
+        vue: 'Vue.js',
+        unity: 'Unity',
+        python: 'Python',
+        flutter: 'Flutter',
+        reactNative: 'React Native',
+      },
+      tags: {
+        teamDevelopment: '#チーム開発',
+        personalDevelopment: '#個人開発',
+        cursorDevelopment: '#Cursor開発',
+      },
+      timeline: {
+        year: '年',
+        experiencePeriod: '経験期間',
+      },
     },
-  },
-  en: {
+    contact: {
+      title: 'Contact',
+      form: {
+        name: 'お名前',
+        email: 'メールアドレス',
+        message: 'お問い合わせ内容',
+        submit: '送信する',
+      },
+      thankYou: {
+        title: 'お問合せありがとうございます',
+        message: 'お問合せ内容を確認させていただきますので、しばらくお待ちください。',
+        backToTop: 'トップページへ戻る',
+             },
+     },
+     profileCard: {
+       description: '沖縄生まれ、ブルーハーツ育ち。考える前に行動する、なんくるないさ系エンジニアです。',
+       viewProfile: 'View Profile',
+     },
+   },
+   en: {
     common: {
       home: 'Home',
       about: 'About',
@@ -269,24 +287,42 @@ export const translations: Translations = {
           description: 'To save myself who is not good at mornings, I created a morning routine app that starts with famous quotes.',
         },
       },
-             skillNames: {
-         php: 'PHP (Laravel, CakePHP)',
-         react: 'React',
-         vue: 'Vue.js',
-         unity: 'Unity',
-         python: 'Python',
-         flutter: 'Flutter',
-         reactNative: 'React Native',
-       },
-       tags: {
-         teamDevelopment: '#Team Dev',
-         personalDevelopment: '#Personal Dev',
-         cursorDevelopment: '#Cursor Dev',
-       },
-       timeline: {
-         year: '',
-         experiencePeriod: 'Experience Period',
-       },
+      skillNames: {
+        php: 'PHP (Laravel, CakePHP)',
+        react: 'React',
+        vue: 'Vue.js',
+        unity: 'Unity',
+        python: 'Python',
+        flutter: 'Flutter',
+        reactNative: 'React Native',
+      },
+      tags: {
+        teamDevelopment: '#Team Dev',
+        personalDevelopment: '#Personal Dev',
+        cursorDevelopment: '#Cursor Dev',
+      },
+      timeline: {
+        year: '',
+        experiencePeriod: 'Experience Period',
+      },
     },
-  },
+    contact: {
+      title: 'Contact',
+      form: {
+        name: 'Name',
+        email: 'Email Address',
+        message: 'Inquiry Content',
+        submit: 'Submit',
+      },
+      thankYou: {
+        title: 'Thank you for your inquiry',
+        message: 'We will review your inquiry, so please wait a moment.',
+        backToTop: 'Back to Top Page',
+             },
+     },
+     profileCard: {
+       description: 'Born in Okinawa, raised on Blue Hearts. I\'m a software engineer who acts before thinking.',
+       viewProfile: 'View Profile',
+     },
+   },
 }; 
