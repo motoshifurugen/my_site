@@ -16,6 +16,7 @@ export type TranslationKeys = {
     title: string;
     subtitle: string;
     description: string;
+    mainMessage: string;
   };
   navigation: {
     toggleMenu: string;

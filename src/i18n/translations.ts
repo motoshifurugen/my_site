@@ -17,6 +17,7 @@ export const translations: Translations = {
       title: 'ようこそ',
       subtitle: '古堅基史の開発ポートフォリオサイトへ',
       description: 'このサイトはなんくるないさ系エンジニアの作品やブログを紹介するためのものです。',
+      mainMessage: '心の健康を支えるために、\n画面の向こうに広がる世界へ、\n想いをコードに込め、\n日々挑戦を続ける、\nなんくるないさ系エンジニア。',
     },
     navigation: {
       toggleMenu: 'メニューを開く',
@@ -184,6 +185,7 @@ export const translations: Translations = {
       title: 'Welcome',
       subtitle: 'to my site',
       description: 'This site showcases my work and blog posts.',
+      mainMessage: 'To support mental health,\nTo the world that spreads beyond the screen,\nI put my thoughts into code,\nContinuing to challenge myself every day,\nI am a software engineer with a "nankurunaisa" spirit.',
     },
     navigation: {
       toggleMenu: 'Toggle menu',
