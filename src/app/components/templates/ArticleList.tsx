@@ -8,6 +8,7 @@ import { FiRefreshCw } from 'react-icons/fi'
 
 import LoadingCircle from '@/app/components/atoms/LoadingCircle'
 import styles from '@/app/components/templates/ArticleContent.module.css'
+import { useI18n } from '@/i18n'
 
 const getBlogData = async () => {
   const apiUrl =
@@ -39,6 +40,7 @@ const parseDate = (dateString: string): Date => {
 }
 
 const ArticleList: React.FC = () => {
+  const { t } = useI18n()
   const [blogData, setBlogData] = useState<any[]>([])
   const [filteredData, setFilteredData] = useState<any[]>([])
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
@@ -94,12 +96,12 @@ const ArticleList: React.FC = () => {
                   onClick={resetFilter}
                   className="relative flex items-center rounded px-6 py-3 text-lg text-main-black transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-teal after:transition-all after:duration-300 hover:after:w-full dark:text-night-white dark:after:bg-night-teal"
                 >
-                  All
+                  {t.blog.all}
                   <FiRefreshCw className="ml-2" />
                 </button>
               </>
             ) : (
-              <div className="py-3 text-xl font-bold">All</div>
+              <div className="py-3 text-xl font-bold">{t.blog.all}</div>
             )}
           </div>
           <BlogGrid blogData={filteredData} />

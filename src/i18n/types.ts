@@ -122,6 +122,11 @@ export type TranslationKeys = {
      description: string;
      viewProfile: string;
    };
+   blog: {
+     title: string;
+     all: string;
+     findOutMore: string;
+   };
 };
 
 export type Translations = Record<Locale, TranslationKeys>; 

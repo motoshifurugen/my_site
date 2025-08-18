@@ -145,7 +145,7 @@ export const translations: Translations = {
       },
     },
     contact: {
-      title: 'Contact',
+      title: 'お問い合わせ',
       form: {
         name: 'お名前',
         email: 'メールアドレス',
@@ -161,6 +161,11 @@ export const translations: Translations = {
      profileCard: {
        description: '沖縄生まれ、ブルーハーツ育ち。考える前に行動する、なんくるないさ系エンジニアです。',
        viewProfile: 'View Profile',
+     },
+     blog: {
+       title: 'ブログ',
+       all: 'すべて',
+       findOutMore: 'もっと見る',
      },
    },
    en: {
@@ -323,6 +328,11 @@ export const translations: Translations = {
      profileCard: {
        description: 'Born in Okinawa, raised on Blue Hearts. I\'m a software engineer who acts before thinking.',
        viewProfile: 'View Profile',
+     },
+     blog: {
+       title: 'Blog',
+       all: 'All',
+       findOutMore: 'Find Out More',
      },
    },
 }; 

@@ -1,11 +1,13 @@
 import BlogCard from '@/app/components/molecules/BlogCard'
 import { useEffect, useState } from 'react'
+import { useI18n } from '@/i18n'
 
 interface BlogGridProps {
   blogData: any
 }
 
 const BlogGrid: React.FC<BlogGridProps> = ({ blogData }) => {
+  const { t } = useI18n()
   const [loadIndex, setLoadIndex] = useState(10)
   const [isEmpty, setIsEmpty] = useState(false)
   const [currentPost, setCurrentPost] = useState<any[]>([])
@@ -52,7 +54,7 @@ const BlogGrid: React.FC<BlogGridProps> = ({ blogData }) => {
             onClick={displayMore}
             className="relative rounded px-6 py-3 text-lg text-main-black transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-teal after:transition-all after:duration-300 hover:after:w-full dark:text-night-white dark:after:bg-night-teal"
           >
-            Find Out More
+            {t.blog.findOutMore}
           </button>
         )}
       </div>
