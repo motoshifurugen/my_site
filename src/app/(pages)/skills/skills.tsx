@@ -1,3 +1,5 @@
+import { useI18n } from '../../../i18n/context'
+
 // インターフェースの定義
 export interface Period {
   start: number
@@ -25,48 +27,52 @@ export interface Skill {
 // 12月：+1.0
 const max = 2025.6
 
-const skills: Skill[] = [
-  {
-    name: 'PHP（Laravel、CakePHP）',
-    periods: [{ start: 2020.4, end: 2024.6 }],
-    total: 2024.6 - 2020.4,
-  },
-  {
-    name: 'React',
-    periods: [
-      { start: 2020.7, end: 2020.8 },
-      { start: 2024.6, end: max },
-    ],
-    total: max - 2024.6 + (2020.8 - 2020.7),
-  },
-  {
-    name: 'Vue.js',
-    periods: [
-      { start: 2020.8, end: 2023.6 },
-      { start: 2024.4, end: max },
-    ],
-    total: max - 2024.4 + (2023.6 - 2020.8),
-  },
-  {
-    name: 'Unity',
-    periods: [{ start: 2021.6, end: 2021.7 }],
-    total: 2021.7 - 2021.6,
-  },
-  {
-    name: 'Python',
-    periods: [{ start: 2022.8, end: max }],
-    total: max - 2022.8,
-  },
-  {
-    name: 'Flutter',
-    periods: [{ start: 2022.8, end: 2024.6 }],
-    total: 2024.6 - 2022.8,
-  },
-  {
-    name: 'React Native',
-    periods: [{ start: 2025.5, end: max }],
-    total: max - 2025.5,
-  },
-]
+export const useSkills = () => {
+  const { t } = useI18n()
+  
+  const skills: Skill[] = [
+    {
+      name: t.skills.skillNames.php,
+      periods: [{ start: 2020.4, end: 2024.6 }],
+      total: 2024.6 - 2020.4,
+    },
+    {
+      name: t.skills.skillNames.react,
+      periods: [
+        { start: 2020.7, end: 2020.8 },
+        { start: 2024.6, end: max },
+      ],
+      total: max - 2024.6 + (2020.8 - 2020.7),
+    },
+    {
+      name: t.skills.skillNames.vue,
+      periods: [
+        { start: 2020.8, end: 2023.6 },
+        { start: 2024.4, end: max },
+      ],
+      total: max - 2024.4 + (2023.6 - 2020.8),
+    },
+    {
+      name: t.skills.skillNames.unity,
+      periods: [{ start: 2021.6, end: 2021.7 }],
+      total: 2021.7 - 2021.6,
+    },
+    {
+      name: t.skills.skillNames.python,
+      periods: [{ start: 2022.8, end: max }],
+      total: max - 2022.8,
+    },
+    {
+      name: t.skills.skillNames.flutter,
+      periods: [{ start: 2022.8, end: 2024.6 }],
+      total: 2024.6 - 2022.8,
+    },
+    {
+      name: t.skills.skillNames.reactNative,
+      periods: [{ start: 2025.5, end: max }],
+      total: max - 2025.5,
+    },
+  ]
 
-export const sortedSkills = skills.sort((a, b) => b.total - a.total)
+  return skills.sort((a, b) => b.total - a.total)
+}

@@ -66,6 +66,44 @@ export type TranslationKeys = {
       assertive: string;
     };
   };
+  skills: {
+    title: string;
+    projects: string;
+    skills: string;
+    works: {
+      work01: { title: string; description: string };
+      work02: { title: string; description: string };
+      work03: { title: string; description: string };
+      hackathon01: { title: string; description: string };
+      hackathon02: { title: string; description: string };
+      hackathon03: { title: string; description: string };
+      hobby01: { title: string; description: string };
+      hobby02: { title: string; description: string };
+      hobby03: { title: string; description: string };
+      hobby04: { title: string; description: string };
+      hobby05: { title: string; description: string };
+      work04: { title: string; description: string };
+      hobby06: { title: string; description: string };
+    };
+    skillNames: {
+      php: string;
+      react: string;
+      vue: string;
+      unity: string;
+      python: string;
+      flutter: string;
+             reactNative: string;
+     };
+     tags: {
+       teamDevelopment: string;
+       personalDevelopment: string;
+       cursorDevelopment: string;
+     };
+     timeline: {
+       year: string;
+       experiencePeriod: string;
+     };
+   };
 };
 
 export type Translations = Record<Locale, TranslationKeys>; 

@@ -23,10 +23,10 @@ export const translations: Translations = {
       closeMenu: 'メニューを閉じる',
     },
     profile: {
-      title: 'Profile',
+      title: 'プロフィール',
       subtitle: '古堅基史（Furugen, Motoshi）',
       career: {
-        title: 'Carrer',
+        title: '足跡',
         1998: '1998年',
         2017: '2017年',
         2020: '2020年',
@@ -41,11 +41,11 @@ export const translations: Translations = {
         descCurrent: 'フロントエンドエンジニアとして奮闘中',
       },
       interest: {
-        title: 'Interest',
+        title: '興味',
         content: '物理学が目に見えない自然の法則を解き明かすように、プログラミングによってデータという見えない情報を扱うことに楽しさを感じています。一方で、サービスを通してつながるエンドユーザーへの意識の重要性も感じています。デザインやジェネラティブアートにも関心があり、ワクワクするようなユーザー体験を提供したいです。自分自身、強いメンタルの持ち主ではないので、メンタルヘルスも大切にしています。',
       },
       passion: {
-        title: 'Passion',
+        title: '趣味',
         reading: '・読書　　　：不定期で友達と読書会を開催しています。',
         tanka: '・短歌　　　：Xで気ままに200首以上の短歌を書いています。',
         walking: '・散歩　　　：朝・昼・晩の散歩が日課です。',
@@ -66,6 +66,83 @@ export const translations: Translations = {
         prospecting: '探索型（P）：考えるまでに行動してみて調整していくスタイル',
         assertive: '自己主張的（A）：常に心に根拠なき自信がある',
       },
+    },
+    skills: {
+      title: 'ポートフォリオ',
+      projects: '制作実績',
+      skills: 'スキル',
+      works: {
+        work01: {
+          title: 'ホームページ（地元スーパー）',
+          description: '地元スーパーのホームページを作成しました。スマホユーザーを主なターゲットとし、レスポンシブデザインを採用しました。',
+        },
+        work02: {
+          title: 'ホームページ（デイサービス施設）',
+          description: 'エンジニアでなくても運用できるようにとの要望を受け、WordPressを使って新たにホームページを作成しました。',
+        },
+        work03: {
+          title: 'ホームページ（ウォーターサーバー）',
+          description: '既存のサイトを刷新し、YouTube埋め込みやスライドショーなど新しい要素を取り入れました。',
+        },
+        hackathon01: {
+          title: '今日の飯決めアプリ',
+          description: 'その日の気分に合ったレシピを提案するアプリを開発しました。楽天レシピAPIのレスポンス時間を考慮しながら実装を進めました。',
+        },
+        hackathon02: {
+          title: 'チーム開発チュートリアルアプリ',
+          description: 'ハッカソンでのチームビルディングの課題を基に、役割分担やタスク共有を簡単に行えるアプリを開発しました。',
+        },
+        hackathon03: {
+          title: 'Pythonで作るトランプゲーム',
+          description: 'Pythonでローカル環境で動作するトランプゲームを開発し、それを配布するためのWebサイトを構築しました。',
+        },
+        hobby01: {
+          title: '自己探究プログラム振り返りサイト',
+          description: '参加したプログラムの内容やメンバー情報などをまとめたサイトを作成しました。動くドット絵の背景が好評でした。',
+        },
+        hobby02: {
+          title: 'あのシーンの吹き出し加工ツール',
+          description: 'あの名シーンの感動を他の場面でも応用できるよう、吹き出しを自分好みに書き換えるツールを開発しました。',
+        },
+        hobby03: {
+          title: 'あのシーンの緊迫感体験ゲーム',
+          description: '某アニメの名シーンを再現して世界崩壊の緊迫感を体験できる、ヌメロン形式のパスワード推測ゲームを作成しました。',
+        },
+        hobby04: {
+          title: 'ユニティちゃんのマリオ風ゲーム',
+          description: 'Unityの基礎を学ぶために、2Dのマリオ風ゲームを作成しました。ゲーム開発者の凄さを強く実感しました。',
+        },
+        hobby05: {
+          title: '開発ポートフォリオサイト',
+          description: 'Reactを使ったブログサイト構築を目指し、ジェネラティブアートの使用やゲーム画面など、遊び心もこめて作成しました。',
+        },
+        work04: {
+          title: 'ホームページ（不動産会社）',
+          description: 'Figmaでのデザイン作成から機能提案まで、依頼者の要望を反映したホームページを作成しました。',
+        },
+        hobby06: {
+          title: '朝のルーティン スマホアプリ',
+          description: '朝が苦手な自分を救うために、名言で始まる朝のルーティンアプリを作成しました。',
+        },
+      },
+             skillNames: {
+         php: 'PHP（Laravel、CakePHP）',
+         react: 'React',
+         vue: 'Vue.js',
+         unity: 'Unity',
+         python: 'Python',
+         flutter: 'Flutter',
+         reactNative: 'React Native',
+       },
+       tags: {
+         teamDevelopment: '#チーム開発',
+         personalDevelopment: '#個人開発',
+         cursorDevelopment: '#Cursor開発',
+       },
+       timeline: {
+         year: '年',
+         experiencePeriod: '経験期間',
+       },
     },
   },
   en: {
@@ -133,6 +210,83 @@ export const translations: Translations = {
         prospecting: 'Prospecting (P): My style is to take action first and then adjust',
         assertive: 'Assertive (A): I always have unfounded confidence in my heart',
       },
+    },
+    skills: {
+      title: 'Portfolio',
+      projects: 'Projects',
+      skills: 'Skills',
+      works: {
+        work01: {
+          title: 'Homepage (Local Supermarket)',
+          description: 'I created a homepage for a local supermarket. I adopted a responsive design targeting smartphone users as the main target.',
+        },
+        work02: {
+          title: 'Homepage (Day Service Facility)',
+          description: 'Based on the request to make it operable even by non-engineers, I created a new homepage using WordPress.',
+        },
+        work03: {
+          title: 'Homepage (Water Server)',
+          description: 'I refreshed the existing site and incorporated new elements such as YouTube embeds and slideshows.',
+        },
+        hackathon01: {
+          title: 'Today\'s Meal Decision App',
+          description: 'I developed an app that suggests recipes that match the mood of the day. I proceeded with implementation while considering the response time of the Rakuten Recipe API.',
+        },
+        hackathon02: {
+          title: 'Team Development Tutorial App',
+          description: 'Based on team building challenges in hackathons, I developed an app that makes role assignment and task sharing easy.',
+        },
+        hackathon03: {
+          title: 'Card Game Made with Python',
+          description: 'I developed a card game that works in a local environment with Python and built a website to distribute it.',
+        },
+        hobby01: {
+          title: 'Self-Exploration Program Reflection Site',
+          description: 'I created a site that summarizes the content of the program I participated in and member information. The animated pixel art background was well received.',
+        },
+        hobby02: {
+          title: 'Speech Bubble Processing Tool for That Scene',
+          description: 'I developed a tool to rewrite speech bubbles to my liking so that the emotion of that famous scene can be applied to other situations.',
+        },
+        hobby03: {
+          title: 'Tension Experience Game for That Scene',
+          description: 'I created a password guessing game in the Numeron format that recreates a famous scene from a certain anime and allows you to experience the tension of world destruction.',
+        },
+        hobby04: {
+          title: 'Unity-chan Mario-style Game',
+          description: 'To learn the basics of Unity, I created a 2D Mario-style game. I strongly felt the greatness of game developers.',
+        },
+        hobby05: {
+          title: 'Development Portfolio Site',
+          description: 'Aiming to build a blog site with React, I created it with playfulness including the use of generative art and game screens.',
+        },
+        work04: {
+          title: 'Homepage (Real Estate Company)',
+          description: 'I created a homepage that reflects the client\'s requests, from design creation in Figma to functional proposals.',
+        },
+        hobby06: {
+          title: 'Morning Routine Smartphone App',
+          description: 'To save myself who is not good at mornings, I created a morning routine app that starts with famous quotes.',
+        },
+      },
+             skillNames: {
+         php: 'PHP (Laravel, CakePHP)',
+         react: 'React',
+         vue: 'Vue.js',
+         unity: 'Unity',
+         python: 'Python',
+         flutter: 'Flutter',
+         reactNative: 'React Native',
+       },
+       tags: {
+         teamDevelopment: '#Team Dev',
+         personalDevelopment: '#Personal Dev',
+         cursorDevelopment: '#Cursor Dev',
+       },
+       timeline: {
+         year: '',
+         experiencePeriod: 'Experience Period',
+       },
     },
   },
 }; 
