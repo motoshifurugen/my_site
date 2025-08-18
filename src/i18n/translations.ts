@@ -23,6 +23,15 @@ export const translations: Translations = {
       toggleMenu: 'メニューを開く',
       closeMenu: 'メニューを閉じる',
     },
+    footer: {
+      copyright: '© 2024 furugen',
+      cities: {
+        oka: '沖縄',
+        hij: '広島',
+        tyo: '東京',
+        bcd: 'バコロド',
+      },
+    },
     profile: {
       title: 'プロフィール',
       subtitle: '古堅基史（Furugen, Motoshi）',
@@ -190,6 +199,15 @@ export const translations: Translations = {
     navigation: {
       toggleMenu: 'Toggle menu',
       closeMenu: 'Close menu',
+    },
+    footer: {
+      copyright: '© 2024 furugen',
+      cities: {
+        oka: 'Okinawa',
+        hij: 'Hiroshima',
+        tyo: 'Tokyo',
+        bcd: 'Bacolod',
+      },
     },
     profile: {
       title: 'Profile',

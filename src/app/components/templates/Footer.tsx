@@ -6,8 +6,11 @@ import Link from 'next/link'
 import { FaGithub } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
 import AnimatedLine from '../atoms/AnimatedLine'
+import { useI18n } from '@/i18n'
 
 export default function Footer() {
+  const { t } = useI18n()
+  
   return (
     <>
       <div className="relative z-20 bg-main-white py-10 dark:bg-night-black">
@@ -18,27 +21,24 @@ export default function Footer() {
               <div className="rightFooter w-full select-none md:w-3/4">
                 <p className="mb-1 text-lg md:mb-3">Motoshi Furugen</p>
                 <p className="flex items-center">
-                  OKA
+                  <span className="mr-1">🇯🇵</span>
+                  {t.footer.cities.oka}
                   <FontAwesomeIcon
                     icon={faPlane}
                     className="mx-1 text-xxs opacity-70"
                   />
-                  HIJ
+                  {t.footer.cities.hij}
                   <FontAwesomeIcon
                     icon={faPlane}
                     className="mx-1 text-xxs opacity-70"
                   />
-                  TYO
+                  {t.footer.cities.tyo}
                   <FontAwesomeIcon
                     icon={faPlane}
                     className="mx-1 text-xxs opacity-70"
                   />
-                  HIJ
-                  <FontAwesomeIcon
-                    icon={faPlane}
-                    className="mx-1 text-xxs opacity-70"
-                  />
-                  TYO
+                  <span className="mr-1">🇵🇭</span>
+                  {t.footer.cities.bcd}
                 </p>
               </div>
               <div
@@ -71,7 +71,7 @@ export default function Footer() {
                   </Link>
                 </div>
                 <p className="select-none self-end opacity-50">
-                  &copy; 2024 furugen
+                  {t.footer.copyright}
                 </p>
               </div>
             </div>

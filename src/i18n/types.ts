@@ -22,6 +22,15 @@ export type TranslationKeys = {
     toggleMenu: string;
     closeMenu: string;
   };
+  footer: {
+    copyright: string;
+    cities: {
+      oka: string;
+      hij: string;
+      tyo: string;
+      bcd: string;
+    };
+  };
   profile: {
     title: string;
     subtitle: string;
