@@ -170,7 +170,7 @@ export const translations: Translations = {
      },
      profileCard: {
        description: '沖縄生まれ、ブルーハーツ育ち。考える前に行動する、なんくるないさ系エンジニアです。',
-       viewProfile: 'View Profile',
+       viewProfile: 'プロフィールを見る',
      },
      blog: {
        title: 'ブログ',
