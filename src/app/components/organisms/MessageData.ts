@@ -1,49 +1,64 @@
-export const announcements = [
+import { Locale } from '@/i18n/types';
+
+export interface AnnouncementLink {
+  url: string;
+  textKey: string;
+}
+
+export interface AnnouncementData {
+  date: string;
+  categoryKey: 'blogUpdate' | 'notification';
+  titleKey: string;
+  link?: AnnouncementLink;
+}
+
+export const announcementsData: AnnouncementData[] = [
+  {
+    date: '2025/08/20',
+    categoryKey: 'notification',
+    titleKey: '2025-08-20',
+  },
   {
     date: '2025/04/22',
-    category: 'ブログ更新',
-    title: '記事を追加しました。',
+    categoryKey: 'blogUpdate',
+    titleKey: '2025-04-22',
     link: {
       url: 'https://furugen-island.com/my_site/blog/create_my_site_4',
-      text: '『Reactでポートフォリオサイトを作成する 🚀（4）』',
+      textKey: '2025-04-22',
     },
   },
   {
     date: '2025/04/21',
-    category: 'ブログ更新',
-    title: '記事を追加しました。',
-    link: {
-      url: 'https://furugen-island.com/my_site/blog/create_my_site_3',
-      text: '『Reactでポートフォリオサイトを作成する 🚀（3）』',
-    },
+    categoryKey: 'blogUpdate',
+    titleKey: '2025-04-21',
   },
   {
     date: '2025/04/01',
-    category: 'お知らせ',
-    title: 'ゲーム（クロッシーロード）画面を追加しました。',
+    categoryKey: 'notification',
+    titleKey: '2025-04-01',
     link: {
       url: 'https://furugen-island.com/my_site/game',
-      text: 'Game',
+      textKey: '2025-04-01',
     },
   },
   {
     date: '2025/03/08',
-    category: 'ブログ更新',
-    title: '記事を追加しました。',
+    categoryKey: 'blogUpdate',
+    titleKey: '2025-03-08-blog',
     link: {
       url: 'https://furugen-island.com/my_site/blog/async_await_with_forEach',
-      text: 'forEach内でasync awaitはなぜ使えないのか',
+      textKey: '2025-03-08-blog',
     },
   },
-  {
-    date: '2025/03/08',
-    category: 'お知らせ',
-    title: 'ブログへのいいね機能を実装しました。',
-    link: {
-      url: 'https://furugen-island.com/my_site/blog',
-      text: 'Blog',
-    },
-  },
+  // {
+  //   date: '2025/03/08',
+  //   categoryKey: 'notification',
+  //   titleKey: '2025-03-08-like',
+  //   link: {
+  //     url: 'https://furugen-island.com/my_site/blog',
+  //     textKey: '2025-03-08-like',
+  //   },
+  // },
   // {
   //   date: '2025/02/02',
   //   category: 'お知らせ',
