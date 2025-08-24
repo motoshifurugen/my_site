@@ -185,7 +185,8 @@ export const translations: Translations = {
       },
       items: {
         '2025-08-20': {
-          title: '言語切り替え（英語・日本語）を実装しました。'
+          title: '言語切り替え（英語・日本語）を実装しました。',
+          linkText: '',
         },
         '2025-04-22': {
           title: '記事を追加しました。',
@@ -394,7 +395,8 @@ export const translations: Translations = {
        },
        items: {
          '2025-08-20': {
-           title: 'Language switching (Japanese/English) is now supported.' 
+           title: 'Language switching (Japanese/English) is now supported.',
+           linkText: '',
          },
          '2025-04-22': {
            title: 'Added a new article.',
@@ -412,10 +414,10 @@ export const translations: Translations = {
            title: 'Added a new article.',
            linkText: 'Why async await cannot be used in forEach',
          },
-        //  '2025-03-08-like': {
-        //    title: 'Implemented like function for blog.',
-        //    linkText: 'Blog',
-        //  },
+         // '2025-03-08-like': {
+         //   title: 'Implemented like function for blog.',
+         //   linkText: 'Blog',
+         // },
        },
      },
    },
