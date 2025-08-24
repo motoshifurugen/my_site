@@ -172,12 +172,45 @@ export const translations: Translations = {
        description: '沖縄生まれ、ブルーハーツ育ち。考える前に行動する、なんくるないさ系エンジニアです。',
        viewProfile: 'プロフィールを見る',
      },
-     blog: {
-       title: 'ブログ',
-       all: 'すべて',
-       findOutMore: 'もっと見る',
-     },
-   },
+         blog: {
+      title: 'ブログ',
+      all: 'すべて',
+      findOutMore: 'もっと見る',
+    },
+    announcements: {
+      title: 'News',
+      categories: {
+        blogUpdate: 'ブログ更新',
+        notification: 'お知らせ',
+      },
+      items: {
+        '2025-08-20': {
+          title: '言語切り替え（英語・日本語）を実装しました。',
+          linkText: '',
+        },
+        '2025-04-22': {
+          title: '記事を追加しました。',
+          linkText: '『Reactでポートフォリオサイトを作成する 🚀（4）』',
+        },
+        '2025-04-21': {
+          title: '記事を追加しました。',
+          linkText: '『Reactでポートフォリオサイトを作成する 🚀（3）』',
+        },
+        '2025-04-01': {
+          title: 'ゲーム（クロッシーロード）画面を追加しました。',
+          linkText: 'Game',
+        },
+        '2025-03-08-blog': {
+          title: '記事を追加しました。',
+          linkText: 'forEach内でasync awaitはなぜ使えないのか',
+        },
+        // '2025-03-08-like': {
+        //   title: 'ブログへのいいね機能を実装しました。',
+        //   linkText: 'Blog',
+        // },
+      },
+    },
+  },
    en: {
     common: {
       home: 'Home',
@@ -353,6 +386,39 @@ export const translations: Translations = {
        title: 'Blog',
        all: 'All',
        findOutMore: 'Find Out More',
+     },
+     announcements: {
+       title: 'News',
+       categories: {
+         blogUpdate: 'Blog Update',
+         notification: 'Notification',
+       },
+       items: {
+         '2025-08-20': {
+           title: 'Language switching (Japanese/English) is now supported.',
+           linkText: '',
+         },
+         '2025-04-22': {
+           title: 'Added a new article.',
+           linkText: '"Creating a Portfolio Site with React 🚀 (4)"',
+         },
+         '2025-04-21': {
+           title: 'Added a new article.',
+           linkText: '"Creating a Portfolio Site with React 🚀 (3)"',
+         },
+         '2025-04-01': {
+           title: 'Added Game (Crossy Road) screen.',
+           linkText: 'Game',
+         },
+         '2025-03-08-blog': {
+           title: 'Added a new article.',
+           linkText: 'Why async await cannot be used in forEach',
+         },
+         // '2025-03-08-like': {
+         //   title: 'Implemented like function for blog.',
+         //   linkText: 'Blog',
+         // },
+       },
      },
    },
 }; 

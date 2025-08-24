@@ -132,11 +132,26 @@ export type TranslationKeys = {
      description: string;
      viewProfile: string;
    };
-   blog: {
-     title: string;
-     all: string;
-     findOutMore: string;
-   };
+     blog: {
+    title: string;
+    all: string;
+    findOutMore: string;
+  };
+  announcements: {
+    title: string;
+    categories: {
+      blogUpdate: string;
+      notification: string;
+    };
+    items: {
+      '2025-08-20': { title: string; linkText: string };
+      '2025-04-22': { title: string; linkText: string };
+      '2025-04-21': { title: string; linkText: string };
+      '2025-04-01': { title: string; linkText: string };
+      '2025-03-08-blog': { title: string; linkText: string };
+      [key: string]: { title: string; linkText: string };
+    };
+  };
 };
 
 export type Translations = Record<Locale, TranslationKeys>; 
