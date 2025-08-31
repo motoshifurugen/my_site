@@ -11,14 +11,14 @@ const GITHUB_REPO = process.env.GITHUB_REPO || ''
 const LIKES_ISSUE_LABEL = 'blog-likes'
 
 export async function GET(request: NextRequest) {
-  const url = new URL(request.url)
-  const articleId = url.searchParams.get('articleId')
-
-  if (!articleId) {
-    return NextResponse.json({ error: '記事IDが必要です' }, { status: 400 })
-  }
-
   try {
+    const url = new URL(request.url)
+    const articleId = url.searchParams.get('articleId')
+
+    if (!articleId) {
+      return NextResponse.json({ error: '記事IDが必要です' }, { status: 400 })
+    }
+
     // GitHub Issueからいいね数を取得
     const likeData = await getLikeCount(articleId)
     return NextResponse.json(likeData)

@@ -2,14 +2,14 @@ import { NextRequest, NextResponse } from 'next/server'
 import ogs from 'open-graph-scraper'
 
 export const GET = async (req: NextRequest) => {
-  const { searchParams } = new URL(req.url)
-  const url = searchParams.get('url')
-
-  if (!url) {
-    return NextResponse.json({ error: 'Invalid URL' }, { status: 400 })
-  }
-
   try {
+    const { searchParams } = new URL(req.url)
+    const url = searchParams.get('url')
+
+    if (!url) {
+      return NextResponse.json({ error: 'Invalid URL' }, { status: 400 })
+    }
+
     const { result, error } = await ogs({ url })
     if (error) {
       return NextResponse.json(
