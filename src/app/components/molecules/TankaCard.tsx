@@ -14,8 +14,18 @@ const TankaCard: React.FC<TankaCardProps> = ({
   createdAt, 
   index 
 }) => {
+  // 波打ち演出の状態管理
+  const [isWaving, setIsWaving] = useState(false);
+  
   // 短歌を行に分割
   const tankaLines = tanka.split('\n').filter(line => line.trim());
+  
+  // クリック時の降下演出
+  const handleClick = () => {
+    setIsWaving(true);
+    // 演出終了後に状態をリセット
+    setTimeout(() => setIsWaving(false), 3000);
+  };
   
   // 日付をフォーマット
   const formatDate = (dateString: string) => {
@@ -29,7 +39,7 @@ const TankaCard: React.FC<TankaCardProps> = ({
 
   return (
     <motion.div
-      className="bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-800 dark:via-gray-850 dark:to-gray-900 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-3 sm:p-4 lg:p-6 relative overflow-hidden flex flex-col justify-between min-h-[200px] sm:min-h-[220px] lg:min-h-[280px]"
+      className="bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-800 dark:via-gray-850 dark:to-gray-900 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-3 sm:p-4 lg:p-6 relative overflow-hidden flex flex-col justify-between min-h-[200px] sm:min-h-[220px] lg:min-h-[280px] cursor-pointer"
       style={{
         background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 30%, #f1f5f9 70%, #e2e8f0 100%)',
         boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6)'
@@ -50,6 +60,8 @@ const TankaCard: React.FC<TankaCardProps> = ({
         transition: { duration: 0.2 },
         boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.15), 0 15px 15px -5px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
       }}
+      whileTap={{ scale: 0.98 }}
+      onClick={handleClick}
     >
       {/* 上部コンテナ */}
       <div className="flex-1 flex flex-col">
@@ -64,7 +76,10 @@ const TankaCard: React.FC<TankaCardProps> = ({
                 key={lineIndex}
                 className="text-xs sm:text-sm lg:text-base text-main-black dark:text-night-white leading-relaxed sm:leading-tight font-medium tracking-wider select-none"
                 initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
+                animate={{ 
+                  opacity: 1, 
+                  x: 0
+                }}
                 transition={{ 
                   delay: index * 0.1 + lineIndex * 0.1,
                   duration: 0.4
@@ -76,7 +91,37 @@ const TankaCard: React.FC<TankaCardProps> = ({
                   userSelect: 'none'
                 }}
               >
-                {line}
+                {line.split('').map((char, charIndex) => (
+                  <motion.span
+                    key={`${char}-${charIndex}-${isWaving ? 'falling' : 'static'}`}
+                    initial={isWaving ? { 
+                      y: -10, 
+                      opacity: 0, 
+                      rotateZ: Math.random() * 20 - 10,
+                      scale: 0.8
+                    } : false}
+                    animate={isWaving ? {
+                      y: 0,
+                      opacity: 1,
+                      rotateZ: 0,
+                      scale: 1
+                    } : {}}
+                    transition={isWaving ? {
+                      duration: 0.8,
+                      delay: (lineIndex * 0.2) + (charIndex * 0.08),
+                      ease: [0.25, 0.46, 0.45, 0.94], // カスタムイージング（落下感）
+                      type: "spring",
+                      stiffness: 100,
+                      damping: 15
+                    } : {}}
+                    style={{ 
+                      display: 'inline-block',
+                      transformOrigin: 'center center'
+                    }}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
               </motion.div>
             ))}
           </div>
