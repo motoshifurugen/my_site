@@ -41,3 +41,6 @@ next-env.d.ts
 # Python
 scripts/__pycache__/
 scripts/.env
+
+# 一時的な過去データ収集スクリプト（後で削除予定）
+# scripts/backfill_historical_tanka.py

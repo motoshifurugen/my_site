@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
-X（旧Twitter）APIから短歌投稿を収集してSupabaseに保存するスクリプト
+過去の短歌ツイートを遡って収集するスクリプト（一時的な使用専用）
+メインの定期実行には影響しません。
 """
 
 import os
-import re
 import sys
 import time
 import logging
 from datetime import datetime
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 import requests
 from supabase import create_client, Client
 from dotenv import load_dotenv
@@ -25,8 +25,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-class TankaCollector:
-    """短歌収集システムのメインクラス"""
+class HistoricalTankaCollector:
+    """過去の短歌を収集する専用クラス（一時的な使用）"""
     
     def __init__(self):
         """初期化"""
@@ -44,9 +44,9 @@ class TankaCollector:
             'Authorization': f'Bearer {self.x_bearer_token}',
             'Content-Type': 'application/json'
         }
-        
+    
     def get_since_id(self) -> str:
-        """metadataテーブルからsince_idを取得"""
+        """metadataテーブルからsince_idを取得（参考用）"""
         try:
             response = self.supabase.table('metadata').select('value').eq('key', 'since_id').execute()
             if response.data:
@@ -56,34 +56,25 @@ class TankaCollector:
             logger.error(f"since_id取得エラー: {e}")
             return '1'
     
-    def set_since_id(self, since_id: str) -> None:
-        """metadataテーブルのsince_idを更新"""
-        try:
-            self.supabase.table('metadata').upsert({
-                'key': 'since_id',
-                'value': since_id,
-                'updated_at': datetime.now().isoformat()
-            }).execute()
-            logger.info(f"since_id更新: {since_id}")
-        except Exception as e:
-            logger.error(f"since_id更新エラー: {e}")
-            raise
-    
-    def get_recent_tweet_ids(self, since_id: str) -> List[str]:
-        """User Timeline APIから新着ツイートIDを取得（ページング対応）"""
+    def get_historical_tweet_ids(self, until_id: str = None, max_batches: int = 10) -> List[str]:
+        """過去のツイートIDを遡って取得"""
         tweet_ids = []
         next_token = None
-        max_requests = 50  # レート制限内で最大50リクエスト（余裕を持たせる）
         request_count = 0
         
-        while request_count < max_requests:
+        logger.info(f"過去ツイート収集開始 (until_id: {until_id}, max_batches: {max_batches})")
+        
+        while request_count < max_batches:
             url = f"https://api.x.com/2/users/{self.x_user_id}/tweets"
             params = {
                 'max_results': 100,
-                'since_id': since_id,
                 'tweet.fields': 'created_at'
             }
             
+            # until_idがある場合は指定（そのIDより古いツイートを取得）
+            if until_id and request_count == 0:
+                params['until_id'] = until_id
+                
             if next_token:
                 params['pagination_token'] = next_token
                 
@@ -94,48 +85,32 @@ class TankaCollector:
                 
             data = response.json()
             if 'data' in data:
-                tweet_ids.extend([tweet['id'] for tweet in data['data']])
-                logger.info(f"バッチ {request_count + 1}: {len(data['data'])}件取得（累計: {len(tweet_ids)}件）")
+                batch_tweets = data['data']
+                tweet_ids.extend([tweet['id'] for tweet in batch_tweets])
+                logger.info(f"バッチ {request_count + 1}: {len(batch_tweets)}件取得（累計: {len(tweet_ids)}件）")
+                
+                # 最古のツイートIDを記録（デバッグ用）
+                if batch_tweets:
+                    oldest_id = batch_tweets[-1]['id']
+                    logger.info(f"  最新ID: {batch_tweets[0]['id']}, 最古ID: {oldest_id}")
+            else:
+                logger.info("これ以上のデータはありません")
+                break
                 
             # ページングトークンがあれば続行
             if 'meta' in data and 'next_token' in data['meta']:
                 next_token = data['meta']['next_token']
                 request_count += 1
-                time.sleep(1.0)  # レート制限対策を強化（1秒間隔）
+                time.sleep(1.2)  # レート制限対策
             else:
                 logger.info("全てのページを取得完了")
                 break
                 
-        if request_count >= max_requests:
-            logger.warning(f"最大リクエスト数({max_requests})に達しました。一部のツイートは次回実行時に取得されます")
+        if request_count >= max_batches:
+            logger.warning(f"最大バッチ数({max_batches})に達しました")
             
-        logger.info(f"取得したツイートID数: {len(tweet_ids)}")
+        logger.info(f"過去ツイート収集完了: {len(tweet_ids)}件")
         return tweet_ids
-    
-    def fetch_posts_by_ids(self, tweet_ids: List[str]) -> List[Dict]:
-        """ツイートIDから投稿内容を取得（100件ずつバッチ処理）"""
-        all_tweets = []
-        
-        # 100件ずつに分割
-        for i in range(0, len(tweet_ids), 100):
-            batch_ids = tweet_ids[i:i+100]
-            url = "https://api.x.com/2/tweets"
-            params = {
-                'ids': ','.join(batch_ids),
-                'tweet.fields': 'created_at,text,author_id'
-            }
-            
-            response = self._make_request_with_retry(url, params)
-            if response:
-                data = response.json()
-                if 'data' in data:
-                    all_tweets.extend(data['data'])
-                    
-            # バッチ間の短いポーズ
-            time.sleep(0.3)
-            
-        logger.info(f"取得したツイート数: {len(all_tweets)}")
-        return all_tweets
     
     def _make_request_with_retry(self, url: str, params: Dict) -> Optional[requests.Response]:
         """指数バックオフでリトライ付きHTTPリクエスト"""
@@ -166,6 +141,31 @@ class TankaCollector:
         logger.error(f"最大リトライ回数に達しました: {url}")
         return None
     
+    def fetch_posts_by_ids(self, tweet_ids: List[str]) -> List[Dict]:
+        """ツイートIDから投稿内容を取得（100件ずつバッチ処理）"""
+        all_tweets = []
+        
+        # 100件ずつに分割
+        for i in range(0, len(tweet_ids), 100):
+            batch_ids = tweet_ids[i:i+100]
+            url = "https://api.x.com/2/tweets"
+            params = {
+                'ids': ','.join(batch_ids),
+                'tweet.fields': 'created_at,text,author_id'
+            }
+            
+            response = self._make_request_with_retry(url, params)
+            if response:
+                data = response.json()
+                if 'data' in data:
+                    all_tweets.extend(data['data'])
+                    
+            # バッチ間の短いポーズ
+            time.sleep(0.3)
+            
+        logger.info(f"取得したツイート数: {len(all_tweets)}")
+        return all_tweets
+    
     def extract_tanka(self, text: str) -> Optional[str]:
         """投稿テキストから短歌を抽出"""
         # #短歌が含まれていない場合はスキップ
@@ -173,6 +173,7 @@ class TankaCollector:
             return None
             
         # 【】がある場合の処理（最後の】を使用）
+        import re
         bracket_matches = list(re.finditer(r'】', text))
         if bracket_matches:
             start_pos = bracket_matches[-1].end()  # 最後の】の直後
@@ -241,45 +242,49 @@ class TankaCollector:
             logger.error(f"upsertエラー: {e}")
             raise
     
-    def run(self) -> None:
-        """メイン処理を実行"""
+    def run(self, until_id: str = None, max_batches: int = 10) -> None:
+        """過去データの収集を実行"""
         try:
-            logger.info("短歌収集処理を開始")
+            logger.info("=== 過去短歌収集処理を開始 ===")
+            logger.info("注意: この処理はsince_idを更新しません（通常の定期実行に影響なし）")
             
-            # since_idを取得
-            since_id = self.get_since_id()
-            logger.info(f"現在のsince_id: {since_id}")
+            # 現在のsince_idを取得（参考用）
+            current_since_id = self.get_since_id()
+            logger.info(f"現在のsince_id: {current_since_id}")
             
-            # 新着ツイートIDを取得
-            tweet_ids = self.get_recent_tweet_ids(since_id)
+            # 過去のツイートIDを取得
+            tweet_ids = self.get_historical_tweet_ids(until_id, max_batches)
             if not tweet_ids:
-                logger.info("新着ツイートはありませんでした")
+                logger.info("取得できる過去ツイートはありませんでした")
                 return
-            
-            # 最大のtweet_idを計算（ツイート内容取得の成功/失敗に関わらずsince_idを更新するため）
-            max_tweet_id = max(tweet_ids, key=int)
             
             # ツイート内容を取得
             tweets = self.fetch_posts_by_ids(tweet_ids)
             if not tweets:
-                logger.warning("ツイート内容の取得に失敗しましたが、since_idを更新します")
-                self.set_since_id(max_tweet_id)
-                logger.info(f"処理完了 - Upserted 0 rows. New since_id: {max_tweet_id}")
+                logger.info("ツイート内容の取得に失敗しました")
                 return
             
             # 短歌を抽出してupsert
             upserted_count = self.upsert_tanka(tweets)
             
-            # since_idを更新
-            self.set_since_id(max_tweet_id)
-                
-            logger.info(f"処理完了 - Upserted {upserted_count} rows. New since_id: {max_tweet_id}")
+            logger.info("=== 過去データ収集完了 ===")
+            logger.info(f"処理結果: Upserted {upserted_count} rows")
+            logger.info(f"since_id: {current_since_id} (変更なし)")
+            logger.info("通常の定期実行は影響を受けません")
             
         except Exception as e:
-            logger.error(f"処理中にエラーが発生しました: {e}")
+            logger.error(f"過去データ収集中にエラーが発生しました: {e}")
             sys.exit(1)
 
 
 if __name__ == "__main__":
-    collector = TankaCollector()
-    collector.run()
+    import argparse
+    
+    parser = argparse.ArgumentParser(description='過去の短歌ツイートを収集（一時的な使用専用）')
+    parser.add_argument('--until-id', type=str, help='この ID より古いツイートを取得（指定しない場合は最新から遡る）')
+    parser.add_argument('--max-batches', type=int, default=10, help='最大バッチ数（デフォルト: 10）')
+    
+    args = parser.parse_args()
+    
+    collector = HistoricalTankaCollector()
+    collector.run(args.until_id, args.max_batches)
