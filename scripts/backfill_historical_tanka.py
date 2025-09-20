@@ -56,13 +56,14 @@ class HistoricalTankaCollector:
             logger.error(f"since_id取得エラー: {e}")
             return '1'
     
-    def get_historical_tweet_ids(self, until_id: str = None, max_batches: int = 10) -> List[str]:
-        """過去のツイートIDを遡って取得"""
+    def get_historical_tweet_ids(self, until_id: str = None, max_batches: int = 1) -> List[str]:
+        """過去のツイートIDを遡って取得（X API Free tier対応）"""
         tweet_ids = []
         next_token = None
         request_count = 0
         
         logger.info(f"過去ツイート収集開始 (until_id: {until_id}, max_batches: {max_batches})")
+        logger.info("X API Free tier制限により、1バッチ（100ツイート）ずつの実行を推奨")
         
         while request_count < max_batches:
             url = f"https://api.x.com/2/users/{self.x_user_id}/tweets"
@@ -113,9 +114,8 @@ class HistoricalTankaCollector:
         return tweet_ids
     
     def _make_request_with_retry(self, url: str, params: Dict) -> Optional[requests.Response]:
-        """指数バックオフでリトライ付きHTTPリクエスト"""
-        max_retries = 5
-        base_delay = 2
+        """X API Free tier対応の保守的なリトライ戦略"""
+        max_retries = 3  # リトライ回数を減らす
         
         for attempt in range(max_retries):
             try:
@@ -124,9 +124,18 @@ class HistoricalTankaCollector:
                 if response.status_code == 200:
                     return response
                 elif response.status_code == 429:
-                    # レート制限
-                    delay = base_delay * (2 ** attempt)
-                    logger.warning(f"レート制限発生。{delay}秒待機中... (試行 {attempt + 1}/{max_retries})")
+                    # X API Free tierでは非常に厳しい制限があるため、長時間待機
+                    if attempt == 0:
+                        delay = 900  # 15分待機
+                        logger.warning(f"レート制限発生。{delay}秒（15分）待機中... (試行 {attempt + 1}/{max_retries})")
+                        logger.warning("X API Free tierでは15分間隔での実行を推奨します")
+                    elif attempt == 1:
+                        delay = 1800  # 30分待機
+                        logger.warning(f"レート制限発生。{delay}秒（30分）待機中... (試行 {attempt + 1}/{max_retries})")
+                    else:
+                        delay = 3600  # 60分待機
+                        logger.warning(f"レート制限発生。{delay}秒（60分）待機中... (試行 {attempt + 1}/{max_retries})")
+                    
                     time.sleep(delay)
                 else:
                     logger.error(f"HTTPエラー {response.status_code}: {response.text}")
@@ -135,10 +144,10 @@ class HistoricalTankaCollector:
             except Exception as e:
                 logger.error(f"リクエストエラー: {e}")
                 if attempt < max_retries - 1:
-                    delay = base_delay * (2 ** attempt)
-                    time.sleep(delay)
+                    time.sleep(60)  # エラー時は1分待機
                     
         logger.error(f"最大リトライ回数に達しました: {url}")
+        logger.error("推奨: 15分以上待ってから再実行してください")
         return None
     
     def fetch_posts_by_ids(self, tweet_ids: List[str]) -> List[Dict]:
@@ -266,6 +275,13 @@ class HistoricalTankaCollector:
             
             # 短歌を抽出してupsert
             upserted_count = self.upsert_tanka(tweets)
+            
+            # 次回実行のヒント
+            if tweets:
+                oldest_tweet_id = min(tweet['id'] for tweet in tweets)
+                logger.info("=== 次回実行時のコマンド例 ===")
+                logger.info(f"python backfill_historical_tanka.py --until-id {oldest_tweet_id} --max-batches 1")
+                logger.info("推奨: 15分以上待ってから次回実行してください")
             
             logger.info("=== 過去データ収集完了 ===")
             logger.info(f"処理結果: Upserted {upserted_count} rows")

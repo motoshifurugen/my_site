@@ -9,9 +9,9 @@ on:
         required: false
         type: string
       max_batches:
-        description: '最大バッチ数（1バッチ=100ツイート）'
+        description: '最大バッチ数（1バッチ=100ツイート、Free tierでは1推奨）'
         required: false
-        default: '10'
+        default: '1'
         type: string
 
 jobs:
