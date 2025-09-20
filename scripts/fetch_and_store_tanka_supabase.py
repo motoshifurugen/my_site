@@ -250,21 +250,24 @@ class TankaCollector:
                 logger.info("新着ツイートはありませんでした")
                 return
             
+            # 最大のtweet_idを計算（ツイート内容取得の成功/失敗に関わらずsince_idを更新するため）
+            max_tweet_id = max(tweet_ids, key=int)
+            
             # ツイート内容を取得
             tweets = self.fetch_posts_by_ids(tweet_ids)
             if not tweets:
-                logger.info("ツイート内容の取得に失敗しました")
+                logger.warning("ツイート内容の取得に失敗しましたが、since_idを更新します")
+                self.set_since_id(max_tweet_id)
+                logger.info(f"処理完了 - Upserted 0 rows. New since_id: {max_tweet_id}")
                 return
             
             # 短歌を抽出してupsert
             upserted_count = self.upsert_tanka(tweets)
             
-            # since_idを更新（最大のtweet_idを使用）
-            if tweet_ids:
-                max_tweet_id = max(tweet_ids, key=int)
-                self.set_since_id(max_tweet_id)
+            # since_idを更新
+            self.set_since_id(max_tweet_id)
                 
-            logger.info(f"処理完了 - Upserted {upserted_count} rows. New since_id: {max_tweet_id if tweet_ids else since_id}")
+            logger.info(f"処理完了 - Upserted {upserted_count} rows. New since_id: {max_tweet_id}")
             
         except Exception as e:
             logger.error(f"処理中にエラーが発生しました: {e}")
