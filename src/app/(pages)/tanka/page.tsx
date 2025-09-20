@@ -4,6 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TankaCard from '../../components/molecules/TankaCard';
 import LoadingCircle from '../../components/atoms/LoadingCircle';
+import AnimatedLine from '../../components/atoms/AnimatedLine';
+import PageFace from '../../components/organisms/PageFace';
+import { useI18n } from '../../../i18n/context';
 
 interface TankaData {
   id: string;
@@ -22,6 +25,7 @@ interface PaginationData {
 }
 
 const TankaPage: React.FC = () => {
+  const { t } = useI18n();
   const [tankaList, setTankaList] = useState<TankaData[]>([]);
   const [pagination, setPagination] = useState<PaginationData | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -63,7 +67,7 @@ const TankaPage: React.FC = () => {
 
   if (loading && currentPage === 1) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <LoadingCircle isLoading={true} />
           <motion.p 
@@ -81,7 +85,7 @@ const TankaPage: React.FC = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <motion.div 
           className="text-center p-8 bg-white rounded-2xl shadow-lg"
           initial={{ opacity: 0, scale: 0.9 }}
@@ -91,7 +95,7 @@ const TankaPage: React.FC = () => {
           <h2 className="text-2xl font-bold text-gray-800 mb-2">エラーが発生しました</h2>
           <p className="text-gray-600 mb-6">{error}</p>
           <motion.button
-            className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-medium hover:shadow-lg transition-shadow"
+            className="px-6 py-3 bg-main-black text-white rounded-lg font-medium hover:shadow-lg transition-shadow"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => fetchTankaData(currentPage)}
@@ -104,45 +108,17 @@ const TankaPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
-      {/* ヘッダーセクション */}
-      <motion.div 
-        className="relative overflow-hidden bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white py-20"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        {/* 背景の装飾 */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-10 -left-10 w-60 h-60 bg-white/10 rounded-full blur-3xl"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 relative">
-          <motion.div 
-            className="text-center"
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <h1 className="text-5xl font-bold mb-4">短歌 ✨</h1>
-            <p className="text-xl opacity-90 mb-8">心に響く五七五七七の調べ</p>
-            {pagination && (
-              <motion.div 
-                className="text-lg opacity-80"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                {pagination.totalItems}首の短歌を収集
-              </motion.div>
-            )}
-          </motion.div>
-        </div>
-      </motion.div>
+    <>
+      <section className="content-wrapper container mx-auto">
+        <PageFace
+          title={t.common.tanka}
+        />
+      </section>
 
-      {/* メインコンテンツ */}
-      <div className="container mx-auto px-4 py-12">
+      <AnimatedLine />
+
+      <section className="content-wrapper container mx-auto"
+        >
         {tankaList.length === 0 ? (
           <motion.div 
             className="text-center py-20"
@@ -155,18 +131,16 @@ const TankaPage: React.FC = () => {
           </motion.div>
         ) : (
           <>
-            {/* 短歌カードグリッド */}
-            <motion.div 
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-12"
-              layout
-            >
+                {/* 短歌カードグリッド */}
+                <motion.div 
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-8 lg:gap-12 mb-12 max-w-5xl mx-auto px-6 md:px-0"
+                  layout
+                >
               <AnimatePresence mode="popLayout">
                 {tankaList.map((tanka, index) => (
                   <TankaCard
                     key={`${tanka.id}-${currentPage}`}
-                    id={tanka.id}
                     tanka={tanka.tanka}
-                    originalText={tanka.originalText}
                     createdAt={tanka.createdAt}
                     index={index}
                   />
@@ -186,7 +160,7 @@ const TankaPage: React.FC = () => {
                 <motion.button
                   className={`px-4 py-2 rounded-lg font-medium transition-all ${
                     pagination.hasPrev
-                      ? 'bg-white text-purple-600 hover:bg-purple-50 shadow-md hover:shadow-lg'
+                      ? 'bg-white text-main-black hover:bg-gray-50 shadow-md hover:shadow-lg'
                       : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                   }`}
                   whileHover={pagination.hasPrev ? { scale: 1.05 } : {}}
@@ -216,8 +190,8 @@ const TankaPage: React.FC = () => {
                         key={pageNum}
                         className={`w-10 h-10 rounded-lg font-medium transition-all ${
                           currentPage === pageNum
-                            ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-                            : 'bg-white text-gray-600 hover:bg-purple-50 shadow-md hover:shadow-lg'
+                            ? 'bg-main-black text-white shadow-lg'
+                            : 'bg-white text-gray-600 hover:bg-gray-50 shadow-md hover:shadow-lg'
                         }`}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
@@ -234,7 +208,7 @@ const TankaPage: React.FC = () => {
                 <motion.button
                   className={`px-4 py-2 rounded-lg font-medium transition-all ${
                     pagination.hasNext
-                      ? 'bg-white text-purple-600 hover:bg-purple-50 shadow-md hover:shadow-lg'
+                      ? 'bg-white text-main-black hover:bg-gray-50 shadow-md hover:shadow-lg'
                       : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                   }`}
                   whileHover={pagination.hasNext ? { scale: 1.05 } : {}}
@@ -248,7 +222,7 @@ const TankaPage: React.FC = () => {
             )}
           </>
         )}
-      </div>
+      </section>
 
       {/* ローディングオーバーレイ */}
       <AnimatePresence>
@@ -266,7 +240,7 @@ const TankaPage: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 };
 

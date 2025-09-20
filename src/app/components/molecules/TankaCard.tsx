@@ -4,23 +4,16 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface TankaCardProps {
-  id: string;
   tanka: string;
-  originalText: string;
   createdAt: string;
   index: number;
 }
 
 const TankaCard: React.FC<TankaCardProps> = ({ 
-  id, 
   tanka, 
-  originalText, 
   createdAt, 
   index 
 }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-
   // 短歌を行に分割
   const tankaLines = tanka.split('\n').filter(line => line.trim());
   
@@ -34,133 +27,75 @@ const TankaCard: React.FC<TankaCardProps> = ({
     });
   };
 
-  // グラデーションカラーのバリエーション
-  const gradients = [
-    'from-pink-400 via-purple-500 to-indigo-600',
-    'from-blue-400 via-cyan-500 to-teal-600',
-    'from-green-400 via-emerald-500 to-cyan-600',
-    'from-yellow-400 via-orange-500 to-red-600',
-    'from-purple-400 via-pink-500 to-rose-600',
-    'from-indigo-400 via-blue-500 to-cyan-600',
-  ];
-
-  const cardGradient = gradients[index % gradients.length];
-
   return (
     <motion.div
-      className="relative w-full h-80 perspective-1000"
-      initial={{ opacity: 0, y: 50 }}
+      className="bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-800 dark:via-gray-850 dark:to-gray-900 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-3 sm:p-4 lg:p-6 relative overflow-hidden flex flex-col justify-between min-h-[200px] sm:min-h-[220px] lg:min-h-[280px]"
+      style={{
+        background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 30%, #f1f5f9 70%, #e2e8f0 100%)',
+        boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6)'
+      }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ 
-        duration: 0.6, 
+        duration: 0.5, 
         delay: index * 0.1,
-        ease: "easeOut"
+        ease: "easeOut",
+        // ホバーアウト時の高速化設定
+        y: { duration: 0.15, ease: "easeOut" },
+        scale: { duration: 0.15, ease: "easeOut" }
       }}
-      whileHover={{ y: -8 }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
+      whileHover={{ 
+        y: -8, 
+        scale: 1.02, 
+        transition: { duration: 0.2 },
+        boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.15), 0 15px 15px -5px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
+      }}
     >
-      {/* カードコンテナ */}
-      <motion.div
-        className="relative w-full h-full cursor-pointer preserve-3d"
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
-        onClick={() => setIsFlipped(!isFlipped)}
-      >
-        {/* 表面 */}
-        <div className={`absolute inset-0 w-full h-full backface-hidden rounded-2xl bg-gradient-to-br ${cardGradient} p-6 shadow-xl`}>
-          {/* ホバー時の光沢エフェクト */}
-          <motion.div
-            className="absolute inset-0 rounded-2xl bg-white opacity-0"
-            animate={{ opacity: isHovered ? 0.1 : 0 }}
-            transition={{ duration: 0.3 }}
-          />
-          
-          {/* 和風の装飾 */}
-          <div className="absolute top-4 right-4 w-8 h-8 opacity-30">
-            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full text-white">
-              <path d="M12 2L13.09 8.26L19 7L14.74 11.26L21 12L14.74 12.74L19 17L13.09 15.74L12 22L10.91 15.74L5 17L9.26 12.74L3 12L9.26 11.26L5 7L10.91 8.26L12 2Z"/>
-            </svg>
-          </div>
+      {/* 上部コンテナ */}
+      <div className="flex-1 flex flex-col">
+        {/* 上部の装飾線 */}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
 
-          {/* 短歌テキスト */}
-          <div className="flex flex-col justify-center h-full text-white">
-            <div className="text-center space-y-3">
-              {tankaLines.map((line, lineIndex) => (
-                <motion.div
-                  key={lineIndex}
-                  className="text-lg font-medium leading-relaxed"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ 
-                    delay: index * 0.1 + lineIndex * 0.1,
-                    duration: 0.4
-                  }}
-                >
-                  {line}
-                </motion.div>
-              ))}
-            </div>
-            
-            {/* 日付 */}
-            <motion.div 
-              className="mt-8 text-center text-white/80 text-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: index * 0.1 + 0.5 }}
-            >
-              {formatDate(createdAt)}
-            </motion.div>
-          </div>
-
-          {/* フリップヒント */}
-          <motion.div
-            className="absolute bottom-4 left-4 text-white/60 text-xs"
-            animate={{ opacity: isHovered ? 1 : 0.6 }}
-            transition={{ duration: 0.3 }}
-          >
-            タップで詳細表示
-          </motion.div>
-        </div>
-
-        {/* 裏面 */}
-        <div className="absolute inset-0 w-full h-full backface-hidden rotateY-180 rounded-2xl bg-white p-6 shadow-xl border border-gray-200">
-          <div className="flex flex-col h-full">
-            {/* ヘッダー */}
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-800">元のツイート</h3>
-              <motion.button
-                className="text-gray-400 hover:text-gray-600"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsFlipped(false);
+        {/* 短歌テキスト（縦書き・中央揃え） */}
+        <div className="flex-1 flex justify-center items-center py-6 sm:py-8">
+          <div className="flex flex-row-reverse space-x-reverse space-x-2 sm:space-x-3 lg:space-x-4 select-none">
+            {tankaLines.map((line, lineIndex) => (
+              <motion.div
+                key={lineIndex}
+                className="text-xs sm:text-sm lg:text-base text-main-black dark:text-night-white leading-relaxed sm:leading-tight font-medium tracking-wider select-none"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ 
+                  delay: index * 0.1 + lineIndex * 0.1,
+                  duration: 0.4
+                }}
+                style={{ 
+                  writingMode: 'vertical-rl',
+                  textOrientation: 'upright',
+                  fontFamily: '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                  userSelect: 'none'
                 }}
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </motion.button>
-            </div>
-
-            {/* 元のテキスト */}
-            <div className="flex-1 overflow-y-auto">
-              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
-                {originalText}
-              </p>
-            </div>
-
-            {/* フッター */}
-            <div className="mt-4 pt-4 border-t border-gray-200">
-              <div className="flex items-center justify-between text-sm text-gray-500">
-                <span>Tweet ID: {id.slice(-8)}</span>
-                <span>{formatDate(createdAt)}</span>
-              </div>
-            </div>
+                {line}
+              </motion.div>
+            ))}
           </div>
         </div>
-      </motion.div>
+      </div>
+      
+      {/* 下部固定エリア */}
+      <div className="mt-auto">
+        {/* 下部の装飾線 */}
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent mb-3"></div>
+        
+        {/* 日付とサイト名 */}
+        <div className="text-center text-xs sm:text-xs lg:text-xs text-gray-400 dark:text-gray-600 font-light opacity-60" style={{ fontSize: '10px' }}>
+          {formatDate(createdAt)} / ココアハーツ
+        </div>
+      </div>
+
+      {/* 微細な光沢エフェクト */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none rounded-xl"></div>
     </motion.div>
   );
 };
