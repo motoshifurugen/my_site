@@ -1,0 +1,48 @@
+name: Backfill Historical Tanka Data
+
+on:
+  # 手動実行のみ（過去データ収集は一時的な作業のため）
+  workflow_dispatch:
+    inputs:
+      until_id:
+        description: 'この ID より古いツイートを取得（空の場合は最新から遡る）'
+        required: false
+        type: string
+      max_batches:
+        description: '最大バッチ数（1バッチ=100ツイート）'
+        required: false
+        default: '10'
+        type: string
+
+jobs:
+  backfill-historical-tanka:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        cd scripts
+        pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Run historical tanka collection script
+      env:
+        X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+        X_USER_ID: ${{ secrets.X_USER_ID }}
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      run: |
+        cd scripts
+        if [ -n "${{ github.event.inputs.until_id }}" ]; then
+          python backfill_historical_tanka.py --until-id "${{ github.event.inputs.until_id }}" --max-batches "${{ github.event.inputs.max_batches }}"
+        else
+          python backfill_historical_tanka.py --max-batches "${{ github.event.inputs.max_batches }}"
+        fi
