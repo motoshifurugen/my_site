@@ -37,3 +37,7 @@ next-env.d.ts
 
 # .env.local
 # .env.production
+
+# Python
+scripts/__pycache__/
+scripts/.env
