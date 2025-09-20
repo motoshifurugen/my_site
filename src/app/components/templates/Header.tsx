@@ -3,10 +3,11 @@
 import TitleLinkButton from '@/app/components/atoms/TitleLinkButton'
 import GithubLinkButton from '@/app/components/molecules/GithubLinkButton'
 import HeaderLinkButton from '@/app/components/molecules/HeaderLinkButton'
+import HeaderDropdownButton from '@/app/components/molecules/HeaderDropdownButton'
 import LanguageSwitcher from '@/app/components/molecules/LanguageSwitcher'
 import ThemeSwitch from '@/app/components/organisms/ThemeSwitch'
 import { useI18n } from '@/i18n'
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faTimes, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -27,8 +28,13 @@ const Header = () => {
     { href: '/profile', text: t.common.about },
     { href: '/blog', text: t.common.blog },
     { href: '/skills', text: t.common.portfolio },
-    { href: '/game', text: t.common.game },
     { href: '/contact', text: t.common.contact },
+  ]
+
+  // エンタメドロップダウンメニュー
+  const entertainmentItems = [
+    { href: '/game', text: t.common.game },
+    { href: '/tanka', text: t.common.tanka },
   ]
 
   useEffect(() => {
@@ -86,6 +92,13 @@ const Header = () => {
                 index={index}
               />
             ))}
+            
+            {/* 遊びドロップダウンメニュー */}
+            <HeaderDropdownButton
+              text={t.common.play}
+              subItems={entertainmentItems}
+              index={links.length}
+            />
             
             {/* スマホメニュー内のコントロール群（横並び） */}
             <div className="mt-6 pr-7 flex items-center justify-end space-x-4 md:hidden">

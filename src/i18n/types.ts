@@ -8,6 +8,8 @@ export type TranslationKeys = {
     blog: string;
     portfolio: string;
     game: string;
+    tanka: string;
+    play: string;
     language: string;
     switchToJapanese: string;
     switchToEnglish: string;
