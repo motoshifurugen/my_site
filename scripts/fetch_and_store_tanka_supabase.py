@@ -70,16 +70,16 @@ class TankaCollector:
             raise
     
     def get_recent_tweet_ids(self, since_id: str) -> List[str]:
-        """User Timeline APIから新着ツイートIDを取得（ページング対応）"""
+        """User Timeline APIから新着ツイートIDを取得（レート制限対応）"""
         tweet_ids = []
         next_token = None
-        max_requests = 50  # レート制限内で最大50リクエスト（余裕を持たせる）
+        max_requests = 3  # 1日5ツイート程度なので、最大3リクエストに制限
         request_count = 0
         
         while request_count < max_requests:
             url = f"https://api.x.com/2/users/{self.x_user_id}/tweets"
             params = {
-                'max_results': 100,
+                'max_results': 10,  # 一度に取得する件数を大幅に削減
                 'since_id': since_id,
                 'tweet.fields': 'created_at'
             }
@@ -101,7 +101,7 @@ class TankaCollector:
             if 'meta' in data and 'next_token' in data['meta']:
                 next_token = data['meta']['next_token']
                 request_count += 1
-                time.sleep(1.0)  # レート制限対策を強化（1秒間隔）
+                time.sleep(5.0)  # レート制限対策を大幅に強化（5秒間隔）
             else:
                 logger.info("全てのページを取得完了")
                 break
@@ -113,12 +113,12 @@ class TankaCollector:
         return tweet_ids
     
     def fetch_posts_by_ids(self, tweet_ids: List[str]) -> List[Dict]:
-        """ツイートIDから投稿内容を取得（100件ずつバッチ処理）"""
+        """ツイートIDから投稿内容を取得（レート制限対応）"""
         all_tweets = []
         
-        # 100件ずつに分割
-        for i in range(0, len(tweet_ids), 100):
-            batch_ids = tweet_ids[i:i+100]
+        # 10件ずつに分割（レート制限対策）
+        for i in range(0, len(tweet_ids), 10):
+            batch_ids = tweet_ids[i:i+10]
             url = "https://api.x.com/2/tweets"
             params = {
                 'ids': ','.join(batch_ids),
@@ -131,16 +131,16 @@ class TankaCollector:
                 if 'data' in data:
                     all_tweets.extend(data['data'])
                     
-            # バッチ間の短いポーズ
-            time.sleep(0.3)
+            # バッチ間の長いポーズ（レート制限対策）
+            time.sleep(2.0)
             
         logger.info(f"取得したツイート数: {len(all_tweets)}")
         return all_tweets
     
     def _make_request_with_retry(self, url: str, params: Dict) -> Optional[requests.Response]:
-        """指数バックオフでリトライ付きHTTPリクエスト"""
-        max_retries = 5
-        base_delay = 2
+        """指数バックオフでリトライ付きHTTPリクエスト（レート制限対応強化）"""
+        max_retries = 3  # リトライ回数を削減
+        base_delay = 10  # ベース待機時間を大幅に増加
         
         for attempt in range(max_retries):
             try:
@@ -149,10 +149,16 @@ class TankaCollector:
                 if response.status_code == 200:
                     return response
                 elif response.status_code == 429:
-                    # レート制限
+                    # レート制限 - より長い待機時間
                     delay = base_delay * (2 ** attempt)
                     logger.warning(f"レート制限発生。{delay}秒待機中... (試行 {attempt + 1}/{max_retries})")
                     time.sleep(delay)
+                elif response.status_code == 401:
+                    logger.error("認証エラー: Bearer Tokenが無効です")
+                    return None
+                elif response.status_code == 403:
+                    logger.error("アクセス拒否: APIアクセス権限がありません")
+                    return None
                 else:
                     logger.error(f"HTTPエラー {response.status_code}: {response.text}")
                     return None
@@ -242,7 +248,7 @@ class TankaCollector:
             raise
     
     def run(self) -> None:
-        """メイン処理を実行"""
+        """メイン処理を実行（レート制限対応）"""
         try:
             logger.info("短歌収集処理を開始")
             
@@ -258,6 +264,10 @@ class TankaCollector:
             
             # 最大のtweet_idを計算（ツイート内容取得の成功/失敗に関わらずsince_idを更新するため）
             max_tweet_id = max(tweet_ids, key=int)
+            
+            # レート制限対策: ツイートID取得とツイート内容取得の間にポーズ
+            logger.info("レート制限対策のため10秒待機中...")
+            time.sleep(10)
             
             # ツイート内容を取得
             tweets = self.fetch_posts_by_ids(tweet_ids)
