@@ -44,13 +44,13 @@ const HeaderDropdownButton: React.FC<HeaderDropdownButtonProps> = ({
         </button>
 
         {isOpen && (
-          <div className="absolute right-0 top-full z-50 mt-1 min-w-[120px] rounded-lg bg-white shadow-lg dark:bg-gray-800">
+          <div className="absolute right-0 top-full z-50 mt-1 min-w-[120px] rounded-lg bg-white shadow-lg dark:bg-night-black">
             <div className="py-1">
               {subItems.map((item, subIndex) => (
                 <Link
                   key={subIndex}
                   href={item.href}
-                  className="block w-full px-4 py-3 text-right md:text-center text-base font-bold text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="block w-full px-4 py-3 text-right md:text-center text-base font-bold text-black dark:text-night-white hover:bg-gray-100 dark:hover:bg-night-gray"
                   onClick={() => setIsOpen(false)}
                 >
                   {item.text}
