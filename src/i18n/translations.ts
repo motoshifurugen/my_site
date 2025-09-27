@@ -187,6 +187,10 @@ export const translations: Translations = {
         notification: 'お知らせ',
       },
       items: {
+        '2025-09-27': {
+          title: '作成した短歌のページを追加しました。',
+          linkText: '短歌',
+        },
         '2025-08-20': {
           title: '言語切り替え（英語・日本語）を実装しました。',
           linkText: '',
@@ -203,10 +207,10 @@ export const translations: Translations = {
           title: 'ゲーム（クロッシーロード）画面を追加しました。',
           linkText: 'Game',
         },
-        '2025-03-08-blog': {
-          title: '記事を追加しました。',
-          linkText: 'forEach内でasync awaitはなぜ使えないのか',
-        },
+        // '2025-03-08-blog': {
+        //   title: '記事を追加しました。',
+        //   linkText: 'forEach内でasync awaitはなぜ使えないのか',
+        // },
         // '2025-03-08-like': {
         //   title: 'ブログへのいいね機能を実装しました。',
         //   linkText: 'Blog',
@@ -400,6 +404,10 @@ export const translations: Translations = {
          notification: 'Notification',
        },
        items: {
+        '2025-09-27': {
+          title: 'Added Tanka page.',
+          linkText: 'Tanka (Japanese short poem)',
+        },
          '2025-08-20': {
            title: 'Language switching (Japanese/English) is now supported.',
            linkText: '',
@@ -416,10 +424,10 @@ export const translations: Translations = {
            title: 'Added Game (Crossy Road) screen.',
            linkText: 'Game',
          },
-         '2025-03-08-blog': {
-           title: 'Added a new article.',
-           linkText: 'Why async await cannot be used in forEach',
-         },
+        //  '2025-03-08-blog': {
+        //    title: 'Added a new article.',
+        //    linkText: 'Why async await cannot be used in forEach',
+        //  },
          // '2025-03-08-like': {
          //   title: 'Implemented like function for blog.',
          //   linkText: 'Blog',
