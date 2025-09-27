@@ -78,14 +78,14 @@ class TankaCollector:
         """
         tweet_ids = []
         next_token = None
-        max_requests = 1  # 1日1回の実行なので、1リクエストのみに制限
+        max_requests = 1  # 月間制限を考慮して、1リクエストのみに制限（最大50件）
         request_count = 0
         success = False
         
         while request_count < max_requests:
             url = f"https://api.x.com/2/users/{self.x_user_id}/tweets"
             params = {
-                'max_results': 10,  # 1回の実行で最大10件まで取得
+                'max_results': 50,  # 月間制限を考慮して最大50件まで取得
                 'since_id': since_id,
                 'tweet.fields': 'created_at'
             }
@@ -130,9 +130,9 @@ class TankaCollector:
         all_tweets = []
         success = False
         
-        # 10件ずつに分割（レート制限対策をさらに強化）
-        for i in range(0, len(tweet_ids), 10):
-            batch_ids = tweet_ids[i:i+10]
+        # 50件ずつに分割（月間制限を考慮）
+        for i in range(0, len(tweet_ids), 50):
+            batch_ids = tweet_ids[i:i+50]
             url = "https://api.x.com/2/tweets"
             params = {
                 'ids': ','.join(batch_ids),
@@ -146,15 +146,15 @@ class TankaCollector:
                     all_tweets.extend(data['data'])
                     success = True
                 else:
-                    logger.warning(f"バッチ {i//10 + 1}: データが空でした")
+                    logger.warning(f"バッチ {i//50 + 1}: データが空でした")
             else:
-                logger.error(f"バッチ {i//10 + 1}: リクエストに失敗しました")
+                logger.error(f"バッチ {i//50 + 1}: リクエストに失敗しました")
                 return all_tweets, False
                     
             # バッチ間の長いポーズ（レート制限・IP制限対策を強化）
-            if i + 10 < len(tweet_ids):  # 最後のバッチでない場合のみ待機
-                logger.info("レート制限・IP制限対策のため30秒待機中...")
-                time.sleep(30)
+            if i + 50 < len(tweet_ids):  # 最後のバッチでない場合のみ待機
+                logger.info("レート制限・IP制限対策のため60秒待機中...")
+                time.sleep(60)
             
         logger.info(f"取得したツイート数: {len(all_tweets)}, 成功: {success}")
         return all_tweets, success
@@ -273,9 +273,11 @@ class TankaCollector:
             raise
     
     def run(self) -> None:
-        """メイン処理を実行（レート制限対応強化）"""
+        """メイン処理を実行（月間制限対応）"""
         try:
             logger.info("短歌収集処理を開始")
+            logger.info("月間制限: 100件/月（現在200%超過中、10月5日にリセット予定）")
+            logger.info("1回の実行で最大50件まで取得します")
             
             # since_idを取得
             since_id = self.get_since_id()
