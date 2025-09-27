@@ -26,13 +26,13 @@ const HeaderDropdownButton: React.FC<HeaderDropdownButtonProps> = ({
   return (
     <div className="mt-6 flex animate-fade-in-up items-center pr-8 md:mr-10 md:mt-0 md:pr-0">
       <div 
-        className="relative inline-block ml-auto md:ml-0"
+        className="relative inline-block ml-auto md:ml-0 cursor-pointer"
         onMouseEnter={() => window.innerWidth >= 768 && setIsOpen(true)}
         onMouseLeave={() => window.innerWidth >= 768 && setIsOpen(false)}
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center"
+          className="flex items-center cursor-pointer"
         >
           <span className="noto-sans-jp select-none text-lg font-bold text-main-black dark:text-night-white md:text-base">
             {text}
