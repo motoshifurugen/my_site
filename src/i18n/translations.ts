@@ -163,6 +163,7 @@ export const translations: Translations = {
         email: 'メールアドレス',
         message: 'お問い合わせ内容',
         submit: '送信する',
+        required: '必須',
       },
       thankYou: {
         title: 'お問合せありがとうございます',
@@ -375,6 +376,7 @@ export const translations: Translations = {
         email: 'Email Address',
         message: 'Inquiry Content',
         submit: 'Submit',
+        required: 'Required',
       },
       thankYou: {
         title: 'Thank you for your inquiry',

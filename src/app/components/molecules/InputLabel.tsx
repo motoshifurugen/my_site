@@ -1,5 +1,6 @@
 import React from 'react'
 import Chip from '../atoms/Chip'
+import { useI18n } from '../../../i18n/context'
 
 interface InputLabelProps {
   label: string
@@ -12,13 +13,15 @@ const InputLabel: React.FC<InputLabelProps> = ({
   id,
   required = false,
 }) => {
+  const { t } = useI18n()
+  
   return (
     <label htmlFor={id} className="mb-2 block text-sm font-bold md:text-base">
       <p className="text-main-black dark:text-night-white">
         {label}
         {required && (
           <Chip className="bg-red-500 text-white dark:text-night-white">
-            必須
+            {t.contact.form.required}
           </Chip>
         )}
       </p>

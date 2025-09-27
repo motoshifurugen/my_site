@@ -123,6 +123,7 @@ export type TranslationKeys = {
        email: string;
        message: string;
        submit: string;
+       required: string;
      };
      thankYou: {
        title: string;
