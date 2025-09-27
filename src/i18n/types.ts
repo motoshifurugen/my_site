@@ -8,6 +8,8 @@ export type TranslationKeys = {
     blog: string;
     portfolio: string;
     game: string;
+    tanka: string;
+    play: string;
     language: string;
     switchToJapanese: string;
     switchToEnglish: string;
@@ -121,6 +123,7 @@ export type TranslationKeys = {
        email: string;
        message: string;
        submit: string;
+       required: string;
      };
      thankYou: {
        title: string;
@@ -144,11 +147,12 @@ export type TranslationKeys = {
       notification: string;
     };
     items: {
+      '2025-09-27': { title: string; linkText: string };
       '2025-08-20': { title: string; linkText: string };
       '2025-04-22': { title: string; linkText: string };
       '2025-04-21': { title: string; linkText: string };
       '2025-04-01': { title: string; linkText: string };
-      '2025-03-08-blog': { title: string; linkText: string };
+      // '2025-03-08-blog': { title: string; linkText: string };
       [key: string]: { title: string; linkText: string };
     };
   };

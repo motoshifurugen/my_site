@@ -15,10 +15,14 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div className="relative inline-block">
+    <div 
+      className="relative inline-block cursor-pointer"
+      onMouseEnter={() => window.innerWidth >= 768 && setIsOpen(true)}
+      onMouseLeave={() => window.innerWidth >= 768 && setIsOpen(false)}
+    >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-1 rounded-lg bg-gray-200 px-2 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 sm:space-x-2 sm:px-3"
+        className="flex items-center space-x-1 rounded-lg bg-gray-200 px-2 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 sm:space-x-2 sm:px-3 cursor-pointer"
         aria-label={t.common.language}
       >
         <FaGlobe className="h-4 w-4" />
@@ -40,16 +44,16 @@ export default function LanguageSwitcher() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full z-50 mt-1 min-w-[120px] rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-800 dark:ring-white dark:ring-opacity-10">
+        <div className="absolute right-0 top-full z-50 mt-1 min-w-[120px] rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-night-black dark:ring-white dark:ring-opacity-10">
           <div className="py-1">
             {locales.map((lang) => (
               <button
                 key={lang}
                 onClick={() => handleLanguageChange(lang)}
-                className={`block w-full px-4 py-2 text-left text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${
+                className={`block w-full px-4 py-2 text-right md:text-center text-sm transition-colors hover:bg-gray-100 dark:hover:bg-night-gray ${
                   locale === lang
-                    ? 'bg-gray-100 font-medium text-gray-900 dark:bg-gray-700 dark:text-white'
-                    : 'text-gray-700 dark:text-gray-300'
+                    ? 'bg-gray-100 font-medium text-gray-900 dark:bg-night-gray dark:text-night-white'
+                    : 'text-gray-700 dark:text-night-white'
                 }`}
               >
                 {localeNames[lang]}
