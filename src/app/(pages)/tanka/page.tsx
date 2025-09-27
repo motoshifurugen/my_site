@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TankaCard from '../../components/molecules/TankaCard';
 import TankaSkeleton from '../../components/atoms/TankaSkeleton';
@@ -8,6 +8,56 @@ import LoadingCircle from '../../components/atoms/LoadingCircle';
 import AnimatedLine from '../../components/atoms/AnimatedLine';
 import PageFace from '../../components/organisms/PageFace';
 import { useI18n } from '../../../i18n/context';
+
+// キャッシュ用の型定義
+interface CacheEntry {
+  data: any;
+  timestamp: number;
+  expiresAt: number;
+}
+
+interface CacheStore {
+  [key: string]: CacheEntry;
+}
+
+// グローバルキャッシュストア
+const cacheStore: CacheStore = {};
+
+// キャッシュの有効期限（5分）
+const CACHE_DURATION = 5 * 60 * 1000;
+
+// キャッシュユーティリティ関数
+const getCacheKey = (page: number, limit: number) => `tanka-${page}-${limit}`;
+
+const getFromCache = (key: string): any | null => {
+  const entry = cacheStore[key];
+  if (!entry) return null;
+  
+  const now = Date.now();
+  if (now > entry.expiresAt) {
+    delete cacheStore[key];
+    return null;
+  }
+  
+  return entry.data;
+};
+
+const setCache = (key: string, data: any): void => {
+  const now = Date.now();
+  cacheStore[key] = {
+    data,
+    timestamp: now,
+    expiresAt: now + CACHE_DURATION
+  };
+};
+
+const clearCache = (): void => {
+  Object.keys(cacheStore).forEach(key => {
+    if (key.startsWith('tanka-')) {
+      delete cacheStore[key];
+    }
+  });
+};
 
 interface TankaData {
   id: string;
@@ -24,6 +74,10 @@ interface InfiniteScrollState {
   isLoading: boolean;
   isLoadingMore: boolean;
 }
+
+// メモ化されたコンポーネント
+const MemoizedTankaCard = memo(TankaCard);
+const MemoizedTankaSkeleton = memo(TankaSkeleton);
 
 const TankaPage: React.FC = () => {
   const { t } = useI18n();
@@ -49,12 +103,44 @@ const TankaPage: React.FC = () => {
       }
       setError(null);
       
-      const response = await fetch(`/my_site/api/tanka?page=${page}&limit=12`);
+      // キャッシュキーを生成
+      const cacheKey = getCacheKey(page, 12);
+      
+      // キャッシュからデータを取得
+      const cachedData = getFromCache(cacheKey);
+      if (cachedData) {
+        // キャッシュからデータを取得した場合
+        if (isLoadMore) {
+          setTankaList(prev => [...prev, ...cachedData.tanka]);
+        } else {
+          setTankaList(cachedData.tanka);
+        }
+        
+        setScrollState(prev => ({
+          ...prev,
+          currentPage: page,
+          totalItems: cachedData.pagination.totalItems,
+          hasNext: cachedData.pagination.hasNext,
+          isLoading: false,
+          isLoadingMore: false
+        }));
+        return;
+      }
+      
+      // キャッシュにない場合はAPIから取得
+      const response = await fetch(`/my_site/api/tanka?page=${page}&limit=12`, {
+        headers: {
+          'Cache-Control': 'max-age=300', // ブラウザキャッシュも5分
+        }
+      });
       if (!response.ok) {
         throw new Error('短歌データの取得に失敗しました');
       }
       
       const data = await response.json();
+      
+      // データをキャッシュに保存
+      setCache(cacheKey, data);
       
       if (isLoadMore) {
         // 既存のデータに追加
@@ -80,7 +166,7 @@ const TankaPage: React.FC = () => {
         isLoadingMore: false
       }));
     }
-  }, []);
+  }, []); // 依存関係を空にして、関数の再作成を防ぐ
 
   // scrollStateRefを更新
   useEffect(() => {
@@ -91,6 +177,27 @@ const TankaPage: React.FC = () => {
   useEffect(() => {
     fetchTankaData(1);
   }, [fetchTankaData]);
+
+  // ページの可視性が変わった時のキャッシュ管理
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        // ページが再び表示された時、古いキャッシュをクリア
+        const now = Date.now();
+        Object.keys(cacheStore).forEach(key => {
+          const entry = cacheStore[key];
+          if (entry && now > entry.expiresAt) {
+            delete cacheStore[key];
+          }
+        });
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
 
   // Intersection Observer設定
   const setupObserver = useCallback(() => {
@@ -123,7 +230,7 @@ const TankaPage: React.FC = () => {
 
     observerRef.current = observer;
     observer.observe(loadMoreRef.current);
-  }, [scrollState.hasNext, scrollState.isLoadingMore, scrollState.currentPage, fetchTankaData]);
+  }, [scrollState.hasNext, scrollState.isLoadingMore, fetchTankaData]); // scrollState.currentPageを削除
 
   // Observer設定の実行
   useEffect(() => {
@@ -154,7 +261,7 @@ const TankaPage: React.FC = () => {
           {/* スケルトンローディング */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-8 lg:gap-12 mb-12 max-w-5xl mx-auto px-6 md:px-0">
             {Array.from({ length: 12 }, (_, index) => (
-              <TankaSkeleton key={index} />
+              <MemoizedTankaSkeleton key={index} />
             ))}
           </div>
         </section>
@@ -176,7 +283,10 @@ const TankaPage: React.FC = () => {
             className="px-6 py-3 bg-main-black text-white rounded-lg font-medium hover:shadow-lg transition-shadow"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => fetchTankaData(scrollState.currentPage)}
+            onClick={() => {
+              clearCache(); // キャッシュをクリアしてから再試行
+              fetchTankaData(scrollState.currentPage);
+            }}
           >
             再試行
           </motion.button>
@@ -213,7 +323,7 @@ const TankaPage: React.FC = () => {
                   className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-8 lg:gap-12 mb-12 max-w-5xl mx-auto px-6 md:px-0"
                 >
                 {tankaList.map((tanka, index) => (
-                  <TankaCard
+                  <MemoizedTankaCard
                     key={`${tanka.id}-${index}`}
                     tanka={tanka.tanka}
                     createdAt={tanka.createdAt}
@@ -237,7 +347,7 @@ const TankaPage: React.FC = () => {
                 {scrollState.isLoadingMore ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-8 lg:gap-12 max-w-5xl mx-auto px-6 md:px-0">
                     {Array.from({ length: 6 }, (_, index) => (
-                      <TankaSkeleton key={`loading-${index}`} />
+                      <MemoizedTankaSkeleton key={`loading-${index}`} />
                     ))}
                   </div>
                 ) : (
