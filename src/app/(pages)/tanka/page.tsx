@@ -132,11 +132,9 @@ const TankaPage: React.FC = () => {
         ) : (
           <>
                 {/* 短歌カードグリッド */}
-                <motion.div 
+                <div 
                   className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-8 lg:gap-12 mb-12 max-w-5xl mx-auto px-6 md:px-0"
-                  layout
                 >
-              <AnimatePresence mode="popLayout">
                 {tankaList.map((tanka, index) => (
                   <TankaCard
                     key={`${tanka.id}-${currentPage}`}
@@ -145,8 +143,7 @@ const TankaPage: React.FC = () => {
                     index={index}
                   />
                 ))}
-              </AnimatePresence>
-            </motion.div>
+            </div>
 
             {/* ページネーション */}
             {pagination && pagination.totalPages > 1 && (

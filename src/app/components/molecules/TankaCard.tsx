@@ -38,29 +38,12 @@ const TankaCard: React.FC<TankaCardProps> = ({
   };
 
   return (
-    <motion.div
+    <div
       className="bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-800 dark:via-gray-850 dark:to-gray-900 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-3 sm:p-4 lg:p-6 relative overflow-hidden flex flex-col justify-between min-h-[200px] sm:min-h-[220px] lg:min-h-[280px] cursor-pointer"
       style={{
         background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 30%, #f1f5f9 70%, #e2e8f0 100%)',
         boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6)'
       }}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ 
-        duration: 0.5, 
-        delay: index * 0.1,
-        ease: "easeOut",
-        // ホバーアウト時の高速化設定
-        y: { duration: 0.15, ease: "easeOut" },
-        scale: { duration: 0.15, ease: "easeOut" }
-      }}
-      whileHover={{ 
-        y: -8, 
-        scale: 1.02, 
-        transition: { duration: 0.2 },
-        boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.15), 0 15px 15px -5px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
-      }}
-      whileTap={{ scale: 0.98 }}
       onClick={handleClick}
     >
       {/* 上部コンテナ */}
@@ -72,18 +55,9 @@ const TankaCard: React.FC<TankaCardProps> = ({
         <div className="flex-1 flex justify-center items-center py-6 sm:py-8">
           <div className="flex flex-row-reverse space-x-reverse space-x-2 sm:space-x-3 lg:space-x-4 select-none">
             {tankaLines.map((line, lineIndex) => (
-              <motion.div
+              <div
                 key={lineIndex}
                 className="text-xs sm:text-sm lg:text-base text-main-black dark:text-night-white leading-relaxed sm:leading-tight font-medium tracking-wider select-none"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ 
-                  opacity: 1, 
-                  x: 0
-                }}
-                transition={{ 
-                  delay: index * 0.1 + lineIndex * 0.1,
-                  duration: 0.4
-                }}
                 style={{ 
                   writingMode: 'vertical-rl',
                   textOrientation: 'upright',
@@ -122,7 +96,7 @@ const TankaCard: React.FC<TankaCardProps> = ({
                     {char}
                   </motion.span>
                 ))}
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -141,7 +115,7 @@ const TankaCard: React.FC<TankaCardProps> = ({
 
       {/* 微細な光沢エフェクト */}
       <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none rounded-xl"></div>
-    </motion.div>
+    </div>
   );
 };
 
