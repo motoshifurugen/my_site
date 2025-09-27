@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 interface TankaCardProps {
@@ -16,6 +16,25 @@ const TankaCard: React.FC<TankaCardProps> = ({
 }) => {
   // 波打ち演出の状態管理
   const [isWaving, setIsWaving] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  
+  // ダークモードの検出
+  useEffect(() => {
+    const checkDarkMode = () => {
+      setIsDarkMode(document.documentElement.classList.contains('dark'));
+    };
+    
+    checkDarkMode();
+    
+    // MutationObserverでダークモードの変更を監視
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+    
+    return () => observer.disconnect();
+  }, []);
   
   // 短歌を行に分割
   const tankaLines = tanka.split('\n').filter(line => line.trim());
@@ -40,6 +59,10 @@ const TankaCard: React.FC<TankaCardProps> = ({
   return (
     <div
       className="bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-700 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-3 sm:p-4 lg:p-6 relative overflow-hidden flex flex-col justify-between min-h-[200px] sm:min-h-[220px] lg:min-h-[280px] cursor-pointer"
+      style={!isDarkMode ? {
+        background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 30%, #f1f5f9 70%, #e2e8f0 100%)',
+        boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6)'
+      } : {}}
       onClick={handleClick}
     >
       {/* 上部コンテナ */}
