@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TankaCard from '../../components/molecules/TankaCard';
+import TankaSkeleton from '../../components/atoms/TankaSkeleton';
 import LoadingCircle from '../../components/atoms/LoadingCircle';
 import AnimatedLine from '../../components/atoms/AnimatedLine';
 import PageFace from '../../components/organisms/PageFace';
@@ -16,25 +17,36 @@ interface TankaData {
   extractedAt: string;
 }
 
-interface PaginationData {
+interface InfiniteScrollState {
   currentPage: number;
   totalItems: number;
-  totalPages: number;
   hasNext: boolean;
-  hasPrev: boolean;
+  isLoading: boolean;
+  isLoadingMore: boolean;
 }
 
 const TankaPage: React.FC = () => {
   const { t } = useI18n();
   const [tankaList, setTankaList] = useState<TankaData[]>([]);
-  const [pagination, setPagination] = useState<PaginationData | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(true);
+  const [scrollState, setScrollState] = useState<InfiniteScrollState>({
+    currentPage: 1,
+    totalItems: 0,
+    hasNext: true,
+    isLoading: true,
+    isLoadingMore: false
+  });
   const [error, setError] = useState<string | null>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const scrollStateRef = useRef(scrollState);
 
-  const fetchTankaData = async (page: number = 1) => {
+  const fetchTankaData = useCallback(async (page: number = 1, isLoadMore: boolean = false) => {
     try {
-      setLoading(true);
+      if (isLoadMore) {
+        setScrollState(prev => ({ ...prev, isLoadingMore: true }));
+      } else {
+        setScrollState(prev => ({ ...prev, isLoading: true }));
+      }
       setError(null);
       
       const response = await fetch(`/my_site/api/tanka?page=${page}&limit=12`);
@@ -43,43 +55,110 @@ const TankaPage: React.FC = () => {
       }
       
       const data = await response.json();
-      setTankaList(data.tanka);
-      setPagination(data.pagination);
-      setCurrentPage(page);
+      
+      if (isLoadMore) {
+        // 既存のデータに追加
+        setTankaList(prev => [...prev, ...data.tanka]);
+      } else {
+        // 初期データとして設定
+        setTankaList(data.tanka);
+      }
+      
+      setScrollState(prev => ({
+        ...prev,
+        currentPage: page,
+        totalItems: data.pagination.totalItems,
+        hasNext: data.pagination.hasNext,
+        isLoading: false,
+        isLoadingMore: false
+      }));
     } catch (err) {
       setError(err instanceof Error ? err.message : '予期しないエラーが発生しました');
-    } finally {
-      setLoading(false);
+      setScrollState(prev => ({
+        ...prev,
+        isLoading: false,
+        isLoadingMore: false
+      }));
     }
-  };
-
-  useEffect(() => {
-    fetchTankaData(1);
   }, []);
 
-  const handlePageChange = (page: number) => {
-    if (page >= 1 && pagination && page <= pagination.totalPages) {
-      fetchTankaData(page);
-      // スムーズスクロール
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
+  // scrollStateRefを更新
+  useEffect(() => {
+    scrollStateRef.current = scrollState;
+  }, [scrollState]);
 
-  if (loading && currentPage === 1) {
+  // 初期データ読み込み
+  useEffect(() => {
+    fetchTankaData(1);
+  }, [fetchTankaData]);
+
+  // Intersection Observer設定
+  const setupObserver = useCallback(() => {
+    if (!scrollState.hasNext || scrollState.isLoadingMore) {
+      return;
+    }
+
+    if (!loadMoreRef.current) {
+      return;
+    }
+
+    // 既存のObserverをクリーンアップ
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const currentState = scrollStateRef.current;
+        
+        if (entries[0].isIntersecting && currentState.hasNext && !currentState.isLoadingMore) {
+          fetchTankaData(currentState.currentPage + 1, true);
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '100px'
+      }
+    );
+
+    observerRef.current = observer;
+    observer.observe(loadMoreRef.current);
+  }, [scrollState.hasNext, scrollState.isLoadingMore, scrollState.currentPage, fetchTankaData]);
+
+  // Observer設定の実行
+  useEffect(() => {
+    setupObserver();
+  }, [setupObserver]);
+
+  // クリーンアップ
+  useEffect(() => {
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, []);
+
+  if (scrollState.isLoading && scrollState.currentPage === 1) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <LoadingCircle isLoading={true} />
-          <motion.p 
-            className="mt-4 text-gray-600"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            短歌を読み込み中...
-          </motion.p>
-        </div>
-      </div>
+      <>
+        <section className="content-wrapper container mx-auto">
+          <PageFace
+            title={t.common.tanka}
+          />
+        </section>
+
+        <AnimatedLine />
+
+        <section className="content-wrapper container mx-auto">
+          {/* スケルトンローディング */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-8 lg:gap-12 mb-12 max-w-5xl mx-auto px-6 md:px-0">
+            {Array.from({ length: 12 }, (_, index) => (
+              <TankaSkeleton key={index} />
+            ))}
+          </div>
+        </section>
+      </>
     );
   }
 
@@ -91,14 +170,13 @@ const TankaPage: React.FC = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
         >
-          <div className="text-red-500 text-6xl mb-4">😔</div>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">エラーが発生しました</h2>
           <p className="text-gray-600 mb-6">{error}</p>
           <motion.button
             className="px-6 py-3 bg-main-black text-white rounded-lg font-medium hover:shadow-lg transition-shadow"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => fetchTankaData(currentPage)}
+            onClick={() => fetchTankaData(scrollState.currentPage)}
           >
             再試行
           </motion.button>
@@ -125,7 +203,6 @@ const TankaPage: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <div className="text-6xl mb-4">🌸</div>
             <h2 className="text-2xl font-bold text-gray-700 mb-2">短歌がまだありません</h2>
             <p className="text-gray-500">短歌収集システムが動作すると、ここに短歌が表示されます。</p>
           </motion.div>
@@ -137,7 +214,7 @@ const TankaPage: React.FC = () => {
                 >
                 {tankaList.map((tanka, index) => (
                   <TankaCard
-                    key={`${tanka.id}-${currentPage}`}
+                    key={`${tanka.id}-${index}`}
                     tanka={tanka.tanka}
                     createdAt={tanka.createdAt}
                     index={index}
@@ -145,98 +222,46 @@ const TankaPage: React.FC = () => {
                 ))}
             </div>
 
-            {/* ページネーション */}
-            {pagination && pagination.totalPages > 1 && (
+            {/* 無限スクロール用のローディング要素 */}
+            {scrollState.hasNext && (
+              <div 
+                ref={(el) => {
+                  loadMoreRef.current = el;
+                  // refが設定された後にObserverを設定
+                  if (el) {
+                    setTimeout(() => setupObserver(), 0);
+                  }
+                }} 
+                className="py-8"
+              >
+                {scrollState.isLoadingMore ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-8 lg:gap-12 max-w-5xl mx-auto px-6 md:px-0">
+                    {Array.from({ length: 6 }, (_, index) => (
+                      <TankaSkeleton key={`loading-${index}`} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center text-gray-400">
+                    <p>スクロールして続きを読み込む</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* 全データ読み込み完了 */}
+            {!scrollState.hasNext && tankaList.length > 0 && (
               <motion.div 
-                className="flex justify-center items-center space-x-2"
+                className="text-center py-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
               >
-                {/* 前のページ */}
-                <motion.button
-                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                    pagination.hasPrev
-                      ? 'bg-white text-main-black hover:bg-gray-50 shadow-md hover:shadow-lg'
-                      : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  }`}
-                  whileHover={pagination.hasPrev ? { scale: 1.05 } : {}}
-                  whileTap={pagination.hasPrev ? { scale: 0.95 } : {}}
-                  onClick={() => pagination.hasPrev && handlePageChange(currentPage - 1)}
-                  disabled={!pagination.hasPrev || loading}
-                >
-                  ← 前へ
-                </motion.button>
-
-                {/* ページ番号 */}
-                <div className="flex space-x-1">
-                  {Array.from({ length: Math.min(5, pagination.totalPages) }, (_, i) => {
-                    let pageNum;
-                    if (pagination.totalPages <= 5) {
-                      pageNum = i + 1;
-                    } else if (currentPage <= 3) {
-                      pageNum = i + 1;
-                    } else if (currentPage >= pagination.totalPages - 2) {
-                      pageNum = pagination.totalPages - 4 + i;
-                    } else {
-                      pageNum = currentPage - 2 + i;
-                    }
-
-                    return (
-                      <motion.button
-                        key={pageNum}
-                        className={`w-10 h-10 rounded-lg font-medium transition-all ${
-                          currentPage === pageNum
-                            ? 'bg-main-black text-white shadow-lg'
-                            : 'bg-white text-gray-600 hover:bg-gray-50 shadow-md hover:shadow-lg'
-                        }`}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() => handlePageChange(pageNum)}
-                        disabled={loading}
-                      >
-                        {pageNum}
-                      </motion.button>
-                    );
-                  })}
-                </div>
-
-                {/* 次のページ */}
-                <motion.button
-                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                    pagination.hasNext
-                      ? 'bg-white text-main-black hover:bg-gray-50 shadow-md hover:shadow-lg'
-                      : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  }`}
-                  whileHover={pagination.hasNext ? { scale: 1.05 } : {}}
-                  whileTap={pagination.hasNext ? { scale: 0.95 } : {}}
-                  onClick={() => pagination.hasNext && handlePageChange(currentPage + 1)}
-                  disabled={!pagination.hasNext || loading}
-                >
-                  次へ →
-                </motion.button>
+                <p className="text-gray-500">すべての短歌を表示しました</p>
               </motion.div>
             )}
           </>
         )}
       </section>
 
-      {/* ローディングオーバーレイ */}
-      <AnimatePresence>
-        {loading && currentPage > 1 && (
-          <motion.div
-            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <div className="bg-white rounded-2xl p-8 text-center">
-              <LoadingCircle isLoading={true} />
-              <p className="mt-4 text-gray-600">読み込み中...</p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 };
