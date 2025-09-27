@@ -39,17 +39,13 @@ const TankaCard: React.FC<TankaCardProps> = ({
 
   return (
     <div
-      className="bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-800 dark:via-gray-850 dark:to-gray-900 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-3 sm:p-4 lg:p-6 relative overflow-hidden flex flex-col justify-between min-h-[200px] sm:min-h-[220px] lg:min-h-[280px] cursor-pointer"
-      style={{
-        background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 30%, #f1f5f9 70%, #e2e8f0 100%)',
-        boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6)'
-      }}
+      className="bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-700 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-3 sm:p-4 lg:p-6 relative overflow-hidden flex flex-col justify-between min-h-[200px] sm:min-h-[220px] lg:min-h-[280px] cursor-pointer"
       onClick={handleClick}
     >
       {/* 上部コンテナ */}
       <div className="flex-1 flex flex-col">
         {/* 上部の装飾線 */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-gradient-to-r from-transparent via-gray-300 dark:via-slate-400 to-transparent"></div>
 
         {/* 短歌テキスト（縦書き・中央揃え） */}
         <div className="flex-1 flex justify-center items-center py-6 sm:py-8">
@@ -105,16 +101,16 @@ const TankaCard: React.FC<TankaCardProps> = ({
       {/* 下部固定エリア */}
       <div className="mt-auto">
         {/* 下部の装飾線 */}
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent mb-3"></div>
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-slate-400 to-transparent mb-3"></div>
         
         {/* 日付とサイト名 */}
-        <div className="text-center text-xs sm:text-xs lg:text-xs text-gray-400 dark:text-gray-600 font-light opacity-60" style={{ fontSize: '10px' }}>
+        <div className="text-center text-xs sm:text-xs lg:text-xs text-gray-400 dark:text-slate-300 font-light opacity-60" style={{ fontSize: '10px' }}>
           {formatDate(createdAt)} / ココアハーツ
         </div>
       </div>
 
       {/* 微細な光沢エフェクト */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none rounded-xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-white/20 dark:from-slate-200/10 to-transparent pointer-events-none rounded-xl"></div>
     </div>
   );
 };
