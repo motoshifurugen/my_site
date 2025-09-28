@@ -14,7 +14,7 @@ MDX対応ブログで日々を記録しながら、ジェネラティブアー�
 
 [🚀 サイトはこちら](https://furugen-island.com/my_site)
 
-<a href="https://furugen-island.com/my_site"><img src="https://raw.githubusercontent.com/motoshifurugen/my_site/main/img/light_home.gif" alt="Light Mode Home" width="400"/><img src="https://raw.githubusercontent.com/motoshifurugen/my_site/main/img/dark_home.gif" alt="Dark Mode Home" width="400"/></a>
+<a href="https://furugen-island.com/my_site">![Light Mode Home](./img/light_home.gif)![Dark Mode Home](./img/dark_home.gif)</a>
 
 ## 🛠️ 主な使用技術
 - **Next.js**
