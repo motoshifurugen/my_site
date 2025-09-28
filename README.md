@@ -14,11 +14,9 @@ MDX対応ブログで日々を記録しながら、ジェネラティブアー�
 
 [🚀 サイトはこちら](https://furugen-island.com/my_site)
 
-<a href="https://furugen-island.com/my_site">![Light Mode Home](https://raw.githubusercontent.com/motoshifurugen/my_site/main/img/light_home.gif)![Dark Mode Home](https://raw.githubusercontent.com/motoshifurugen/my_site/main/img/dark_home.gif)</a>
-
-[![Image from Gyazo](https://i.gyazo.com/e2c179796cda9378c02dcf1b8c9e2619.gif)](https://gyazo.com/e2c179796cda9378c02dcf1b8c9e2619)
-
-[![Image from Gyazo](https://i.gyazo.com/a6b92492c40d4f53a3f93e8158bdd4bf.gif)](https://gyazo.com/a6b92492c40d4f53a3f93e8158bdd4bf)
+| Light Mode | Dark Mode |
+|------------|-----------|
+| ![Light Mode Home](https://i.gyazo.com/e2c179796cda9378c02dcf1b8c9e2619.gif) | ![Dark Mode Home](https://i.gyazo.com/a6b92492c40d4f53a3f93e8158bdd4bf.gif) |
 
 ## 🛠️ 主な使用技術
 - **Next.js**
