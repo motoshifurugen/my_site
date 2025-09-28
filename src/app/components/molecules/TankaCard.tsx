@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 interface TankaCardProps {
@@ -18,8 +18,8 @@ const TankaCard: React.FC<TankaCardProps> = ({
   const [isWaving, setIsWaving] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   
-  // ダークモードの検出
-  useEffect(() => {
+  // ダークモードの検出（メモ化）
+  const darkModeObserver = useMemo(() => {
     const checkDarkMode = () => {
       setIsDarkMode(document.documentElement.classList.contains('dark'));
     };
@@ -33,28 +33,38 @@ const TankaCard: React.FC<TankaCardProps> = ({
       attributeFilter: ['class']
     });
     
-    return () => observer.disconnect();
+    return observer;
   }, []);
   
-  // 短歌を行に分割
-  const tankaLines = tanka.split('\n').filter(line => line.trim());
+  useEffect(() => {
+    return () => darkModeObserver.disconnect();
+  }, [darkModeObserver]);
   
-  // クリック時の降下演出
-  const handleClick = () => {
-    setIsWaving(true);
-    // 演出終了後に状態をリセット
-    setTimeout(() => setIsWaving(false), 3000);
-  };
+  // 短歌を行に分割（メモ化）
+  const tankaLines = useMemo(() => 
+    tanka.split('\n').filter(line => line.trim()), 
+    [tanka]
+  );
   
-  // 日付をフォーマット
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
+  // クリック時の降下演出（デバウンス）
+  const handleClick = useMemo(() => {
+    let timeoutId: NodeJS.Timeout;
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      setIsWaving(true);
+      timeoutId = setTimeout(() => setIsWaving(false), 2500); // 文字アニメーション完了まで待機
+    };
+  }, []);
+  
+  // 日付をフォーマット（メモ化）
+  const formattedDate = useMemo(() => {
+    const date = new Date(createdAt);
     return date.toLocaleDateString('ja-JP', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     });
-  };
+  }, [createdAt]);
 
   return (
     <div
@@ -86,30 +96,35 @@ const TankaCard: React.FC<TankaCardProps> = ({
               >
                 {line.split('').map((char, charIndex) => (
                   <motion.span
-                    key={`${char}-${charIndex}-${isWaving ? 'falling' : 'static'}`}
+                    key={`${char}-${charIndex}-${isWaving ? 'animate' : 'static'}`}
                     initial={isWaving ? { 
-                      y: -10, 
+                      y: -8, 
                       opacity: 0, 
-                      rotateZ: Math.random() * 20 - 10,
-                      scale: 0.8
-                    } : false}
-                    animate={isWaving ? {
+                      rotateZ: Math.random() * 10 - 5,
+                      scale: 0.9
+                    } : { 
+                      y: 0, 
+                      opacity: 1, 
+                      rotateZ: 0,
+                      scale: 1
+                    }}
+                    animate={{
                       y: 0,
                       opacity: 1,
                       rotateZ: 0,
                       scale: 1
-                    } : {}}
+                    }}
                     transition={isWaving ? {
-                      duration: 0.8,
-                      delay: (lineIndex * 0.2) + (charIndex * 0.08),
-                      ease: [0.25, 0.46, 0.45, 0.94], // カスタムイージング（落下感）
-                      type: "spring",
-                      stiffness: 100,
-                      damping: 15
-                    } : {}}
+                      duration: 0.5,
+                      delay: (lineIndex * 0.15) + (charIndex * 0.05),
+                      ease: "easeOut"
+                    } : {
+                      duration: 0
+                    }}
                     style={{ 
                       display: 'inline-block',
-                      transformOrigin: 'center center'
+                      transformOrigin: 'center center',
+                      willChange: isWaving ? 'transform, opacity' : 'auto'
                     }}
                   >
                     {char}
@@ -128,7 +143,7 @@ const TankaCard: React.FC<TankaCardProps> = ({
         
         {/* 日付とサイト名 */}
         <div className="text-center text-xs sm:text-xs lg:text-xs text-gray-400 dark:text-slate-300 font-light opacity-60" style={{ fontSize: '10px' }}>
-          {formatDate(createdAt)} / ココアハーツ
+          {formattedDate} / ココアハーツ
         </div>
       </div>
 
