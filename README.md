@@ -14,7 +14,7 @@ MDX対応ブログで日々を記録しながら、ジェネラティブアー�
 
 [🚀 サイトはこちら](https://furugen-island.com/my_site)
 
-<a href="https://furugen-island.com/my_site"><img src="https://raw.githubusercontent.com/motoshifurugen/my_site/main/img/light_mode_home_compressed2.gif" alt="Light Mode Home" width="400"/><img src="https://raw.githubusercontent.com/motoshifurugen/my_site/main/img/dark_mode_home_compressed2.gif" alt="Dark Mode Home" width="400"/></a>
+<a href="https://furugen-island.com/my_site"><img src="https://raw.githubusercontent.com/motoshifurugen/my_site/main/img/light_home.gif" alt="Light Mode Home" width="400"/><img src="https://raw.githubusercontent.com/motoshifurugen/my_site/main/img/dark_home.gif" alt="Dark Mode Home" width="400"/></a>
 
 ## 🛠️ 主な使用技術
 - **Next.js**
@@ -28,11 +28,11 @@ MDX対応ブログで日々を記録しながら、ジェネラティブアー�
 ## ローカル起動手順
 
 ```bash
-git clone https://github.com/your-username/furugen-island.git
+git clone https://github.com/motoshifurugen/my_site.git
 ```
 
 ```bash
-cd furugen-island
+cd my_site
 ```
 
 ```bash
