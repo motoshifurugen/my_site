@@ -14,7 +14,7 @@ MDX対応ブログで日々を記録しながら、ジェネラティブアー�
 
 [🚀 サイトはこちら](https://furugen-island.com/my_site)
 
-<a href="https://furugen-island.com/my_site"><img src="https://i.gyazo.com/bdb601b0458020da488c43e11b905ba6.png" alt="Image from Gyazo" width="1649"/></a>
+<a href="https://furugen-island.com/my_site"><img src="https://i.gyazo.com/e2c179796cda9378c02dcf1b8c9e2619.gif" alt="Light Mode Home" width="400"/><img src="https://i.gyazo.com/a6b92492c40d4f53a3f93e8158bdd4bf.gif" alt="Dark Mode Home" width="400"/></a>
 
 ## 🛠️ 主な使用技術
 - **Next.js**
