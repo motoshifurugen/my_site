@@ -199,7 +199,7 @@ const TankaPage: React.FC = () => {
     };
   }, []);
 
-  // Intersection Observer設定
+  // Intersection Observer設定（最適化）
   const setupObserver = useCallback(() => {
     if (!scrollState.hasNext || scrollState.isLoadingMore) {
       return;
@@ -224,13 +224,13 @@ const TankaPage: React.FC = () => {
       },
       {
         threshold: 0.1,
-        rootMargin: '100px'
+        rootMargin: '200px' // より早めに読み込み開始
       }
     );
 
     observerRef.current = observer;
     observer.observe(loadMoreRef.current);
-  }, [scrollState.hasNext, scrollState.isLoadingMore, fetchTankaData]); // scrollState.currentPageを削除
+  }, [scrollState.hasNext, scrollState.isLoadingMore, fetchTankaData]);
 
   // Observer設定の実行
   useEffect(() => {
@@ -324,7 +324,7 @@ const TankaPage: React.FC = () => {
                 >
                 {tankaList.map((tanka, index) => (
                   <MemoizedTankaCard
-                    key={`${tanka.id}-${index}`}
+                    key={tanka.id} // indexを削除してidのみ使用
                     tanka={tanka.tanka}
                     createdAt={tanka.createdAt}
                     index={index}
@@ -339,14 +339,15 @@ const TankaPage: React.FC = () => {
                   loadMoreRef.current = el;
                   // refが設定された後にObserverを設定
                   if (el) {
-                    setTimeout(() => setupObserver(), 0);
+                    // requestAnimationFrameを使用してより効率的に
+                    requestAnimationFrame(() => setupObserver());
                   }
                 }} 
                 className="py-8"
               >
                 {scrollState.isLoadingMore ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-8 lg:gap-12 max-w-5xl mx-auto px-6 md:px-0">
-                    {Array.from({ length: 6 }, (_, index) => (
+                    {Array.from({ length: 3 }, (_, index) => ( // スケルトン数を削減
                       <MemoizedTankaSkeleton key={`loading-${index}`} />
                     ))}
                   </div>
