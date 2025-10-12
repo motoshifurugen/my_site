@@ -22,10 +22,24 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '12')
     const offset = (page - 1) * limit
 
-    // 短歌データを取得（作成日時の降順）
+    // 短歌データを取得（作成日時の降順、タグ情報も含む）
     const { data: tankaData, error, count } = await supabase
       .from('tanka')
-      .select('*', { count: 'exact' })
+      .select(`
+        *,
+        tanka_tags (
+          score,
+          assigned_by,
+          assigned_at,
+          tags (
+            id,
+            name,
+            slug,
+            category,
+            description
+          )
+        )
+      `, { count: 'exact' })
       .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1)
 
@@ -42,7 +56,17 @@ export async function GET(request: NextRequest) {
       tanka: tanka.tanka,
       originalText: tanka.original_text,
       createdAt: tanka.created_at,
-      extractedAt: tanka.extracted_at
+      extractedAt: tanka.extracted_at,
+      tags: tanka.tanka_tags?.map((tagRelation: any) => ({
+        id: tagRelation.tags.id,
+        name: tagRelation.tags.name,
+        slug: tagRelation.tags.slug,
+        category: tagRelation.tags.category,
+        description: tagRelation.tags.description,
+        score: tagRelation.score,
+        assignedBy: tagRelation.assigned_by,
+        assignedAt: tagRelation.assigned_at
+      })) || []
     })) || []
 
     return NextResponse.json({
