@@ -3,16 +3,29 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
+interface Tag {
+  id: number;
+  name: string;
+  slug: string;
+  category: string;
+  description?: string;
+  score: number;
+  assignedBy: string;
+  assignedAt: string;
+}
+
 interface TankaCardProps {
   tanka: string;
   createdAt: string;
   index: number;
+  tags?: Tag[];
 }
 
 const TankaCard: React.FC<TankaCardProps> = ({ 
   tanka, 
   createdAt, 
-  index 
+  index,
+  tags = []
 }) => {
   // 波打ち演出の状態管理
   const [isWaving, setIsWaving] = useState(false);
@@ -66,6 +79,34 @@ const TankaCard: React.FC<TankaCardProps> = ({
     });
   }, [createdAt]);
 
+  // タグをカテゴリ別にグループ化（メモ化）
+  const groupedTags = useMemo(() => {
+    const groups: { [key: string]: Tag[] } = {};
+    tags.forEach(tag => {
+      if (!groups[tag.category]) {
+        groups[tag.category] = [];
+      }
+      groups[tag.category].push(tag);
+    });
+    return groups;
+  }, [tags]);
+
+  // カテゴリの表示名を取得
+  const getCategoryDisplayName = (category: string) => {
+    const categoryNames: { [key: string]: string } = {
+      'kigo': '季語',
+      'emotion': '感情',
+      'theme': 'テーマ',
+      'place': '場所'
+    };
+    return categoryNames[category] || category;
+  };
+
+  // 統一されたタグの色を取得
+  const getTagColor = () => {
+    return 'bg-gray-400/95 text-gray-400 dark:bg-gray-600/90 dark:text-slate-300';
+  };
+
   return (
     <div
       className="bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-700 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-3 sm:p-4 lg:p-6 relative overflow-hidden flex flex-col justify-between min-h-[200px] sm:min-h-[220px] lg:min-h-[280px] cursor-pointer"
@@ -75,6 +116,27 @@ const TankaCard: React.FC<TankaCardProps> = ({
       } : {}}
       onClick={handleClick}
     >
+      {/* タグ表示エリア（右上） */}
+      {tags.length > 0 && (
+        <div className="absolute top-3 right-3 z-10">
+          <div className="flex flex-wrap gap-1 justify-end">
+            {Object.entries(groupedTags).map(([category, categoryTags]) => (
+              <div key={category} className="flex flex-wrap gap-1">
+                {categoryTags.map(tag => (
+                  <span
+                    key={tag.id}
+                    className={`px-2 py-1 text-xs rounded-md font-medium ${getTagColor()} transition-all duration-200 hover:scale-105 shadow-sm opacity-60`}
+                    title={`${getCategoryDisplayName(category)}: ${tag.description || tag.name}`}
+                  >
+                    #{tag.name}
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* 上部コンテナ */}
       <div className="flex-1 flex flex-col">
         {/* 上部の装飾線 */}
