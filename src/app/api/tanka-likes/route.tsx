@@ -1,6 +1,14 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 
+// tweet_idを正規化する関数（文字列として扱う）
+function normalizeTweetId(raw: any): string | null {
+  if (raw === undefined || raw === null) return null
+  const s = String(raw).trim()
+  if (!/^\d+$/.test(s)) return null
+  return s
+}
+
 // クライアントIPアドレスを取得する関数
 function getClientIP(request: NextRequest): string {
   // Vercelの場合
@@ -35,10 +43,11 @@ export async function GET(request: NextRequest) {
     )
 
     const url = new URL(request.url)
-    const tweetId = url.searchParams.get('tweetId')
+    const rawTweetId = url.searchParams.get('tweetId')
+    const tweetIdStr = normalizeTweetId(rawTweetId)
     const userIP = getClientIP(request)
 
-    if (!tweetId) {
+    if (!tweetIdStr) {
       return NextResponse.json({ error: 'tweetIdが必要です' }, { status: 400 })
     }
 
@@ -46,7 +55,7 @@ export async function GET(request: NextRequest) {
     const { count: likeCount, error: likeCountError } = await supabase
       .from('tanka_likes')
       .select('*', { count: 'exact', head: true })
-      .eq('tweet_id', tweetId)
+      .eq('tweet_id', tweetIdStr)
 
     if (likeCountError) {
       console.error('いいね数取得エラー:', likeCountError)
@@ -60,14 +69,14 @@ export async function GET(request: NextRequest) {
     const { data: userLikeData, error: userLikeError } = await supabase
       .from('tanka_likes')
       .select('id')
-      .eq('tweet_id', tweetId)
+      .eq('tweet_id', tweetIdStr)
       .eq('user_ip', userIP)
       .maybeSingle()
 
     const isLiked = !userLikeError && userLikeData !== null
 
     return NextResponse.json({
-      tweetId: parseInt(tweetId),
+      tweetId: tweetIdStr,
       likeCount: likeCount || 0,
       isLiked
     })
@@ -95,10 +104,12 @@ export async function POST(request: NextRequest) {
       process.env.SUPABASE_SERVICE_ROLE_KEY
     )
 
-    const { tweetId, liked } = await request.json()
+    const payload = await request.json()
+    const tweetIdStr = normalizeTweetId(payload?.tweetId)
+    const liked = payload?.liked
     const userIP = getClientIP(request)
 
-    if (!tweetId) {
+    if (!tweetIdStr) {
       return NextResponse.json({ error: 'tweetIdが必要です' }, { status: 400 })
     }
 
@@ -109,11 +120,19 @@ export async function POST(request: NextRequest) {
     // 短歌が存在するか確認
     const { data: tankaData, error: tankaError } = await supabase
       .from('tanka')
-      .select('tweet_id')
-      .eq('tweet_id', tweetId)
-      .single()
+      .select('tweet_id::text')
+      .eq('tweet_id', tweetIdStr)
+      .maybeSingle()
 
-    if (tankaError || !tankaData) {
+    if (tankaError) {
+      console.error('短歌存在確認エラー:', tankaError)
+      return NextResponse.json(
+        { error: '短歌の確認に失敗しました' },
+        { status: 500 }
+      )
+    }
+
+    if (!tankaData) {
       return NextResponse.json(
         { error: '指定された短歌が見つかりません' },
         { status: 404 }
@@ -125,7 +144,7 @@ export async function POST(request: NextRequest) {
       const { data: insertData, error: insertError } = await supabase
         .from('tanka_likes')
         .insert({
-          tweet_id: tweetId,
+          tweet_id: tweetIdStr,
           user_ip: userIP
         })
         .select()
@@ -145,7 +164,7 @@ export async function POST(request: NextRequest) {
       const { error: deleteError } = await supabase
         .from('tanka_likes')
         .delete()
-        .eq('tweet_id', tweetId)
+        .eq('tweet_id', tweetIdStr)
         .eq('user_ip', userIP)
 
       if (deleteError) {
@@ -161,7 +180,7 @@ export async function POST(request: NextRequest) {
     const { count: updatedLikeCount, error: likeCountError } = await supabase
       .from('tanka_likes')
       .select('*', { count: 'exact', head: true })
-      .eq('tweet_id', tweetId)
+      .eq('tweet_id', tweetIdStr)
 
     if (likeCountError) {
       console.error('いいね数取得エラー:', likeCountError)
@@ -172,7 +191,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({
-      tweetId: parseInt(tweetId),
+      tweetId: tweetIdStr,
       likeCount: updatedLikeCount || 0,
       isLiked: liked
     })

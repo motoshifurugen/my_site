@@ -4,7 +4,7 @@ import { Heart } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 interface TankaLikeButtonProps {
-  tweetId: number
+  tweetId: string
   initialLiked?: boolean
   initialLikeCount?: number
 }
@@ -22,9 +22,9 @@ const TankaLikeButton: React.FC<TankaLikeButtonProps> = ({
   useEffect(() => {
     const fetchLikeInfo = async () => {
       try {
-        const response = await fetch(
-          `/api/tanka-likes?tweetId=${tweetId}`,
-        )
+      const response = await fetch(
+        `/my_site/api/tanka-likes?tweetId=${tweetId}`,
+      )
 
         if (response.ok) {
           const data = await response.json()
@@ -46,10 +46,10 @@ const TankaLikeButton: React.FC<TankaLikeButtonProps> = ({
       setIsAnimating(true)
       const newLikedState = !isLiked
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tanka-likes`, {
+      const response = await fetch('/my_site/api/tanka-likes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tweetId, liked: newLikedState }),
+        body: JSON.stringify({ tweetId: tweetId, liked: newLikedState }),
       })
 
       if (response.ok) {

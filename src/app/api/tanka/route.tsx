@@ -23,10 +23,16 @@ export async function GET(request: NextRequest) {
     const offset = (page - 1) * limit
 
     // 短歌データを取得（作成日時の降順、タグ情報も含む）
+    // tweet_idを文字列として取得するため、::textを使用
     const { data: tankaData, error, count } = await supabase
       .from('tanka')
       .select(`
-        *,
+        tweet_id::text,
+        author_id,
+        created_at,
+        extracted_at,
+        original_text,
+        tanka,
         tanka_tags (
           score,
           assigned_by,
@@ -52,11 +58,12 @@ export async function GET(request: NextRequest) {
 
     // レスポンスデータの整形
     const formattedData = tankaData?.map(tanka => ({
-      id: String(tanka.tweet_id),
+      id: tanka.tweet_id, // 既に文字列として取得済み
       tanka: tanka.tanka,
       originalText: tanka.original_text,
       createdAt: tanka.created_at,
       extractedAt: tanka.extracted_at,
+      tweetId: tanka.tweet_id, // 既に文字列として取得済み
       tags: tanka.tanka_tags?.map((tagRelation: any) => ({
         id: tagRelation.tags.id,
         name: tagRelation.tags.name,
