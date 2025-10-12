@@ -65,6 +65,8 @@ interface TankaData {
   originalText: string;
   createdAt: string;
   extractedAt: string;
+  tags?: any[];
+  tweetId?: number;
 }
 
 interface InfiniteScrollState {
@@ -328,6 +330,8 @@ const TankaPage: React.FC = () => {
                     tanka={tanka.tanka}
                     createdAt={tanka.createdAt}
                     index={index}
+                    tags={tanka.tags || []}
+                    tweetId={parseInt(tanka.id)}
                   />
                 ))}
             </div>

@@ -2,17 +2,33 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import TankaLikeButton from './TankaLikeButton';
+
+interface Tag {
+  id: number;
+  name: string;
+  slug: string;
+  category: string;
+  description?: string;
+  score: number;
+  assignedBy: string;
+  assignedAt: string;
+}
 
 interface TankaCardProps {
   tanka: string;
   createdAt: string;
   index: number;
+  tags?: Tag[];
+  tweetId?: number;
 }
 
 const TankaCard: React.FC<TankaCardProps> = ({ 
   tanka, 
   createdAt, 
-  index 
+  index,
+  tags = [],
+  tweetId
 }) => {
   // 波打ち演出の状態管理
   const [isWaving, setIsWaving] = useState(false);
@@ -66,6 +82,34 @@ const TankaCard: React.FC<TankaCardProps> = ({
     });
   }, [createdAt]);
 
+  // タグをカテゴリ別にグループ化（メモ化）
+  const groupedTags = useMemo(() => {
+    const groups: { [key: string]: Tag[] } = {};
+    tags.forEach(tag => {
+      if (!groups[tag.category]) {
+        groups[tag.category] = [];
+      }
+      groups[tag.category].push(tag);
+    });
+    return groups;
+  }, [tags]);
+
+  // カテゴリの表示名を取得
+  const getCategoryDisplayName = (category: string) => {
+    const categoryNames: { [key: string]: string } = {
+      'kigo': '季語',
+      'emotion': '感情',
+      'theme': 'テーマ',
+      'place': '場所'
+    };
+    return categoryNames[category] || category;
+  };
+
+  // 統一されたタグの色を取得
+  const getTagColor = () => {
+    return 'bg-gray-400/95 text-gray-400 dark:bg-gray-600/90 dark:text-slate-300';
+  };
+
   return (
     <div
       className="bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-700 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-3 sm:p-4 lg:p-6 relative overflow-hidden flex flex-col justify-between min-h-[200px] sm:min-h-[220px] lg:min-h-[280px] cursor-pointer"
@@ -75,10 +119,18 @@ const TankaCard: React.FC<TankaCardProps> = ({
       } : {}}
       onClick={handleClick}
     >
+
       {/* 上部コンテナ */}
       <div className="flex-1 flex flex-col">
         {/* 上部の装飾線 */}
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-gradient-to-r from-transparent via-gray-300 dark:via-slate-400 to-transparent"></div>
+        
+        {/* 右上のいいねボタン */}
+        {tweetId && (
+          <div className="absolute top-3 right-3 z-10">
+            <TankaLikeButton tweetId={tweetId} />
+          </div>
+        )}
 
         {/* 短歌テキスト（縦書き・中央揃え） */}
         <div className="flex-1 flex justify-center items-center py-6 sm:py-8">
@@ -140,6 +192,27 @@ const TankaCard: React.FC<TankaCardProps> = ({
       <div className="mt-auto">
         {/* 下部の装飾線 */}
         <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-slate-400 to-transparent mb-3"></div>
+        
+        {/* タグ表示エリア */}
+        {tags.length > 0 && (
+          <div className="mb-3">
+            <div className="flex flex-wrap gap-1 justify-center">
+              {Object.entries(groupedTags).map(([category, categoryTags]) => (
+                <div key={category} className="flex flex-wrap gap-1">
+                  {categoryTags.map(tag => (
+                    <span
+                      key={tag.id}
+                      className={`px-1.5 py-0.5 sm:px-2 sm:py-1 text-[10px] sm:text-xs rounded-md font-medium ${getTagColor()} transition-all duration-200 hover:scale-105 shadow-sm opacity-60`}
+                      title={`${getCategoryDisplayName(category)}: ${tag.description || tag.name}`}
+                    >
+                      #{tag.name}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         
         {/* 日付とサイト名 */}
         <div className="text-center text-xs sm:text-xs lg:text-xs text-gray-400 dark:text-slate-300 font-light opacity-60" style={{ fontSize: '10px' }}>
