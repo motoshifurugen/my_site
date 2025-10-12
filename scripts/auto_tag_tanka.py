@@ -62,7 +62,7 @@ class TankaTagger:
         
         # 2. 部分文字列検索用のキーワード（2文字以上）
         for i in range(len(text) - 1):
-            for j in range(i + 2, min(len(text) + 1, i + 5)):  # 最大4文字まで
+            for j in range(i + 2, min(len(text) + 1, i + 6)):  # 最大5文字まで拡張
                 substring = text[i:j]
                 if len(substring) >= 2:
                     keywords.append(substring)
@@ -75,11 +75,14 @@ class TankaTagger:
         
         keywords.extend(words)
         
-        # 4. よく使われる季語・感情語のパターンマッチング
+        # 4. よく使われる季語・感情語のパターンマッチング（拡張）
         common_patterns = [
             '春', '夏', '秋', '冬', '花', '月', '風', '雨', '雪', '雲',
             '恋', '愛', '悲', '喜', '楽', '苦', '夢', '希望', '孤独',
-            '山', '海', '川', '森', '野', '空', '星', '鳥', '虫'
+            '山', '海', '川', '森', '野', '空', '星', '鳥', '虫',
+            '君', '私', '人', '心', '手', '目', '声', '顔', '笑',
+            '朝', '昼', '夕', '夜', '光', '影', '色', '音', '香',
+            '家', '道', '街', '窓', '扉', '部屋', '庭', '畑', '田'
         ]
         
         for pattern in common_patterns:
@@ -119,21 +122,24 @@ class TankaTagger:
                     if keyword in tanka_text:
                         score = 0.7
             
-            # 優先度をスコアに反映
+            # 優先度をスコアに反映（より緩い閾値でマッチを増やす）
             if score > 0:
                 final_score = score * (1 + priority / 1000)  # 優先度を0.001刻みで加算
+                matches.append((tag_id, final_score))
+            elif keyword in tanka_text and len(keyword) >= 2:  # 部分一致も追加
+                final_score = 0.3 * (1 + priority / 1000)  # 低いスコアで追加
                 matches.append((tag_id, final_score))
         
         # スコアでソート（降順）
         matches.sort(key=lambda x: x[1], reverse=True)
         
-        # マッチがない場合、デフォルトタグを追加
-        if not matches:
+        # マッチが少ない場合、デフォルトタグを追加（1-3個になるように調整）
+        if len(matches) < 1:
             # 一般的なタグをデフォルトとして追加
             default_tags = [
-                ('自然', 0.5),  # 自然タグ
-                ('テーマ', 0.3),  # テーマタグ
-                ('感情', 0.2)   # 感情タグ
+                ('日常', 0.5),  # 日常タグ
+                ('自然', 0.4),  # 自然タグを追加
+                ('感情', 0.3)   # 感情タグ
             ]
             
             # デフォルトタグを辞書から検索
@@ -148,8 +154,9 @@ class TankaTagger:
     def assign_tags_to_tanka(self, tweet_id: int, tag_matches: List[Tuple[int, float]], assigned_by: str = 'auto') -> int:
         """短歌にタグを割り当て"""
         try:
-            # 既存のタグを削除
-            self.supabase.table('tanka_tags').delete().eq('tweet_id', tweet_id).execute()
+            # 既存のタグを削除（より確実に）
+            delete_response = self.supabase.table('tanka_tags').delete().eq('tweet_id', tweet_id).execute()
+            logger.debug(f"Tweet ID {tweet_id}: 既存タグ削除完了")
             
             # 最大3つのタグを選択
             selected_tags = tag_matches[:3]
@@ -157,15 +164,21 @@ class TankaTagger:
             if not selected_tags:
                 return 0
             
-            # タグデータを準備
+            # タグデータを準備（重複するtag_idを除去）
+            seen_tag_ids = set()
             tag_data = []
             for tag_id, score in selected_tags:
-                tag_data.append({
-                    'tweet_id': tweet_id,
-                    'tag_id': tag_id,
-                    'score': score,
-                    'assigned_by': assigned_by
-                })
+                if tag_id not in seen_tag_ids:
+                    tag_data.append({
+                        'tweet_id': tweet_id,
+                        'tag_id': tag_id,
+                        'score': score,
+                        'assigned_by': assigned_by
+                    })
+                    seen_tag_ids.add(tag_id)
+            
+            if not tag_data:
+                return 0
             
             # タグを挿入
             response = self.supabase.table('tanka_tags').insert(tag_data).execute()
@@ -252,7 +265,7 @@ class TankaTagger:
             logger.error(f"自動タグ付け処理エラー: {e}")
             return {'processed': 0, 'errors': 1}
     
-    def retag_existing_tanka(self, limit: int = 100) -> Dict:
+    def retag_existing_tanka(self, limit: int = None) -> Dict:
         """既存のタグ付け短歌を再処理"""
         try:
             logger.info("既存タグ再処理を開始")
@@ -263,10 +276,15 @@ class TankaTagger:
                 logger.error("タグ辞書が空です")
                 return {'processed': 0, 'errors': 0}
             
-            # 既存のタグ付け短歌を取得
-            response = self.supabase.table('tanka').select(
+            # 既存のタグ付け短歌を取得（全件）
+            query = self.supabase.table('tanka').select(
                 'tweet_id, tanka, original_text'
-            ).limit(limit).execute()
+            )
+            
+            if limit:
+                query = query.limit(limit)
+            
+            response = query.execute()
             
             tanka_list = response.data or []
             if not tanka_list:
@@ -292,10 +310,15 @@ class TankaTagger:
                     if assigned_count > 0:
                         processed_count += 1
                         logger.info(f"再処理完了: Tweet ID {tweet_id}, タグ数: {assigned_count}")
+                    else:
+                        # タグが割り当てられなかった場合も処理完了としてカウント
+                        processed_count += 1
+                        logger.info(f"再処理完了: Tweet ID {tweet_id}, タグ数: 0")
                         
                 except Exception as e:
                     error_count += 1
                     logger.error(f"短歌再処理エラー (Tweet ID {tanka.get('tweet_id', 'unknown')}): {e}")
+                    # エラーが発生しても処理を継続
             
             logger.info(f"再処理完了: {processed_count}件成功, {error_count}件エラー")
             return {'processed': processed_count, 'errors': error_count}
@@ -304,7 +327,7 @@ class TankaTagger:
             logger.error(f"既存タグ再処理エラー: {e}")
             return {'processed': 0, 'errors': 1}
     
-    def run(self, mode: str = 'untagged', limit: int = 100):
+    def run(self, mode: str = 'untagged', limit: int = None):
         """メイン処理を実行"""
         try:
             if mode == 'untagged':
@@ -328,8 +351,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='短歌自動タグ付けシステム')
     parser.add_argument('--mode', choices=['untagged', 'retag'], default='untagged',
                        help='処理モード: untagged=未タグ付けのみ, retag=既存タグ再処理')
-    parser.add_argument('--limit', type=int, default=100,
-                       help='処理件数の上限')
+    parser.add_argument('--limit', type=int, default=None,
+                       help='処理件数の上限（指定しない場合は全件処理）')
     
     args = parser.parse_args()
     

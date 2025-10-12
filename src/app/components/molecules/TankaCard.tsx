@@ -125,7 +125,7 @@ const TankaCard: React.FC<TankaCardProps> = ({
                 {categoryTags.map(tag => (
                   <span
                     key={tag.id}
-                    className={`px-2 py-1 text-xs rounded-md font-medium ${getTagColor()} transition-all duration-200 hover:scale-105 shadow-sm opacity-60`}
+                    className={`px-1.5 py-0.5 sm:px-2 sm:py-1 text-[10px] sm:text-xs rounded-md font-medium ${getTagColor()} transition-all duration-200 hover:scale-105 shadow-sm opacity-60`}
                     title={`${getCategoryDisplayName(category)}: ${tag.description || tag.name}`}
                   >
                     #{tag.name}
