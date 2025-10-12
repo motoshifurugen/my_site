@@ -20,7 +20,7 @@ interface TankaCardProps {
   createdAt: string;
   index: number;
   tags?: Tag[];
-  tweetId?: number;
+  tweetId?: string;
 }
 
 const TankaCard: React.FC<TankaCardProps> = ({ 
