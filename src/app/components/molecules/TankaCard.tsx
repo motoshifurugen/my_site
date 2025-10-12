@@ -116,26 +116,6 @@ const TankaCard: React.FC<TankaCardProps> = ({
       } : {}}
       onClick={handleClick}
     >
-      {/* タグ表示エリア（右上） */}
-      {tags.length > 0 && (
-        <div className="absolute top-3 right-3 z-10">
-          <div className="flex flex-wrap gap-1 justify-end">
-            {Object.entries(groupedTags).map(([category, categoryTags]) => (
-              <div key={category} className="flex flex-wrap gap-1">
-                {categoryTags.map(tag => (
-                  <span
-                    key={tag.id}
-                    className={`px-1.5 py-0.5 sm:px-2 sm:py-1 text-[10px] sm:text-xs rounded-md font-medium ${getTagColor()} transition-all duration-200 hover:scale-105 shadow-sm opacity-60`}
-                    title={`${getCategoryDisplayName(category)}: ${tag.description || tag.name}`}
-                  >
-                    #{tag.name}
-                  </span>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* 上部コンテナ */}
       <div className="flex-1 flex flex-col">
@@ -202,6 +182,27 @@ const TankaCard: React.FC<TankaCardProps> = ({
       <div className="mt-auto">
         {/* 下部の装飾線 */}
         <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-slate-400 to-transparent mb-3"></div>
+        
+        {/* タグ表示エリア */}
+        {tags.length > 0 && (
+          <div className="mb-3">
+            <div className="flex flex-wrap gap-1 justify-center">
+              {Object.entries(groupedTags).map(([category, categoryTags]) => (
+                <div key={category} className="flex flex-wrap gap-1">
+                  {categoryTags.map(tag => (
+                    <span
+                      key={tag.id}
+                      className={`px-1.5 py-0.5 sm:px-2 sm:py-1 text-[10px] sm:text-xs rounded-md font-medium ${getTagColor()} transition-all duration-200 hover:scale-105 shadow-sm opacity-60`}
+                      title={`${getCategoryDisplayName(category)}: ${tag.description || tag.name}`}
+                    >
+                      #{tag.name}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         
         {/* 日付とサイト名 */}
         <div className="text-center text-xs sm:text-xs lg:text-xs text-gray-400 dark:text-slate-300 font-light opacity-60" style={{ fontSize: '10px' }}>
