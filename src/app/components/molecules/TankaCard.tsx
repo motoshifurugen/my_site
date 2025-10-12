@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import TankaLikeButton from './TankaLikeButton';
 
 interface Tag {
   id: number;
@@ -19,13 +20,15 @@ interface TankaCardProps {
   createdAt: string;
   index: number;
   tags?: Tag[];
+  tweetId?: number;
 }
 
 const TankaCard: React.FC<TankaCardProps> = ({ 
   tanka, 
   createdAt, 
   index,
-  tags = []
+  tags = [],
+  tweetId
 }) => {
   // 波打ち演出の状態管理
   const [isWaving, setIsWaving] = useState(false);
@@ -121,6 +124,13 @@ const TankaCard: React.FC<TankaCardProps> = ({
       <div className="flex-1 flex flex-col">
         {/* 上部の装飾線 */}
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-gradient-to-r from-transparent via-gray-300 dark:via-slate-400 to-transparent"></div>
+        
+        {/* 右上のいいねボタン */}
+        {tweetId && (
+          <div className="absolute top-3 right-3 z-10">
+            <TankaLikeButton tweetId={tweetId} />
+          </div>
+        )}
 
         {/* 短歌テキスト（縦書き・中央揃え） */}
         <div className="flex-1 flex justify-center items-center py-6 sm:py-8">
