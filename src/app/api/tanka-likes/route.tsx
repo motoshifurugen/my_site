@@ -1,11 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-
-const supabase = createClient(supabaseUrl, supabaseServiceKey)
-
 // クライアントIPアドレスを取得する関数
 function getClientIP(request: NextRequest): string {
   // Vercelの場合
@@ -26,6 +21,19 @@ function getClientIP(request: NextRequest): string {
 
 export async function GET(request: NextRequest) {
   try {
+    // 環境変数チェック
+    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return NextResponse.json({ 
+        error: 'Supabase configuration is missing' 
+      }, { status: 500 })
+    }
+
+    // Supabaseクライアント初期化
+    const supabase = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    )
+
     const url = new URL(request.url)
     const tweetId = url.searchParams.get('tweetId')
     const userIP = getClientIP(request)
@@ -74,6 +82,19 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // 環境変数チェック
+    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return NextResponse.json({ 
+        error: 'Supabase configuration is missing' 
+      }, { status: 500 })
+    }
+
+    // Supabaseクライアント初期化
+    const supabase = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    )
+
     const { tweetId, liked } = await request.json()
     const userIP = getClientIP(request)
 
