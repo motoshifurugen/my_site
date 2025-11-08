@@ -216,7 +216,7 @@ const TankaCard: React.FC<TankaCardProps> = ({
         
         {/* 日付とサイト名 */}
         <div className="text-center text-xs sm:text-xs lg:text-xs text-gray-400 dark:text-slate-300 font-light opacity-60" style={{ fontSize: '10px' }}>
-          {formattedDate} / ココアハーツ
+          {formattedDate} / Motoshi
         </div>
       </div>
 
