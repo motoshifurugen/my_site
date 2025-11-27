@@ -129,19 +129,19 @@ const IntroOverlay = ({ onComplete }: { onComplete: () => void }) => {
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-main-white text-main-black"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-main-white text-main-black dark:bg-night-black dark:text-night-white"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 1 }}
     >
-      <div className="relative mb-8 w-64">
+      <div className="relative mb-8 w-64 text-main-black dark:text-night-white">
         <div className="flex justify-between text-xl font-bold tracking-widest">
           <span>JAPAN</span>
           <span>PH</span>
         </div>
-        <div className="relative mt-2 h-1 w-full bg-gray">
+        <div className="relative mt-2 h-1 w-full bg-gray dark:bg-night-gray">
           <motion.div
-            className="absolute top-1/2 -mt-3 text-teal"
+            className="absolute top-1/2 -mt-3 text-teal dark:text-night-teal"
             initial={{ left: '0%' }}
             animate={{ left: '100%' }}
             transition={{ duration: 2, ease: 'easeInOut' }}
@@ -150,9 +150,11 @@ const IntroOverlay = ({ onComplete }: { onComplete: () => void }) => {
           </motion.div>
         </div>
       </div>
-      <div className="font-mono text-6xl font-bold text-teal">Day {count}</div>
+      <div className="font-mono text-6xl font-bold text-teal dark:text-night-teal">
+        Day {count}
+      </div>
       <motion.div
-        className="mt-8 text-2xl font-medium opacity-0"
+        className="mt-8 text-2xl font-medium opacity-0 text-main-black dark:text-night-white"
         animate={{ opacity: 1 }}
         transition={{ delay: 2.2, duration: 0.8 }}
       >
@@ -226,27 +228,33 @@ const Chart = () => {
   const yAxisLabels = [4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0]
 
   return (
-    <div className="w-full rounded-2xl bg-white p-6 shadow-sm">
-      <h3 className="mb-4 text-center text-xl font-bold text-main-black">
-        Growth Journey
+    <div className="w-full rounded-2xl bg-white p-6 shadow-sm dark:bg-night-gray dark:text-night-white">
+      <h3 className="mb-4 text-center text-xl font-bold text-main-black dark:text-night-white">
+        IELTS Score Progress
       </h3>
 
       {/* Legend */}
-      <div className="mb-4 flex flex-wrap justify-center gap-3">
+      <div className="mb-4 flex flex-wrap justify-center gap-3 text-main-black dark:text-night-white">
         {skills.map((skill) => (
           <div key={skill} className="flex items-center gap-1">
             <div
               className="h-3 w-3 rounded-full"
               style={{ backgroundColor: SKILL_COLORS[skill] }}
             />
-            <span className="text-xs text-main-black/80">{skill}</span>
+            <span className="text-xs text-main-black/80 dark:text-night-white/80">
+              {skill}
+            </span>
           </div>
         ))}
       </div>
 
       {/* Chart */}
       <div className="relative flex justify-center">
-        <svg width={width} height={height} className="overflow-visible">
+        <svg
+          width={width}
+          height={height}
+          className="overflow-visible text-main-black dark:text-night-white"
+        >
           {/* Y-axis labels */}
           {yAxisLabels.map((score) => {
             const y =
@@ -269,7 +277,7 @@ const Chart = () => {
                   x={paddingLeft - 8}
                   y={y + 4}
                   fontSize="10"
-                  fill="#4A4A4A"
+                  fill="currentColor"
                   textAnchor="end"
                 >
                   {score.toFixed(1)}
@@ -341,7 +349,7 @@ const Chart = () => {
                 x={x}
                 y={height - paddingBottom + 20}
                 fontSize="9"
-                fill="#4A4A4A"
+                fill="currentColor"
                 textAnchor="middle"
               >
                 {test.date}
@@ -358,7 +366,7 @@ export default function ThankYouPage() {
   const [showIntro, setShowIntro] = useState(true)
 
   return (
-    <div className="min-h-screen bg-main-white font-sans text-main-black">
+    <div className="min-h-screen bg-main-white font-sans text-main-black dark:bg-night-black dark:text-night-white">
       <AnimatePresence>
         {showIntro && <IntroOverlay onComplete={() => setShowIntro(false)} />}
       </AnimatePresence>
@@ -370,23 +378,62 @@ export default function ThankYouPage() {
             <h1 className="mb-2 text-3xl font-bold tracking-tight text-teal">
               Memories in the Philippines
             </h1>
-            <p className="text-lg text-main-black/80">
+            <p className="text-lg text-main-black/80 dark:text-night-white/80">
               A record of my 113-day treasure.
             </p>
           </Section>
 
           {/* Message Card */}
           <Section>
-            <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-sm">
-              <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-main-white opacity-50"></div>
+            <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-sm dark:bg-night-gray dark:text-night-white">
+              <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-main-white opacity-50 dark:bg-night-black/40"></div>
               <h2 className="mb-4 text-xl font-bold text-teal">
                 Dear Teachers & Friends
               </h2>
-              <p className="leading-relaxed text-main-black">
-                Thank you for your endless patience with my English. I'll never
-                forget the laughter when I said "Rural" wrong, or our weekend
-                trips to the beach. You made this place feel like home.
-              </p>
+              <div className="space-y-4 leading-relaxed text-main-black dark:text-night-white">
+                <p>
+                  <strong>
+                    Time went by so quickly, and my four months of studying abroad
+                    in the Philippines are coming to an end. Thank you so much for
+                    everything.
+                  </strong>
+                </p>
+                <p>
+                  <strong>
+                    With the goal of working overseas, I decided to focus on
+                    English, a subject I used to struggle with as a student. It
+                    turned out to be a fun and valuable experience in my life.
+                  </strong>
+                </p>
+                <p>
+                  Since it was my first time going abroad, I had many worries:
+                  whether I could adapt to the climate and culture, and whether I
+                  could build good relationships with teachers and friends. 
+                  <strong>
+                    But, everyone at E-ROOM was very warm and patient with my poor
+                    English skills and awkward communication.
+                  </strong>
+                </p>
+                <p>
+                  <strong>Now, I no longer feel resistance toward English.</strong>
+                  <br />
+                  <strong>
+                    Instead, I want to learn more, speak more, and understand
+                    more.
+                  </strong>
+                  {' '}
+                  Over these four months, I’ve discovered the joy of connecting
+                  with different cultures, while also recognizing the positive
+                  aspects of Japan.
+                </p>
+                <p>
+                  <strong>
+                    I’ll keep using English and continue making progress toward my
+                    goals.
+                  </strong>{' '}
+                  <strong>Wishing you all good health and continued success.</strong>
+                </p>
+              </div>
               <div className="mt-6 flex justify-end">
                 <Heart className="text-teal" fill="#008080" size={24} />
               </div>
@@ -483,17 +530,17 @@ export default function ThankYouPage() {
               {STATS.map((stat, i) => (
                 <motion.div
                   key={i}
-                  className="flex flex-col items-center justify-center rounded-2xl bg-white p-4 text-center shadow-sm"
+                  className="flex flex-col items-center justify-center rounded-2xl bg-white p-4 text-center shadow-sm dark:bg-night-gray dark:text-night-white"
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.5 }}
                 >
                   <stat.icon className="mb-2 text-teal" size={28} />
-                  <div className="text-xs font-medium uppercase tracking-wider text-main-black/60">
+                  <div className="text-xs font-medium uppercase tracking-wider text-main-black/60 dark:text-night-white/80">
                     {stat.label}
                   </div>
-                  <div className="mt-1 text-lg font-bold text-main-black">
+                  <div className="mt-1 text-lg font-bold text-main-black dark:text-night-white">
                     {stat.value}
                   </div>
                 </motion.div>
@@ -502,16 +549,16 @@ export default function ThankYouPage() {
           </Section>
 
           {/* Footer */}
-          <footer className="mt-20 text-center">
+          <footer className="mt-20 text-center text-main-black dark:text-night-white">
             <div className="mb-8 flex justify-center">
               <div className="relative w-48">
-                <div className="flex justify-between text-sm font-bold tracking-widest text-main-black/60">
+                <div className="flex justify-between text-sm font-bold tracking-widest text-main-black/60 dark:text-night-white/80">
                   <span>PH</span>
                   <span>JAPAN</span>
                 </div>
-                <div className="relative mt-2 h-0.5 w-full bg-gray">
+                <div className="relative mt-2 h-0.5 w-full bg-gray dark:bg-night-gray">
                   <motion.div
-                    className="absolute top-1/2 -mt-3 text-teal"
+                    className="absolute top-1/2 -mt-3 text-teal dark:text-night-teal"
                     initial={{ left: '0%' }}
                     whileInView={{ left: '100%' }}
                     viewport={{ once: true }}
@@ -525,10 +572,10 @@ export default function ThankYouPage() {
             <h2 className="mb-2 text-2xl font-bold text-teal">
               See you again.
             </h2>
-            <p className="mb-8 text-sm text-main-black/60">
+            <p className="mb-8 text-sm text-main-black/60 dark:text-night-white/80">
               Future commitments.
             </p>
-            <div className="flex justify-center space-x-6 text-teal">
+            <div className="flex justify-center space-x-6 text-teal dark:text-night-teal">
               <a href="#" className="transition-transform hover:scale-110">
                 <Instagram size={24} />
               </a>
