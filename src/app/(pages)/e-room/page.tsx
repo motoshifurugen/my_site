@@ -78,14 +78,14 @@ const IELTS_TESTS = [
     Writing: 7.0,
     Speaking: 6.0,
   },
-  {
-    date: '11/28',
-    Overall: 6.0,
-    Listening: 5.0,
-    Reading: 6.0,
-    Writing: 7.0,
-    Speaking: 6.0,
-  },
+  // {
+  //   date: '12/05',
+  //   Overall: 6.0,
+  //   Listening: 5.0,
+  //   Reading: 6.0,
+  //   Writing: 7.0,
+  //   Speaking: 6.0,
+  // },
 ]
 
 const SKILL_COLORS: Record<SkillType, string> = {
@@ -113,14 +113,14 @@ const DUOLINGO_TESTS = [
     Writing: 90,
     Speaking: 80,
   },
-  {
-    date: '11/30',
-    Overall: 91.25,
-    Listening: 85,
-    Reading: 110,
-    Writing: 90,
-    Speaking: 80,
-  },
+  // {
+  //   date: '11/30',
+  //   Overall: 91.25,
+  //   Listening: 85,
+  //   Reading: 110,
+  //   Writing: 90,
+  //   Speaking: 80,
+  // },
 ]
 
 const DUOLINGO_SKILL_COLORS: Record<DuolingoSkillType, string> = {
@@ -835,44 +835,32 @@ export default function ThankYouPage() {
               <div className="space-y-4 leading-relaxed text-main-black dark:text-night-white">
                 <p>
                   <strong>
-                    Time went by so quickly, and my four months of studying abroad
-                    in the Philippines are coming to an end. Thank you so much for
-                    everything.
+                    Time has flown by so quickly, and my four months of studying abroad in the Philippines are already coming to an end. Thank you so much for everything.
                   </strong>
                 </p>
                 <p>
                   <strong>
-                    With the goal of working overseas, I decided to focus on
-                    English, a subject I used to struggle with as a student. It
-                    turned out to be a fun and valuable experience in my life.
+                    With the goal of working overseas, I decided to study English at E-ROOM.
                   </strong>
                 </p>
                 <p>
-                  Since it was my first time going abroad, I had many worries:
-                  whether I could adapt to the climate and culture, and whether I
-                  could build good relationships with teachers and friends. 
+                  Since it was my first time going abroad, I had many worries — whether I could adapt to the climate and culture, whether I could build good relationships with teachers and friends, and whether I could actually learn English, a subject I had always struggled with.  
+                  There were moments when I felt like throwing in the towel because learning a language can be so challenging.
                   <strong>
-                    But, everyone at E-ROOM was very warm and patient with my poor
-                    English skills and awkward communication.
+                    But everyone at E-ROOM was incredibly warm and supportive, even when I put my foot in my mouth.
+                  </strong>
+                  Thanks to that, I realized that this experience was fun and meaningful.
+                </p>
+                <p>
+                  <strong>Now, I don't feel nervous about English anymore.</strong><br />
+                  <strong>
+                    Not only do I enjoy learning it, but I also feel in seventh heaven because of the people I've met and the experiences I've gained.
                   </strong>
                 </p>
                 <p>
-                  <strong>Now, I no longer feel resistance toward English.</strong>
-                  <br />
                   <strong>
-                    Instead, I want to learn more, speak more, and understand
-                    more.
+                    I'll keep hitting the books and continue working toward my goals.
                   </strong>
-                  {' '}
-                  Over these four months, I’ve discovered the joy of connecting
-                  with different cultures, while also recognizing the positive
-                  aspects of Japan.
-                </p>
-                <p>
-                  <strong>
-                    I’ll keep using English and continue making progress toward my
-                    goals.
-                  </strong>{' '}
                   <strong>Wishing you all good health and continued success.</strong>
                 </p>
               </div>
