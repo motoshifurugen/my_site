@@ -5,10 +5,12 @@ import {
   Beer,
   BookOpen,
   CloudRain,
-  Heart,
   MessageCircle,
   Plane,
   Apple,
+  Sparkles,
+  Heart,
+  Star,
 } from 'lucide-react'
 import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
@@ -149,7 +151,7 @@ const STATS = [
   { icon: Beer, label: 'Beers Consumed', value: '112 Bottles' },
   { icon: CloudRain, label: 'Typhoons Encountered', value: '3' },
   { icon: Apple, label: 'Watermelons Eaten', value: '34 Slices' },
-  { icon: Heart, label: 'Favorite Phrase', value: '"once in a blue moon"' },
+  { icon: Sparkles, label: 'Favorite Phrase', value: '"once in a blue moon"' },
   { icon: MessageCircle, label: 'Hardest Word to Pronounce', value: '"walk / work"' },
 ]
 
@@ -825,9 +827,44 @@ export default function ThankYouPage() {
       {!showIntro && (
         <main className="mx-auto max-w-md overflow-hidden pb-20 pt-12">
           {/* Header */}
-          <Section className="text-center">
+          <Section className="text-center !mb-4">
             <h1 className="mb-2 text-3xl font-bold tracking-tight text-teal">
-              Memories in the Philippines
+              <div>
+                {'Memories'.split('').map((char, index) => (
+                  <motion.span
+                    key={`line1-${index}`}
+                    initial={{ opacity: 0, y: -50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 200,
+                      damping: 12,
+                      delay: index * 0.1,
+                    }}
+                    style={{ display: 'inline-block' }}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+              </div>
+              <div>
+                {'in the Philippines'.split('').map((char, index) => (
+                  <motion.span
+                    key={`line2-${index}`}
+                    initial={{ opacity: 0, y: -50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 200,
+                      damping: 12,
+                      delay: ('Memories'.length + 1 + index) * 0.1,
+                    }}
+                    style={{ display: 'inline-block' }}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </motion.span>
+                ))}
+              </div>
             </h1>
             <p className="text-lg text-main-black/80 dark:text-night-white/80">
               A record of my 113-day treasure.
@@ -835,40 +872,47 @@ export default function ThankYouPage() {
           </Section>
 
           {/* Message Card */}
-          <Section>
-            <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-sm dark:bg-night-gray dark:text-night-white">
-              <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-main-white opacity-50 dark:bg-night-black/40"></div>
-              <h2 className="mb-4 text-xl font-bold text-teal">
-                Dear Teachers & Friends
-              </h2>
-              <div className="space-y-4 leading-relaxed text-main-black dark:text-night-white">
-                <p>
-                  Time has flown by so quickly, and my four months of studying abroad in the Philippines are already coming to an end. Thank you so much for everything.
-                </p>
-                <p>
-                  Since it was my first time going abroad, I had many worries:<br></br> 
-                  ・whether I could adapt to the climate and culture.<br></br>
-                  ・whether I could build good relationships with teachers and friends.<br></br>
-                  ・whether I could actually learn English, a subject I had always struggled with.<br></br>
-                  Also There were moments when I felt like throwing in the towel because learning a language can be so challenging.
-                  <strong>
-                    But everyone at E-ROOM was incredibly warm and supportive,
-                  </strong>
-                  even when I put my foot in my mouth. Thanks to that, I realized that this experience was fun and meaningful.
-                </p>
-                <p>
-                  Now, I don't feel nervous about English anymore.<br />
-                  <strong>
-                    Not only do I enjoy learning it, but I also feel in seventh heaven because of the people I've met and the experiences I've gained.
-                  </strong>
-                </p>
-                <p>
-                  I'll keep hitting the books and continue working toward my goals.
-                  Wishing you all good health and continued success.
-                </p>
-              </div>
-              <div className="mt-6 flex justify-end">
-                <Heart className="text-teal" fill="#008080" size={24} />
+          <Section className="!px-0">
+            <div className="relative px-6 py-8 md:px-8">
+              <div className="relative">
+                <h2 className="mb-6 text-xl font-bold text-teal dark:text-night-teal">
+                  Dear Teachers & Friends
+                </h2>
+                
+                <div className="space-y-4 leading-relaxed text-main-black dark:text-night-white">
+                  <p>
+                    Time has flown by so quickly, and my four months of studying abroad in the Philippines are already coming to an end. Thank you so much for everything.
+                  </p>
+                  <p>
+                    Since it was my first time going abroad, I had many worries:<br></br> 
+                    ・whether I could adapt to the climate and culture.<br></br>
+                    ・whether I could build good relationships with teachers and friends.<br></br>
+                    ・whether I could actually learn English, a subject I had always struggled with.<br></br>
+                    Also There were moments when I felt like throwing in the towel because learning a language can be so challenging.
+                    <strong>
+                      But everyone at E-ROOM was incredibly warm and supportive,
+                    </strong>
+                    even when I put my foot in my mouth. Thanks to that, I realized that this experience was fun and meaningful.
+                  </p>
+                  <p>
+                    Now, I don't feel nervous about English anymore.<br />
+                    <strong>
+                      Not only do I enjoy learning it, but I also feel in seventh heaven because of the people I've met and the experiences I've gained.
+                    </strong>
+                  </p>
+                  <p>
+                    I'll keep hitting the books and continue working toward my goals.
+                    Wishing you all good health and continued success.
+                  </p>
+                </div>
+                
+                {/* Signature */}
+                <div className="mt-8 flex items-center justify-end gap-2">
+                  <div className="h-px w-24 bg-gradient-to-l from-teal/40 to-transparent dark:from-night-teal/40"></div>
+                  <div className="text-sm font-medium italic text-teal/80 dark:text-night-teal/80">
+                    Toshi
+                  </div>
+                </div>
               </div>
             </div>
           </Section>
