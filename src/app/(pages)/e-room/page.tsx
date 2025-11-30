@@ -131,9 +131,18 @@ const DUOLINGO_SKILL_COLORS: Record<DuolingoSkillType, string> = {
   Speaking: '#9B59B6', // Purple
 }
 
-const PHOTO_ROWS = Array.from({ length: 3 }, (_, rowIndex) =>
-  E_ROOM_PHOTOS.filter((_, idx) => idx % 3 === rowIndex)
-)
+// 画像を2つのグループに分ける
+const PHOTOS_COUNT = E_ROOM_PHOTOS.length
+const FIRST_SLIDESHOW_PHOTOS = E_ROOM_PHOTOS.slice(0, Math.floor(PHOTOS_COUNT / 2))
+const SECOND_SLIDESHOW_PHOTOS = E_ROOM_PHOTOS.slice(Math.floor(PHOTOS_COUNT / 2))
+
+const createPhotoRows = (photos: typeof E_ROOM_PHOTOS) =>
+  Array.from({ length: 3 }, (_, rowIndex) =>
+    photos.filter((_, idx) => idx % 3 === rowIndex)
+  )
+
+const FIRST_PHOTO_ROWS = createPhotoRows(FIRST_SLIDESHOW_PHOTOS)
+const SECOND_PHOTO_ROWS = createPhotoRows(SECOND_SLIDESHOW_PHOTOS)
 
 const STATS = [
   { icon: BookOpen, label: 'Classes Taken', value: '512 Hours' },
@@ -234,7 +243,7 @@ const Section = ({
   )
 }
 
-const PhotoFilmRoll = () => {
+const PhotoFilmRoll = ({ photoRows }: { photoRows: typeof FIRST_PHOTO_ROWS }) => {
   const row1Ref = useRef<HTMLDivElement>(null)
   const row2Ref = useRef<HTMLDivElement>(null)
   const row3Ref = useRef<HTMLDivElement>(null)
@@ -245,7 +254,7 @@ const PhotoFilmRoll = () => {
   useEffect(() => {
     // Initialize row2 position for reverse scroll
     const itemWidth = 208
-    const setWidth = PHOTO_ROWS[1].length * itemWidth
+    const setWidth = photoRows[1].length * itemWidth
     row2X.current = -setWidth
     if (row2Ref.current) {
       row2Ref.current.style.transform = `translateX(${row2X.current}px)`
@@ -257,7 +266,7 @@ const PhotoFilmRoll = () => {
     const animate = () => {
       if (row1Ref.current) {
         const itemWidth = 208 // 192px (w-48) + 16px (mx-2)
-        const setWidth = PHOTO_ROWS[0].length * itemWidth
+        const setWidth = photoRows[0].length * itemWidth
         row1X.current -= speed
         if (Math.abs(row1X.current) >= setWidth) {
           row1X.current += setWidth
@@ -267,7 +276,7 @@ const PhotoFilmRoll = () => {
 
       if (row2Ref.current) {
         const itemWidth = 208
-        const setWidth = PHOTO_ROWS[1].length * itemWidth
+        const setWidth = photoRows[1].length * itemWidth
         row2X.current += speed
         if (row2X.current >= 0) {
           row2X.current -= setWidth
@@ -277,7 +286,7 @@ const PhotoFilmRoll = () => {
 
       if (row3Ref.current) {
         const itemWidth = 208
-        const setWidth = PHOTO_ROWS[2].length * itemWidth
+        const setWidth = photoRows[2].length * itemWidth
         row3X.current -= speed
         if (Math.abs(row3X.current) >= setWidth) {
           row3X.current += setWidth
@@ -295,13 +304,13 @@ const PhotoFilmRoll = () => {
         cancelAnimationFrame(animationFrameId)
       }
     }
-  }, [])
+  }, [photoRows])
 
   return (
     <div className="mb-16 w-full space-y-4 overflow-hidden py-4">
       {/* First Row - Scroll Left */}
       <div className="relative flex" ref={row1Ref}>
-        {[...PHOTO_ROWS[0], ...PHOTO_ROWS[0]].map((photo, i) => (
+        {[...photoRows[0], ...photoRows[0]].map((photo, i) => (
           <div
             key={i}
             className="relative mx-2 h-48 w-48 flex-shrink-0 overflow-hidden rounded-lg shadow-md"
@@ -318,7 +327,7 @@ const PhotoFilmRoll = () => {
       </div>
       {/* Second Row - Scroll Right */}
       <div className="relative flex" ref={row2Ref}>
-        {[...PHOTO_ROWS[1], ...PHOTO_ROWS[1]].map((photo, i) => (
+        {[...photoRows[1], ...photoRows[1]].map((photo, i) => (
           <div
             key={`reverse-${i}`}
             className="relative mx-2 h-48 w-48 flex-shrink-0 overflow-hidden rounded-lg shadow-md"
@@ -335,7 +344,7 @@ const PhotoFilmRoll = () => {
       </div>
       {/* Third Row - Scroll Left */}
       <div className="relative flex" ref={row3Ref}>
-        {[...PHOTO_ROWS[2], ...PHOTO_ROWS[2]].map((photo, i) => (
+        {[...photoRows[2], ...photoRows[2]].map((photo, i) => (
           <div
             key={`third-${i}`}
             className="relative mx-2 h-48 w-48 flex-shrink-0 overflow-hidden rounded-lg shadow-md"
@@ -376,12 +385,12 @@ const Chart = () => {
     return IELTS_TESTS.map((test, index) => {
       const x =
         (index / (IELTS_TESTS.length - 1)) *
-          (width - paddingLeft - paddingRight) +
+        (width - paddingLeft - paddingRight) +
         paddingLeft
       const y =
         height -
         ((test[skill] - minScore) / (maxScore - minScore)) *
-          (height - paddingTop - paddingBottom) -
+        (height - paddingTop - paddingBottom) -
         paddingBottom
       return `${x},${y}`
     }).join(' ')
@@ -433,7 +442,7 @@ const Chart = () => {
             const y =
               height -
               ((score - minScore) / (maxScore - minScore)) *
-                (height - paddingTop - paddingBottom) -
+              (height - paddingTop - paddingBottom) -
               paddingBottom
             return (
               <line
@@ -454,7 +463,7 @@ const Chart = () => {
             const y =
               height -
               ((score - minScore) / (maxScore - minScore)) *
-                (height - paddingTop - paddingBottom) -
+              (height - paddingTop - paddingBottom) -
               paddingBottom
             return (
               <text
@@ -476,7 +485,7 @@ const Chart = () => {
             const y =
               height -
               ((targetScore - minScore) / (maxScore - minScore)) *
-                (height - paddingTop - paddingBottom) -
+              (height - paddingTop - paddingBottom) -
               paddingBottom
             return (
               <g>
@@ -528,12 +537,12 @@ const Chart = () => {
             return IELTS_TESTS.map((test, index) => {
               const x =
                 (index / (IELTS_TESTS.length - 1)) *
-                  (width - paddingLeft - paddingRight) +
+                (width - paddingLeft - paddingRight) +
                 paddingLeft
               const y =
                 height -
                 ((test[skill] - minScore) / (maxScore - minScore)) *
-                  (height - paddingTop - paddingBottom) -
+                (height - paddingTop - paddingBottom) -
                 paddingBottom
               const isOverall = skill === 'Overall'
               return (
@@ -558,7 +567,7 @@ const Chart = () => {
           {IELTS_TESTS.map((test, index) => {
             const x =
               (index / (IELTS_TESTS.length - 1)) *
-                (width - paddingLeft - paddingRight) +
+              (width - paddingLeft - paddingRight) +
               paddingLeft
             return (
               <text
@@ -601,12 +610,12 @@ const DuolingoChart = () => {
     return DUOLINGO_TESTS.map((test, index) => {
       const x =
         (index / (DUOLINGO_TESTS.length - 1)) *
-          (width - paddingLeft - paddingRight) +
+        (width - paddingLeft - paddingRight) +
         paddingLeft
       const y =
         height -
         ((test[skill] - minScore) / (maxScore - minScore)) *
-          (height - paddingTop - paddingBottom) -
+        (height - paddingTop - paddingBottom) -
         paddingBottom
       return `${x},${y}`
     }).join(' ')
@@ -658,7 +667,7 @@ const DuolingoChart = () => {
             const y =
               height -
               ((score - minScore) / (maxScore - minScore)) *
-                (height - paddingTop - paddingBottom) -
+              (height - paddingTop - paddingBottom) -
               paddingBottom
             return (
               <line
@@ -679,7 +688,7 @@ const DuolingoChart = () => {
             const y =
               height -
               ((score - minScore) / (maxScore - minScore)) *
-                (height - paddingTop - paddingBottom) -
+              (height - paddingTop - paddingBottom) -
               paddingBottom
             return (
               <text
@@ -701,7 +710,7 @@ const DuolingoChart = () => {
             const y =
               height -
               ((targetScore - minScore) / (maxScore - minScore)) *
-                (height - paddingTop - paddingBottom) -
+              (height - paddingTop - paddingBottom) -
               paddingBottom
             return (
               <g>
@@ -753,12 +762,12 @@ const DuolingoChart = () => {
             return DUOLINGO_TESTS.map((test, index) => {
               const x =
                 (index / (DUOLINGO_TESTS.length - 1)) *
-                  (width - paddingLeft - paddingRight) +
+                (width - paddingLeft - paddingRight) +
                 paddingLeft
               const y =
                 height -
                 ((test[skill] - minScore) / (maxScore - minScore)) *
-                  (height - paddingTop - paddingBottom) -
+                (height - paddingTop - paddingBottom) -
                 paddingBottom
               const isOverall = skill === 'Overall'
               return (
@@ -783,7 +792,7 @@ const DuolingoChart = () => {
           {DUOLINGO_TESTS.map((test, index) => {
             const x =
               (index / (DUOLINGO_TESTS.length - 1)) *
-                (width - paddingLeft - paddingRight) +
+              (width - paddingLeft - paddingRight) +
               paddingLeft
             return (
               <text
@@ -834,34 +843,28 @@ export default function ThankYouPage() {
               </h2>
               <div className="space-y-4 leading-relaxed text-main-black dark:text-night-white">
                 <p>
-                  <strong>
-                    Time has flown by so quickly, and my four months of studying abroad in the Philippines are already coming to an end. Thank you so much for everything.
-                  </strong>
+                  Time has flown by so quickly, and my four months of studying abroad in the Philippines are already coming to an end. Thank you so much for everything.
                 </p>
                 <p>
+                  Since it was my first time going abroad, I had many worries:<br></br> 
+                  ・whether I could adapt to the climate and culture.<br></br>
+                  ・whether I could build good relationships with teachers and friends.<br></br>
+                  ・whether I could actually learn English, a subject I had always struggled with.<br></br>
+                  Also There were moments when I felt like throwing in the towel because learning a language can be so challenging.
                   <strong>
-                    With the goal of working overseas, I decided to study English at E-ROOM.
+                    But everyone at E-ROOM was incredibly warm and supportive,
                   </strong>
+                  even when I put my foot in my mouth. Thanks to that, I realized that this experience was fun and meaningful.
                 </p>
                 <p>
-                  Since it was my first time going abroad, I had many worries — whether I could adapt to the climate and culture, whether I could build good relationships with teachers and friends, and whether I could actually learn English, a subject I had always struggled with.  
-                  There were moments when I felt like throwing in the towel because learning a language can be so challenging.
-                  <strong>
-                    But everyone at E-ROOM was incredibly warm and supportive, even when I put my foot in my mouth.
-                  </strong>
-                  Thanks to that, I realized that this experience was fun and meaningful.
-                </p>
-                <p>
-                  <strong>Now, I don't feel nervous about English anymore.</strong><br />
+                  Now, I don't feel nervous about English anymore.<br />
                   <strong>
                     Not only do I enjoy learning it, but I also feel in seventh heaven because of the people I've met and the experiences I've gained.
                   </strong>
                 </p>
                 <p>
-                  <strong>
-                    I'll keep hitting the books and continue working toward my goals.
-                  </strong>
-                  <strong>Wishing you all good health and continued success.</strong>
+                  I'll keep hitting the books and continue working toward my goals.
+                  Wishing you all good health and continued success.
                 </p>
               </div>
               <div className="mt-6 flex justify-end">
@@ -871,7 +874,7 @@ export default function ThankYouPage() {
           </Section>
 
           {/* Photo Film Roll */}
-          <PhotoFilmRoll />
+          <PhotoFilmRoll photoRows={FIRST_PHOTO_ROWS} />
 
           {/* Growth Journey */}
           <Section className="mb-4">
@@ -882,6 +885,9 @@ export default function ThankYouPage() {
           <Section>
             <DuolingoChart />
           </Section>
+
+          {/* Second Photo Film Roll */}
+          <PhotoFilmRoll photoRows={SECOND_PHOTO_ROWS} />
 
           {/* Fun Stats */}
           <Section>

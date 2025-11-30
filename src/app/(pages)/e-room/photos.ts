@@ -72,6 +72,14 @@ import IMG_5305 from '../../../../img/e-room/IMG_5305.jpeg'
 import IMG_5329_2 from '../../../../img/e-room/IMG_5329 2.jpeg'
 import IMG_5342 from '../../../../img/e-room/IMG_5342.jpeg'
 import IMG_6169 from '../../../../img/e-room/IMG_6169.jpg'
+import IMG_0726 from '../../../../img/e-room/IMG_0726.jpeg'
+import IMG_0908 from '../../../../img/e-room/IMG_0908.jpeg'
+import IMG_0909 from '../../../../img/e-room/IMG_0909.jpeg'
+import IMG_0911 from '../../../../img/e-room/IMG_0911.jpeg'
+import IMG_0920 from '../../../../img/e-room/IMG_0920.jpeg'
+import IMG_0949 from '../../../../img/e-room/IMG_0949.jpeg'
+import IMG_0965 from '../../../../img/e-room/IMG_0965.jpeg'
+import IMG_0967 from '../../../../img/e-room/IMG_0967.jpeg'
 
 export const E_ROOM_PHOTOS: StaticImageData[] = [
   IMG_0011,
@@ -146,5 +154,13 @@ export const E_ROOM_PHOTOS: StaticImageData[] = [
   IMG_5329_2,
   IMG_5342,
   IMG_6169,
+  IMG_0726,
+  IMG_0908,
+  IMG_0909,
+  IMG_0911,
+  IMG_0920,
+  IMG_0949,
+  IMG_0965,
+  IMG_0967,
 ]
 
