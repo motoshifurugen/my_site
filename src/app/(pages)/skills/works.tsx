@@ -14,7 +14,7 @@ type Work = {
 
 export const useWorks = () => {
   const { t } = useI18n()
-  
+
   const works: Work[] = [
     {
       src: '/images/works/work_01.png',

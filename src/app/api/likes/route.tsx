@@ -56,7 +56,7 @@ async function getLikeCount(articleId: string) {
   try {
     // より確実にイシューを検索するため、複数の方法を試す
     const likeIssue = await findLikeIssue(articleId)
-    
+
     if (likeIssue) {
       // Issueのbodyからいいね数を取得
       const likeCount = parseLikeCount(likeIssue.body || '0')
@@ -69,7 +69,7 @@ async function getLikeCount(articleId: string) {
       // 記事のいいねIssueがまだない場合は新規作成
       // 作成前に再度確認して重複を防ぐ
       const doubleCheckIssue = await findLikeIssue(articleId)
-      
+
       if (doubleCheckIssue) {
         // 再確認で見つかった場合は既存のイシューを使用
         const likeCount = parseLikeCount(doubleCheckIssue.body || '0')
@@ -79,7 +79,7 @@ async function getLikeCount(articleId: string) {
           issueNumber: doubleCheckIssue.number,
         }
       }
-      
+
       // 確実に存在しない場合のみ新規作成
       try {
         const newIssue = await octokit.issues.create({
@@ -98,7 +98,7 @@ async function getLikeCount(articleId: string) {
       } catch (createError: any) {
         // イシュー作成に失敗した場合（例：重複タイトルなど）
         console.error('イシュー作成エラー:', createError)
-        
+
         // 作成失敗時は再度検索を試行
         const retryIssue = await findLikeIssue(articleId)
         if (retryIssue) {
@@ -109,9 +109,11 @@ async function getLikeCount(articleId: string) {
             issueNumber: retryIssue.number,
           }
         }
-        
+
         // それでも見つからない場合はエラーを投げる
-        throw new Error(`いいねイシューの作成に失敗しました: ${createError.message}`)
+        throw new Error(
+          `いいねイシューの作成に失敗しました: ${createError.message}`,
+        )
       }
     }
   } catch (error) {
@@ -123,7 +125,7 @@ async function getLikeCount(articleId: string) {
 // イシューを検索する関数（複数の方法を試す）
 async function findLikeIssue(articleId: string) {
   const targetTitle = `likes-${articleId}`
-  
+
   // 方法1: ラベルで検索（open状態）
   try {
     const openIssues = await octokit.issues.listForRepo({
@@ -133,11 +135,11 @@ async function findLikeIssue(articleId: string) {
       state: 'open',
       per_page: 100, // より多くの結果を取得
     })
-    
+
     const foundIssue = openIssues.data.find(
       (issue) => issue.title === targetTitle,
     )
-    
+
     if (foundIssue) {
       return foundIssue
     }
@@ -152,11 +154,11 @@ async function findLikeIssue(articleId: string) {
       q: searchQuery,
       per_page: 10,
     })
-    
+
     const foundIssue = searchResults.data.items.find(
       (issue) => issue.title === targetTitle,
     )
-    
+
     if (foundIssue) {
       // 検索結果から詳細情報を取得
       const issueDetails = await octokit.issues.get({
@@ -164,7 +166,7 @@ async function findLikeIssue(articleId: string) {
         repo: GITHUB_REPO,
         issue_number: foundIssue.number,
       })
-      
+
       return issueDetails.data
     }
   } catch (error) {

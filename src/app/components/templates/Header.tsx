@@ -2,12 +2,12 @@
 
 import TitleLinkButton from '@/app/components/atoms/TitleLinkButton'
 import GithubLinkButton from '@/app/components/molecules/GithubLinkButton'
-import HeaderLinkButton from '@/app/components/molecules/HeaderLinkButton'
 import HeaderDropdownButton from '@/app/components/molecules/HeaderDropdownButton'
+import HeaderLinkButton from '@/app/components/molecules/HeaderLinkButton'
 import LanguageSwitcher from '@/app/components/molecules/LanguageSwitcher'
 import ThemeSwitch from '@/app/components/organisms/ThemeSwitch'
 import { useI18n } from '@/i18n'
-import { faBars, faTimes, faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -68,7 +68,9 @@ const Header = () => {
             <button
               className="flex size-12 items-center justify-center rounded-full bg-white text-2xl text-main-black dark:bg-night-black dark:text-night-white"
               onClick={toggleMenu}
-              aria-label={menuOpen ? t.navigation.closeMenu : t.navigation.toggleMenu}
+              aria-label={
+                menuOpen ? t.navigation.closeMenu : t.navigation.toggleMenu
+              }
             >
               <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
             </button>
@@ -92,14 +94,14 @@ const Header = () => {
                 index={index}
               />
             ))}
-            
+
             {/* 遊びドロップダウンメニュー */}
             <HeaderDropdownButton
               text={t.common.play}
               subItems={entertainmentItems}
               index={links.length}
             />
-            
+
             {/* スマホメニュー内のコントロール群（横並び） */}
             <div className="mt-6 pr-7 flex items-center justify-end space-x-4 md:hidden">
               <ThemeSwitch />
@@ -109,7 +111,7 @@ const Header = () => {
             <div className="ml-auto mt-6 pr-7 md:m-0 md:pr-0">
               <GithubLinkButton />
             </div>
-            
+
             {/* デスクトップでのテーマ・言語切り替え */}
             <div className="mb-8 mt-auto hidden w-full justify-end md:my-0 md:flex md:w-auto">
               <div className="ml-4 text-main-black dark:text-night-white">

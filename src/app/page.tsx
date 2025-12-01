@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import MessageBoard from '@/app/components/organisms/MessageBoard'
 import { useI18n } from '@/i18n'

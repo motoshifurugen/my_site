@@ -2,28 +2,34 @@ import { useI18n } from '../../../i18n/context'
 
 const useHistory = () => {
   const { t } = useI18n()
-  
+
   return [
     { year: t.profile.career[1998], description: t.profile.career.desc1998 },
     { year: t.profile.career[2017], description: t.profile.career.desc2017 },
     { year: t.profile.career[2020], description: t.profile.career.desc2020 },
     { year: t.profile.career[2021], description: t.profile.career.desc2021 },
     { year: t.profile.career[2023], description: t.profile.career.desc2023 },
-    { year: t.profile.career.current, description: t.profile.career.descCurrent },
+    {
+      year: t.profile.career.current,
+      description: t.profile.career.descCurrent,
+    },
   ]
 }
 
 export const useArticles = () => {
   const { t } = useI18n()
   const history = useHistory()
-  
+
   return [
     {
       title: t.profile.career.title,
       content: (
         <div className="flex flex-col space-y-4 md:space-y-0">
           {history.map((item, index) => (
-            <div key={index} className="flex flex-col md:flex-row md:items-start">
+            <div
+              key={index}
+              className="flex flex-col md:flex-row md:items-start"
+            >
               <p className="mr-6 text-left">{item.year}</p>
               <p className="pl-2 md:pl-0">{item.description}</p>
             </div>
@@ -35,11 +41,7 @@ export const useArticles = () => {
     },
     {
       title: t.profile.interest.title,
-      content: (
-        <p>
-          {t.profile.interest.content}
-        </p>
-      ),
+      content: <p>{t.profile.interest.content}</p>,
       imageSrc: '/images/profile_02.png',
       imageAlt: 'profile img 02',
     },
@@ -65,7 +67,8 @@ export const useArticles = () => {
       title: t.profile.mbti.title,
       content: (
         <p>
-          <strong>{t.profile.mbti.type}</strong>{t.profile.mbti.typeName}
+          <strong>{t.profile.mbti.type}</strong>
+          {t.profile.mbti.typeName}
           <br />
           <br />
           {t.profile.mbti.introvert}

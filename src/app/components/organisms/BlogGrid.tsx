@@ -1,6 +1,6 @@
 import BlogCard from '@/app/components/molecules/BlogCard'
-import { useEffect, useState } from 'react'
 import { useI18n } from '@/i18n'
+import { useEffect, useState } from 'react'
 
 interface BlogGridProps {
   blogData: any

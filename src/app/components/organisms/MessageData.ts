@@ -1,15 +1,13 @@
-import { Locale } from '@/i18n/types';
-
 export interface AnnouncementLink {
-  url: string;
-  textKey: string;
+  url: string
+  textKey: string
 }
 
 export interface AnnouncementData {
-  date: string;
-  categoryKey: 'blogUpdate' | 'notification';
-  titleKey: string;
-  link?: AnnouncementLink;
+  date: string
+  categoryKey: 'blogUpdate' | 'notification'
+  titleKey: string
+  link?: AnnouncementLink
 }
 
 export const announcementsData: AnnouncementData[] = [

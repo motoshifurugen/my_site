@@ -33,10 +33,12 @@ const ThemeSwitch = () => {
   }
 
   return (
-    <button 
-      onClick={toggleTheme} 
+    <button
+      onClick={toggleTheme}
       className="flex items-center space-x-1 rounded-lg bg-gray-200 px-2 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 sm:space-x-2 sm:px-3"
-      aria-label={theme === 'light' ? 'ダークモードをオン' : 'ダークモードをオフ'}
+      aria-label={
+        theme === 'light' ? 'ダークモードをオン' : 'ダークモードをオフ'
+      }
     >
       {theme === 'light' ? (
         <>

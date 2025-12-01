@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import React from 'react';
+import React from 'react'
 
 const TankaSkeleton: React.FC = () => {
   return (
@@ -13,14 +13,17 @@ const TankaSkeleton: React.FC = () => {
         <div className="flex flex-row-reverse space-x-reverse space-x-6 sm:space-x-8 lg:space-x-12">
           {/* 5行の短歌スケルトン */}
           {Array.from({ length: 5 }, (_, lineIndex) => (
-            <div key={lineIndex} className="flex flex-col space-y-4 sm:space-y-5">
+            <div
+              key={lineIndex}
+              className="flex flex-col space-y-4 sm:space-y-5"
+            >
               {/* 各行の文字スケルトン */}
               {Array.from({ length: 7 }, (_, charIndex: number) => (
                 <div
                   key={charIndex}
                   className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 bg-gray-300 dark:bg-gray-600 rounded-sm"
                   style={{
-                    animationDelay: `${(lineIndex * 0.1) + (charIndex * 0.05)}s`
+                    animationDelay: `${lineIndex * 0.1 + charIndex * 0.05}s`,
                   }}
                 />
               ))}
@@ -28,12 +31,12 @@ const TankaSkeleton: React.FC = () => {
           ))}
         </div>
       </div>
-      
+
       {/* 下部固定エリア */}
       <div className="mt-auto">
         {/* 下部の装飾線 */}
         <div className="w-full h-px bg-gray-300 dark:bg-gray-600 mb-3"></div>
-        
+
         {/* 日付部分のスケルトン */}
         <div className="text-center">
           <div className="h-3 w-32 bg-gray-300 dark:bg-gray-600 rounded mx-auto"></div>
@@ -43,7 +46,7 @@ const TankaSkeleton: React.FC = () => {
       {/* 微細な光沢エフェクト */}
       <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none rounded-xl"></div>
     </div>
-  );
-};
+  )
+}
 
-export default TankaSkeleton;
+export default TankaSkeleton

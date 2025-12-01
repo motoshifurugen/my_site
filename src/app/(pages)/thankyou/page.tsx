@@ -2,8 +2,8 @@
 
 import { faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import TextArrowLinkButton from '../../components/molecules/TextArrowLinkButton'
 import { useI18n } from '../../../i18n/context'
+import TextArrowLinkButton from '../../components/molecules/TextArrowLinkButton'
 
 const ThankYou = () => {
   const { t } = useI18n()
@@ -18,9 +18,7 @@ const ThankYou = () => {
           />
         </div>
         <h2 className="my-10 text-center">{t.contact.thankYou.title}</h2>
-        <p className="mt-4 text-center">
-          {t.contact.thankYou.message}
-        </p>
+        <p className="mt-4 text-center">{t.contact.thankYou.message}</p>
         <div className="flex justify-center">
           <TextArrowLinkButton text={t.contact.thankYou.backToTop} href="/" />
         </div>
