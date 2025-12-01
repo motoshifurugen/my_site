@@ -29,7 +29,7 @@ const max = 2025.6
 
 export const useSkills = () => {
   const { t } = useI18n()
-  
+
   const skills: Skill[] = [
     {
       name: t.skills.skillNames.php,

@@ -16,13 +16,13 @@ function getClientIP(request: NextRequest): string {
   if (forwarded) {
     return forwarded.split(',')[0].trim()
   }
-  
+
   // その他のプロキシ
   const realIP = request.headers.get('x-real-ip')
   if (realIP) {
     return realIP
   }
-  
+
   // フォールバック
   return '127.0.0.1'
 }
@@ -31,15 +31,18 @@ export async function GET(request: NextRequest) {
   try {
     // 環境変数チェック
     if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      return NextResponse.json({ 
-        error: 'Supabase configuration is missing' 
-      }, { status: 500 })
+      return NextResponse.json(
+        {
+          error: 'Supabase configuration is missing',
+        },
+        { status: 500 },
+      )
     }
 
     // Supabaseクライアント初期化
     const supabase = createClient(
       process.env.SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY
+      process.env.SUPABASE_SERVICE_ROLE_KEY,
     )
 
     const url = new URL(request.url)
@@ -61,7 +64,7 @@ export async function GET(request: NextRequest) {
       console.error('いいね数取得エラー:', likeCountError)
       return NextResponse.json(
         { error: 'いいね数の取得に失敗しました' },
-        { status: 500 }
+        { status: 500 },
       )
     }
 
@@ -78,13 +81,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       tweetId: tweetIdStr,
       likeCount: likeCount || 0,
-      isLiked
+      isLiked,
     })
   } catch (error) {
     console.error('いいね取得エラー:', error)
     return NextResponse.json(
       { error: 'いいね情報の取得に失敗しました' },
-      { status: 500 }
+      { status: 500 },
     )
   }
 }
@@ -93,15 +96,18 @@ export async function POST(request: NextRequest) {
   try {
     // 環境変数チェック
     if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      return NextResponse.json({ 
-        error: 'Supabase configuration is missing' 
-      }, { status: 500 })
+      return NextResponse.json(
+        {
+          error: 'Supabase configuration is missing',
+        },
+        { status: 500 },
+      )
     }
 
     // Supabaseクライアント初期化
     const supabase = createClient(
       process.env.SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY
+      process.env.SUPABASE_SERVICE_ROLE_KEY,
     )
 
     const payload = await request.json()
@@ -114,7 +120,10 @@ export async function POST(request: NextRequest) {
     }
 
     if (typeof liked !== 'boolean') {
-      return NextResponse.json({ error: 'likedパラメータが必要です' }, { status: 400 })
+      return NextResponse.json(
+        { error: 'likedパラメータが必要です' },
+        { status: 400 },
+      )
     }
 
     // 短歌が存在するか確認
@@ -128,14 +137,14 @@ export async function POST(request: NextRequest) {
       console.error('短歌存在確認エラー:', tankaError)
       return NextResponse.json(
         { error: '短歌の確認に失敗しました' },
-        { status: 500 }
+        { status: 500 },
       )
     }
 
     if (!tankaData) {
       return NextResponse.json(
         { error: '指定された短歌が見つかりません' },
-        { status: 404 }
+        { status: 404 },
       )
     }
 
@@ -145,7 +154,7 @@ export async function POST(request: NextRequest) {
         .from('tanka_likes')
         .insert({
           tweet_id: tweetIdStr,
-          user_ip: userIP
+          user_ip: userIP,
         })
         .select()
 
@@ -155,7 +164,7 @@ export async function POST(request: NextRequest) {
           console.error('いいね追加エラー:', insertError)
           return NextResponse.json(
             { error: 'いいねの追加に失敗しました' },
-            { status: 500 }
+            { status: 500 },
           )
         }
       }
@@ -171,7 +180,7 @@ export async function POST(request: NextRequest) {
         console.error('いいね削除エラー:', deleteError)
         return NextResponse.json(
           { error: 'いいねの削除に失敗しました' },
-          { status: 500 }
+          { status: 500 },
         )
       }
     }
@@ -186,20 +195,20 @@ export async function POST(request: NextRequest) {
       console.error('いいね数取得エラー:', likeCountError)
       return NextResponse.json(
         { error: 'いいね数の取得に失敗しました' },
-        { status: 500 }
+        { status: 500 },
       )
     }
 
     return NextResponse.json({
       tweetId: tweetIdStr,
       likeCount: updatedLikeCount || 0,
-      isLiked: liked
+      isLiked: liked,
     })
   } catch (error) {
     console.error('いいね更新エラー:', error)
     return NextResponse.json(
       { error: 'いいねの更新に失敗しました' },
-      { status: 500 }
+      { status: 500 },
     )
   }
 }

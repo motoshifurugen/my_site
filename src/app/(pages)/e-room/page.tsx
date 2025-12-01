@@ -2,25 +2,28 @@
 
 import { AnimatePresence, motion, useInView } from 'framer-motion'
 import {
+  Apple,
   Beer,
   BookOpen,
   CloudRain,
   MessageCircle,
   Plane,
-  Apple,
   Sparkles,
-  Heart,
-  Star,
 } from 'lucide-react'
 import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
 
+import { FaInstagram, FaXTwitter } from 'react-icons/fa6'
 import { E_ROOM_PHOTOS } from './photos'
-import { FaXTwitter, FaInstagram } from 'react-icons/fa6'
 
 // --- Types ---
 type SkillType = 'Overall' | 'Listening' | 'Reading' | 'Writing' | 'Speaking'
-type DuolingoSkillType = 'Overall' | 'Listening' | 'Reading' | 'Writing' | 'Speaking'
+type DuolingoSkillType =
+  | 'Overall'
+  | 'Listening'
+  | 'Reading'
+  | 'Writing'
+  | 'Speaking'
 
 // --- Data ---
 const IELTS_TESTS = [
@@ -135,12 +138,17 @@ const DUOLINGO_SKILL_COLORS: Record<DuolingoSkillType, string> = {
 
 // 画像を2つのグループに分ける
 const PHOTOS_COUNT = E_ROOM_PHOTOS.length
-const FIRST_SLIDESHOW_PHOTOS = E_ROOM_PHOTOS.slice(0, Math.floor(PHOTOS_COUNT / 2))
-const SECOND_SLIDESHOW_PHOTOS = E_ROOM_PHOTOS.slice(Math.floor(PHOTOS_COUNT / 2))
+const FIRST_SLIDESHOW_PHOTOS = E_ROOM_PHOTOS.slice(
+  0,
+  Math.floor(PHOTOS_COUNT / 2),
+)
+const SECOND_SLIDESHOW_PHOTOS = E_ROOM_PHOTOS.slice(
+  Math.floor(PHOTOS_COUNT / 2),
+)
 
 const createPhotoRows = (photos: typeof E_ROOM_PHOTOS) =>
   Array.from({ length: 3 }, (_, rowIndex) =>
-    photos.filter((_, idx) => idx % 3 === rowIndex)
+    photos.filter((_, idx) => idx % 3 === rowIndex),
   )
 
 const FIRST_PHOTO_ROWS = createPhotoRows(FIRST_SLIDESHOW_PHOTOS)
@@ -152,12 +160,22 @@ const STATS = [
   { icon: CloudRain, label: 'Typhoons Encountered', value: '3' },
   { icon: Apple, label: 'Watermelons Eaten', value: '34 Slices' },
   { icon: Sparkles, label: 'Favorite Phrase', value: '"once in a blue moon"' },
-  { icon: MessageCircle, label: 'Hardest Word to Pronounce', value: '"walk / work"' },
+  {
+    icon: MessageCircle,
+    label: 'Hardest Word to Pronounce',
+    value: '"walk / work"',
+  },
 ]
 
 // --- Components ---
 
-const StatCard = ({ stat, index }: { stat: typeof STATS[0]; index: number }) => {
+const StatCard = ({
+  stat,
+  index,
+}: {
+  stat: (typeof STATS)[0]
+  index: number
+}) => {
   const [isFlipped, setIsFlipped] = useState(false)
 
   const handleClick = () => {
@@ -195,7 +213,7 @@ const StatCard = ({ stat, index }: { stat: typeof STATS[0]; index: number }) => 
             {stat.label}
           </div>
         </motion.div>
-        
+
         {/* Back side */}
         <motion.div
           className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-teal p-4 text-center shadow-sm dark:bg-night-teal"
@@ -204,7 +222,10 @@ const StatCard = ({ stat, index }: { stat: typeof STATS[0]; index: number }) => 
             transform: 'rotateY(180deg)',
           }}
         >
-          <stat.icon className="mb-2 text-white dark:text-night-white" size={28} />
+          <stat.icon
+            className="mb-2 text-white dark:text-night-white"
+            size={28}
+          />
           <div className="mb-2 text-xs font-medium uppercase tracking-wider text-white/90 dark:text-night-white/90">
             {stat.label}
           </div>
@@ -305,7 +326,11 @@ const Section = ({
   )
 }
 
-const PhotoFilmRoll = ({ photoRows }: { photoRows: typeof FIRST_PHOTO_ROWS }) => {
+const PhotoFilmRoll = ({
+  photoRows,
+}: {
+  photoRows: typeof FIRST_PHOTO_ROWS
+}) => {
   const row1Ref = useRef<HTMLDivElement>(null)
   const row2Ref = useRef<HTMLDivElement>(null)
   const row3Ref = useRef<HTMLDivElement>(null)
@@ -447,19 +472,21 @@ const Chart = () => {
     return IELTS_TESTS.map((test, index) => {
       const x =
         (index / (IELTS_TESTS.length - 1)) *
-        (width - paddingLeft - paddingRight) +
+          (width - paddingLeft - paddingRight) +
         paddingLeft
       const y =
         height -
         ((test[skill] - minScore) / (maxScore - minScore)) *
-        (height - paddingTop - paddingBottom) -
+          (height - paddingTop - paddingBottom) -
         paddingBottom
       return `${x},${y}`
     }).join(' ')
   }
 
   // Y-axis grid lines (0.5 increments)
-  const yAxisGridLines = [3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0]
+  const yAxisGridLines = [
+    3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0,
+  ]
   // Y-axis labels (1.0 increments)
   const yAxisLabels = [3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
 
@@ -504,7 +531,7 @@ const Chart = () => {
             const y =
               height -
               ((score - minScore) / (maxScore - minScore)) *
-              (height - paddingTop - paddingBottom) -
+                (height - paddingTop - paddingBottom) -
               paddingBottom
             return (
               <line
@@ -525,7 +552,7 @@ const Chart = () => {
             const y =
               height -
               ((score - minScore) / (maxScore - minScore)) *
-              (height - paddingTop - paddingBottom) -
+                (height - paddingTop - paddingBottom) -
               paddingBottom
             return (
               <text
@@ -547,7 +574,7 @@ const Chart = () => {
             const y =
               height -
               ((targetScore - minScore) / (maxScore - minScore)) *
-              (height - paddingTop - paddingBottom) -
+                (height - paddingTop - paddingBottom) -
               paddingBottom
             return (
               <g>
@@ -599,12 +626,12 @@ const Chart = () => {
             return IELTS_TESTS.map((test, index) => {
               const x =
                 (index / (IELTS_TESTS.length - 1)) *
-                (width - paddingLeft - paddingRight) +
+                  (width - paddingLeft - paddingRight) +
                 paddingLeft
               const y =
                 height -
                 ((test[skill] - minScore) / (maxScore - minScore)) *
-                (height - paddingTop - paddingBottom) -
+                  (height - paddingTop - paddingBottom) -
                 paddingBottom
               const isOverall = skill === 'Overall'
               return (
@@ -629,7 +656,7 @@ const Chart = () => {
           {IELTS_TESTS.map((test, index) => {
             const x =
               (index / (IELTS_TESTS.length - 1)) *
-              (width - paddingLeft - paddingRight) +
+                (width - paddingLeft - paddingRight) +
               paddingLeft
             return (
               <text
@@ -672,12 +699,12 @@ const DuolingoChart = () => {
     return DUOLINGO_TESTS.map((test, index) => {
       const x =
         (index / (DUOLINGO_TESTS.length - 1)) *
-        (width - paddingLeft - paddingRight) +
+          (width - paddingLeft - paddingRight) +
         paddingLeft
       const y =
         height -
         ((test[skill] - minScore) / (maxScore - minScore)) *
-        (height - paddingTop - paddingBottom) -
+          (height - paddingTop - paddingBottom) -
         paddingBottom
       return `${x},${y}`
     }).join(' ')
@@ -729,7 +756,7 @@ const DuolingoChart = () => {
             const y =
               height -
               ((score - minScore) / (maxScore - minScore)) *
-              (height - paddingTop - paddingBottom) -
+                (height - paddingTop - paddingBottom) -
               paddingBottom
             return (
               <line
@@ -750,7 +777,7 @@ const DuolingoChart = () => {
             const y =
               height -
               ((score - minScore) / (maxScore - minScore)) *
-              (height - paddingTop - paddingBottom) -
+                (height - paddingTop - paddingBottom) -
               paddingBottom
             return (
               <text
@@ -772,7 +799,7 @@ const DuolingoChart = () => {
             const y =
               height -
               ((targetScore - minScore) / (maxScore - minScore)) *
-              (height - paddingTop - paddingBottom) -
+                (height - paddingTop - paddingBottom) -
               paddingBottom
             return (
               <g>
@@ -824,12 +851,12 @@ const DuolingoChart = () => {
             return DUOLINGO_TESTS.map((test, index) => {
               const x =
                 (index / (DUOLINGO_TESTS.length - 1)) *
-                (width - paddingLeft - paddingRight) +
+                  (width - paddingLeft - paddingRight) +
                 paddingLeft
               const y =
                 height -
                 ((test[skill] - minScore) / (maxScore - minScore)) *
-                (height - paddingTop - paddingBottom) -
+                  (height - paddingTop - paddingBottom) -
                 paddingBottom
               const isOverall = skill === 'Overall'
               return (
@@ -854,7 +881,7 @@ const DuolingoChart = () => {
           {DUOLINGO_TESTS.map((test, index) => {
             const x =
               (index / (DUOLINGO_TESTS.length - 1)) *
-              (width - paddingLeft - paddingRight) +
+                (width - paddingLeft - paddingRight) +
               paddingLeft
             return (
               <text
@@ -938,34 +965,44 @@ export default function ThankYouPage() {
                 <h2 className="mb-6 text-xl font-bold text-teal dark:text-night-teal">
                   Dear Teachers & Friends
                 </h2>
-                
+
                 <div className="space-y-4 leading-relaxed text-main-black dark:text-night-white">
                   <p>
-                    Time has flown by so quickly, and my four months of studying abroad in the Philippines are already coming to an end. Thank you so much for everything.
+                    Time has flown by so quickly, and my four months of studying
+                    abroad in the Philippines are already coming to an end.
+                    Thank you so much for everything.
                   </p>
                   <p>
-                    Since it was my first time going abroad, I had many worries:<br></br> 
+                    Since it was my first time going abroad, I had many worries:
+                    <br></br>
                     ・whether I could adapt to the climate and culture.<br></br>
-                    ・whether I could build good relationships with teachers and friends.<br></br>
-                    ・whether I could actually learn English, a subject I had always struggled with.<br></br>
-                    Also There were moments when I felt like throwing in the towel because learning a language can be so challenging.
+                    ・whether I could build good relationships with teachers and
+                    friends.<br></br>
+                    ・whether I could actually learn English, a subject I had
+                    always struggled with.<br></br>
+                    Also There were moments when I felt like throwing in the
+                    towel because learning a language can be so challenging.
                     <strong>
                       But everyone at E-ROOM was incredibly warm and supportive,
                     </strong>
-                    even when I put my foot in my mouth. Thanks to that, I realized that this experience was fun and meaningful.
+                    even when I put my foot in my mouth. Thanks to that, I
+                    realized that this experience was fun and meaningful.
                   </p>
                   <p>
-                    Now, I don't feel nervous about English anymore.<br />
+                    Now, I don&apos;t feel nervous about English anymore.
+                    <br />
                     <strong>
-                      Not only do I enjoy learning it, but I also feel in seventh heaven because of the people I've met and the experiences I've gained.
+                      Not only do I enjoy learning it, but I also feel in
+                      seventh heaven because of the people I&apos;ve met and the
+                      experiences I&apos;ve gained.
                     </strong>
                   </p>
                   <p>
-                    I'll keep hitting the books and continue working toward my goals.
-                    Wishing you all good health and continued success.
+                    I&apos;ll keep hitting the books and continue working toward my
+                    goals. Wishing you all good health and continued success.
                   </p>
                 </div>
-                
+
                 {/* Signature */}
                 <div className="mt-8 flex items-center justify-end gap-2">
                   <div className="h-px w-24 bg-gradient-to-l from-teal/40 to-transparent dark:from-night-teal/40"></div>
@@ -1033,10 +1070,20 @@ export default function ThankYouPage() {
               Future commitments.
             </p>
             <div className="flex justify-center space-x-6 text-teal dark:text-night-teal">
-              <a href="https://www.instagram.com/motoshi_cocoa" rel="noopener noreferrer" target="_blank" className="transition-transform hover:scale-110">
+              <a
+                href="https://www.instagram.com/motoshi_cocoa"
+                rel="noopener noreferrer"
+                target="_blank"
+                className="transition-transform hover:scale-110"
+              >
                 <FaInstagram size={24} />
               </a>
-              <a href="https://x.com/cocoahearts21" rel="noopener noreferrer" target="_blank" className="transition-transform hover:scale-110">
+              <a
+                href="https://x.com/cocoahearts21"
+                rel="noopener noreferrer"
+                target="_blank"
+                className="transition-transform hover:scale-110"
+              >
                 <FaXTwitter size={24} />
               </a>
             </div>

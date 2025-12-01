@@ -8,7 +8,7 @@ interface ChartHeaderProps {
 
 const ChartHeader: React.FC<ChartHeaderProps> = ({ years, totalYears }) => {
   const { t } = useI18n()
-  
+
   return (
     <div>
       <div className="flex items-center">
@@ -24,7 +24,8 @@ const ChartHeader: React.FC<ChartHeaderProps> = ({ years, totalYears }) => {
               className="absolute"
               style={{ left: `${left}%`, top: '0' }}
             >
-              {year}{t.skills.timeline.year}
+              {year}
+              {t.skills.timeline.year}
             </p>
           )
         })}

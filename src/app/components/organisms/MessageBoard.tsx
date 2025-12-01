@@ -1,11 +1,11 @@
-'use client';
+'use client'
 
-import { announcementsData } from './MessageData';
-import { useI18n } from '@/i18n';
+import { useI18n } from '@/i18n'
+import { announcementsData } from './MessageData'
 
 const MessageBoard = () => {
-  const { t } = useI18n();
-  
+  const { t } = useI18n()
+
   // if (announcementsData.length > 5) {
   //   throw new Error('お知らせは5件までです。')
   // }
@@ -35,7 +35,11 @@ const MessageBoard = () => {
                       href={announcement.link.url}
                       className="text-teal underline dark:text-night-teal"
                     >
-                      {(t.announcements.items as any)[announcement.link.textKey]?.linkText}
+                      {
+                        (t.announcements.items as any)[
+                          announcement.link.textKey
+                        ]?.linkText
+                      }
                     </a>
                   </>
                 )}

@@ -1,19 +1,22 @@
-import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
   try {
     // 環境変数チェック
     if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      return NextResponse.json({ 
-        error: 'Supabase configuration is missing' 
-      }, { status: 500 })
+      return NextResponse.json(
+        {
+          error: 'Supabase configuration is missing',
+        },
+        { status: 500 },
+      )
     }
 
     // Supabaseクライアント初期化
     const supabase = createClient(
       process.env.SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY
+      process.env.SUPABASE_SERVICE_ROLE_KEY,
     )
 
     // クエリパラメータ取得
@@ -24,9 +27,14 @@ export async function GET(request: NextRequest) {
 
     // 短歌データを取得（作成日時の降順、タグ情報も含む）
     // tweet_idを文字列として取得するため、::textを使用
-    const { data: tankaData, error, count } = await supabase
+    const {
+      data: tankaData,
+      error,
+      count,
+    } = await supabase
       .from('tanka')
-      .select(`
+      .select(
+        `
         tweet_id::text,
         author_id,
         created_at,
@@ -45,36 +53,43 @@ export async function GET(request: NextRequest) {
             description
           )
         )
-      `, { count: 'exact' })
+      `,
+        { count: 'exact' },
+      )
       .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1)
 
     if (error) {
       console.error('Supabase error:', error)
-      return NextResponse.json({ 
-        error: 'Failed to fetch tanka data' 
-      }, { status: 500 })
+      return NextResponse.json(
+        {
+          error: 'Failed to fetch tanka data',
+        },
+        { status: 500 },
+      )
     }
 
     // レスポンスデータの整形
-    const formattedData = tankaData?.map(tanka => ({
-      id: tanka.tweet_id, // 既に文字列として取得済み
-      tanka: tanka.tanka,
-      originalText: tanka.original_text,
-      createdAt: tanka.created_at,
-      extractedAt: tanka.extracted_at,
-      tweetId: tanka.tweet_id, // 既に文字列として取得済み
-      tags: tanka.tanka_tags?.map((tagRelation: any) => ({
-        id: tagRelation.tags.id,
-        name: tagRelation.tags.name,
-        slug: tagRelation.tags.slug,
-        category: tagRelation.tags.category,
-        description: tagRelation.tags.description,
-        score: tagRelation.score,
-        assignedBy: tagRelation.assigned_by,
-        assignedAt: tagRelation.assigned_at
+    const formattedData =
+      tankaData?.map((tanka) => ({
+        id: tanka.tweet_id, // 既に文字列として取得済み
+        tanka: tanka.tanka,
+        originalText: tanka.original_text,
+        createdAt: tanka.created_at,
+        extractedAt: tanka.extracted_at,
+        tweetId: tanka.tweet_id, // 既に文字列として取得済み
+        tags:
+          tanka.tanka_tags?.map((tagRelation: any) => ({
+            id: tagRelation.tags.id,
+            name: tagRelation.tags.name,
+            slug: tagRelation.tags.slug,
+            category: tagRelation.tags.category,
+            description: tagRelation.tags.description,
+            score: tagRelation.score,
+            assignedBy: tagRelation.assigned_by,
+            assignedAt: tagRelation.assigned_at,
+          })) || [],
       })) || []
-    })) || []
 
     return NextResponse.json({
       tanka: formattedData,
@@ -83,14 +98,16 @@ export async function GET(request: NextRequest) {
         totalItems: count || 0,
         totalPages: Math.ceil((count || 0) / limit),
         hasNext: page < Math.ceil((count || 0) / limit),
-        hasPrev: page > 1
-      }
+        hasPrev: page > 1,
+      },
     })
-
   } catch (error) {
     console.error('API error:', error)
-    return NextResponse.json({ 
-      error: 'Internal server error'
-    }, { status: 500 })
+    return NextResponse.json(
+      {
+        error: 'Internal server error',
+      },
+      { status: 500 },
+    )
   }
 }

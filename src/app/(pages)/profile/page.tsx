@@ -1,11 +1,11 @@
 'use client'
 
+import { useI18n } from '../../../i18n/context'
 import AnimatedLine from '../../components/atoms/AnimatedLine'
 import MainMessage from '../../components/atoms/MainMessage'
 import Article from '../../components/molecules/Article'
 import PageFace from '../../components/organisms/PageFace'
 import { useArticles } from './articles'
-import { useI18n } from '../../../i18n/context'
 
 export default function Page() {
   const { t } = useI18n()

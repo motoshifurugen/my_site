@@ -4,8 +4,8 @@ import AnimatedLine from '@/app/components/atoms/AnimatedLine'
 import PageFace from '@/app/components/organisms/PageFace'
 import dynamic from 'next/dynamic'
 import nextConfig from '../../../../next.config.mjs'
-import MaintenanceTemplate from '../../components/templates/MaintenanceTemplate'
 import { useI18n } from '../../../i18n/context'
+import MaintenanceTemplate from '../../components/templates/MaintenanceTemplate'
 
 const BASE_PATH = nextConfig.basePath || ''
 const public_flag = true

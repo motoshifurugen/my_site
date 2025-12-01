@@ -19,13 +19,14 @@ interface ChartRowProps {
 
 const ChartRow: React.FC<ChartRowProps> = ({ skill, totalYears }) => {
   const { t } = useI18n()
-  
+
   return (
     <div className="relative mb-6">
       <div className="relative rounded-lg bg-white p-3">
         <div className="dm-sans text-base font-bold">{skill.name}</div>
         <div className="dm-sans flex">
-          {skill.total.toFixed(1)}{t.skills.timeline.year}
+          {skill.total.toFixed(1)}
+          {t.skills.timeline.year}
           {skill.periods.map((period, i) => {
             const startOffset = ((period.start - 2019) / totalYears) * 100
             const width = ((period.end - period.start + 0.1) / totalYears) * 100

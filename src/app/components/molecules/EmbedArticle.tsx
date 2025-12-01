@@ -23,21 +23,22 @@ const EmbedArticle: React.FC<EmbedArticleProps> = ({ url }) => {
   const [ogData, setOgData] = useState<OpenGraphData | null>(null)
 
   const srcUrl = ogData?.ogUrl || ogData?.requestUrl
-  const faviconUrl = ogData?.favicon && srcUrl
-    ? (() => {
-        try {
-          return new URL(ogData.favicon, srcUrl).toString()
-        } catch (error) {
-          // Base URLが無効な場合、faviconが絶対URLかチェック
+  const faviconUrl =
+    ogData?.favicon && srcUrl
+      ? (() => {
           try {
-            return new URL(ogData.favicon).toString()
-          } catch {
-            // 両方とも失敗した場合はnullを返す
-            return null
+            return new URL(ogData.favicon, srcUrl).toString()
+          } catch (error) {
+            // Base URLが無効な場合、faviconが絶対URLかチェック
+            try {
+              return new URL(ogData.favicon).toString()
+            } catch {
+              // 両方とも失敗した場合はnullを返す
+              return null
+            }
           }
-        }
-      })()
-    : null
+        })()
+      : null
   const ogImageUrl = Array.isArray(ogData?.ogImage)
     ? ogData?.ogImage[0].url
     : ogData?.ogImage?.url

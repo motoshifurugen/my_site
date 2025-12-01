@@ -54,9 +54,9 @@ const ProfileCard = () => {
       </p>
       <div className="mt-3">
         <Link href="/profile">
-        <div className="text-teal hover:underline dark:text-night-teal">
-          {t.profileCard.viewProfile}
-        </div>
+          <div className="text-teal hover:underline dark:text-night-teal">
+            {t.profileCard.viewProfile}
+          </div>
         </Link>
       </div>
     </div>

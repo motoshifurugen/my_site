@@ -1,7 +1,7 @@
 'use client'
 
-import LoadingCircle from '@/app/components/atoms/LoadingCircle'
 import HtmlLangUpdater from '@/app/components/atoms/HtmlLangUpdater'
+import LoadingCircle from '@/app/components/atoms/LoadingCircle'
 import BackgroundWrapper from '@/app/components/molecules/BackgroundWrapper'
 import Footer from '@/app/components/templates/Footer'
 import Header from '@/app/components/templates/Header'

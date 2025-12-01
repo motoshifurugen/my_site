@@ -1,5 +1,6 @@
 import type { StaticImageData } from 'next/image'
 
+import IMG_9EACA7FD from '../../../../img/e-room/9EACA7FD-D72B-4D04-A8DF-27880C214955.jpg'
 import IMG_0011 from '../../../../img/e-room/IMG_0011.jpg'
 import IMG_0012 from '../../../../img/e-room/IMG_0012.jpg'
 import IMG_0015 from '../../../../img/e-room/IMG_0015.jpeg'
@@ -40,6 +41,7 @@ import IMG_0458 from '../../../../img/e-room/IMG_0458.jpeg'
 import IMG_0464 from '../../../../img/e-room/IMG_0464.jpeg'
 import IMG_0474 from '../../../../img/e-room/IMG_0474.jpeg'
 import IMG_0574 from '../../../../img/e-room/IMG_0574.jpeg'
+import IMG_0726 from '../../../../img/e-room/IMG_0726.jpeg'
 import IMG_0851 from '../../../../img/e-room/IMG_0851.jpeg'
 import IMG_0860 from '../../../../img/e-room/IMG_0860.jpeg'
 import IMG_0862 from '../../../../img/e-room/IMG_0862.jpeg'
@@ -65,14 +67,6 @@ import IMG_0901 from '../../../../img/e-room/IMG_0901.jpg'
 import IMG_0902 from '../../../../img/e-room/IMG_0902.jpg'
 import IMG_0903 from '../../../../img/e-room/IMG_0903.jpg'
 import IMG_0904 from '../../../../img/e-room/IMG_0904.jpg'
-import IMG_2564 from '../../../../img/e-room/IMG_2564.jpeg'
-import IMG_4412 from '../../../../img/e-room/IMG_4412.jpeg'
-import IMG_5201_2 from '../../../../img/e-room/IMG_5201 2.jpeg'
-import IMG_5305 from '../../../../img/e-room/IMG_5305.jpeg'
-import IMG_5329_2 from '../../../../img/e-room/IMG_5329 2.jpeg'
-import IMG_5342 from '../../../../img/e-room/IMG_5342.jpeg'
-import IMG_6169 from '../../../../img/e-room/IMG_6169.jpg'
-import IMG_0726 from '../../../../img/e-room/IMG_0726.jpeg'
 import IMG_0908 from '../../../../img/e-room/IMG_0908.jpeg'
 import IMG_0909 from '../../../../img/e-room/IMG_0909.jpeg'
 import IMG_0911 from '../../../../img/e-room/IMG_0911.jpeg'
@@ -84,7 +78,13 @@ import IMG_0983 from '../../../../img/e-room/IMG_0983.jpg'
 import IMG_0992 from '../../../../img/e-room/IMG_0992.jpg'
 import IMG_0999 from '../../../../img/e-room/IMG_0999.jpeg'
 import IMG_1054 from '../../../../img/e-room/IMG_1054.jpeg'
-import IMG_9EACA7FD from '../../../../img/e-room/9EACA7FD-D72B-4D04-A8DF-27880C214955.jpg'
+import IMG_2564 from '../../../../img/e-room/IMG_2564.jpeg'
+import IMG_4412 from '../../../../img/e-room/IMG_4412.jpeg'
+import IMG_5201_2 from '../../../../img/e-room/IMG_5201 2.jpeg'
+import IMG_5305 from '../../../../img/e-room/IMG_5305.jpeg'
+import IMG_5329_2 from '../../../../img/e-room/IMG_5329 2.jpeg'
+import IMG_5342 from '../../../../img/e-room/IMG_5342.jpeg'
+import IMG_6169 from '../../../../img/e-room/IMG_6169.jpg'
 
 export const E_ROOM_PHOTOS: StaticImageData[] = [
   IMG_0011,
@@ -173,4 +173,3 @@ export const E_ROOM_PHOTOS: StaticImageData[] = [
   IMG_1054,
   IMG_9EACA7FD,
 ]
-

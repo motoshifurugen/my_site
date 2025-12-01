@@ -1,21 +1,20 @@
-'use client';
+'use client'
 
-import { useI18n } from '@/i18n';
-import { Locale, locales, localeNames } from '@/i18n';
-import { useState } from 'react';
-import { FaGlobe } from 'react-icons/fa';
+import { Locale, localeNames, locales, useI18n } from '@/i18n'
+import { useState } from 'react'
+import { FaGlobe } from 'react-icons/fa'
 
 export default function LanguageSwitcher() {
-  const { locale, setLocale, t } = useI18n();
-  const [isOpen, setIsOpen] = useState(false);
+  const { locale, setLocale, t } = useI18n()
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleLanguageChange = (newLocale: Locale) => {
-    setLocale(newLocale);
-    setIsOpen(false);
-  };
+    setLocale(newLocale)
+    setIsOpen(false)
+  }
 
   return (
-    <div 
+    <div
       className="relative inline-block cursor-pointer"
       onMouseEnter={() => window.innerWidth >= 768 && setIsOpen(true)}
       onMouseLeave={() => window.innerWidth >= 768 && setIsOpen(false)}
@@ -72,5 +71,5 @@ export default function LanguageSwitcher() {
         />
       )}
     </div>
-  );
-} 
+  )
+}

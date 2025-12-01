@@ -1,6 +1,6 @@
 import React from 'react'
-import Chip from '../atoms/Chip'
 import { useI18n } from '../../../i18n/context'
+import Chip from '../atoms/Chip'
 
 interface InputLabelProps {
   label: string
@@ -14,7 +14,7 @@ const InputLabel: React.FC<InputLabelProps> = ({
   required = false,
 }) => {
   const { t } = useI18n()
-  
+
   return (
     <label htmlFor={id} className="mb-2 block text-sm font-bold md:text-base">
       <p className="text-main-black dark:text-night-white">

@@ -22,9 +22,9 @@ const TankaLikeButton: React.FC<TankaLikeButtonProps> = ({
   useEffect(() => {
     const fetchLikeInfo = async () => {
       try {
-      const response = await fetch(
-        `/my_site/api/tanka-likes?tweetId=${tweetId}`,
-      )
+        const response = await fetch(
+          `/my_site/api/tanka-likes?tweetId=${tweetId}`,
+        )
 
         if (response.ok) {
           const data = await response.json()
