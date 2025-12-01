@@ -80,6 +80,11 @@ import IMG_0920 from '../../../../img/e-room/IMG_0920.jpeg'
 import IMG_0949 from '../../../../img/e-room/IMG_0949.jpeg'
 import IMG_0965 from '../../../../img/e-room/IMG_0965.jpeg'
 import IMG_0967 from '../../../../img/e-room/IMG_0967.jpeg'
+import IMG_0983 from '../../../../img/e-room/IMG_0983.jpg'
+import IMG_0992 from '../../../../img/e-room/IMG_0992.jpg'
+import IMG_0999 from '../../../../img/e-room/IMG_0999.jpeg'
+import IMG_1054 from '../../../../img/e-room/IMG_1054.jpeg'
+import IMG_9EACA7FD from '../../../../img/e-room/9EACA7FD-D72B-4D04-A8DF-27880C214955.jpg'
 
 export const E_ROOM_PHOTOS: StaticImageData[] = [
   IMG_0011,
@@ -162,5 +167,10 @@ export const E_ROOM_PHOTOS: StaticImageData[] = [
   IMG_0949,
   IMG_0965,
   IMG_0967,
+  IMG_0983,
+  IMG_0992,
+  IMG_0999,
+  IMG_1054,
+  IMG_9EACA7FD,
 ]
 
