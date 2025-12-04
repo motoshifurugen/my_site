@@ -83,14 +83,14 @@ const IELTS_TESTS = [
     Writing: 7.0,
     Speaking: 6.0,
   },
-  // {
-  //   date: '12/05',
-  //   Overall: 6.0,
-  //   Listening: 5.0,
-  //   Reading: 6.0,
-  //   Writing: 7.0,
-  //   Speaking: 6.0,
-  // },
+  {
+    date: '12/05',
+    Overall: 6.38,
+    Listening: 7.0,
+    Reading: 5.5,
+    Writing: 6.5,
+    Speaking: 6.5,
+  },
 ]
 
 const SKILL_COLORS: Record<SkillType, string> = {
@@ -968,34 +968,29 @@ export default function ThankYouPage() {
 
                 <div className="space-y-4 leading-relaxed text-main-black dark:text-night-white">
                   <p>
-                    Time has flown by so quickly, and my four months of studying
-                    abroad in the Philippines are already coming to an end.
-                    Thank you so much for everything.
+                    Thank you so much for everything. Time has flown by so quickly.
                   </p>
                   <p>
-                    Since it was my first time going abroad, I had many worries:
+                    Since it was my first time going abroad, I had second thoughts:
                     <br></br>
-                    ・whether I could adapt to the climate and culture.<br></br>
-                    ・whether I could build good relationships with teachers and
+                    ・Whether I could adapt to the climate and culture.<br></br>
+                    ・Whether I could build good relationships with teachers and
                     friends.<br></br>
-                    ・whether I could actually learn English, a subject I had
-                    always struggled with.<br></br>
-                    Also There were moments when I felt like throwing in the
-                    towel because learning a language can be so challenging.
+                    ・Whether I could improve my English skills.<br></br>
+                    Honestly speaking, there were moments when I wanted to throw in the
+                    towel.
                     <strong>
-                      But everyone at E-ROOM was incredibly warm and supportive,
+                      But you gave me a hand through thick and thin.
                     </strong>
-                    even when I put my foot in my mouth. Thanks to that, I
-                    realized that this experience was fun and meaningful.
                   </p>
                   <p>
-                    Now, I don&apos;t feel nervous about English anymore.
-                    <br />
                     <strong>
-                      Not only do I enjoy learning it, but I also feel in
+                      Not only did I enjoy learning, but I also felt like I was in
                       seventh heaven because of the people I&apos;ve met and the
                       experiences I&apos;ve gained.
                     </strong>
+                    <br />
+                    Now, I don&apos;t feel nervous about English anymore.
                   </p>
                   <p>
                     I&apos;ll keep hitting the books and continue working toward my
@@ -1067,7 +1062,7 @@ export default function ThankYouPage() {
               See you again.
             </h2>
             <p className="mb-8 text-sm text-main-black/60 dark:text-night-white/80">
-              Future commitments.
+              Wishing you beautiful days ahead.
             </p>
             <div className="flex justify-center space-x-6 text-teal dark:text-night-teal">
               <a
