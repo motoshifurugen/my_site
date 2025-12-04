@@ -6,9 +6,11 @@ import {
   Beer,
   BookOpen,
   CloudRain,
+  Dog,
   MessageCircle,
   Plane,
   Sparkles,
+  Sun,
 } from 'lucide-react'
 import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
@@ -165,6 +167,8 @@ const STATS = [
     label: 'Hardest Word to Pronounce',
     value: '"walk / work"',
   },
+  { icon: Sun, label: 'SUNBURN LEVEL', value: 'well-done' },
+  { icon: Dog, label: 'STREET DOGS THAT IGNORED ME', value: '256 Dogs' },
 ]
 
 // --- Components ---
@@ -928,7 +932,10 @@ export default function ThankYouPage() {
                       damping: 12,
                       delay: index * 0.1,
                     }}
-                    style={{ display: 'inline-block' }}
+                    style={{
+                      display: 'inline-block',
+                      color: index === 0 ? '#C0CA33' : undefined,
+                    }}
                   >
                     {char}
                   </motion.span>
@@ -1028,7 +1035,7 @@ export default function ThankYouPage() {
           {/* Fun Stats */}
           <Section>
             <p className="mb-4 text-center text-xs text-main-black/40 dark:text-night-white/40">
-              Tap the cards
+              Tap the cards!
             </p>
             <div className="grid grid-cols-2 gap-4">
               {STATS.map((stat, i) => (
