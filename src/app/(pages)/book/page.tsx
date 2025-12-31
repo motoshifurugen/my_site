@@ -85,7 +85,9 @@ const BookmarkPage = ({ bookmark }: { bookmark: BookmarkData }) => {
             maxHeight: 'calc(100vh - 6rem)',
           }}
         >
-          <div>{isFlipped ? bookmark.content : bookmark.title}</div>
+          <div style={{ whiteSpace: 'pre-line' }}>
+            {isFlipped ? bookmark.content : bookmark.title}
+          </div>
         </div>
       </div>
     </div>
@@ -202,58 +204,154 @@ export default function BookPage() {
     CONTENT: 2, // 本文開始
   } as const
 
-  // STEP4: 章ごとの本文データ（サンプルテキスト）
-  const chapters: ChapterContent[] = [
+  // STEP5: 本文を10行ごとに分割する関数
+  const splitTextIntoPages = (text: string, maxLines: number = 10): string[] => {
+    const lines = text.split('\n')
+    const pages: string[] = []
+    let currentPage: string[] = []
+
+    for (const line of lines) {
+      currentPage.push(line)
+      if (currentPage.length >= maxLines) {
+        pages.push(currentPage.join('\n'))
+        currentPage = []
+      }
+    }
+
+    // 残りの行がある場合は最後のページに追加
+    if (currentPage.length > 0) {
+      pages.push(currentPage.join('\n'))
+    }
+
+    return pages
+  }
+
+  // STEP5: 章ごとの本文データ（実際のコンテンツ、改行を保持）
+  // 各章の本文を1つの文字列として保持し、10行ごとに自動分割
+  const chaptersRaw: Array<{
+    title: string
+    content: string
+    bookmark?: BookmarkData | null
+  }> = [
     {
-      title: 'はじめに',
-      pages: [
-        'はじめに、この一年を振り返る。',
-        '様々な出来事があった。',
-        'それらを言葉にしてみたい。',
-      ],
-    },
-    {
-      title: '第1章　春の朝',
-      pages: [
-        '春の朝、窓の外から小鳥のさえずりが聞こえてくる。静かな時間が流れていく。',
-        '本を開くと、新しい世界が広がる。言葉が紡がれ、物語が始まる。',
-        '遠くの山々が朝日に照らされて、美しい光景を見せてくれる。',
-      ],
+      title: '第1章　退けば老いるぞ臆せば死ぬぞ',
+      content: `充実感と好奇心に満たされていた。
+仕事は3年目。自信だけは先に進んでいた。
+もっと自分の可能性を信じたい。とう思いはどんどん膨らんでいった。
+昇進、転職、海外キャリア。
+いろんな人の話を聞いて回った。
+副業先の先輩エンジニアから聞いたカナダ渡航実経験。
+
+これだ！と思った以上、戻れなかった。
+
+そのあとは早かった。
+海外渡航エージェント（そんなものあるのか）の相談会へ参加。
+個人面談の後、退職とカナダ渡航を決断した。`,
       bookmark: {
-        title: 'この頃よく聴いていた曲',
-        content: '春の朝に流れる静かなメロディ。心が落ち着く時間。',
+        title: 'よく考え事をした場所',
+        content: `・住宅街を抜ける散歩道
+朝昼晩歩いていた。4畳の部屋からの非難`,
       },
     },
     {
-      title: '第2章　静かな時間',
-      pages: [
-        '時間はゆっくりと過ぎていく。心が落ち着き、穏やかな気持ちになる。',
-        '読書の時間は、日常から離れる特別な瞬間だ。静寂の中で、自分と向き合う。',
-        '新しい発見があった。それは小さな気づきかもしれない。',
-      ],
+      title: '第2章　夜は短し、やり切れ全部',
+      content: `退職までは、半年の時間があった。
+後悔は残したくない。
+辞めると決めてから、仕事ではさらにタスクを巻き取った。
+夜も眠らずに個人でアプリを作ってリリース。
+英語の勉強もスタート。
+手を休める理由はどこにもなかった。`,
+      bookmark: {
+        title: 'なくして困ったもの',
+        content: `・財布
+あれどこ行ったんだろう。なぜ無くしたのかも忘れた`,
+      },
     },
     {
-      title: '第3章　季節の移り変わり',
-      pages: [
-        '季節が移り変わる。それぞれに美しさがある。',
-        '人との出会いも大切なものだ。',
-        '感謝の気持ちを忘れずにいたい。',
-      ],
+      title: '第3章　新卒失格',
+      content: `上司に「辞めます」と伝えるときが来てしまった。
+気持ちの良いものではない。
+言葉にする度に覚悟と不安が同時に強くなっていく。
+
+嬉しい言葉を言われたとき、心が戻されそうになる。
+厳しい言葉を言われたとき、心が折れそうになる。
+
+5月に全てが決着した。
+対戦ありがとうございました。
+
+本当にこれで良いの？と考えた日々。
+そこから得られたエネルギーは、後の推進力になる。
+カナダ渡航には英語力が必要。
+古堅の英語力は、ミジンコ未満。
+そのくらいが朝鮮にはちょうど良い。
+4ヶ月のフィリピン語学留学を決めた。`,
+      bookmark: {
+        title: 'この頃よく開いていたアプリ',
+        content: `・ChatGPT
+相談に乗ってくれた。ありがとう`,
+      },
+    },
+    {
+      title: '第4章　Re:ゼロから始める留学生活',
+      content: `フィリピンは想像していたより日本と近い。
+距離も、環境も、人の温かさも。
+授業は平日8時から18時まで。
+学ぶのは楽しい。めっちゃ楽しい。
+一方で、聞けない・話せないことに毎秒悔しさを感じた。
+どんなテストにも、傾向と対策が存在する。
+スコアは徐々に上がっていったが、実感とは噛み合っていなかった。`,
+      bookmark: {
+        title: 'この頃よく聴いていた曲',
+        content: `・Don't Look Back in Anger / Oasis
+リスニングの練習にはならなかった。おしゃれ`,
+      },
+    },
+    {
+      title: '第5章　書を捨てよ街へ出よう',
+      content: `少しできるようになってきた時が、一番美味しい。
+留学生活は2ヶ月が経過。
+ここにきて、英語での会話が楽しくて仕方ない。
+授業時間内のエネルギーは、いくらか外で遊ぶことにも注いだ。
+模擬試験では目標スコアを達成。
+笑い合える多くの友達にも出会うことができた。
+
+4ヶ月。いや、4秒だったのかもしれない。
+そのくらいあっといいう間だった。
+キャリアが止まっている。
+年齢は上がってる。
+焦りはそりゃあるよ。人間だもの。
+でも手に入れたものは、英語力だけではない。
+自分の脳裏に焼き付く思い出。
+結果オーライ。
+多分これからも、こんな感じで生きていく。`,
+      bookmark: {
+        title: '無性に食べたくなった味',
+        content: `・横浜家系ラーメン
+満足感120％で忘れらんねぇよ。チャーシュー抜きで`,
+      },
     },
     {
       title: '終わりに',
-      pages: [
-        '一年が終わろうとしている。',
-        '振り返ると、多くの学びがあった。',
-        'これからも歩み続けたい。',
-      ],
+      content: `2025年。
+一言で表すと、「後戻りできないボタンを押した1年」だった。
+時間が進んでいく感覚。
+夢の途中にいる自覚。
+来年へ繋げたバトン。
+前を向いて自分のペースで駆けていきたい。`,
     },
   ]
 
-  // STEP4: ページマッピングを生成（表紙→目次→各章→栞の順）
+  // STEP5: 各章の本文を10行ごとに自動分割
+  const chapters: ChapterContent[] = chaptersRaw.map((chapter) => ({
+    title: chapter.title,
+    pages: splitTextIntoPages(chapter.content, 10),
+    bookmark: chapter.bookmark,
+  }))
+
+  // STEP4: ページマッピングを生成（表紙→目次→各章→栞→裏表紙の順）
   const buildPageMapping = () => {
     const mapping: Array<{
-      type: 'cover' | 'table-of-contents' | 'content' | 'bookmark'
+      type: 'cover' | 'table-of-contents' | 'content' | 'bookmark' | 'back-cover'
       chapterIndex?: number
       pageIndex?: number
       bookmark?: BookmarkData
@@ -285,20 +383,17 @@ export default function BookPage() {
       }
     })
 
+    // 裏表紙
+    mapping.push({ type: 'back-cover' })
+
     return mapping
   }
 
   const pageMapping = buildPageMapping()
   const totalPages = pageMapping.length
 
-  // STEP3A: 目次項目
-  const tableOfContentsItems = [
-    'はじめに',
-    '第1章',
-    '第2章',
-    '第3章',
-    '終わりに',
-  ]
+  // STEP3A: 目次項目（STEP5: 実際の章タイトルから生成）
+  const tableOfContentsItems = chapters.map((chapter) => chapter.title)
 
   // STEP4: 現在のページ情報を取得
   const currentPageInfo = pageMapping[currentPage] || pageMapping[0]
@@ -336,7 +431,7 @@ export default function BookPage() {
             overflow: 'hidden',
           }}
         >
-          {/* 本の上部（中央）：章タイトル */}
+          {/* 本の上部（中央）：章タイトルまたは本のタイトル */}
           {pageType === 'content' &&
           currentPageInfo.chapterIndex !== undefined ? (
             <div
@@ -347,33 +442,65 @@ export default function BookPage() {
                 fontSize: '0.7rem',
                 color: 'rgba(0, 0, 0, 0.6)',
                 writingMode: 'horizontal-tb',
+                width: '90%',
+                maxWidth: '100%',
               }}
             >
-              <div>{chapters[currentPageInfo.chapterIndex].title}</div>
+              <div style={{ whiteSpace: 'nowrap' }}>
+                {chapters[currentPageInfo.chapterIndex].title}
+              </div>
               <div
                 style={{
-                  width: '3rem',
+                  width: '5rem',
                   height: '1px',
                   backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                  marginTop: '0.25rem',
+                  marginTop: '0.5rem',
+                }}
+              />
+            </div>
+          ) : pageType === 'table-of-contents' ? (
+            <div
+              className="absolute top-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+              style={{
+                fontFamily:
+                  '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                fontSize: '0.7rem',
+                color: 'rgba(0, 0, 0, 0.6)',
+                writingMode: 'horizontal-tb',
+                width: '90%',
+                maxWidth: '100%',
+              }}
+            >
+              <div style={{ whiteSpace: 'nowrap' }}>2025</div>
+              <div
+                style={{
+                  width: '5rem',
+                  height: '1px',
+                  backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                  marginTop: '0.5rem',
                 }}
               />
             </div>
           ) : null}
 
-          {/* 本の下部（中央）：ページ数 */}
-          <div
-            className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
-            style={{
-              fontFamily:
-                '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
-              fontSize: '0.65rem',
-              color: 'rgba(0, 0, 0, 0.5)',
-              writingMode: 'horizontal-tb',
-            }}
-          >
-            - {currentPage + 1} -
-          </div>
+          {/* 本の下部（中央）：ページ数（表紙・目次・栞・裏表紙を除く） */}
+          {pageType !== 'cover' &&
+          pageType !== 'table-of-contents' &&
+          pageType !== 'bookmark' &&
+          pageType !== 'back-cover' ? (
+            <div
+              className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
+              style={{
+                fontFamily:
+                  '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                fontSize: '0.65rem',
+                color: 'rgba(0, 0, 0, 0.5)',
+                writingMode: 'horizontal-tb',
+              }}
+            >
+              - {currentPage - 1} -
+            </div>
+          ) : null}
 
           <div className="relative w-full h-full flex items-center justify-center">
             {/* STEP2: 縦書き表示エリア */}
@@ -439,14 +566,14 @@ export default function BookPage() {
         ) : pageType === 'content' ? (
           // STEP4: 章本文ページ
           <div
-            className="flex h-full w-full items-start justify-start"
+            className="flex h-full w-full"
             style={{
               writingMode: 'vertical-rl',
               textOrientation: 'upright',
               paddingLeft: '1rem',
               paddingRight: '1rem',
-              paddingTop: '2.5rem',
-              paddingBottom: '2.5rem',
+              paddingTop: '3.5rem',
+              paddingBottom: '3.5rem',
               fontFamily:
                 '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
             }}
@@ -456,25 +583,44 @@ export default function BookPage() {
               style={{
                 fontFamily:
                   '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
-                fontSize: '0.75rem',
-                lineHeight: '2.8',
+                fontSize: 'clamp(0.65rem, 3vw, 0.85rem)',
                 letterSpacing: '0.08em',
-                maxHeight: 'calc(100vh - 6rem)',
-                maxWidth: 'calc(100vw - 4rem)',
-                paddingTop: '1.5rem',
-                paddingBottom: '1.5rem',
+                width: '100%',
+                height: '100%',
+                display: 'grid',
+                gridTemplateRows: 'repeat(10, 1fr)',
+                paddingTop: '1rem',
+                paddingBottom: '1rem',
+                gap: '0',
               }}
             >
-              <div>
-                {currentPageInfo.chapterIndex !== undefined &&
-                currentPageInfo.pageIndex !== undefined
-                  ? chapters[currentPageInfo.chapterIndex].pages[
-                      currentPageInfo.pageIndex
-                    ]
-                  : ''}
-              </div>
+              {currentPageInfo.chapterIndex !== undefined &&
+              currentPageInfo.pageIndex !== undefined
+                ? (() => {
+                    const lines = chapters[
+                      currentPageInfo.chapterIndex
+                    ].pages[currentPageInfo.pageIndex].split('\n')
+                    // 常に10行分のスペースを確保
+                    return Array.from({ length: 10 }, (_, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                        }}
+                      >
+                        {lines[index] || ''}
+                      </div>
+                    ))
+                  })()
+                : Array.from({ length: 10 }, (_, index) => (
+                    <div key={index}></div>
+                  ))}
             </div>
           </div>
+        ) : pageType === 'back-cover' ? (
+          // 裏表紙ページ（何も表示しない）
+          <div className="h-full w-full" />
         ) : null}
           </div>
         </div>
