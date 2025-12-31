@@ -2,8 +2,9 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 
-// STEP1: 本をめくる機能の最小実装
-// TODO: STEP2以降で縦書き・フォント・表紙デザイン等を実装予定
+// STEP1: 本をめくる機能の最小実装（完了）
+// STEP2: 縦書き・明朝体フォントの導入（完了）
+// TODO: STEP3で表紙・目次デザイン等を実装予定
 export default function BookPage() {
   const [currentPage, setCurrentPage] = useState(0)
   const totalPages = 5
@@ -91,7 +92,7 @@ export default function BookPage() {
     touchStartY.current = null
   }
 
-  // タップ検出（画面右側で次ページ、左側で前ページ）
+  // タップ検出（画面左側で次ページ、右側で前ページ）
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return
 
@@ -101,20 +102,20 @@ export default function BookPage() {
     const leftHalf = screenWidth / 2
 
     // 左側タップ：次ページ、右側タップ：前ページ
-    if (clickX >= leftHalf) {
-      setCurrentPage((prev) => Math.max(prev + 1, 0))
-    } else {
+    if (clickX < leftHalf) {
       setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
+    } else {
+      setCurrentPage((prev) => Math.max(prev - 1, 0))
     }
   }
 
-  // ダミーページコンテンツ
+  // STEP2: 縦書き向けのダミーページコンテンツ（短めの文章）
   const pageContents = [
-    'これは1ページ目のダミーテキストです。本をめくる体験を確認するための最小実装です。',
-    '2ページ目の内容です。右開きの本として、左から右へとページが進んでいきます。',
-    '3ページ目です。スワイプやタップで自然にページをめくることができます。',
-    '4ページ目のダミーテキストです。縦スクロールは完全に無効化されています。',
-    '最後の5ページ目です。STEP1ではページング機能のみを実装しています。',
+    '春の朝、窓の外から小鳥のさえずりが聞こえてくる。静かな時間が流れていく。',
+    '本を開くと、新しい世界が広がる。言葉が紡がれ、物語が始まる。',
+    '遠くの山々が朝日に照らされて、美しい光景を見せてくれる。',
+    '時間はゆっくりと過ぎていく。心が落ち着き、穏やかな気持ちになる。',
+    '読書の時間は、日常から離れる特別な瞬間だ。静寂の中で、自分と向き合う。',
   ]
 
   return (
@@ -130,12 +131,37 @@ export default function BookPage() {
         width: '100vw',
       }}
     >
-      <div className="flex h-full w-full items-center justify-center px-6 py-8">
-        <div className="w-full max-w-md">
-          <div className="text-center text-main-black dark:text-night-white">
-            <p className="text-base leading-relaxed md:text-lg">
-              {pageContents[currentPage]}
-            </p>
+      <div className="flex h-full w-full items-center justify-center">
+        {/* STEP2: 縦書き表示エリア */}
+        {/* TODO: STEP3で表紙・目次を追加予定 */}
+        <div
+          className="flex h-full w-full items-center justify-center"
+          style={{
+            writingMode: 'vertical-rl',
+            textOrientation: 'mixed',
+            paddingLeft: '2rem',
+            paddingRight: '2rem',
+            paddingTop: '3rem',
+            paddingBottom: '3rem',
+            fontFamily:
+              '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+          }}
+        >
+          <div
+            className="text-main-black dark:text-night-white"
+            style={{
+              fontFamily:
+                '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+              fontSize: '1rem',
+              lineHeight: '2.8',
+              letterSpacing: '0.08em',
+              maxHeight: 'calc(100vh - 6rem)',
+              maxWidth: 'calc(100vw - 4rem)',
+              paddingTop: '1.5rem',
+              paddingBottom: '1.5rem',
+            }}
+          >
+            <div>{pageContents[currentPage]}</div>
           </div>
         </div>
       </div>
