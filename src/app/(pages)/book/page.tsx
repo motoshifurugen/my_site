@@ -306,7 +306,7 @@ export default function BookPage() {
 個人面談の後、退職とカナダ渡航を決断した。`,
       bookmark: {
         title: 'よく考え事をした場所',
-        content: `・住宅街を抜ける散歩道
+        content: `【住宅街を抜ける散歩道】
 朝昼晩歩いていた。4畳の部屋からの非難`,
       },
     },
@@ -320,7 +320,7 @@ export default function BookPage() {
 手を休める理由はどこにもなかった。`,
       bookmark: {
         title: 'なくして困ったもの',
-        content: `・財布
+        content: `【財布】
 あれどこ行ったんだろう。なぜ無くしたのかも忘れた`,
       },
     },
@@ -344,7 +344,7 @@ export default function BookPage() {
 4ヶ月のフィリピン語学留学を決めた。`,
       bookmark: {
         title: 'この頃よく開いていたアプリ',
-        content: `・ChatGPT
+        content: `【ChatGPT】
 相談に乗ってくれた。ありがとう`,
       },
     },
@@ -359,7 +359,7 @@ export default function BookPage() {
 スコアは徐々に上がっていったが、実感とは噛み合っていなかった。`,
       bookmark: {
         title: 'この頃よく聴いていた曲',
-        content: `・Don't Look Back in Anger / Oasis
+        content: `【Don't Look Back in Anger】
 リスニングの練習にはならなかった。おしゃれ`,
       },
     },
