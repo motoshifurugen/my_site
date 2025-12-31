@@ -6,11 +6,19 @@ import React, { useEffect, useRef, useState } from 'react'
 // STEP2: 縦書き・明朝体フォントの導入（完了）
 // STEP3A: 表紙・目次ページの追加（完了）
 // STEP3B: 栞ページの追加（完了）
+// STEP4: 章本文ページの追加（完了）
 
 // STEP3B: 栞データ構造
 type BookmarkData = {
   title: string // 表：栞タイトル
   content: string // 裏：コンテンツ
+}
+
+// STEP4: 章本文データ構造
+type ChapterContent = {
+  title: string // 章タイトル（例：「第1章」「はじめに」）
+  pages: string[] // 章内の各ページのテキスト
+  bookmark?: BookmarkData | null // 章末の栞（オプション）
 }
 
 // STEP3B: 栞コンポーネント（表/裏反転機能付き）
@@ -31,10 +39,10 @@ const BookmarkPage = ({ bookmark }: { bookmark: BookmarkData }) => {
       style={{
         writingMode: 'vertical-rl',
         textOrientation: 'upright',
-        paddingLeft: '2rem',
-        paddingRight: '2rem',
-        paddingTop: '3rem',
-        paddingBottom: '3rem',
+        paddingLeft: '1rem',
+        paddingRight: '1rem',
+        paddingTop: '1.5rem',
+        paddingBottom: '1.5rem',
         fontFamily: '"Noto Sans JP", sans-serif',
       }}
     >
@@ -86,8 +94,6 @@ const BookmarkPage = ({ bookmark }: { bookmark: BookmarkData }) => {
 
 export default function BookPage() {
   const [currentPage, setCurrentPage] = useState(0)
-  // STEP3A: 表紙(0) + 目次(1) + 本文(2-6) = 7ページ
-  const totalPages = 7
   const touchStartX = useRef<number | null>(null)
   const touchStartY = useRef<number | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -196,29 +202,94 @@ export default function BookPage() {
     CONTENT: 2, // 本文開始
   } as const
 
-  // STEP3B: 栞データ（章末に挿入）
-  const bookmarks: (BookmarkData | null)[] = [
-    null, // 0: 表紙
-    null, // 1: 目次
-    null, // 2: 本文1
-    null, // 3: 本文2
+  // STEP4: 章ごとの本文データ（サンプルテキスト）
+  const chapters: ChapterContent[] = [
     {
-      title: 'この頃よく聴いていた曲',
-      content: '春の朝に流れる静かなメロディ。心が落ち着く時間。',
-    }, // 4: 第1章末の栞
-    null, // 5: 本文3
-    null, // 6: 本文4
+      title: 'はじめに',
+      pages: [
+        'はじめに、この一年を振り返る。',
+        '様々な出来事があった。',
+        'それらを言葉にしてみたい。',
+      ],
+    },
+    {
+      title: '第1章　春の朝',
+      pages: [
+        '春の朝、窓の外から小鳥のさえずりが聞こえてくる。静かな時間が流れていく。',
+        '本を開くと、新しい世界が広がる。言葉が紡がれ、物語が始まる。',
+        '遠くの山々が朝日に照らされて、美しい光景を見せてくれる。',
+      ],
+      bookmark: {
+        title: 'この頃よく聴いていた曲',
+        content: '春の朝に流れる静かなメロディ。心が落ち着く時間。',
+      },
+    },
+    {
+      title: '第2章　静かな時間',
+      pages: [
+        '時間はゆっくりと過ぎていく。心が落ち着き、穏やかな気持ちになる。',
+        '読書の時間は、日常から離れる特別な瞬間だ。静寂の中で、自分と向き合う。',
+        '新しい発見があった。それは小さな気づきかもしれない。',
+      ],
+    },
+    {
+      title: '第3章　季節の移り変わり',
+      pages: [
+        '季節が移り変わる。それぞれに美しさがある。',
+        '人との出会いも大切なものだ。',
+        '感謝の気持ちを忘れずにいたい。',
+      ],
+    },
+    {
+      title: '終わりに',
+      pages: [
+        '一年が終わろうとしている。',
+        '振り返ると、多くの学びがあった。',
+        'これからも歩み続けたい。',
+      ],
+    },
   ]
 
-  // STEP2: 縦書き向けのダミーページコンテンツ（短めの文章）
-  // STEP3A: 本文は2ページ目以降に配置
-  const contentPages = [
-    '春の朝、窓の外から小鳥のさえずりが聞こえてくる。静かな時間が流れていく。',
-    '本を開くと、新しい世界が広がる。言葉が紡がれ、物語が始まる。',
-    '遠くの山々が朝日に照らされて、美しい光景を見せてくれる。',
-    '時間はゆっくりと過ぎていく。心が落ち着き、穏やかな気持ちになる。',
-    '読書の時間は、日常から離れる特別な瞬間だ。静寂の中で、自分と向き合う。',
-  ]
+  // STEP4: ページマッピングを生成（表紙→目次→各章→栞の順）
+  const buildPageMapping = () => {
+    const mapping: Array<{
+      type: 'cover' | 'table-of-contents' | 'content' | 'bookmark'
+      chapterIndex?: number
+      pageIndex?: number
+      bookmark?: BookmarkData
+    }> = []
+
+    // 表紙
+    mapping.push({ type: 'cover' })
+
+    // 目次
+    mapping.push({ type: 'table-of-contents' })
+
+    // 各章の本文ページと栞
+    chapters.forEach((chapter, chapterIndex) => {
+      // 章の本文ページ
+      chapter.pages.forEach((_, pageIndex) => {
+        mapping.push({
+          type: 'content',
+          chapterIndex,
+          pageIndex,
+        })
+      })
+
+      // 章末の栞（存在する場合）
+      if (chapter.bookmark) {
+        mapping.push({
+          type: 'bookmark',
+          bookmark: chapter.bookmark,
+        })
+      }
+    })
+
+    return mapping
+  }
+
+  const pageMapping = buildPageMapping()
+  const totalPages = pageMapping.length
 
   // STEP3A: 目次項目
   const tableOfContentsItems = [
@@ -229,16 +300,9 @@ export default function BookPage() {
     '終わりに',
   ]
 
-  // STEP3A: ページタイプを判定
-  // STEP3B: 栞ページの判定を追加
-  const getPageType = (page: number) => {
-    if (page === PAGE_TYPE.COVER) return 'cover'
-    if (page === PAGE_TYPE.TABLE_OF_CONTENTS) return 'table-of-contents'
-    if (bookmarks[page] !== null) return 'bookmark'
-    return 'content'
-  }
-
-  const pageType = getPageType(currentPage)
+  // STEP4: 現在のページ情報を取得
+  const currentPageInfo = pageMapping[currentPage] || pageMapping[0]
+  const pageType = currentPageInfo.type
 
   return (
     <div
@@ -253,9 +317,67 @@ export default function BookPage() {
         width: '100vw',
       }}
     >
-      <div className="flex h-full w-full items-center justify-center">
-        {/* STEP2: 縦書き表示エリア */}
-        {/* STEP3A: ページタイプに応じて表示を切り替え */}
+      <div className="flex h-full w-full items-center justify-center p-4">
+        {/* 本の形の枠（縦横比2:3.5、紙の質感） */}
+        <div
+          className="relative flex items-center justify-center"
+          style={{
+            aspectRatio: '2/3.5',
+            width: '100%',
+            maxWidth: 'min(90vw, calc(90vh * 2 / 3.5))',
+            height: 'auto',
+            maxHeight: '90vh',
+            backgroundColor: '#FEFEFE',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(0, 0, 0, 0.08)',
+            borderRadius: '2px',
+            padding: '1rem',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          {/* 本の上部（中央）：章タイトル */}
+          {pageType === 'content' &&
+          currentPageInfo.chapterIndex !== undefined ? (
+            <div
+              className="absolute top-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+              style={{
+                fontFamily:
+                  '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                fontSize: '0.7rem',
+                color: 'rgba(0, 0, 0, 0.6)',
+                writingMode: 'horizontal-tb',
+              }}
+            >
+              <div>{chapters[currentPageInfo.chapterIndex].title}</div>
+              <div
+                style={{
+                  width: '3rem',
+                  height: '1px',
+                  backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                  marginTop: '0.25rem',
+                }}
+              />
+            </div>
+          ) : null}
+
+          {/* 本の下部（中央）：ページ数 */}
+          <div
+            className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
+            style={{
+              fontFamily:
+                '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+              fontSize: '0.65rem',
+              color: 'rgba(0, 0, 0, 0.5)',
+              writingMode: 'horizontal-tb',
+            }}
+          >
+            - {currentPage + 1} -
+          </div>
+
+          <div className="relative w-full h-full flex items-center justify-center">
+            {/* STEP2: 縦書き表示エリア */}
+            {/* STEP3A: ページタイプに応じて表示を切り替え */}
         {pageType === 'cover' ? (
           // STEP3A: 表紙ページ（横書き）
           <div
@@ -270,7 +392,7 @@ export default function BookPage() {
               style={{
                 fontFamily:
                   '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
-                fontSize: '2rem',
+                fontSize: '1.5rem',
                 letterSpacing: '0.1em',
               }}
             >
@@ -284,10 +406,10 @@ export default function BookPage() {
             style={{
               writingMode: 'vertical-rl',
               textOrientation: 'upright',
-              paddingLeft: '2rem',
-              paddingRight: '2rem',
-              paddingTop: '3rem',
-              paddingBottom: '3rem',
+              paddingLeft: '1rem',
+              paddingRight: '1rem',
+              paddingTop: '1.5rem',
+              paddingBottom: '1.5rem',
               fontFamily:
                 '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
             }}
@@ -297,7 +419,7 @@ export default function BookPage() {
               style={{
                 fontFamily:
                   '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
-                fontSize: '1rem',
+                fontSize: '0.85rem',
                 lineHeight: '3',
                 letterSpacing: '0.08em',
                 maxHeight: 'calc(100vh - 6rem)',
@@ -313,18 +435,18 @@ export default function BookPage() {
           </div>
         ) : pageType === 'bookmark' ? (
           // STEP3B: 栞ページ
-          <BookmarkPage bookmark={bookmarks[currentPage]!} />
-        ) : (
-          // STEP2: 本文ページ
+          <BookmarkPage bookmark={currentPageInfo.bookmark!} />
+        ) : pageType === 'content' ? (
+          // STEP4: 章本文ページ
           <div
-            className="flex h-full w-full items-center justify-center"
+            className="flex h-full w-full items-start justify-start"
             style={{
               writingMode: 'vertical-rl',
               textOrientation: 'upright',
-              paddingLeft: '2rem',
-              paddingRight: '2rem',
-              paddingTop: '3rem',
-              paddingBottom: '3rem',
+              paddingLeft: '1rem',
+              paddingRight: '1rem',
+              paddingTop: '2.5rem',
+              paddingBottom: '2.5rem',
               fontFamily:
                 '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
             }}
@@ -334,7 +456,7 @@ export default function BookPage() {
               style={{
                 fontFamily:
                   '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
-                fontSize: '1rem',
+                fontSize: '0.75rem',
                 lineHeight: '2.8',
                 letterSpacing: '0.08em',
                 maxHeight: 'calc(100vh - 6rem)',
@@ -344,14 +466,21 @@ export default function BookPage() {
               }}
             >
               <div>
-                {contentPages[currentPage - PAGE_TYPE.CONTENT] ||
-                  contentPages[0]}
+                {currentPageInfo.chapterIndex !== undefined &&
+                currentPageInfo.pageIndex !== undefined
+                  ? chapters[currentPageInfo.chapterIndex].pages[
+                      currentPageInfo.pageIndex
+                    ]
+                  : ''}
               </div>
             </div>
           </div>
-        )}
+        ) : null}
+          </div>
+        </div>
       </div>
     </div>
   )
 }
+
 
