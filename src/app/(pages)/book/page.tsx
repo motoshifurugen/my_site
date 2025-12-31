@@ -422,9 +422,20 @@ export default function BookPage() {
             maxWidth: 'min(90vw, calc(90vh * 2 / 3.5))',
             height: 'auto',
             maxHeight: '90vh',
-            backgroundColor: '#FEFEFE',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-            border: '1px solid rgba(0, 0, 0, 0.08)',
+            backgroundColor:
+              pageType === 'cover'
+                ? '#2C3E50' // 表紙：濃いグレー
+                : pageType === 'back-cover'
+                  ? '#34495E' // 裏表紙：少し明るいグレー
+                  : '#FEFEFE', // 本文：白っぽい紙の色
+            boxShadow:
+              pageType === 'cover' || pageType === 'back-cover'
+                ? '0 4px 12px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1)'
+                : '0 2px 8px rgba(0, 0, 0, 0.1)',
+            border:
+              pageType === 'cover' || pageType === 'back-cover'
+                ? '2px solid rgba(0, 0, 0, 0.2)'
+                : '1px solid rgba(0, 0, 0, 0.08)',
             borderRadius: '2px',
             padding: '1rem',
             position: 'relative',
@@ -508,22 +519,65 @@ export default function BookPage() {
         {pageType === 'cover' ? (
           // STEP3A: 表紙ページ（横書き）
           <div
-            className="flex h-full w-full items-center justify-center"
+            className="relative flex h-full w-full flex-col items-center justify-center"
             style={{
               fontFamily:
                 '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
             }}
           >
+            {/* 右閉じの本を表現する縦線（右側） */}
             <div
-              className="text-main-black dark:text-night-white"
+              style={{
+                position: 'absolute',
+                right: '0',
+                top: '0',
+                bottom: '0',
+                width: '3px',
+                background: 'linear-gradient(to left, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2), transparent)',
+                boxShadow: 'inset -2px 0 4px rgba(0, 0, 0, 0.3)',
+              }}
+            />
+            <div
               style={{
                 fontFamily:
                   '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
-                fontSize: '1.5rem',
-                letterSpacing: '0.1em',
+                fontSize: 'clamp(2.5rem, 8vw, 4rem)',
+                letterSpacing: '0.15em',
+                color: '#ECF0F1',
+                textShadow: '0 3px 6px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.1)',
+                fontWeight: '300',
+                lineHeight: '1.2',
+                position: 'relative',
+                paddingBottom: '1rem',
               }}
             >
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: '0',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '3rem',
+                  height: '2px',
+                  background: 'linear-gradient(to right, transparent, #ECF0F1, transparent)',
+                  opacity: 0.6,
+                }}
+              />
               2025
+            </div>
+            <div
+              style={{
+                fontFamily:
+                  '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                fontSize: '0.7rem',
+                letterSpacing: '0.2em',
+                color: '#BDC3C7',
+                textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
+                marginTop: '2rem',
+                fontWeight: '300',
+              }}
+            >
+              Motoshi
             </div>
           </div>
         ) : pageType === 'table-of-contents' ? (
@@ -620,7 +674,20 @@ export default function BookPage() {
           </div>
         ) : pageType === 'back-cover' ? (
           // 裏表紙ページ（何も表示しない）
-          <div className="h-full w-full" />
+          <div className="relative h-full w-full">
+            {/* 右開きの本を表現する縦線（左側） */}
+            <div
+              style={{
+                position: 'absolute',
+                left: '0',
+                top: '0',
+                bottom: '0',
+                width: '3px',
+                background: 'linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2), transparent)',
+                boxShadow: 'inset 2px 0 4px rgba(0, 0, 0, 0.3)',
+              }}
+            />
+          </div>
         ) : null}
           </div>
         </div>
