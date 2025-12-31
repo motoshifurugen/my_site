@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
+import { Bookmark } from 'lucide-react'
 
 // STEP1: 本をめくる機能の最小実装（完了）
 // STEP2: 縦書き・明朝体フォントの導入（完了）
@@ -22,6 +23,7 @@ type ChapterContent = {
 }
 
 // STEP3B: 栞コンポーネント（表/裏反転機能付き）
+// STEP6: 裏返しアクションに最小限のトランジションを追加
 const BookmarkPage = ({ bookmark }: { bookmark: BookmarkData }) => {
   const [isFlipped, setIsFlipped] = useState(false)
   const bookmarkRef = useRef<HTMLDivElement>(null)
@@ -49,14 +51,14 @@ const BookmarkPage = ({ bookmark }: { bookmark: BookmarkData }) => {
       {/* STEP3B: 栞エリア（本の間に挟まっている感覚） */}
       <div
         ref={bookmarkRef}
-        className="absolute right-8 top-0 flex h-full items-center justify-center cursor-pointer"
+        className="flex items-center justify-center cursor-pointer"
         style={{
           width: '80px',
-          backgroundColor: 'rgba(0, 128, 128, 0.1)', // 一時的な色付け（わかりやすくするため）
-          borderLeft: '2px solid rgba(0, 128, 128, 0.3)',
+          height: '60%',
           writingMode: 'vertical-rl',
           textOrientation: 'upright',
           zIndex: 10, // 他の要素より前面に表示
+          position: 'relative',
         }}
         onClick={(e) => {
           e.stopPropagation()
@@ -74,19 +76,74 @@ const BookmarkPage = ({ bookmark }: { bookmark: BookmarkData }) => {
           setIsFlipped((prev) => !prev)
         }}
       >
+        {/* リボンアイコン（栞の中央上部、はみ出すように配置） */}
         <div
-          className="text-main-black dark:text-night-white"
           style={{
-            fontFamily: '"Noto Sans JP", sans-serif',
-            fontSize: '0.9rem',
-            lineHeight: '2.5',
-            letterSpacing: '0.05em',
-            padding: '2rem 0.5rem',
-            maxHeight: 'calc(100vh - 6rem)',
+            position: 'absolute',
+            left: 'calc(50% + 1px)',
+            top: '-12px',
+            transform: 'translateX(-50%)',
+            zIndex: 12,
+            color: '#FFB366', // リボンの色（少し濃いオレンジ）
           }}
         >
-          <div style={{ whiteSpace: 'pre-line' }}>
-            {isFlipped ? bookmark.content : bookmark.title}
+          <Bookmark size={28} fill="#FFB366" strokeWidth={1.5} />
+        </div>
+        {/* 栞本体 */}
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            backgroundColor: '#FFE5CC', // 薄いオレンジ系の色
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'relative',
+          }}
+        >
+          <div
+            className="text-main-black dark:text-night-white relative w-full h-full flex items-center justify-center"
+            style={{
+              fontFamily: '"Noto Sans JP", sans-serif',
+              fontSize: '0.65rem',
+              lineHeight: '2',
+              letterSpacing: '0.05em',
+              padding: '1rem 0.5rem',
+            }}
+          >
+            {/* STEP6: 表と裏を別要素として配置し、フェードトランジションを適用 */}
+            <div
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                whiteSpace: 'pre-line',
+                opacity: isFlipped ? 0 : 1,
+                transition: 'opacity 0.2s ease-in-out',
+                pointerEvents: isFlipped ? 'none' : 'auto',
+              }}
+            >
+              {bookmark.title}
+            </div>
+            <div
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                whiteSpace: 'pre-line',
+                opacity: isFlipped ? 1 : 0,
+                transition: 'opacity 0.2s ease-in-out',
+                pointerEvents: isFlipped ? 'auto' : 'none',
+              }}
+            >
+              {bookmark.content}
+            </div>
           </div>
         </div>
       </div>
