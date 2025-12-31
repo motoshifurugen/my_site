@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Bookmark } from 'lucide-react'
 
 // STEP1: 本をめくる機能の最小実装（完了）
@@ -157,43 +157,7 @@ export default function BookPage() {
   const touchStartY = useRef<number | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  // 縦スクロールを完全に無効化し、親要素のスタイルをリセット
-  useEffect(() => {
-    const html = document.documentElement
-    const body = document.body
-    const root = document.getElementById('__next') || document.body
-    const main = document.querySelector('main')
-
-    // スクロール無効化
-    html.style.overflowY = 'hidden'
-    html.style.height = '100vh'
-    body.style.overflowY = 'hidden'
-    body.style.height = '100vh'
-    if (root) {
-      ;(root as HTMLElement).style.overflowY = 'hidden'
-      ;(root as HTMLElement).style.height = '100vh'
-    }
-    // main要素のパディングをリセット
-    if (main) {
-      ;(main as HTMLElement).style.paddingTop = '0'
-      ;(main as HTMLElement).style.height = '100vh'
-    }
-
-    return () => {
-      html.style.overflowY = ''
-      html.style.height = ''
-      body.style.overflowY = ''
-      body.style.height = ''
-      if (root) {
-        ;(root as HTMLElement).style.overflowY = ''
-        ;(root as HTMLElement).style.height = ''
-      }
-      if (main) {
-        ;(main as HTMLElement).style.paddingTop = ''
-        ;(main as HTMLElement).style.height = ''
-      }
-    }
-  }, [])
+  // 縦スクロールを許可するため、このuseEffectは削除
 
   // スワイプ検出（誤爆防止のため閾値設定）
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -459,7 +423,7 @@ export default function BookPage() {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-50 h-screen w-screen overflow-hidden bg-main-white dark:bg-night-black"
+      className="fixed inset-0 z-50 h-screen w-screen overflow-y-auto bg-main-white dark:bg-night-black"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onClick={handleClick}
@@ -469,7 +433,7 @@ export default function BookPage() {
         width: '100vw',
       }}
     >
-      <div className="flex h-full w-full items-center justify-center p-4">
+      <div className="flex min-h-full w-full items-center justify-center px-4 pt-2 pb-4">
         {/* 本の形の枠（縦横比2:3.5、紙の質感） */}
         <div
           className="relative flex items-center justify-center"
