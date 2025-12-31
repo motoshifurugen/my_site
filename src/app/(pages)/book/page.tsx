@@ -433,7 +433,7 @@ export default function BookPage() {
         width: '100vw',
       }}
     >
-      <div className="flex min-h-full w-full items-center justify-center px-4 pt-2 pb-4">
+      <div className="flex min-h-full w-full items-start justify-center px-4 pt-2 pb-4">
         {/* 本の形の枠（縦横比2:3.5、紙の質感） */}
         <div
           className="relative flex items-center justify-center"
