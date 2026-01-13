@@ -10,6 +10,7 @@ export type TranslationKeys = {
     game: string
     tanka: string
     play: string
+    shogi: string
     language: string
     switchToJapanese: string
     switchToEnglish: string

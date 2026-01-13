@@ -23,7 +23,7 @@ const Header = () => {
   const pathname = usePathname()
   const isMainPage = pathname === `${BASE_PATH}/` || pathname === '/'
 
-  // ヘッダーリンク（国際化対応）
+  // ヘッダーリンク
   const links = [
     { href: '/profile', text: t.common.about },
     { href: '/blog', text: t.common.blog },
@@ -31,10 +31,11 @@ const Header = () => {
     { href: '/contact', text: t.common.contact },
   ]
 
-  // エンタメドロップダウンメニュー
+  // labメニュー
   const entertainmentItems = [
     { href: '/game', text: t.common.game },
     { href: '/tanka', text: t.common.tanka },
+    { href: '/shogi', text: t.common.shogi },
   ]
 
   useEffect(() => {

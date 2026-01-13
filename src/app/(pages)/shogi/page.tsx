@@ -1,0 +1,124 @@
+'use client'
+
+import { useEffect, useState } from "react"
+
+// 9 x 9 のマップを作成
+const field: number[][] = [
+  [91, 92, 93, 94, 95, 96, 97, 98, 99],
+  [81, 82, 83, 84, 85, 86, 87, 88, 89],
+  [71, 72, 73, 74, 75, 76, 77, 78, 79],
+  [61, 62, 63, 64, 65, 66, 67, 68, 69],
+  [51, 52, 53, 54, 55, 56, 57, 58, 59],
+  [41, 42, 43, 44, 45, 46, 47, 48, 49],
+  [31, 32, 33, 34, 35, 36, 37, 38, 39],
+  [21, 22, 23, 24, 25, 26, 27, 28, 29],
+  [11, 12, 13, 14, 15, 16, 17, 18, 19]
+]
+
+// 駒を定義
+type Piece = {
+  color: 'black' | 'white',
+  type:
+    'K' // 王将
+    | 'R' // 飛車
+    | 'B' // 角行
+    | 'G' // 金将
+    | 'S' // 銀将
+    | 'N' // 桂馬
+    | 'L' // 香車
+    | 'P', // 歩
+  name: string,
+  promoted: boolean,
+  position: [number, number],
+  reach: number[][],
+  hold: boolean
+}
+
+// 君たちの行けるところを計算する
+const getReach = (piece: Piece): number[][] => {
+  const currentPosition: [number, number] = piece.position
+  const reach: number[][] = piece.reach
+  const row = currentPosition[0]
+  const col = currentPosition[1]
+  piece.reach = [[], [], [], [], [], [], [], [], [], []]
+
+  switch (piece.type) {
+    case 'K':
+      if(row - 1 >= 0){
+        if (col - 1 >= 0) reach[row - 1].push(col - 1)
+        reach[row - 1].push(col)
+        if (col + 1 <= 9) reach[row - 1].push(col + 1)
+      }
+      if (col - 1 >= 0) reach[row].push(col - 1)
+      reach[row].push(col)
+      if (col + 1 <= 9) reach[row].push(col + 1)
+      if (row + 1 <= 9) {
+        if (col - 1 >= 0) reach[row + 1].push(col - 1)
+        reach[row + 1].push(col)
+        if (col + 1 <= 9) reach[row + 1].push(col + 1)
+      }
+      break
+  }
+  return reach
+}
+
+// 将棋盤の表示のために整形
+const rowPosition = (row: number): number => {
+  return row + 1
+}
+const colPosition = (col: number): number => {
+  return col + 1
+}
+
+// 将棋盤の表示
+const ShogiPage: React.FC = () => {
+  const [kingA, setKingA] = useState<Piece>({
+    color: 'black',
+    type: 'K',
+    name: '王',
+    promoted: false,
+    position: [5, 9],
+    reach: [[], [], [], [], [], [], [], [], [], []],
+    hold: false,
+  })
+
+  // 移動
+  const movePiece = (piece: Piece, position: [number, number]): void => {
+    setKingA({
+      ...piece,
+      hold: false,
+      position: position,
+    })
+  }
+
+  return (
+    <div className="flex h-screen w-full items-start justify-center p-8">
+      <div className="grid grid-cols-9 w-full">
+        {field.map((row: number[], rowIndex: number) => (
+          <div id="row_${rowIndex}" className="w-full h-full">
+            {row.map((cell: number, cellIndex: number) => (
+              <div id="cell_${cellIndex}" className="border-2 border-main-black w-1/9 aspect-square flex items-center justify-center">
+                {kingA.position[0] === rowPosition(rowIndex) && kingA.position[1] === colPosition(cellIndex) ?
+                  kingA.hold ?
+                    <button
+                      className="w-full h-full font-bold bg-night-teal text-white"
+                      onClick={() => setKingA({...kingA, hold: false})}>{kingA.name}</button>
+                  : <button
+                      className="w-full h-full font-bold"
+                      onClick={() => setKingA({...kingA, hold: true})}>{kingA.name}</button>
+                : getReach(kingA)[rowPosition(rowIndex)].includes(colPosition(cellIndex)) && kingA.hold ? 
+                  <button
+                    className="w-full h-full font-bold text-night-teal"
+                    onClick={() => movePiece(kingA, [rowPosition(rowIndex), colPosition(cellIndex)])}>⚫︎</button>
+                : <span>{cell}</span>
+              }
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default ShogiPage
