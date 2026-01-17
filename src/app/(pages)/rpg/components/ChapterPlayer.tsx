@@ -33,6 +33,7 @@ const FadeInText = ({
     setIsReady(false)
     
     let timer: NodeJS.Timeout | null = null
+    let timeoutId: NodeJS.Timeout | null = null
     let rafId: number | null = null
     
     // requestAnimationFrameを使って確実に次のフレームまで待つ
@@ -51,7 +52,7 @@ const FadeInText = ({
             // 全て表示されたらコールバックを呼ぶ
             if (onCompleteRef.current) {
               // 最後の文字のアニメーションが完了するまで少し待つ
-              setTimeout(() => {
+              timeoutId = setTimeout(() => {
                 onCompleteRef.current?.()
               }, delay + 300) // delay + アニメーション時間(0.3s)
             }
@@ -63,6 +64,7 @@ const FadeInText = ({
     return () => {
       if (rafId !== null) cancelAnimationFrame(rafId)
       if (timer) clearInterval(timer)
+      if (timeoutId) clearTimeout(timeoutId)
     }
   }, [text, delay])
 
