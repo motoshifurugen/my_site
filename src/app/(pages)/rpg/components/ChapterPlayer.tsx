@@ -75,18 +75,32 @@ const FadeInText = ({
 
   return (
     <span>
-      {text.split('').map((char, index) => (
-        <span
-          key={index}
-          className="inline-block"
-          style={{
-            opacity: index < visibleChars ? 1 : 0,
-            transition: `opacity 0.1s ease-out`,
-          }}
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </span>
-      ))}
+      {text.split('').map((char, index) => {
+        // 改行文字の場合は<br />タグを返す
+        if (char === '\n') {
+          return (
+            <br
+              key={index}
+              style={{
+                opacity: index < visibleChars ? 1 : 0,
+                transition: `opacity 0.1s ease-out`,
+              }}
+            />
+          )
+        }
+        return (
+          <span
+            key={index}
+            className="inline-block"
+            style={{
+              opacity: index < visibleChars ? 1 : 0,
+              transition: `opacity 0.1s ease-out`,
+            }}
+          >
+            {char === ' ' ? '\u00A0' : char}
+          </span>
+        )
+      })}
     </span>
   )
 }
@@ -158,34 +172,21 @@ const ChapterPlayer = () => {
         <div className="flex-1" />
         
         {/* 下部エリア：テキストボックス */}
-        <div className="relative h-40 bg-black/70 backdrop-blur-sm border-t-2 border-white/20">
-          <div className="container mx-auto px-4 py-4 md:py-6">
-            {/* 話者名 */}
-            <div className="mb-2 min-h-[1.75rem] md:min-h-[2rem] text-base md:text-lg font-bold text-white">
-              {currentLine.speaker && (
-                <>
-                  {/* 振り仮名 */}
-                  <div className="text-[9px] md:text-xs text-white/70 leading-tight">
-                    {getFurigana(currentLine.speaker)}
-                  </div>
-                  {/* 話者名 */}
-                  <div>
-                    {currentLine.speaker}
-                  </div>
-                </>
-              )}
-              {!currentLine.speaker && (
-                <>
-                  {/* 空の時も振り仮名分の高さを確保 */}
-                  <div className="text-[9px] md:text-xs leading-tight">
-                    {'\u00A0'}
-                  </div>
-                  <div>
-                    {'\u00A0'}
-                  </div>
-                </>
-              )}
+        <div className="relative h-32 mb-12 bg-black/70 backdrop-blur-sm border-t-2 border-white/20">
+          {/* 話者名（左上に飛び出した領域） */}
+          {currentLine.speaker && (
+            <div className="absolute bottom-full left-4 md:left-6 px-6 py-1.5 bg-black/70 backdrop-blur-sm border-2 border-white/20 rounded-t-md">
+              {/* 振り仮名 */}
+              <div className="text-[9px] text-white/70 leading-tight">
+                {getFurigana(currentLine.speaker)}
+              </div>
+              {/* 話者名 */}
+              <div className="text-base md:text-lg font-bold text-white">
+                {currentLine.speaker}
+              </div>
             </div>
+          )}
+          <div className="container mx-auto px-4 py-6">
             {/* テキスト */}
             <div className="text-sm md:text-base leading-relaxed text-white">
               <FadeInText 
@@ -197,7 +198,7 @@ const ChapterPlayer = () => {
           </div>
           {/* クリックを促す■（右下） */}
           {isTextComplete && (
-            <div className="absolute bottom-4 right-4 md:bottom-4 md:right-6">
+            <div className="absolute bottom-6 right-4 md:bottom-4 md:right-6">
               <div className="w-3 h-1.5 bg-white/60 rounded-sm" />
             </div>
           )}
