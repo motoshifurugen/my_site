@@ -109,6 +109,14 @@ const ChapterPlayer = () => {
   const [currentSceneIndex, setCurrentSceneIndex] = useState(0)
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
   const [isTextComplete, setIsTextComplete] = useState(false)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const [transitionPhase, setTransitionPhase] = useState<'idle' | 'fadeOut' | 'white' | 'waiting' | 'fadeIn'>('idle')
+  const currentSceneIndexRef = useRef(currentSceneIndex)
+
+  // currentSceneIndexの変更をrefに反映
+  useEffect(() => {
+    currentSceneIndexRef.current = currentSceneIndex
+  }, [currentSceneIndex])
 
   const currentScene = chapter1.scenes[currentSceneIndex]
   const currentBackground =
@@ -125,6 +133,47 @@ const ChapterPlayer = () => {
     setIsTextComplete(false)
   }, [currentLine.text])
 
+  // シーン遷移アニメーション
+  useEffect(() => {
+    if (!isTransitioning) return
+
+    const fadeOutDuration = 800 // テキストフェードアウト時間（ミリ秒）
+    const whiteFadeDuration = 400 // 白へのフェード時間（ミリ秒）
+    const waitDuration = 800 // 無音時間（0.6〜1.0秒の間で0.8秒）
+    const fadeInDuration = 400 // 白からのフェードイン時間（ミリ秒）
+
+    // フェーズ1: テキストフェードアウト
+    setTransitionPhase('fadeOut')
+    
+    // フェーズ2: 白へのフェード
+    setTimeout(() => {
+      setTransitionPhase('white')
+    }, fadeOutDuration)
+
+    // フェーズ3: 無音時間（この間に次のシーンに切り替える）
+    setTimeout(() => {
+      setTransitionPhase('waiting')
+      // 次のシーンに切り替え（白画面で覆われているので見えない）
+      // refを使用して最新の値を参照
+      const sceneIndex = currentSceneIndexRef.current
+      if (sceneIndex < chapter1.scenes.length - 1) {
+        setCurrentSceneIndex(sceneIndex + 1)
+        setCurrentLineIndex(0)
+      }
+    }, fadeOutDuration + whiteFadeDuration)
+
+    // フェーズ4: 白画面からのフェードイン
+    setTimeout(() => {
+      setTransitionPhase('fadeIn')
+    }, fadeOutDuration + whiteFadeDuration + waitDuration)
+
+    // 遷移完了
+    setTimeout(() => {
+      setIsTransitioning(false)
+      setTransitionPhase('idle')
+    }, fadeOutDuration + whiteFadeDuration + waitDuration + fadeInDuration)
+  }, [isTransitioning])
+
   // 話者名から振り仮名を取得
   const getFurigana = (speaker: string): string => {
     const furiganaMap: Record<string, string> = {
@@ -136,17 +185,70 @@ const ChapterPlayer = () => {
   }
 
   const handleClick = () => {
+    // 遷移中はクリックを無視
+    if (isTransitioning) return
+
     // 現在のシーンのテキストがまだ残っている場合
     if (currentLineIndex < currentScene.lines.length - 1) {
       setCurrentLineIndex(currentLineIndex + 1)
     } else {
-      // 現在のシーンのテキストが最後の場合、次のシーンに進む
+      // 現在のシーンのテキストが最後の場合、遷移アニメーションを開始
       if (currentSceneIndex < chapter1.scenes.length - 1) {
-        setCurrentSceneIndex(currentSceneIndex + 1)
-        setCurrentLineIndex(0)
+        setIsTransitioning(true)
       }
       // すべてのシーンが終わった場合は何もしない（将来的にエンド画面などを表示）
     }
+  }
+
+  // 遷移アニメーションのスタイルを計算
+  const getTransitionOverlayStyle = (): React.CSSProperties => {
+    if (transitionPhase === 'idle') {
+      return { opacity: 0, pointerEvents: 'none' }
+    }
+    
+    if (transitionPhase === 'fadeOut') {
+      return { 
+        opacity: 0,
+        transition: 'opacity 0.8s ease-out',
+        pointerEvents: 'none'
+      }
+    }
+    
+    if (transitionPhase === 'white') {
+      return { 
+        opacity: 1,
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+        transition: 'opacity 0.4s ease-in',
+        pointerEvents: 'none'
+      }
+    }
+    
+    if (transitionPhase === 'waiting') {
+      return { 
+        opacity: 1,
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+        pointerEvents: 'none'
+      }
+    }
+    
+    // fadeIn phase
+    return { 
+      opacity: 0,
+      backgroundColor: 'rgba(255, 255, 255, 1)',
+      transition: 'opacity 0.4s ease-out',
+      pointerEvents: 'none'
+    }
+  }
+
+  // テキストボックスのフェードアウトスタイル
+  const getTextBoxStyle = (): React.CSSProperties => {
+    if (transitionPhase === 'fadeOut' || transitionPhase === 'white' || transitionPhase === 'waiting' || transitionPhase === 'fadeIn') {
+      return {
+        opacity: 0,
+        transition: transitionPhase === 'fadeOut' ? 'opacity 0.8s ease-out' : 'none',
+      }
+    }
+    return {}
   }
 
   return (
@@ -166,13 +268,22 @@ const ChapterPlayer = () => {
         />
       </div>
       
+      {/* 遷移オーバーレイ（白フェード用） */}
+      <div 
+        className="absolute inset-0 z-50"
+        style={getTransitionOverlayStyle()}
+      />
+      
       {/* ゲーム画面のコンテンツエリア */}
       <div className="relative z-10 flex h-full w-full flex-col">
         {/* 上部エリア（将来的にUIなどを配置） */}
         <div className="flex-1" />
         
         {/* 下部エリア：テキストボックス */}
-        <div className="relative h-32 mb-12 bg-black/70 backdrop-blur-sm border-t-2 border-white/20">
+        <div 
+          className="relative h-32 mb-12 bg-black/70 backdrop-blur-sm border-t-2 border-white/20"
+          style={getTextBoxStyle()}
+        >
           {/* 話者名（左上に飛び出した領域） */}
           {currentLine.speaker && (
             <div className="absolute bottom-full left-4 md:left-6 px-6 py-1.5 bg-black/70 backdrop-blur-sm border-2 border-white/20 rounded-t-md">
@@ -197,7 +308,7 @@ const ChapterPlayer = () => {
             </div>
           </div>
           {/* クリックを促す■（右下） */}
-          {isTextComplete && (
+          {isTextComplete && !isTransitioning && (
             <div className="absolute bottom-6 right-4 md:bottom-4 md:right-6">
               <div className="w-3 h-1.5 bg-white/60 rounded-sm" />
             </div>
