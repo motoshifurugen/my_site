@@ -1,85 +1,10 @@
 'use client'
 
 import { useState } from "react"
-
-type GameData = {
-  time: number,
-  player: 'black' | 'white'
-  state: 'initial' | 'playing' | 'finished'
-  moves: Piece[],
-  winner: 'black' | 'white' | null
-}
-
-// 9 x 9 のマップを作成
-const field: number[][] = [
-  [91, 92, 93, 94, 95, 96, 97, 98, 99],
-  [81, 82, 83, 84, 85, 86, 87, 88, 89],
-  [71, 72, 73, 74, 75, 76, 77, 78, 79],
-  [61, 62, 63, 64, 65, 66, 67, 68, 69],
-  [51, 52, 53, 54, 55, 56, 57, 58, 59],
-  [41, 42, 43, 44, 45, 46, 47, 48, 49],
-  [31, 32, 33, 34, 35, 36, 37, 38, 39],
-  [21, 22, 23, 24, 25, 26, 27, 28, 29],
-  [11, 12, 13, 14, 15, 16, 17, 18, 19]
-]
-
-// 駒を定義
-type Piece = {
-  color: 'black' | 'white',
-  type:
-    'K' // 王将
-    | 'R' // 飛車
-    | 'B' // 角行
-    | 'G' // 金将
-    | 'S' // 銀将
-    | 'N' // 桂馬
-    | 'L' // 香車
-    | 'P', // 歩
-  name: string,
-  promoted: boolean,
-  position: [number, number],
-  reach: number[][],
-  hold: boolean
-}
-
-// 君たちの行けるところを計算する
-const getReach = (piece: Piece): number[][] => {
-  const currentPosition: [number, number] = piece.position
-  const reach: number[][] = piece.reach
-  const row = currentPosition[0]
-  const col = currentPosition[1]
-  piece.reach = [[], [], [], [], [], [], [], [], [], []]
-
-  switch (piece.type) {
-    case 'K':
-      if(row - 1 >= 0){
-        if (col - 1 >= 0) reach[row - 1].push(col - 1)
-        reach[row - 1].push(col)
-        if (col + 1 <= 9) reach[row - 1].push(col + 1)
-      }
-      if (col - 1 >= 0) reach[row].push(col - 1)
-      reach[row].push(col)
-      if (col + 1 <= 9) reach[row].push(col + 1)
-      if (row + 1 <= 9) {
-        if (col - 1 >= 0) reach[row + 1].push(col - 1)
-        reach[row + 1].push(col)
-        if (col + 1 <= 9) reach[row + 1].push(col + 1)
-      }
-      break
-    case 'P':
-      if (col - 1 >= 0) reach[row].push(col - 1)
-      break
-  }
-  return reach
-}
-
-// 将棋盤の表示のために整形
-const rowPosition = (row: number): number => {
-  return row + 1
-}
-const colPosition = (col: number): number => {
-  return col + 1
-}
+import { Piece, GameData } from "./type"
+import { field } from "./constants"
+import { getReach } from "./utils/pieceMove"
+import { initialPieces } from "./constants"
 
 const ShogiPage: React.FC = () => {
   const [gameData, setGameData] = useState<GameData>({
@@ -89,264 +14,136 @@ const ShogiPage: React.FC = () => {
     moves: [],
     winner: null,
   })
-  const [kingA, setKingA] = useState<Piece>({
-    color: 'black',
-    type: 'K',
-    name: '王',
-    promoted: false,
-    position: [5, 9],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [kingB, setKingB] = useState<Piece>({
-    color: 'white',
-    type: 'K',
-    name: '王',
-    promoted: false,
-    position: [5, 1],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  // 歩を定義
-  const [pawnA1, setPawnA1] = useState<Piece>({
-    color: 'black',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [1, 7],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnA2, setPawnA2] = useState<Piece>({
-    color: 'black',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [2, 7],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnA3, setPawnA3] = useState<Piece>({
-    color: 'black',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [3, 7],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnA4, setPawnA4] = useState<Piece>({
-    color: 'black',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [4, 7],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnA5, setPawnA5] = useState<Piece>({
-    color: 'black',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [5, 7],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnA6, setPawnA6] = useState<Piece>({
-    color: 'black',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [6, 7],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnA7, setPawnA7] = useState<Piece>({
-    color: 'black',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [7, 7],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnA8, setPawnA8] = useState<Piece>({
-    color: 'black',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [8, 7],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnA9, setPawnA9] = useState<Piece>({
-    color: 'black',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [9, 7],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-
-  const [pawnB1, setPawnB1] = useState<Piece>({
-    color: 'white',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [1, 3],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnB2, setPawnB2] = useState<Piece>({
-    color: 'white',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [2, 3],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnB3, setPawnB3] = useState<Piece>({
-    color: 'white',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [3, 3],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnB4, setPawnB4] = useState<Piece>({
-    color: 'white',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [4, 3],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnB5, setPawnB5] = useState<Piece>({
-    color: 'white',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [5, 3],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnB6, setPawnB6] = useState<Piece>({
-    color: 'white',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [6, 3],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnB7, setPawnB7] = useState<Piece>({
-    color: 'white',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [7, 3],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnB8, setPawnB8] = useState<Piece>({
-    color: 'white',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [8, 3],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
-  const [pawnB9, setPawnB9] = useState<Piece>({
-    color: 'white',
-    type: 'P',
-    name: '歩',
-    promoted: false,
-    position: [9, 3],
-    reach: [[], [], [], [], [], [], [], [], [], []],
-    hold: false,
-  })
+  const [kingBlack, setKingBlack] = useState<Piece>(initialPieces[0])
+  const [rookBlack, setRookBlack] = useState<Piece>(initialPieces[1])
+  const [bishopBlack, setBishopBlack] = useState<Piece>(initialPieces[2])
+  const [goldBlack1, setGoldBlack1] = useState<Piece>(initialPieces[3])
+  const [goldBlack2, setGoldBlack2] = useState<Piece>(initialPieces[4])
+  const [silverBlack1, setSilverBlack1] = useState<Piece>(initialPieces[5])
+  const [silverBlack2, setSilverBlack2] = useState<Piece>(initialPieces[6])
+  const [knightBlack1, setKnightBlack1] = useState<Piece>(initialPieces[7])
+  const [knightBlack2, setKnightBlack2] = useState<Piece>(initialPieces[8])
+  const [lanceBlack1, setLanceBlack1] = useState<Piece>(initialPieces[9])
+  const [lanceBlack2, setLanceBlack2] = useState<Piece>(initialPieces[10])
+  const [pawnBlack1, setPawnBlack1] = useState<Piece>(initialPieces[11])
+  const [pawnBlack2, setPawnBlack2] = useState<Piece>(initialPieces[12])
+  const [pawnBlack3, setPawnBlack3] = useState<Piece>(initialPieces[13])
+  const [pawnBlack4, setPawnBlack4] = useState<Piece>(initialPieces[14])
+  const [pawnBlack5, setPawnBlack5] = useState<Piece>(initialPieces[15])
+  const [pawnBlack6, setPawnBlack6] = useState<Piece>(initialPieces[16])
+  const [pawnBlack7, setPawnBlack7] = useState<Piece>(initialPieces[17])
+  const [pawnBlack8, setPawnBlack8] = useState<Piece>(initialPieces[18])
+  const [pawnBlack9, setPawnBlack9] = useState<Piece>(initialPieces[19])
+  
+  const [kingWhite, setKingWhite] = useState<Piece>(initialPieces[20])
+  const [rookWhite, setRookWhite] = useState<Piece>(initialPieces[21])
+  const [bishopWhite, setBishopWhite] = useState<Piece>(initialPieces[22])
+  const [goldWhite1, setGoldWhite1] = useState<Piece>(initialPieces[23])
+  const [goldWhite2, setGoldWhite2] = useState<Piece>(initialPieces[24])
+  const [silverWhite1, setSilverWhite1] = useState<Piece>(initialPieces[25])
+  const [silverWhite2, setSilverWhite2] = useState<Piece>(initialPieces[26])
+  const [knightWhite1, setKnightWhite1] = useState<Piece>(initialPieces[27])
+  const [knightWhite2, setKnightWhite2] = useState<Piece>(initialPieces[28])
+  const [lanceWhite1, setLanceWhite1] = useState<Piece>(initialPieces[29])
+  const [lanceWhite2, setLanceWhite2] = useState<Piece>(initialPieces[30])
+  const [pawnWhite1, setPawnWhite1] = useState<Piece>(initialPieces[31])
+  const [pawnWhite2, setPawnWhite2] = useState<Piece>(initialPieces[32])
+  const [pawnWhite3, setPawnWhite3] = useState<Piece>(initialPieces[33])
+  const [pawnWhite4, setPawnWhite4] = useState<Piece>(initialPieces[34])
+  const [pawnWhite5, setPawnWhite5] = useState<Piece>(initialPieces[35])
+  const [pawnWhite6, setPawnWhite6] = useState<Piece>(initialPieces[36])
+  const [pawnWhite7, setPawnWhite7] = useState<Piece>(initialPieces[37])
+  const [pawnWhite8, setPawnWhite8] = useState<Piece>(initialPieces[38])
+  const [pawnWhite9, setPawnWhite9] = useState<Piece>(initialPieces[39])
 
   const [pieceList, setPieceList] = useState<Piece[]>([
-    kingA, kingB,
-    pawnA1, pawnA2, pawnA3, pawnA4, pawnA5, pawnA6, pawnA7, pawnA8, pawnA9,
-    pawnB1, pawnB2, pawnB3, pawnB4, pawnB5, pawnB6, pawnB7, pawnB8, pawnB9,
+    kingBlack,
+    rookBlack,
+    bishopBlack,
+    goldBlack1, goldBlack2,
+    silverBlack1, silverBlack2,
+    knightBlack1, knightBlack2,
+    lanceBlack1, lanceBlack2,
+    pawnBlack1, pawnBlack2, pawnBlack3, pawnBlack4, pawnBlack5, pawnBlack6, pawnBlack7, pawnBlack8, pawnBlack9,
+    kingWhite,
+    rookWhite,
+    bishopWhite,
+    goldWhite1, goldWhite2,
+    silverWhite1, silverWhite2,
+    knightWhite1, knightWhite2,
+    lanceWhite1, lanceWhite2,
+    pawnWhite1, pawnWhite2, pawnWhite3, pawnWhite4, pawnWhite5, pawnWhite6, pawnWhite7, pawnWhite8, pawnWhite9,
   ])
 
   const setPiece = (piece: Piece): void => {
     switch (piece.type) {
       case 'K':
-        switch (piece) {
-          case kingA:
-            setKingA(piece)
+        switch (piece.id) {
+          case 1:
+            setKingBlack(piece)
             break
-          case kingB:
-            setKingB(piece)
+          case 20:
+            setKingWhite(piece)
             break
           default:
             break
         }
         break
       case 'P':
-        switch (piece) {
-          case pawnA1:
-            setPawnA1(piece)
+        switch (piece.id) {
+          case 12:
+            setPawnBlack1(piece)
             break
-          case pawnA2:
-            setPawnA2(piece)
+          case 13:
+            setPawnBlack2(piece)
             break
-          case pawnA3:
-            setPawnA3(piece)
+          case 14:
+            setPawnBlack3(piece)
             break
-          case pawnA4:
-            setPawnA4(piece)
+          case 15:
+            setPawnBlack4(piece)
             break
-          case pawnA5:
-            setPawnA5(piece)
+          case 16:
+            setPawnBlack5(piece)
             break
-          case pawnA6:
-            setPawnA6(piece)
+          case 17:
+            setPawnBlack6(piece)
             break
-          case pawnA7:
-            setPawnA7(piece)
+          case 18:
+            setPawnBlack7(piece)
             break
-          case pawnA8:
-            setPawnA8(piece)
+          case 19:
+            setPawnBlack8(piece)
             break
-          case pawnA9:
-            setPawnA9(piece)
+          case 20:
+            setPawnBlack9(piece)
             break
-          case pawnB1:
-            setPawnB1(piece)
+          case 32:
+            setPawnWhite1(piece)
             break
-          case pawnB2:
-            setPawnB2(piece)
+          case 33:
+            setPawnWhite2(piece)
             break
-          case pawnB3:
-            setPawnB3(piece)
+          case 34:
+            setPawnWhite3(piece)
             break
-          case pawnB4:
-            setPawnB4(piece)
+          case 35:
+            setPawnWhite4(piece)
             break
-          case pawnB5:
-            setPawnB5(piece)
+          case 36:
+            setPawnWhite5(piece)
             break
-          case pawnB6:
-            setPawnB6(piece)
+          case 37:
+            setPawnWhite6(piece)
             break
-          case pawnB7:
-            setPawnB7(piece)
+          case 38:
+            setPawnWhite7(piece)
             break
-          case pawnB8:
-            setPawnB8(piece)
+          case 39:
+            setPawnWhite8(piece)
             break
-          case pawnB9:
-            setPawnB9(piece)
+          case 40:
+            setPawnWhite9(piece)
             break
           default:
             break
@@ -369,8 +166,8 @@ const ShogiPage: React.FC = () => {
   }
 
   const getComputerHand = (): void => {
-    setKingB({
-      ...kingB,
+    setKingWhite({
+      ...kingWhite,
       position: [5, 2],
     })
   }
@@ -409,40 +206,45 @@ const ShogiPage: React.FC = () => {
       </div>
       <div className="flex h-screen w-full items-start justify-center p-8">
         <div className="grid grid-cols-9 w-full">
-          {field.map((row: number[], rowIndex: number) => (
-            <div id="row_${rowIndex}" className="w-full h-full">
-              {row.map((cell: number, cellIndex: number) => (
-                <div id="cell_${cellIndex}" className="border-2 border-main-black w-1/9 aspect-square flex items-center justify-center">
-                  {(() => {
-                    const piece = pieceList.find((piece: Piece) => piece.position[0] === rowPosition(rowIndex) && piece.position[1] === colPosition(cellIndex))
-                    if (piece) {
-                      if (piece.color === 'white') {
-                        return <span className="font-bold rotate-180">{piece.name}</span>
+          {field.map((col: number[], colIndex: number) => {
+            return (
+            <div key={`col_${colIndex}`} id="col_${colIndex}" className="w-full h-full">
+              {col.map((row: number, rowIndex: number) => {
+                const cell: [number, number] = field[colIndex][rowIndex].toString().split('').map(Number) as [number, number]
+                return (
+                  <div key={`${colIndex}-${rowIndex}`} id="row_${rowIndex}" className="border-2 border-main-black w-1/9 aspect-square flex items-center justify-center">
+                    {(() => {
+                      const piece = pieceList.find((piece: Piece) => piece.position[0] === cell[0] && piece.position[1] === cell[1])
+                      if (piece) {
+                        if (piece.color === 'white') {
+                          return <span className="font-bold rotate-180">{piece.name}</span>
+                        }
+                        if (piece.hold) {
+                          return <button
+                            className="w-full h-full font-bold bg-night-teal text-white"
+                            onClick={() => selectPiece(piece)}>{piece.name}</button>
+                        } else {
+                          return <button
+                            className="w-full h-full font-bold"
+                            onClick={() => selectPiece(piece)}>{piece.name}</button>
+                        }
                       }
-                      if (piece.hold) {
-                        return <button
-                          className="w-full h-full font-bold bg-night-teal text-white"
-                          onClick={() => selectPiece(piece)}>{piece.name}</button>
-                      } else {
-                        return <button
-                          className="w-full h-full font-bold"
-                          onClick={() => selectPiece(piece)}>{piece.name}</button>
+                      const holdedPiece = pieceList.find((piece: Piece) => piece.hold)
+                      if (holdedPiece) {
+                        if (getReach(holdedPiece)[cell[0]].includes(cell[1])) {
+                          return <button
+                            className="w-full h-full font-bold text-night-teal"
+                            onClick={() => movePiece(holdedPiece, cell)}>⚫︎</button>
+                        }
                       }
-                    }
-                    const holdedPiece = pieceList.find((piece: Piece) => piece.hold)
-                    if (holdedPiece) {
-                      if (getReach(holdedPiece)[rowPosition(rowIndex)].includes(colPosition(cellIndex))) {
-                        return <button
-                          className="w-full h-full font-bold text-night-teal"
-                          onClick={() => movePiece(holdedPiece, [rowPosition(rowIndex), colPosition(cellIndex)])}>⚫︎</button>
-                      }
-                    }
-                    return null
-                  })()}
-                </div>
-              ))}
+                      return null
+                    })()}
+                  </div>
+                )
+              })}
             </div>
-          ))}
+          )
+        })}
         </div>
       </div>
     </div>
