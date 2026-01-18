@@ -10,7 +10,8 @@ export type Scene = {
   lines: Line[]
 }
 
-export const chapter1: { scenes: Scene[] } = {
+export const chapter1: { title: string; scenes: Scene[] } = {
+  title: "同じ道、同じ朝",
   scenes: [
     {
       id: "ch1_sc1_morning_walk",

@@ -3,10 +3,16 @@
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { chapter1 } from "../data/chapter1"
+import { chapter2 } from "../data/chapter2"
 import stationMorning from "../../../../../img/rpg/station_morning.png"
 import officeMorning from "../../../../../img/rpg/office_morning.png"
 import meetingRoom from "../../../../../img/rpg/meeting_room.png"
 import barNight from "../../../../../img/rpg/bar_night.png"
+import cafeLunch from "../../../../../img/rpg/cafe_lunch.png"
+import blueLeaf from "../../../../../img/rpg/blue_leaf.png"
+
+// すべての章を配列で管理（新しい章を追加する場合はここに追加するだけ）
+const chapters = [chapter1, chapter2]
 
 // 1文字ずつフェードインするテキストコンポーネント
 const FadeInText = ({ 
@@ -106,32 +112,190 @@ const FadeInText = ({
 }
 
 const ChapterPlayer = () => {
+  const [showTitleScreen, setShowTitleScreen] = useState(true)
+  const [titleScreenOpacity, setTitleScreenOpacity] = useState(1)
+  const [currentChapterIndex, setCurrentChapterIndex] = useState(0)
   const [currentSceneIndex, setCurrentSceneIndex] = useState(0)
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
   const [isTextComplete, setIsTextComplete] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [transitionPhase, setTransitionPhase] = useState<'idle' | 'fadeOut' | 'white' | 'waiting' | 'fadeIn'>('idle')
+  const [showChapterTitle, setShowChapterTitle] = useState(false)
+  const [chapterTitleOpacity, setChapterTitleOpacity] = useState(0)
+  const [chapterTitleTransform, setChapterTitleTransform] = useState('translateX(100px)')
   const currentSceneIndexRef = useRef(currentSceneIndex)
+  const currentChapterIndexRef = useRef(currentChapterIndex)
+  const prevChapterIndexRef = useRef(currentChapterIndex)
+  const isMountedRef = useRef(false)
+
+  // 現在の章を取得
+  const currentChapter = chapters[currentChapterIndex]
 
   // currentSceneIndexの変更をrefに反映
   useEffect(() => {
     currentSceneIndexRef.current = currentSceneIndex
   }, [currentSceneIndex])
 
-  const currentScene = chapter1.scenes[currentSceneIndex]
+  // currentChapterIndexの変更をrefに反映
+  useEffect(() => {
+    currentChapterIndexRef.current = currentChapterIndex
+  }, [currentChapterIndex])
+
+  // タイトル画面からゲーム開始
+  const handleTitleScreenClick = () => {
+    if (showTitleScreen) {
+      setTitleScreenOpacity(0)
+      const hideTimer = setTimeout(() => {
+        setShowTitleScreen(false)
+        // タイトル画面が消えたら第1章のタイトルを表示
+        if (currentChapter) {
+          setShowChapterTitle(true)
+          setChapterTitleOpacity(0)
+          setChapterTitleTransform('translateX(100px)')
+          
+          const rafIds: number[] = []
+          
+          // フェードイン（横からスッと）
+          const rafId1 = requestAnimationFrame(() => {
+            const rafId2 = requestAnimationFrame(() => {
+              setChapterTitleOpacity(1)
+              setChapterTitleTransform('translateX(0)')
+            })
+            rafIds.push(rafId2)
+          })
+          rafIds.push(rafId1)
+          
+          // 3秒表示してからフェードアウト
+          const fadeOutTimer = setTimeout(() => {
+            setChapterTitleOpacity(0)
+          }, 3000)
+          
+          // フェードアウト完了後に要素を非表示
+          const hideChapterTitleTimer = setTimeout(() => {
+            setShowChapterTitle(false)
+          }, 4500)
+          
+          // クリーンアップは不要（コンポーネントがアンマウントされるまで実行される）
+        }
+      }, 800) // フェードアウト時間
+    }
+  }
+
+  // 初回マウント時に第1章のタイトルを表示（タイトル画面が表示されていない場合のみ）
+  useEffect(() => {
+    if (!isMountedRef.current && currentChapter && !showTitleScreen) {
+      isMountedRef.current = true
+      setShowChapterTitle(true)
+      setChapterTitleOpacity(0)
+      setChapterTitleTransform('translateX(100px)')
+      
+      const rafIds: number[] = []
+      
+      // フェードイン（横からスッと）- requestAnimationFrameで確実に次のフレームで実行
+      const rafId1 = requestAnimationFrame(() => {
+        const rafId2 = requestAnimationFrame(() => {
+          setChapterTitleOpacity(1)
+          setChapterTitleTransform('translateX(0)')
+        })
+        rafIds.push(rafId2)
+      })
+      rafIds.push(rafId1)
+      
+      // 3秒表示してからフェードアウト（ゆっくりその場で）
+      const fadeOutTimer = setTimeout(() => {
+        setChapterTitleOpacity(0)
+        // フェードアウト時は位置はそのまま（transformは変更しない）
+      }, 3000)
+      
+      // フェードアウト完了後に要素を非表示
+      const hideTimer = setTimeout(() => {
+        setShowChapterTitle(false)
+      }, 4500) // フェードアウトが1.5秒かかるので、3000 + 1500 = 4500
+      
+      return () => {
+        rafIds.forEach(id => cancelAnimationFrame(id))
+        clearTimeout(fadeOutTimer)
+        clearTimeout(hideTimer)
+      }
+    }
+  }, [currentChapter, showTitleScreen])
+
+  // 章が変わったときにタイトルを表示（第2章以降）
+  useEffect(() => {
+    // 章が変わったときのみ表示（初回マウント時は除外）
+    if (currentChapterIndex !== prevChapterIndexRef.current && isMountedRef.current) {
+      setShowChapterTitle(true)
+      setChapterTitleOpacity(0)
+      setChapterTitleTransform('translateX(100px)')
+      
+      // 遷移アニメーション完了後0.5秒待つ
+      const delay = 500
+      
+      // フェードイン（横からスッと）
+      const showTimer = setTimeout(() => {
+        setChapterTitleOpacity(1)
+        setChapterTitleTransform('translateX(0)')
+      }, delay)
+      
+      // 3秒表示してからフェードアウト（ゆっくりその場で）
+      const fadeOutTimer = setTimeout(() => {
+        setChapterTitleOpacity(0)
+        // フェードアウト時は位置はそのまま（transformは変更しない）
+      }, delay + 3000) // 待機時間 + 3秒表示
+      
+      // フェードアウト完了後に要素を非表示
+      const hideTimer = setTimeout(() => {
+        setShowChapterTitle(false)
+      }, delay + 4500) // 待機時間 + 3秒表示 + 1.5秒フェードアウト
+      
+      return () => {
+        clearTimeout(showTimer)
+        clearTimeout(fadeOutTimer)
+        clearTimeout(hideTimer)
+      }
+    }
+    prevChapterIndexRef.current = currentChapterIndex
+  }, [currentChapterIndex])
+
+  // 章が存在しない場合はエンド画面を表示
+  if (!currentChapter) {
+    return (
+      <div className="relative h-full w-full overflow-hidden flex items-center justify-center bg-black">
+        <div className="text-center text-white">
+          <h1 className="text-2xl md:text-4xl font-bold mb-4">つづく</h1>
+          <p className="text-sm md:text-base opacity-70">遊んでいただきありがとうございます</p>
+        </div>
+      </div>
+    )
+  }
+
+  // シーンが存在しない場合はエンド画面を表示
+  if (!currentChapter.scenes[currentSceneIndex]) {
+    return (
+      <div className="relative h-full w-full overflow-hidden flex items-center justify-center bg-black">
+        <div className="text-center text-white">
+          <h1 className="text-2xl md:text-4xl font-bold mb-4">つづく</h1>
+          <p className="text-sm md:text-base opacity-70">遊んでいただきありがとうございます</p>
+        </div>
+      </div>
+    )
+  }
+
+  const currentScene = currentChapter.scenes[currentSceneIndex]
   const currentBackground =
     currentScene.background === "station_morning" ? stationMorning :
     currentScene.background === "office_morning" ? officeMorning :
     currentScene.background === "meeting_room" ? meetingRoom :
     currentScene.background === "bar_night" ? barNight :
+    currentScene.background === "cafe_lunch" ? cafeLunch :
     stationMorning
 
   const currentLine = currentScene.lines[currentLineIndex] || currentScene.lines[0]
 
-  // テキストが変更されたら完了状態をリセット
+  // 章、シーン、またはテキストが変更されたら完了状態をリセット
   useEffect(() => {
     setIsTextComplete(false)
-  }, [currentLine.text])
+  }, [currentChapterIndex, currentSceneIndex, currentLineIndex, currentLine.text])
 
   // シーン遷移アニメーション
   useEffect(() => {
@@ -156,8 +320,17 @@ const ChapterPlayer = () => {
       // 次のシーンに切り替え（白画面で覆われているので見えない）
       // refを使用して最新の値を参照
       const sceneIndex = currentSceneIndexRef.current
-      if (sceneIndex < chapter1.scenes.length - 1) {
+      const chapterIndex = currentChapterIndexRef.current
+      const chapter = chapters[chapterIndex]
+      
+      if (sceneIndex < chapter.scenes.length - 1) {
+        // 同じ章内の次のシーンへ
         setCurrentSceneIndex(sceneIndex + 1)
+        setCurrentLineIndex(0)
+      } else if (chapterIndex < chapters.length - 1) {
+        // 次の章の最初のシーンへ
+        setCurrentChapterIndex(chapterIndex + 1)
+        setCurrentSceneIndex(0)
         setCurrentLineIndex(0)
       }
     }, fadeOutDuration + whiteFadeDuration)
@@ -185,6 +358,12 @@ const ChapterPlayer = () => {
   }
 
   const handleClick = () => {
+    // タイトル画面が表示されている場合は、タイトル画面のクリックハンドラーを呼ぶ
+    if (showTitleScreen) {
+      handleTitleScreenClick()
+      return
+    }
+
     // 遷移中はクリックを無視
     if (isTransitioning) return
 
@@ -193,10 +372,11 @@ const ChapterPlayer = () => {
       setCurrentLineIndex(currentLineIndex + 1)
     } else {
       // 現在のシーンのテキストが最後の場合、遷移アニメーションを開始
-      if (currentSceneIndex < chapter1.scenes.length - 1) {
+      // シーンの切り替えは遷移アニメーション中（白画面で覆われている間）に行う
+      if (currentSceneIndex < currentChapter.scenes.length - 1 || currentChapterIndex < chapters.length - 1) {
         setIsTransitioning(true)
       }
-      // すべてのシーンが終わった場合は何もしない（将来的にエンド画面などを表示）
+      // すべての章が終わった場合は何もしない（エンド画面が表示される）
     }
   }
 
@@ -251,6 +431,45 @@ const ChapterPlayer = () => {
     return {}
   }
 
+  // タイトル画面を表示
+  if (showTitleScreen) {
+    return (
+      <div 
+        className="relative h-full w-full overflow-hidden cursor-pointer select-none flex items-center justify-center"
+        onClick={handleTitleScreenClick}
+        style={{
+          opacity: titleScreenOpacity,
+          transition: 'opacity 0.8s ease-out',
+        }}
+      >
+        {/* 背景画像 */}
+        <div className="absolute inset-0">
+          <Image
+            src={blueLeaf}
+            alt="Blue Leaf"
+            fill
+            className="object-cover"
+            priority
+            quality={90}
+          />
+        </div>
+        {/* オーバーレイ（テキストの視認性向上） */}
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="relative z-10 text-center px-4">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            Blue Leaf
+          </h1>
+          <div className="flex items-end justify-center gap-2 mb-8">
+            <p className="text-lg md:text-xl text-white/90">
+              クリックして開始
+            </p>
+            <div className="w-3 h-1.5 m-1 bg-white/80 rounded-sm animate-pulse" />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div 
       className="relative h-full w-full overflow-hidden cursor-pointer select-none"
@@ -273,6 +492,25 @@ const ChapterPlayer = () => {
         className="absolute inset-0 z-50"
         style={getTransitionOverlayStyle()}
       />
+      
+      {/* 章タイトル表示（右上） */}
+      {showChapterTitle && (
+        <div 
+          className="absolute top-4 right-4 md:top-6 md:right-6 z-40 px-4 py-2 bg-teal-100/40 backdrop-blur-sm border border-teal-300/50 rounded-md"
+          style={{
+            opacity: chapterTitleOpacity,
+            transform: chapterTitleTransform,
+            transition: chapterTitleOpacity === 0 
+              ? 'opacity 1.5s ease-in-out' // フェードアウト時はゆっくり
+              : 'opacity 0.5s ease-out, transform 0.5s ease-out', // フェードイン時はスッと
+          }}
+        >
+          <div className="text-black text-sm md:text-base">
+            <span className="font-bold">第{currentChapterIndex + 1}章</span>
+            <span className="ml-2">{currentChapter.title}</span>
+          </div>
+        </div>
+      )}
       
       {/* ゲーム画面のコンテンツエリア */}
       <div className="relative z-10 flex h-full w-full flex-col">
