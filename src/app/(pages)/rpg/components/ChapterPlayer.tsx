@@ -257,6 +257,65 @@ const ChapterPlayer = () => {
     prevChapterIndexRef.current = currentChapterIndex
   }, [currentChapterIndex])
 
+  // 章、シーン、またはテキストが変更されたら完了状態をリセット
+  useEffect(() => {
+    if (!currentChapter) return
+    const currentScene = currentChapter.scenes[currentSceneIndex]
+    if (!currentScene) return
+    const currentLine = currentScene.lines[currentLineIndex] || currentScene.lines[0]
+    setIsTextComplete(false)
+  }, [currentChapterIndex, currentSceneIndex, currentLineIndex, currentChapter])
+
+  // シーン遷移アニメーション
+  useEffect(() => {
+    if (!isTransitioning) return
+
+    const fadeOutDuration = 800 // テキストフェードアウト時間（ミリ秒）
+    const whiteFadeDuration = 400 // 白へのフェード時間（ミリ秒）
+    const waitDuration = 800 // 無音時間（0.6〜1.0秒の間で0.8秒）
+    const fadeInDuration = 400 // 白からのフェードイン時間（ミリ秒）
+
+    // フェーズ1: テキストフェードアウト
+    setTransitionPhase('fadeOut')
+    
+    // フェーズ2: 白へのフェード
+    setTimeout(() => {
+      setTransitionPhase('white')
+    }, fadeOutDuration)
+
+    // フェーズ3: 無音時間（この間に次のシーンに切り替える）
+    setTimeout(() => {
+      setTransitionPhase('waiting')
+      // 次のシーンに切り替え（白画面で覆われているので見えない）
+      // refを使用して最新の値を参照
+      const sceneIndex = currentSceneIndexRef.current
+      const chapterIndex = currentChapterIndexRef.current
+      const chapter = chapters[chapterIndex]
+      
+      if (chapter && sceneIndex < chapter.scenes.length - 1) {
+        // 同じ章内の次のシーンへ
+        setCurrentSceneIndex(sceneIndex + 1)
+        setCurrentLineIndex(0)
+      } else if (chapter && chapterIndex < chapters.length - 1) {
+        // 次の章の最初のシーンへ
+        setCurrentChapterIndex(chapterIndex + 1)
+        setCurrentSceneIndex(0)
+        setCurrentLineIndex(0)
+      }
+    }, fadeOutDuration + whiteFadeDuration)
+
+    // フェーズ4: 白画面からのフェードイン
+    setTimeout(() => {
+      setTransitionPhase('fadeIn')
+    }, fadeOutDuration + whiteFadeDuration + waitDuration)
+
+    // 遷移完了
+    setTimeout(() => {
+      setIsTransitioning(false)
+      setTransitionPhase('idle')
+    }, fadeOutDuration + whiteFadeDuration + waitDuration + fadeInDuration)
+  }, [isTransitioning])
+
   // 章が存在しない場合はエンド画面を表示
   if (!currentChapter) {
     return (
@@ -291,61 +350,6 @@ const ChapterPlayer = () => {
     stationMorning
 
   const currentLine = currentScene.lines[currentLineIndex] || currentScene.lines[0]
-
-  // 章、シーン、またはテキストが変更されたら完了状態をリセット
-  useEffect(() => {
-    setIsTextComplete(false)
-  }, [currentChapterIndex, currentSceneIndex, currentLineIndex, currentLine.text])
-
-  // シーン遷移アニメーション
-  useEffect(() => {
-    if (!isTransitioning) return
-
-    const fadeOutDuration = 800 // テキストフェードアウト時間（ミリ秒）
-    const whiteFadeDuration = 400 // 白へのフェード時間（ミリ秒）
-    const waitDuration = 800 // 無音時間（0.6〜1.0秒の間で0.8秒）
-    const fadeInDuration = 400 // 白からのフェードイン時間（ミリ秒）
-
-    // フェーズ1: テキストフェードアウト
-    setTransitionPhase('fadeOut')
-    
-    // フェーズ2: 白へのフェード
-    setTimeout(() => {
-      setTransitionPhase('white')
-    }, fadeOutDuration)
-
-    // フェーズ3: 無音時間（この間に次のシーンに切り替える）
-    setTimeout(() => {
-      setTransitionPhase('waiting')
-      // 次のシーンに切り替え（白画面で覆われているので見えない）
-      // refを使用して最新の値を参照
-      const sceneIndex = currentSceneIndexRef.current
-      const chapterIndex = currentChapterIndexRef.current
-      const chapter = chapters[chapterIndex]
-      
-      if (sceneIndex < chapter.scenes.length - 1) {
-        // 同じ章内の次のシーンへ
-        setCurrentSceneIndex(sceneIndex + 1)
-        setCurrentLineIndex(0)
-      } else if (chapterIndex < chapters.length - 1) {
-        // 次の章の最初のシーンへ
-        setCurrentChapterIndex(chapterIndex + 1)
-        setCurrentSceneIndex(0)
-        setCurrentLineIndex(0)
-      }
-    }, fadeOutDuration + whiteFadeDuration)
-
-    // フェーズ4: 白画面からのフェードイン
-    setTimeout(() => {
-      setTransitionPhase('fadeIn')
-    }, fadeOutDuration + whiteFadeDuration + waitDuration)
-
-    // 遷移完了
-    setTimeout(() => {
-      setIsTransitioning(false)
-      setTransitionPhase('idle')
-    }, fadeOutDuration + whiteFadeDuration + waitDuration + fadeInDuration)
-  }, [isTransitioning])
 
   // 話者名から振り仮名を取得
   const getFurigana = (speaker: string): string => {
@@ -472,7 +476,7 @@ const ChapterPlayer = () => {
 
   return (
     <div 
-      className="relative h-full w-full overflow-hidden cursor-pointer select-none"
+      className="relative h-full w-full overflow-hidden select-none cursor-pointer"
       onClick={handleClick}
     >
       {/* 背景画像 */}
