@@ -975,33 +975,35 @@ export default function ThankYouPage() {
 
                 <div className="space-y-4 leading-relaxed text-main-black dark:text-night-white">
                   <p>
-                    Thank you so much for everything. Time has flown by so quickly.
+                    Thank you so much for everything. Time has flown by so
+                    quickly.
                   </p>
                   <p>
-                    Since it was my first time going abroad, I had second thoughts:
+                    Since it was my first time going abroad, I had second
+                    thoughts:
                     <br></br>
                     ・Whether I could adapt to the climate and culture.<br></br>
                     ・Whether I could build good relationships with teachers and
                     friends.<br></br>
                     ・Whether I could improve my English skills.<br></br>
-                    Honestly speaking, there were moments when I wanted to throw in the
-                    towel.
+                    Honestly speaking, there were moments when I wanted to throw
+                    in the towel.
                     <strong>
                       But you gave me a hand through thick and thin.
                     </strong>
                   </p>
                   <p>
                     <strong>
-                      Not only did I enjoy learning, but I also felt like I was in
-                      seventh heaven because of the people I&apos;ve met and the
-                      experiences I&apos;ve gained.
+                      Not only did I enjoy learning, but I also felt like I was
+                      in seventh heaven because of the people I&apos;ve met and
+                      the experiences I&apos;ve gained.
                     </strong>
                     <br />
                     Now, I don&apos;t feel nervous about English anymore.
                   </p>
                   <p>
-                    I&apos;ll keep hitting the books and continue working toward my
-                    goals. Wishing you all good health and continued success.
+                    I&apos;ll keep hitting the books and continue working toward
+                    my goals. Wishing you all good health and continued success.
                   </p>
                 </div>
 

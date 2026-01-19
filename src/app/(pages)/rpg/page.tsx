@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from "react"
-import ChapterPlayer from "./components/ChapterPlayer"
+import { useEffect, useState } from 'react'
+import ChapterPlayer from './components/ChapterPlayer'
 
 export default function Rpg() {
   const [isPortrait, setIsPortrait] = useState(false)
@@ -46,7 +46,9 @@ export default function Rpg() {
       <div className="fixed inset-0 h-screen w-screen flex items-center justify-center bg-black text-white">
         <div className="text-center px-4">
           <h2 className="text-xl font-bold mb-2">画面を横にしてください</h2>
-          <p className="text-sm opacity-80">このゲームは横画面でプレイできます</p>
+          <p className="text-sm opacity-80">
+            このゲームは横画面でプレイできます
+          </p>
         </div>
       </div>
     )

@@ -17,7 +17,8 @@ const ClientWrapper: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(true)
   const pathname = usePathname()
-  const isRpgPage = pathname?.startsWith(`${BASE_PATH}/rpg`) || pathname?.startsWith('/rpg')
+  const isRpgPage =
+    pathname?.startsWith(`${BASE_PATH}/rpg`) || pathname?.startsWith('/rpg')
 
   useEffect(() => {
     setTimeout(() => {

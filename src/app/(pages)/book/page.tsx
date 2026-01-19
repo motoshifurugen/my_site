@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
 import { Bookmark } from 'lucide-react'
+import React, { useRef, useState } from 'react'
 
 // STEP1: 本をめくる機能の最小実装（完了）
 // STEP2: 縦書き・明朝体フォントの導入（完了）
@@ -226,7 +226,10 @@ export default function BookPage() {
   } as const
 
   // STEP5: 本文を10行ごとに分割する関数
-  const splitTextIntoPages = (text: string, maxLines: number = 10): string[] => {
+  const splitTextIntoPages = (
+    text: string,
+    maxLines: number = 10,
+  ): string[] => {
     const lines = text.split('\n')
     const pages: string[] = []
     let currentPage: string[] = []
@@ -382,7 +385,12 @@ export default function BookPage() {
   // STEP4: ページマッピングを生成（表紙→目次→各章→栞→裏表紙の順）
   const buildPageMapping = () => {
     const mapping: Array<{
-      type: 'cover' | 'table-of-contents' | 'content' | 'bookmark' | 'back-cover'
+      type:
+        | 'cover'
+        | 'table-of-contents'
+        | 'content'
+        | 'bookmark'
+        | 'back-cover'
       chapterIndex?: number
       pageIndex?: number
       bookmark?: BookmarkData
@@ -547,184 +555,187 @@ export default function BookPage() {
           <div className="relative w-full h-full flex items-center justify-center">
             {/* STEP2: 縦書き表示エリア */}
             {/* STEP3A: ページタイプに応じて表示を切り替え */}
-        {pageType === 'cover' ? (
-          // STEP3A: 表紙ページ（横書き）
-          <div
-            className="relative flex h-full w-full flex-col items-center justify-center"
-            style={{
-              fontFamily:
-                '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
-            }}
-          >
-            {/* 右閉じの本を表現する縦線（右側） */}
-            <div
-              style={{
-                position: 'absolute',
-                right: '0',
-                top: '0',
-                bottom: '0',
-                width: '3px',
-                background: 'linear-gradient(to left, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2), transparent)',
-                boxShadow: 'inset -2px 0 4px rgba(0, 0, 0, 0.3)',
-              }}
-            />
-            <div
-              style={{
-                fontFamily:
-                  '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
-                fontSize: 'clamp(2.5rem, 8vw, 4rem)',
-                letterSpacing: '0.15em',
-                color: '#ECF0F1',
-                textShadow: '0 3px 6px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.1)',
-                fontWeight: '300',
-                lineHeight: '1.2',
-                position: 'relative',
-                paddingBottom: '1rem',
-              }}
-            >
+            {pageType === 'cover' ? (
+              // STEP3A: 表紙ページ（横書き）
               <div
+                className="relative flex h-full w-full flex-col items-center justify-center"
                 style={{
-                  position: 'absolute',
-                  bottom: '0',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  width: '3rem',
-                  height: '2px',
-                  background: 'linear-gradient(to right, transparent, #ECF0F1, transparent)',
-                  opacity: 0.6,
+                  fontFamily:
+                    '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
                 }}
-              />
-              2025
-            </div>
-            <div
-              style={{
-                fontFamily:
-                  '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
-                fontSize: '0.7rem',
-                letterSpacing: '0.2em',
-                color: '#BDC3C7',
-                textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
-                marginTop: '2rem',
-                fontWeight: '300',
-              }}
-            >
-              Motoshi
-            </div>
-          </div>
-        ) : pageType === 'table-of-contents' ? (
-          // STEP3A: 目次ページ
-          <div
-            className="flex h-full w-full items-center justify-center"
-            style={{
-              writingMode: 'vertical-rl',
-              textOrientation: 'upright',
-              paddingLeft: '1rem',
-              paddingRight: '1rem',
-              paddingTop: '1.5rem',
-              paddingBottom: '1.5rem',
-              fontFamily:
-                '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
-            }}
-          >
-            <div
-              className="text-main-black dark:text-night-white"
-              style={{
-                fontFamily:
-                  '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
-                fontSize: '0.85rem',
-                lineHeight: '3',
-                letterSpacing: '0.08em',
-                maxHeight: 'calc(100vh - 6rem)',
-                maxWidth: 'calc(100vw - 4rem)',
-              }}
-            >
-              {tableOfContentsItems.map((item, index) => (
-                <div key={index} style={{ marginBottom: '1.5rem' }}>
-                  {item}
+              >
+                {/* 右閉じの本を表現する縦線（右側） */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    right: '0',
+                    top: '0',
+                    bottom: '0',
+                    width: '3px',
+                    background:
+                      'linear-gradient(to left, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2), transparent)',
+                    boxShadow: 'inset -2px 0 4px rgba(0, 0, 0, 0.3)',
+                  }}
+                />
+                <div
+                  style={{
+                    fontFamily:
+                      '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                    fontSize: 'clamp(2.5rem, 8vw, 4rem)',
+                    letterSpacing: '0.15em',
+                    color: '#ECF0F1',
+                    textShadow:
+                      '0 3px 6px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.1)',
+                    fontWeight: '300',
+                    lineHeight: '1.2',
+                    position: 'relative',
+                    paddingBottom: '1rem',
+                  }}
+                >
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: '0',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      width: '3rem',
+                      height: '2px',
+                      background:
+                        'linear-gradient(to right, transparent, #ECF0F1, transparent)',
+                      opacity: 0.6,
+                    }}
+                  />
+                  2025
                 </div>
-              ))}
-            </div>
-          </div>
-        ) : pageType === 'bookmark' ? (
-          // STEP3B: 栞ページ
-          <BookmarkPage bookmark={currentPageInfo.bookmark!} />
-        ) : pageType === 'content' ? (
-          // STEP4: 章本文ページ
-          <div
-            className="flex h-full w-full"
-            style={{
-              writingMode: 'vertical-rl',
-              textOrientation: 'upright',
-              paddingLeft: '1rem',
-              paddingRight: '1rem',
-              paddingTop: '3.5rem',
-              paddingBottom: '3.5rem',
-              fontFamily:
-                '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
-            }}
-          >
-            <div
-              className="text-main-black dark:text-night-white"
-              style={{
-                fontFamily:
-                  '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
-                fontSize: 'clamp(0.65rem, 3vw, 0.85rem)',
-                letterSpacing: '0.08em',
-                width: '100%',
-                height: '100%',
-                display: 'grid',
-                gridTemplateRows: 'repeat(10, 1fr)',
-                paddingTop: '1rem',
-                paddingBottom: '1rem',
-                gap: '0',
-              }}
-            >
-              {currentPageInfo.chapterIndex !== undefined &&
-              currentPageInfo.pageIndex !== undefined
-                ? (() => {
-                    const lines = chapters[
-                      currentPageInfo.chapterIndex
-                    ].pages[currentPageInfo.pageIndex].split('\n')
-                    // 常に10行分のスペースを確保
-                    return Array.from({ length: 10 }, (_, index) => (
-                      <div
-                        key={index}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                        }}
-                      >
-                        {lines[index] || ''}
-                      </div>
-                    ))
-                  })()
-                : Array.from({ length: 10 }, (_, index) => (
-                    <div key={index}></div>
+                <div
+                  style={{
+                    fontFamily:
+                      '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                    fontSize: '0.7rem',
+                    letterSpacing: '0.2em',
+                    color: '#BDC3C7',
+                    textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
+                    marginTop: '2rem',
+                    fontWeight: '300',
+                  }}
+                >
+                  Motoshi
+                </div>
+              </div>
+            ) : pageType === 'table-of-contents' ? (
+              // STEP3A: 目次ページ
+              <div
+                className="flex h-full w-full items-center justify-center"
+                style={{
+                  writingMode: 'vertical-rl',
+                  textOrientation: 'upright',
+                  paddingLeft: '1rem',
+                  paddingRight: '1rem',
+                  paddingTop: '1.5rem',
+                  paddingBottom: '1.5rem',
+                  fontFamily:
+                    '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                }}
+              >
+                <div
+                  className="text-main-black dark:text-night-white"
+                  style={{
+                    fontFamily:
+                      '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                    fontSize: '0.85rem',
+                    lineHeight: '3',
+                    letterSpacing: '0.08em',
+                    maxHeight: 'calc(100vh - 6rem)',
+                    maxWidth: 'calc(100vw - 4rem)',
+                  }}
+                >
+                  {tableOfContentsItems.map((item, index) => (
+                    <div key={index} style={{ marginBottom: '1.5rem' }}>
+                      {item}
+                    </div>
                   ))}
-            </div>
-          </div>
-        ) : pageType === 'back-cover' ? (
-          // 裏表紙ページ（何も表示しない）
-          <div className="relative h-full w-full">
-            {/* 右開きの本を表現する縦線（左側） */}
-            <div
-              style={{
-                position: 'absolute',
-                left: '0',
-                top: '0',
-                bottom: '0',
-                width: '3px',
-                background: 'linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2), transparent)',
-                boxShadow: 'inset 2px 0 4px rgba(0, 0, 0, 0.3)',
-              }}
-            />
-          </div>
-        ) : null}
+                </div>
+              </div>
+            ) : pageType === 'bookmark' ? (
+              // STEP3B: 栞ページ
+              <BookmarkPage bookmark={currentPageInfo.bookmark!} />
+            ) : pageType === 'content' ? (
+              // STEP4: 章本文ページ
+              <div
+                className="flex h-full w-full"
+                style={{
+                  writingMode: 'vertical-rl',
+                  textOrientation: 'upright',
+                  paddingLeft: '1rem',
+                  paddingRight: '1rem',
+                  paddingTop: '3.5rem',
+                  paddingBottom: '3.5rem',
+                  fontFamily:
+                    '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                }}
+              >
+                <div
+                  className="text-main-black dark:text-night-white"
+                  style={{
+                    fontFamily:
+                      '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                    fontSize: 'clamp(0.65rem, 3vw, 0.85rem)',
+                    letterSpacing: '0.08em',
+                    width: '100%',
+                    height: '100%',
+                    display: 'grid',
+                    gridTemplateRows: 'repeat(10, 1fr)',
+                    paddingTop: '1rem',
+                    paddingBottom: '1rem',
+                    gap: '0',
+                  }}
+                >
+                  {currentPageInfo.chapterIndex !== undefined &&
+                  currentPageInfo.pageIndex !== undefined
+                    ? (() => {
+                        const lines =
+                          chapters[currentPageInfo.chapterIndex].pages[
+                            currentPageInfo.pageIndex
+                          ].split('\n')
+                        // 常に10行分のスペースを確保
+                        return Array.from({ length: 10 }, (_, index) => (
+                          <div
+                            key={index}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'flex-start',
+                            }}
+                          >
+                            {lines[index] || ''}
+                          </div>
+                        ))
+                      })()
+                    : Array.from({ length: 10 }, (_, index) => (
+                        <div key={index}></div>
+                      ))}
+                </div>
+              </div>
+            ) : pageType === 'back-cover' ? (
+              // 裏表紙ページ（何も表示しない）
+              <div className="relative h-full w-full">
+                {/* 右開きの本を表現する縦線（左側） */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: '0',
+                    top: '0',
+                    bottom: '0',
+                    width: '3px',
+                    background:
+                      'linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2), transparent)',
+                    boxShadow: 'inset 2px 0 4px rgba(0, 0, 0, 0.3)',
+                  }}
+                />
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
     </div>
   )
 }
-
-
