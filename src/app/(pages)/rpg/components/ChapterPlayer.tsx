@@ -4,15 +4,17 @@ import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { chapter1 } from "../data/chapter1"
 import { chapter2 } from "../data/chapter2"
+import { chapter3 } from "../data/chapter3"
 import stationMorning from "../../../../../img/rpg/station_morning.png"
 import officeMorning from "../../../../../img/rpg/office_morning.png"
 import meetingRoom from "../../../../../img/rpg/meeting_room.png"
 import barNight from "../../../../../img/rpg/bar_night.png"
 import cafeLunch from "../../../../../img/rpg/cafe_lunch.png"
 import blueLeaf from "../../../../../img/rpg/blue_leaf.png"
+import rainRoad from "../../../../../img/rpg/rain_road.png"
 
 // すべての章を配列で管理（新しい章を追加する場合はここに追加するだけ）
-const chapters = [chapter1, chapter2]
+const chapters = [chapter1, chapter2, chapter3]
 
 // 1文字ずつフェードインするテキストコンポーネント
 const FadeInText = ({ 
@@ -347,6 +349,8 @@ const ChapterPlayer = () => {
     currentScene.background === "meeting_room" ? meetingRoom :
     currentScene.background === "bar_night" ? barNight :
     currentScene.background === "cafe_lunch" ? cafeLunch :
+    currentScene.background === "blue_leaf" ? blueLeaf :
+    currentScene.background === "rain_road" ? rainRoad :
     stationMorning
 
   const currentLine = currentScene.lines[currentLineIndex] || currentScene.lines[0]
