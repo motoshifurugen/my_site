@@ -1,6 +1,12 @@
 export type Line = {
   speaker: string
   text: string
+  characters?: Character[]
+}
+
+export type Character = {
+  image: string
+  position?: 'left' | 'center' | 'right'
 }
 
 export type Scene = {
@@ -8,6 +14,7 @@ export type Scene = {
   background: string
   // bgm: string
   lines: Line[]
+  characters?: Character[]
 }
 
 export const chapter4: { title: string; scenes: Scene[] } = {
@@ -54,18 +61,42 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         {
           speaker: '',
           text: 'オフィスに入ると、青葉はもう席にいた。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '青葉',
           text: '「おはようございます、赤羽さん」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '声は、明るい。\n仕事用の、完成された明るさだ。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '赤羽',
           text: '「おはよう」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
@@ -96,14 +127,32 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         {
           speaker: '',
           text: '午前中。青葉が資料を持ってくる。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '青葉',
           text: '「こちら、確認お願いします」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '無駄のない一言。無駄のない動作。俺は資料に目を通す。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
@@ -128,38 +177,92 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         {
           speaker: '青葉',
           text: '「はい」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '俺は、一瞬言葉に詰まる。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '赤羽',
           text: '（何を、確認したいんだ）',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '誤字はない。論理も破綻していない。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'それでも、',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '以前ならここにあった"何か"が、見当たらない。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '赤羽',
           text: '「……いや、いい」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'そう言うしかなかった。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '青葉は少しだけ頷き、自分の席に戻る。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
@@ -190,22 +293,52 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         {
           speaker: '',
           text: '昼休み。カフェテリア。青葉は同僚と並んで座っている。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '会話は、仕事の進捗。タスク管理。納期。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '以前のような、どうでもいい雑談はない。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '同僚',
           text: '「青葉ちゃん、仕事早くなったよね」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '青葉',
           text: '「ありがとうございます。赤羽さんに鍛えられて、無駄が減りました」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',

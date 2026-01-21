@@ -1,6 +1,12 @@
 export type Line = {
   speaker: string
   text: string
+  characters?: Character[]
+}
+
+export type Character = {
+  image: string
+  position?: 'left' | 'center' | 'right'
 }
 
 export type Scene = {
@@ -8,6 +14,7 @@ export type Scene = {
   background: string
   // bgm: string
   lines: Line[]
+  characters?: Character[]
 }
 
 export const chapter1: { title: string; scenes: Scene[] } = {
@@ -55,35 +62,130 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         },
         { speaker: '？？？', text: '「おはようございますー！」' },
         { speaker: '', text: '少しだけ、場違いな明るさの声。' },
-        { speaker: '', text: '振り向くと、青葉 色音がいた。' },
+        { 
+          speaker: '', 
+          text: '振り向くと、青葉 色音がいた。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
         {
           speaker: '',
           text: '今年入ってきた新人で、フロアの空気を一瞬で変える、珍しいタイプだ。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
-        { speaker: '青葉', text: '「おはようございます、赤羽さん！」' },
+        { speaker: '青葉', text: '「おはようございます、赤羽さん！」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
         {
           speaker: '',
           text: '語尾が弾む。それだけで、何人かの視線が和らぐのがわかる。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
-        { speaker: '', text: '青葉は、仕事が速いわけじゃない。むしろ遅い。' },
-        { speaker: '', text: '要領も、正直いいとは言えない。' },
-        { speaker: '', text: 'そのかわり、' },
+        { speaker: '', text: '青葉は、仕事が速いわけじゃない。むしろ遅い。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: '要領も、正直いいとは言えない。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: 'そのかわり、',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
         {
           speaker: '',
           text: '誰かがミスをすると、必ず一言声をかける。空気が重くなると、どうでもいい話を始める。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '理屈じゃ説明できないのに、場が崩れない。俺にはできないやり方だ。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
-        { speaker: '青葉', text: '「資料、昨日の件、ここまでまとめました！」' },
+        { speaker: '青葉', text: '「資料、昨日の件、ここまでまとめました！」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
         {
           speaker: '',
           text: '青葉が、少し誇らしげにファイルを差し出す。\n中身を見ると、方向性は合っているが、無駄が多い。時間は、かかっている。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
-        { speaker: '赤羽', text: '「……ここ、先にテンプレ使えば早かったな。」' },
-        { speaker: '', text: '青葉は一瞬だけ目を丸くした。' },
-        { speaker: '青葉', text: '「あ、なるほど！　次からそうします！」' },
+        { speaker: '赤羽', text: '「……ここ、先にテンプレ使えば早かったな。」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
+        { speaker: '', text: '青葉は一瞬だけ目を丸くした。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
+        { speaker: '青葉', text: '「あ、なるほど！　次からそうします！」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
         { speaker: '', text: '軽い。' },
         {
           speaker: '',

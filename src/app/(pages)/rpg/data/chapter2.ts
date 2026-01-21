@@ -1,6 +1,12 @@
 export type Line = {
   speaker: string
   text: string
+  characters?: Character[]
+}
+
+export type Character = {
+  image: string
+  position?: 'left' | 'center' | 'right'
 }
 
 export type Scene = {
@@ -8,6 +14,7 @@ export type Scene = {
   background: string
   // bgm: string
   lines: Line[]
+  characters?: Character[]
 }
 
 export const chapter2: { title: string; scenes: Scene[] } = {
@@ -21,11 +28,31 @@ export const chapter2: { title: string; scenes: Scene[] } = {
           speaker: '',
           text: '昼休み。\n社内のカフェテリアは、雨の日特有の湿り気を含んだ空気で満ちていた。',
         },
-        { speaker: '青葉', text: '「今日の雨、匂いが面白くないですか？」' },
-        { speaker: '', text: '青葉が、少し身を乗り出して言う。' },
+        { speaker: '青葉', text: '「今日の雨、匂いが面白くないですか？」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
+        { speaker: '', text: '青葉が、少し身を乗り出して言う。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
         {
           speaker: '青葉',
           text: '「土の香りが強くて……なんか、安心する感じで」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         { speaker: '赤羽', text: '（ペトリコール……）' },
         {
@@ -59,14 +86,47 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         {
           speaker: '',
           text: '午後、青葉がまとめた資料を確認する。\n内容は間違っていない。だが、構成が独自すぎる。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
-        { speaker: '赤羽', text: '「ここ、フォーマット使えばもっと早い」' },
+        { speaker: '赤羽', text: '「ここ、フォーマット使えばもっと早い」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
         {
           speaker: '赤羽',
           text: '「先方もその形式に慣れてる。確認も早くなる」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
-        { speaker: '青葉', text: '「なるほど……！」' },
-        { speaker: '', text: '青葉は素直に頷き、メモを取る。' },
+        { speaker: '青葉', text: '「なるほど……！」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
+        { speaker: '', text: '青葉は素直に頷き、メモを取る。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
         { speaker: '', text: '反発はない。' },
         { speaker: '', text: 'ただ、処理に時間がかかっている。' },
       ],
@@ -75,24 +135,84 @@ export const chapter2: { title: string; scenes: Scene[] } = {
       id: 'ch2_sc3_work_instruction_2',
       background: 'office_morning',
       lines: [
-        { speaker: '', text: '別の案件。進捗が、明らかに遅れている。' },
+        { speaker: '', text: '別の案件。進捗が、明らかに遅れている。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
         {
           speaker: '赤羽',
           text: '「ここ、詰まってたなら、もう少し早く相談してほしかった」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
-        { speaker: '', text: '声は荒げない。' },
+        { speaker: '', text: '声は荒げない。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
         {
           speaker: '赤羽',
           text: '「一人で抱えるより、早く出したほうが、結果的にお客さんのためになる」',
-        },
-        { speaker: '', text: '青葉は、一瞬だけ言葉を探す。' },
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
+        { speaker: '', text: '青葉は、一瞬だけ言葉を探す。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
         {
           speaker: '青葉',
           text: '「……すみません。自分でやりきった方がいいかなって」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
-        { speaker: '赤羽', text: '「時と場合による」' },
-        { speaker: '赤羽', text: '「仕事は、完成度より優先順位だ」' },
-        { speaker: '青葉', text: '「はい」' },
+        { speaker: '赤羽', text: '「時と場合による」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
+        { speaker: '赤羽', text: '「仕事は、完成度より優先順位だ」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
+        { speaker: '青葉', text: '「はい」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+         },
         { speaker: '', text: 'その声は、いつもより少しだけ小さい。' },
       ],
     },

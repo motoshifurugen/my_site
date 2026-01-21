@@ -14,6 +14,7 @@ import cafeLunch from "../../../../../img/rpg/cafe_lunch.png"
 import blueLeaf from "../../../../../img/rpg/blue_leaf.png"
 import rainRoad from "../../../../../img/rpg/rain_road.png"
 import nightCoffee from "../../../../../img/rpg/night_coffee.png"
+import aoba1 from "../../../../../img/rpg/person/aoba_1.png"
 
 // すべての章を配列で管理（新しい章を追加する場合はここに追加するだけ）
 const chapters = [chapter1, chapter2, chapter3, chapter4]
@@ -358,6 +359,14 @@ const ChapterPlayer = () => {
 
   const currentLine = currentScene.lines[currentLineIndex] || currentScene.lines[0]
 
+  // キャラクター画像を取得
+  const getCharacterImage = (imagePath: string) => {
+    const characterImageMap: Record<string, any> = {
+      "aoba_1.png": aoba1,
+    }
+    return characterImageMap[imagePath] || null
+  }
+
   // 話者名から振り仮名を取得
   const getFurigana = (speaker: string): string => {
     const furiganaMap: Record<string, string> = {
@@ -503,6 +512,50 @@ const ChapterPlayer = () => {
         className="absolute inset-0 z-50"
         style={getTransitionOverlayStyle()}
       />
+      
+      {/* キャラクター画像 */}
+      {((currentLine.characters && currentLine.characters.length > 0) || (currentScene.characters && currentScene.characters.length > 0)) && (
+        <div className="absolute inset-0 z-[5] flex items-center justify-center">
+          {(currentLine.characters || currentScene.characters || []).map((character, index) => {
+            const characterImage = getCharacterImage(character.image)
+            if (!characterImage) return null
+            
+            const positionClass = 
+              character.position === 'left' ? 'justify-start' :
+              character.position === 'right' ? 'justify-end' :
+              'justify-center'
+            
+            return (
+              <div
+                key={index}
+                className={`absolute flex w-full ${positionClass}`}
+                style={{
+                  top: '2rem',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  opacity: transitionPhase === 'fadeOut' || transitionPhase === 'white' || transitionPhase === 'waiting' || transitionPhase === 'fadeIn' 
+                    ? 0 
+                    : 1,
+                  transition: transitionPhase === 'fadeOut' ? 'opacity 0.8s ease-out' : 'opacity 0.4s ease-out',
+                }}
+              >
+                <div className="relative h-full" style={{ maxWidth: '50%' }}>
+                  <Image
+                    src={characterImage}
+                    alt={character.image}
+                    width={800}
+                    height={1200}
+                    className="object-contain h-full w-auto"
+                    priority={index === 0}
+                    quality={90}
+                  />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
       
       {/* 章タイトル表示（右上） */}
       {showChapterTitle && (
