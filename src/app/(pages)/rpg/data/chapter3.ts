@@ -1,6 +1,12 @@
 export type Line = {
   speaker: string
   text: string
+  characters?: Character[]
+}
+
+export type Character = {
+  image: string
+  position?: 'left' | 'center' | 'right'
 }
 
 export type Scene = {
@@ -8,6 +14,7 @@ export type Scene = {
   background: string
   // bgm: string
   lines: Line[]
+  characters?: Character[]
 }
 
 export const chapter3: { title: string; scenes: Scene[] } = {
@@ -42,26 +49,62 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         {
           speaker: '',
           text: 'オフィスに着くと、青葉はすでに席にいた。キーボードを打つ手は、以前より早い。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '無駄な装飾は減り、画面には、会社指定のフォーマットが並んでいる。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '青葉',
           text: '「赤羽さん、おはようございます」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '声は明るい。だが、どこか平坦だ。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '赤羽',
           text: '「おはよう」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '俺はそれだけ返す。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
@@ -156,18 +199,42 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         {
           speaker: '',
           text: '昼休み。カフェテリア。青葉は一人で座り、スマートフォンを見ている。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '以前なら、誰かに話しかけたり、天気の話を振ったりしていたはずだ。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '赤羽',
           text: '「……」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '声をかけようとして、やめる。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '赤羽',
