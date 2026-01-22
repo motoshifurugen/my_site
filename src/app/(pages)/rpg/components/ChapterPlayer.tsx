@@ -447,7 +447,7 @@ const ChapterPlayer = () => {
     if (transitionPhase === 'white') {
       return { 
         opacity: 1,
-        backgroundColor: 'rgba(255, 255, 255, 1)',
+        backgroundColor: 'rgba(220, 220, 220, 1)',
         transition: 'opacity 0.4s ease-in',
         pointerEvents: 'none'
       }
@@ -456,7 +456,7 @@ const ChapterPlayer = () => {
     if (transitionPhase === 'waiting') {
       return { 
         opacity: 1,
-        backgroundColor: 'rgba(255, 255, 255, 1)',
+        backgroundColor: 'rgba(220, 220, 220, 1)',
         pointerEvents: 'none'
       }
     }
@@ -464,7 +464,7 @@ const ChapterPlayer = () => {
     // fadeIn phase
     return { 
       opacity: 0,
-      backgroundColor: 'rgba(255, 255, 255, 1)',
+      backgroundColor: 'rgba(220, 220, 220, 1)',
       transition: 'opacity 0.4s ease-out',
       pointerEvents: 'none'
     }
@@ -590,7 +590,7 @@ const ChapterPlayer = () => {
       {/* 章タイトル表示（右上） */}
       {showChapterTitle && (
         <div 
-          className="absolute top-4 right-4 md:top-6 md:right-6 z-40 px-4 py-2 bg-teal-100/40 backdrop-blur-sm border border-teal-300/50 rounded-md"
+          className="absolute top-4 right-4 md:top-6 md:right-6 z-40 px-5 py-2.5 md:px-8 md:py-3 bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm border border-slate-600/50 rounded-lg shadow-[0_2px_12px_rgba(0,0,0,0.4)]"
           style={{
             opacity: chapterTitleOpacity,
             transform: chapterTitleTransform,
@@ -599,9 +599,14 @@ const ChapterPlayer = () => {
               : 'opacity 0.5s ease-out, transform 0.5s ease-out', // フェードイン時はスッと
           }}
         >
-          <div className="text-black text-sm md:text-base">
-            <span className="font-bold">第{currentChapterIndex + 1}章</span>
-            <span className="ml-2">{currentChapter.title}</span>
+          <div className="flex items-center gap-3">
+            <div className="text-[10px] md:text-xs font-medium text-slate-400 tracking-widest uppercase whitespace-nowrap">
+              Chapter {currentChapterIndex + 1}
+            </div>
+            <div className="h-4 w-px bg-slate-600/50"></div>
+            <div className="text-sm md:text-base font-semibold text-slate-200 whitespace-nowrap">
+              {currentChapter.title}
+            </div>
           </div>
         </div>
       )}
