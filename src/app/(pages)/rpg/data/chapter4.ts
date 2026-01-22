@@ -2,11 +2,18 @@ export type Line = {
   speaker: string
   text: string
   characters?: Character[]
+  isChoice?: boolean
+  choiceId?: string
 }
 
 export type Character = {
   image: string
   position?: 'left' | 'center' | 'right'
+}
+
+export type Choice = {
+  text: string
+  choiceId: string
 }
 
 export type Scene = {
@@ -15,6 +22,7 @@ export type Scene = {
   // bgm: string
   lines: Line[]
   characters?: Character[]
+  options?: Choice[]
 }
 
 export const chapter4: { title: string; scenes: Scene[] } = {
@@ -381,82 +389,202 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         {
           speaker: '',
           text: '夜。また、黄瀬と飲んでいる。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「最近どうだ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '何気ない問い。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '俺は、少し迷ってから答える。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '赤羽',
           text: '「……青葉が、ちゃんと仕事をするようになった」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '黄瀬は、黙って聞いている。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '赤羽',
           text: '「効率も上がった。評価もいい」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「それで？」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '赤羽',
           text: '「それで……」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '言葉が、続かない。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「赤羽。お前さ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '少し笑って、黄瀬は続けた。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「正しい結果が出たときほど、自分を疑えなくなるタイプだよな」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '図星だった。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「でもさ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '黄瀬はグラスを置く。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「疑えなくなった時点で、もう選択は始まってるんだぜ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '赤羽',
           text: '「……何の話だ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「壊したまま進むか、立ち止まって向き合うか」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '直接的な言葉は使わない。でも、逃げ道は示さない。\nそれが、黄瀬なりの優しさだと、俺は知っている。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
       ],
     },

@@ -2,11 +2,18 @@ export type Line = {
   speaker: string
   text: string
   characters?: Character[]
+  isChoice?: boolean
+  choiceId?: string
 }
 
 export type Character = {
   image: string
   position?: 'left' | 'center' | 'right'
+}
+
+export type Choice = {
+  text: string
+  choiceId: string
 }
 
 export type Scene = {
@@ -15,6 +22,7 @@ export type Scene = {
   // bgm: string
   lines: Line[]
   characters?: Character[]
+  options?: Choice[]
 }
 
 export const chapter3: { title: string; scenes: Scene[] } = {
@@ -363,62 +371,152 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         {
           speaker: '',
           text: '夜。いつもの店。黄瀬が、ビールを一口飲んでから言う。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「青葉、変わったな」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '俺は、答えない。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「悪い意味じゃないぞ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「でもさ……赤羽、お前さ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '少しだけ、言葉を選ぶ間があって、黄瀬は続ける。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「自分を信じるの、得意すぎるんだよ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'その一言が、胸の奥に、深く突き刺さる。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '赤羽',
           text: '「……それが、俺のやり方だ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '絞り出すように言う。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '赤羽',
           text: '「間違えないために、自分を信じてきた」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '黄瀬は、否定しない。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'ただ、静かに言う。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「正しいってさ、誰も傷つけないって意味じゃない」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'グラスの中の氷が、音を立てて溶ける。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',

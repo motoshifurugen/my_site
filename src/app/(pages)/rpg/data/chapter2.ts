@@ -2,11 +2,18 @@ export type Line = {
   speaker: string
   text: string
   characters?: Character[]
+  isChoice?: boolean
+  choiceId?: string
 }
 
 export type Character = {
   image: string
   position?: 'left' | 'center' | 'right'
+}
+
+export type Choice = {
+  text: string
+  choiceId: string
 }
 
 export type Scene = {
@@ -15,6 +22,7 @@ export type Scene = {
   // bgm: string
   lines: Line[]
   characters?: Character[]
+  options?: Choice[]
 }
 
 export const chapter2: { title: string; scenes: Scene[] } = {
@@ -220,23 +228,116 @@ export const chapter2: { title: string; scenes: Scene[] } = {
       id: 'ch2_sc4_night_bar',
       background: 'bar_night',
       lines: [
-        { speaker: '', text: '同じ店。同じ席。' },
-        { speaker: '黄瀬', text: '「青葉、最近どうよ」' },
-        { speaker: '', text: '黄瀬が、何気なく聞く。' },
-        { speaker: '赤羽', text: '「……改善点は多い」' },
+        { 
+          speaker: '', 
+          text: '同じ店。同じ席。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { 
+          speaker: '黄瀬', 
+          text: '「青葉、最近どうよ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { 
+          speaker: '', 
+          text: '黄瀬が、何気なく聞く。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { 
+          speaker: '赤羽', 
+          text: '「……改善点は多い」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
         {
           speaker: '',
           text: 'そう答えながら、昼のカフェテリアの光景が、頭をよぎる。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
-        { speaker: '黄瀬', text: '「でもさ」' },
-        { speaker: '', text: '黄瀬は、グラスを傾けながら続ける。' },
+        { 
+          speaker: '黄瀬', 
+          text: '「でもさ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { 
+          speaker: '', 
+          text: '黄瀬は、グラスを傾けながら続ける。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
         {
           speaker: '黄瀬',
           text: '「正しいこと言ってりゃ、全部うまくいくってわけじゃない」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
-        { speaker: '', text: '胸の奥に、小さな違和感が、確かに残る。' },
-        { speaker: '', text: '――自分の正しさが、何かを削っている気がする。' },
-        { speaker: '', text: '理由は、まだない。' },
+        { 
+          speaker: '', 
+          text: '胸の奥に、小さな違和感が、確かに残る。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { 
+          speaker: '', 
+          text: '――自分の正しさが、何かを削っている気がする。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { 
+          speaker: '', 
+          text: '理由は、まだない。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
         { speaker: '', text: 'だが、予感は、輪郭を持ち始めていた。' },
       ],
     },
