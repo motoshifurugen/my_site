@@ -325,58 +325,142 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         {
           speaker: '',
           text: '夜。また、黄瀬と会う。いつもの店。いつもの席。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「なあ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '黄瀬が、ぽつりと言う。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「もしさ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「お前が正しくて、相手もそれを受け入れて、全体もうまく回ってるとしたらさ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'グラスを揺らしながら話す。嫌な予感がする。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「それでも壊れてるって、言えるか？」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '俺は、答えられない。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「言えないなら、それも選択だ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '赤羽',
           text: '「……」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「でも」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: '少しだけ、声が低くなる。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '黄瀬',
           text: '「気づいたあとで何もしないのは、もう"無自覚"じゃない」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'その言葉が、胸に深く沈む。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
       ],
     },

@@ -224,21 +224,126 @@ export const chapter1: { title: string; scenes: Scene[] } = {
       id: 'ch1_sc4_night_bar',
       background: 'bar_night',
       lines: [
-        { speaker: '', text: '仕事終わり、黄瀬 燈也と、いつもの店に入る。' },
-        { speaker: '黄瀬', text: '「新人、どう？」' },
-        { speaker: '', text: 'ビールを一口飲んで、黄瀬が聞く。' },
-        { speaker: '赤羽', text: '「青葉か。……悪くはない。」' },
-        { speaker: '黄瀬', text: '「遅いけどな。」' },
-        { speaker: '赤羽', text: '「遅いな。」' },
-        { speaker: '', text: '二人して笑う。' },
-        { speaker: '黄瀬', text: '「でもさ、ああいうの、得意じゃないだろ」' },
-        { speaker: '赤羽', text: '「……どうだろうね」' },
+        { 
+          speaker: '', 
+          text: '仕事終わり、黄瀬 燈也と、いつもの店に入る。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { 
+          speaker: '黄瀬', 
+          text: '「新人、どう？」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { 
+          speaker: '', 
+          text: 'ビールを一口飲んで、黄瀬が聞く。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { 
+          speaker: '赤羽', 
+          text: '「青葉か。……悪くはない。」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { 
+          speaker: '黄瀬', 
+          text: '「遅いけどな。」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { 
+          speaker: '赤羽', 
+          text: '「遅いな。」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { 
+          speaker: '', 
+          text: '二人して笑う。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { 
+          speaker: '黄瀬', 
+          text: '「でもさ、ああいうの、得意じゃないだろ」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { 
+          speaker: '赤羽', 
+          text: '「……どうだろうね」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
         {
           speaker: '',
-          text: '黄瀬は、俺が無理をしていないかを聞かない。代わりに、軽い話を投げてくる。',
+          text: '黄瀬は、俺が無理をしていないかを聞かない。\n代わりに、軽い話を投げてくる。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
         },
-        { speaker: '黄瀬', text: '「正しすぎると、疲れんぞ。」' },
-        { speaker: '', text: 'その言葉を、そのときは深く考えなかった。' },
+        { 
+          speaker: '黄瀬', 
+          text: '「正しすぎると、疲れんぞ。」',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { 
+          speaker: '', 
+          text: 'その言葉を、そのときは深く考えなかった。',
+          characters: [
+            {
+              image: 'kise_1.png',
+              position: 'center',
+            },
+          ],
+        },
       ],
     },
   ],
