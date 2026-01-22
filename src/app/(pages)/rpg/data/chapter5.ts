@@ -2,11 +2,18 @@ export type Line = {
   speaker: string
   text: string
   characters?: Character[]
+  isChoice?: boolean
+  choiceId?: string
 }
 
 export type Character = {
   image: string
   position?: 'left' | 'center' | 'right'
+}
+
+export type Choice = {
+  text: string
+  choiceId: string
 }
 
 export type Scene = {
@@ -15,6 +22,7 @@ export type Scene = {
   // bgm: string
   lines: Line[]
   characters?: Character[]
+  options?: Choice[]
 }
 
 export const chapter5: { title: string; scenes: Scene[] } = {
@@ -540,23 +548,25 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: '・このまま進む',
-        },
-        {
-          speaker: '',
-          text: '・青葉と話す',
-        },
-        {
-          speaker: '',
-          text: '・黄瀬に相談する',
-        },
-        {
-          speaker: '',
           text: 'どれも、正解ではない。',
         },
         {
           speaker: '',
           text: 'どれも、間違いでもない。',
+        },
+      ],
+      options: [
+        {
+          text: 'このまま進む',
+          choiceId: 'continue',
+        },
+        {
+          text: '青葉と話す',
+          choiceId: 'talk_to_aoba',
+        },
+        {
+          text: '黄瀬に相談する',
+          choiceId: 'consult_kise',
         },
       ],
     },

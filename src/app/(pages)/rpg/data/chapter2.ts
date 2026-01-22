@@ -2,11 +2,18 @@ export type Line = {
   speaker: string
   text: string
   characters?: Character[]
+  isChoice?: boolean
+  choiceId?: string
 }
 
 export type Character = {
   image: string
   position?: 'left' | 'center' | 'right'
+}
+
+export type Choice = {
+  text: string
+  choiceId: string
 }
 
 export type Scene = {
@@ -15,6 +22,7 @@ export type Scene = {
   // bgm: string
   lines: Line[]
   characters?: Character[]
+  options?: Choice[]
 }
 
 export const chapter2: { title: string; scenes: Scene[] } = {

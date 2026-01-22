@@ -130,6 +130,7 @@ const ChapterPlayer = () => {
   const [showChapterTitle, setShowChapterTitle] = useState(false)
   const [chapterTitleOpacity, setChapterTitleOpacity] = useState(0)
   const [chapterTitleTransform, setChapterTitleTransform] = useState('translateX(100px)')
+  const [selectedChoiceId, setSelectedChoiceId] = useState<string | null>(null)
   const currentSceneIndexRef = useRef(currentSceneIndex)
   const currentChapterIndexRef = useRef(currentChapterIndex)
   const prevChapterIndexRef = useRef(currentChapterIndex)
@@ -271,6 +272,8 @@ const ChapterPlayer = () => {
     if (!currentScene) return
     const currentLine = currentScene.lines[currentLineIndex] || currentScene.lines[0]
     setIsTextComplete(false)
+    // シーンが変わったら選択状態をリセット
+    setSelectedChoiceId(null)
   }, [currentChapterIndex, currentSceneIndex, currentLineIndex, currentChapter])
 
   // シーン遷移アニメーション
@@ -361,6 +364,27 @@ const ChapterPlayer = () => {
 
   const currentLine = currentScene.lines[currentLineIndex] || currentScene.lines[0]
 
+  // 現在のシーンの選択肢を取得
+  const choices = currentScene.options || []
+  // シーンの最後の行が表示され、テキストが完了したときに選択肢を表示
+  const shouldShowChoices = choices.length > 0 && 
+    currentLineIndex === currentScene.lines.length - 1 &&
+    isTextComplete
+
+  // 選択肢ボタンのクリックハンドラー（選択状態を更新）
+  const handleChoiceSelect = (choiceId: string) => {
+    setSelectedChoiceId(choiceId)
+  }
+
+  // 決定ボタンのクリックハンドラー
+  const handleChoiceConfirm = () => {
+    if (selectedChoiceId) {
+      // 後で分岐を実装するため、今は何もしない
+      console.log('決定された選択肢:', selectedChoiceId)
+      // ここで選択肢に応じた分岐処理を実装
+    }
+  }
+
   // キャラクター画像を取得
   const getCharacterImage = (imagePath: string) => {
     const characterImageMap: Record<string, any> = {
@@ -389,6 +413,9 @@ const ChapterPlayer = () => {
 
     // 遷移中はクリックを無視
     if (isTransitioning) return
+
+    // 選択肢が表示されている場合は、通常のクリック処理を無視
+    if (shouldShowChoices) return
 
     // 現在のシーンのテキストがまだ残っている場合
     if (currentLineIndex < currentScene.lines.length - 1) {
@@ -581,44 +608,111 @@ const ChapterPlayer = () => {
       
       {/* ゲーム画面のコンテンツエリア */}
       <div className="relative z-10 flex h-full w-full flex-col">
-        {/* 上部エリア（将来的にUIなどを配置） */}
-        <div className="flex-1" />
-        
-        {/* 下部エリア：テキストボックス */}
-        <div 
-          className="relative h-32 mb-12 bg-black/70 backdrop-blur-sm border-t-2 border-white/20"
-          style={getTextBoxStyle()}
-        >
-          {/* 話者名（左上に飛び出した領域） */}
-          {currentLine.speaker && (
-            <div className="absolute bottom-full left-4 md:left-6 px-6 py-1.5 bg-black/70 backdrop-blur-sm border-2 border-white/20 rounded-t-md">
-              {/* 振り仮名 */}
-              <div className="text-[9px] text-white/70 leading-tight">
-                {getFurigana(currentLine.speaker)}
-              </div>
-              {/* 話者名 */}
-              <div className="text-base md:text-lg font-bold text-white">
-                {currentLine.speaker}
-              </div>
+        {/* 選択肢ボタン表示エリア（全画面表示） */}
+        {shouldShowChoices ? (
+          <div className="flex-1 flex flex-col items-center justify-center px-4 md:px-8 py-8 md:py-12 overflow-y-auto">
+            <div className="container mx-auto max-w-xl w-full flex flex-col gap-3 md:gap-4 pb-20 md:pb-4">
+              {choices.map((choice, index) => {
+                const isSelected = selectedChoiceId === choice.choiceId
+                return (
+                  <button
+                    key={choice.choiceId || index}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleChoiceSelect(choice.choiceId || '')
+                    }}
+                    className={`group relative w-full min-h-[56px] px-5 py-4 md:px-6 md:py-4 backdrop-blur-md border rounded-lg text-left transition-all duration-200 touch-manipulation ${
+                        isSelected
+                          ? 'bg-white/20 border-white/40 shadow-[0_0_20px_rgba(255,255,255,0.2)]'
+                          : 'bg-black/70 border-white/20 hover:bg-black/80 hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]'
+                      } active:scale-[0.97]`}
+                    style={{ WebkitTapHighlightColor: 'transparent' }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className={`text-base md:text-base leading-relaxed font-medium transition-colors drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] pr-8 ${
+                        isSelected ? 'text-white' : 'text-white group-hover:text-white'
+                      }`}>
+                        {choice.text}
+                      </div>
+                      <div className={`ml-4 transition-opacity duration-200 flex-shrink-0 ${
+                        isSelected ? 'opacity-100' : 'opacity-0 md:opacity-0 group-hover:opacity-100 md:group-hover:opacity-100'
+                      }`}>
+                        {isSelected ? (
+                          <svg className="w-5 h-5 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        ) : (
+                          <svg className="w-5 h-5 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        )}
+                      </div>
+                    </div>
+                  </button>
+                )
+              })}
             </div>
-          )}
-          <div className="container mx-auto px-4 py-6">
-            {/* テキスト */}
-            <div className="text-sm md:text-base leading-relaxed text-white">
-              <FadeInText 
-                text={currentLine.text} 
-                delay={20} 
-                onComplete={() => setIsTextComplete(true)}
-              />
+            {/* 決定ボタン */}
+            <div className="fixed bottom-6 md:bottom-8 left-0 right-0 px-4 md:px-8 flex justify-center z-20">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  handleChoiceConfirm()
+                }}
+                disabled={!selectedChoiceId}
+                className={`min-h-[56px] px-8 py-4 md:px-10 md:py-4 rounded-lg font-semibold text-base md:text-lg transition-all duration-200 touch-manipulation ${
+                  selectedChoiceId
+                    ? 'bg-white text-black hover:bg-white/90 active:scale-[0.97] shadow-lg'
+                    : 'bg-gray-500/50 text-gray-300 cursor-not-allowed'
+                }`}
+                style={{ WebkitTapHighlightColor: 'transparent' }}
+              >
+                決定
+              </button>
             </div>
           </div>
-          {/* クリックを促す■（右下） */}
-          {isTextComplete && !isTransitioning && (
-            <div className="absolute bottom-6 right-4 md:bottom-4 md:right-6">
-              <div className="w-3 h-1.5 bg-white/60 rounded-sm" />
+        ) : (
+          <>
+            {/* 上部エリア（将来的にUIなどを配置） */}
+            <div className="flex-1" />
+            
+            {/* 下部エリア：テキストボックス */}
+          <div 
+            className="relative h-32 mb-12 bg-black/70 backdrop-blur-sm border-t-2 border-white/20"
+            style={getTextBoxStyle()}
+          >
+            {/* 話者名（左上に飛び出した領域） */}
+            {currentLine.speaker && (
+              <div className="absolute bottom-full left-4 md:left-6 px-6 py-1.5 bg-black/70 backdrop-blur-sm border-2 border-white/20 rounded-t-md">
+                {/* 振り仮名 */}
+                <div className="text-[9px] text-white/70 leading-tight">
+                  {getFurigana(currentLine.speaker)}
+                </div>
+                {/* 話者名 */}
+                <div className="text-base md:text-lg font-bold text-white">
+                  {currentLine.speaker}
+                </div>
+              </div>
+            )}
+            <div className="container mx-auto px-4 py-6">
+              {/* テキスト */}
+              <div className="text-sm md:text-base leading-relaxed text-white">
+                <FadeInText 
+                  text={currentLine.text} 
+                  delay={20} 
+                  onComplete={() => setIsTextComplete(true)}
+                />
+              </div>
             </div>
-          )}
-        </div>
+            {/* クリックを促す■（右下） */}
+            {isTextComplete && !isTransitioning && (
+              <div className="absolute bottom-6 right-4 md:bottom-4 md:right-6">
+                <div className="w-3 h-1.5 bg-white/60 rounded-sm" />
+              </div>
+            )}
+          </div>
+          </>
+        )}
       </div>
     </div>
   )
