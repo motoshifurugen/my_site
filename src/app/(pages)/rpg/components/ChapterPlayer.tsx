@@ -692,7 +692,7 @@ const ChapterPlayer = () => {
             
             {/* 下部エリア：テキストボックス */}
           <div 
-            className="relative h-32 mb-8 bg-black/70 backdrop-blur-sm border-t-2 border-white/20"
+            className="relative h-32 mb-4 bg-black/70 backdrop-blur-sm border-t-2 border-white/20"
             style={getTextBoxStyle()}
           >
             {/* 話者名（左上に飛び出した領域） */}
