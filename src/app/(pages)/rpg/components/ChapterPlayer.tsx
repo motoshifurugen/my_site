@@ -17,6 +17,7 @@ import rainRoad from "../../../../../img/rpg/rain_road.png"
 import nightCoffee from "../../../../../img/rpg/night_coffee.png"
 import aoba1 from "../../../../../img/rpg/person/aoba_1.png"
 import kise1 from "../../../../../img/rpg/person/kise_1.png"
+import blueLeafLogo from "../../../../../img/rpg/logo/blue_leaf_logo.png"
 
 // すべての章を配列で管理（新しい章を追加する場合はここに追加するだけ）
 const chapters = [chapter1, chapter2, chapter3, chapter4, chapter5]
@@ -485,7 +486,7 @@ const ChapterPlayer = () => {
   if (showTitleScreen) {
     return (
       <div 
-        className="relative h-full w-full overflow-hidden cursor-pointer select-none flex items-center justify-center"
+        className="relative h-full w-full overflow-hidden cursor-pointer select-none"
         onClick={handleTitleScreenClick}
         style={{
           opacity: titleScreenOpacity,
@@ -505,16 +506,24 @@ const ChapterPlayer = () => {
         </div>
         {/* オーバーレイ（テキストの視認性向上） */}
         <div className="absolute inset-0 bg-black/30" />
-        <div className="relative z-10 text-center px-4">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-            Blue Leaf
-          </h1>
-          <div className="flex items-end justify-center gap-2 mb-8">
-            <p className="text-lg md:text-xl text-white/90">
-              クリックして開始
-            </p>
-            <div className="w-3 h-1.5 m-1 bg-white/80 rounded-sm animate-pulse" />
-          </div>
+        {/* ロゴ画像（画面中央に完全に配置） */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 px-4 py-8 md:py-12">
+          <Image
+            src={blueLeafLogo}
+            alt="Blue Leaf Logo"
+            width={800}
+            height={400}
+            className="w-auto h-auto max-w-[98vw] md:max-w-6xl max-h-[90vh] object-contain"
+            priority
+            quality={90}
+          />
+        </div>
+        {/* クリックして開始テキスト（画面下部に固定） */}
+        <div className="absolute bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 z-20 flex items-end justify-center gap-2">
+          <p className="text-lg md:text-xl font-semibold animate-pulse" style={{ color: '#000000' }}>
+            Press to Start
+          </p>
+          <div className="w-3 h-1.5 m-1 rounded-sm animate-pulse" style={{ backgroundColor: '#000000' }} />
         </div>
       </div>
     )
