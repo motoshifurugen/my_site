@@ -6,6 +6,7 @@ import { chapter1 } from "../data/chapter1"
 import { chapter2 } from "../data/chapter2"
 import { chapter3 } from "../data/chapter3"
 import { chapter4 } from "../data/chapter4"
+import { chapter5 } from "../data/chapter5"
 import stationMorning from "../../../../../img/rpg/station_morning.png"
 import officeMorning from "../../../../../img/rpg/office_morning.png"
 import meetingRoom from "../../../../../img/rpg/meeting_room.png"
@@ -17,7 +18,7 @@ import nightCoffee from "../../../../../img/rpg/night_coffee.png"
 import aoba1 from "../../../../../img/rpg/person/aoba_1.png"
 
 // すべての章を配列で管理（新しい章を追加する場合はここに追加するだけ）
-const chapters = [chapter1, chapter2, chapter3, chapter4]
+const chapters = [chapter1, chapter2, chapter3, chapter4, chapter5]
 
 // 1文字ずつフェードインするテキストコンポーネント
 const FadeInText = ({ 
