@@ -8,6 +8,12 @@ export default function Rpg() {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
+    // モバイルブラウザのアドレスバーに対応するため、実際のビューポート高さを取得してCSS変数に設定
+    const setViewportHeight = () => {
+      const vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
+    }
+
     // モバイルデバイスかどうかを判定
     const checkMobile = () => {
       const isMobileDevice = window.innerWidth < 768 // md breakpoint
@@ -17,6 +23,9 @@ export default function Rpg() {
 
     // 画面の向きを判定
     const checkOrientation = () => {
+      // ビューポート高さを更新（アドレスバーの表示/非表示に対応）
+      setViewportHeight()
+      
       if (!checkMobile()) {
         setIsPortrait(false)
         return
@@ -27,7 +36,8 @@ export default function Rpg() {
       setIsPortrait(isPortraitMode)
     }
 
-    // 初回チェック
+    // 初回設定
+    setViewportHeight()
     checkOrientation()
 
     // リサイズと向き変更を監視
@@ -43,7 +53,10 @@ export default function Rpg() {
   // モバイルで縦向きの場合は回転を促すメッセージを表示
   if (isMobile && isPortrait) {
     return (
-      <div className="fixed inset-0 h-screen w-screen flex items-center justify-center bg-black text-white">
+      <div 
+        className="fixed inset-0 w-screen flex items-center justify-center bg-black text-white"
+        style={{ height: 'calc(var(--vh, 1vh) * 100)' }}
+      >
         <div className="text-center px-4">
           <h2 className="text-xl font-bold mb-2">画面を横にしてください</h2>
           <p className="text-sm opacity-80">
@@ -55,7 +68,10 @@ export default function Rpg() {
   }
 
   return (
-    <div className="fixed inset-0 h-screen w-screen overflow-hidden">
+    <div 
+      className="fixed inset-0 w-screen overflow-hidden"
+      style={{ height: 'calc(var(--vh, 1vh) * 100)' }}
+    >
       <ChapterPlayer />
     </div>
   )
