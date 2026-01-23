@@ -7,6 +7,9 @@ import { chapter2 } from "../data/chapter2"
 import { chapter3 } from "../data/chapter3"
 import { chapter4 } from "../data/chapter4"
 import { chapter5 } from "../data/chapter5"
+import { chapter6a } from "../data/chapter6a"
+import { chapter6b } from "../data/chapter6b"
+import { chapter6c } from "../data/chapter6c"
 import stationMorning from "../../../../../img/rpg/station_morning.png"
 import officeMorning from "../../../../../img/rpg/office_morning.png"
 import meetingRoom from "../../../../../img/rpg/meeting_room.png"
@@ -18,9 +21,11 @@ import nightCoffee from "../../../../../img/rpg/night_coffee.png"
 import aoba1 from "../../../../../img/rpg/person/aoba_1.png"
 import kise1 from "../../../../../img/rpg/person/kise_1.png"
 import blueLeafLogo from "../../../../../img/rpg/logo/blue_leaf_logo.png"
+import aobaRoom from "../../../../../img/rpg/aoba_room.png"
+import blueSky from "../../../../../img/rpg/blue_sky.png"
 
-// すべての章を配列で管理（新しい章を追加する場合はここに追加するだけ）
-const chapters = [chapter1, chapter2, chapter3, chapter4, chapter5]
+// 第6章のルート選択を管理するための型
+type Chapter6Route = 'continue' | 'talk_to_aoba' | 'consult_kise' | null
 
 // 1文字ずつフェードインするテキストコンポーネント
 const FadeInText = ({ 
@@ -132,10 +137,29 @@ const ChapterPlayer = () => {
   const [chapterTitleOpacity, setChapterTitleOpacity] = useState(0)
   const [chapterTitleTransform, setChapterTitleTransform] = useState('translateX(100px)')
   const [selectedChoiceId, setSelectedChoiceId] = useState<string | null>(null)
+  const [chapter6Route, setChapter6Route] = useState<Chapter6Route>(null)
+  const [shouldTransitionToChapter6, setShouldTransitionToChapter6] = useState(false)
+  const [showProceedButton, setShowProceedButton] = useState(false)
+  const [showEnding, setShowEnding] = useState(false)
   const currentSceneIndexRef = useRef(currentSceneIndex)
   const currentChapterIndexRef = useRef(currentChapterIndex)
   const prevChapterIndexRef = useRef(currentChapterIndex)
   const isMountedRef = useRef(false)
+
+  // 第6章のルートに応じて章を動的に構築
+  const getChapters = () => {
+    const baseChapters = [chapter1, chapter2, chapter3, chapter4, chapter5]
+    if (chapter6Route === 'continue') {
+      return [...baseChapters, chapter6a]
+    } else if (chapter6Route === 'talk_to_aoba') {
+      return [...baseChapters, chapter6b]
+    } else if (chapter6Route === 'consult_kise') {
+      return [...baseChapters, chapter6c]
+    }
+    return baseChapters
+  }
+
+  const chapters = getChapters()
 
   // 現在の章を取得
   const currentChapter = chapters[currentChapterIndex]
@@ -275,6 +299,7 @@ const ChapterPlayer = () => {
     setIsTextComplete(false)
     // シーンが変わったら選択状態をリセット
     setSelectedChoiceId(null)
+    setShowProceedButton(false)
   }, [currentChapterIndex, currentSceneIndex, currentLineIndex, currentChapter])
 
   // シーン遷移アニメーション
@@ -301,13 +326,15 @@ const ChapterPlayer = () => {
       // refを使用して最新の値を参照
       const sceneIndex = currentSceneIndexRef.current
       const chapterIndex = currentChapterIndexRef.current
-      const chapter = chapters[chapterIndex]
+      // 最新のchapters配列を取得
+      const currentChapters = getChapters()
+      const chapter = currentChapters[chapterIndex]
       
       if (chapter && sceneIndex < chapter.scenes.length - 1) {
         // 同じ章内の次のシーンへ
         setCurrentSceneIndex(sceneIndex + 1)
         setCurrentLineIndex(0)
-      } else if (chapter && chapterIndex < chapters.length - 1) {
+      } else if (chapter && chapterIndex < currentChapters.length - 1) {
         // 次の章の最初のシーンへ
         setCurrentChapterIndex(chapterIndex + 1)
         setCurrentSceneIndex(0)
@@ -325,66 +352,42 @@ const ChapterPlayer = () => {
       setIsTransitioning(false)
       setTransitionPhase('idle')
     }, fadeOutDuration + whiteFadeDuration + waitDuration + fadeInDuration)
-  }, [isTransitioning])
+  }, [isTransitioning, chapter6Route])
 
-  // 章が存在しない場合はエンド画面を表示
-  if (!currentChapter) {
-    return (
-      <div className="relative h-full w-full overflow-hidden flex items-center justify-center bg-black">
-        <div className="text-center text-white">
-          <h1 className="text-2xl md:text-4xl font-bold mb-4">つづく</h1>
-          <p className="text-sm md:text-base opacity-70">遊んでいただきありがとうございます</p>
-        </div>
-      </div>
-    )
-  }
-
-  // シーンが存在しない場合はエンド画面を表示
-  if (!currentChapter.scenes[currentSceneIndex]) {
-    return (
-      <div className="relative h-full w-full overflow-hidden flex items-center justify-center bg-black">
-        <div className="text-center text-white">
-          <h1 className="text-2xl md:text-4xl font-bold mb-4">つづく</h1>
-          <p className="text-sm md:text-base opacity-70">遊んでいただきありがとうございます</p>
-        </div>
-      </div>
-    )
-  }
-
-  const currentScene = currentChapter.scenes[currentSceneIndex]
-  const currentBackground =
-    currentScene.background === "station_morning" ? stationMorning :
-    currentScene.background === "office_morning" ? officeMorning :
-    currentScene.background === "meeting_room" ? meetingRoom :
-    currentScene.background === "bar_night" ? barNight :
-    currentScene.background === "cafe_lunch" ? cafeLunch :
-    currentScene.background === "blue_leaf" ? blueLeaf :
-    currentScene.background === "rain_road" ? rainRoad :
-    currentScene.background === "night_coffee" ? nightCoffee :
-    stationMorning
-
-  const currentLine = currentScene.lines[currentLineIndex] || currentScene.lines[0]
-
-  // 現在のシーンの選択肢を取得
-  const choices = currentScene.options || []
-  // シーンの最後の行が表示され、テキストが完了したときに選択肢を表示
-  const shouldShowChoices = choices.length > 0 && 
-    currentLineIndex === currentScene.lines.length - 1 &&
-    isTextComplete
-
-  // 選択肢ボタンのクリックハンドラー（選択状態を更新）
-  const handleChoiceSelect = (choiceId: string) => {
-    setSelectedChoiceId(choiceId)
-  }
+  // 選択が解除されたら決定ボタンを非表示
+  useEffect(() => {
+    if (!selectedChoiceId) {
+      setShowProceedButton(false)
+    }
+  }, [selectedChoiceId])
 
   // 決定ボタンのクリックハンドラー
   const handleChoiceConfirm = () => {
     if (selectedChoiceId) {
-      // 後で分岐を実装するため、今は何もしない
-      console.log('決定された選択肢:', selectedChoiceId)
-      // ここで選択肢に応じた分岐処理を実装
+      // 第5章の最後のシーンの選択の場合、第6章のルートを決定
+      if (currentChapterIndex === 4 && currentSceneIndex === currentChapter?.scenes.length - 1) {
+        if (selectedChoiceId === 'continue') {
+          setChapter6Route('continue')
+        } else if (selectedChoiceId === 'talk_to_aoba') {
+          setChapter6Route('talk_to_aoba')
+        } else if (selectedChoiceId === 'consult_kise') {
+          setChapter6Route('consult_kise')
+        }
+        // 選択状態をリセット
+        setSelectedChoiceId(null)
+        // 第6章への遷移フラグを設定
+        setShouldTransitionToChapter6(true)
+      }
     }
   }
+
+  // chapter6Routeが設定されたら遷移アニメーションを開始
+  useEffect(() => {
+    if (shouldTransitionToChapter6 && chapter6Route) {
+      setShouldTransitionToChapter6(false)
+      setIsTransitioning(true)
+    }
+  }, [chapter6Route, shouldTransitionToChapter6])
 
   // キャラクター画像を取得
   const getCharacterImage = (imagePath: string) => {
@@ -422,6 +425,12 @@ const ChapterPlayer = () => {
     if (currentLineIndex < currentScene.lines.length - 1) {
       setCurrentLineIndex(currentLineIndex + 1)
     } else {
+      // 第6章の最後のシーンの最後の行がクリックされたらエンディングページを表示
+      if (currentChapterIndex === 5 && currentSceneIndex === currentChapter.scenes.length - 1) {
+        setShowEnding(true)
+        return
+      }
+      
       // 現在のシーンのテキストが最後の場合、遷移アニメーションを開始
       // シーンの切り替えは遷移アニメーション中（白画面で覆われている間）に行う
       if (currentSceneIndex < currentChapter.scenes.length - 1 || currentChapterIndex < chapters.length - 1) {
@@ -480,6 +489,112 @@ const ChapterPlayer = () => {
       }
     }
     return {}
+  }
+
+  // エンディングページを表示
+  if (showEnding) {
+    const endingLabel = chapter6Route === 'continue' ? 'A' : chapter6Route === 'talk_to_aoba' ? 'B' : 'C'
+    
+    return (
+      <div className="relative h-full w-full overflow-hidden flex items-center justify-center">
+        {/* 背景画像 */}
+        <div className="absolute inset-0">
+          <Image
+            src={blueSky}
+            alt="Blue Sky"
+            fill
+            className="object-cover"
+            priority
+            quality={90}
+          />
+        </div>
+        {/* オーバーレイ */}
+        <div className="absolute inset-0 bg-black/40" />
+        
+        {/* エンディングコンテンツ */}
+        <div className="relative z-10 text-center text-white px-4">
+          <h1 className="text-3xl md:text-5xl font-bold mb-2 md:mb-4 tracking-wide">
+            Ending {endingLabel}
+          </h1>
+          <p className="text-lg md:text-2xl mb-8 md:mb-12 opacity-90 font-light">
+            Thank you for playing
+          </p>
+          
+          {/* Return to the Choice ボタン */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              // 第5章の最後のシーン（選択肢の場面）に戻る
+              setCurrentChapterIndex(4)
+              setCurrentSceneIndex(chapter5.scenes.length - 1)
+              setCurrentLineIndex(0)
+              setShowEnding(false)
+              setChapter6Route(null)
+              setSelectedChoiceId(null)
+              setShowProceedButton(false)
+            }}
+            className="group relative min-h-[52px] px-10 py-3 md:px-12 md:py-3.5 rounded-full font-medium text-sm md:text-base tracking-wide transition-all duration-300 touch-manipulation bg-white/95 text-black hover:bg-white hover:scale-[1.02] active:scale-[0.98] shadow-[0_4px_20px_rgba(255,255,255,0.3)] hover:shadow-[0_6px_30px_rgba(255,255,255,0.4)] backdrop-blur-sm border border-white/20"
+            style={{ WebkitTapHighlightColor: 'transparent' }}
+          >
+            <span className="relative z-10">Return to the Choice</span>
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white to-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // 章が存在しない場合はエンド画面を表示
+  if (!currentChapter) {
+    return (
+      <div className="relative h-full w-full overflow-hidden flex items-center justify-center bg-black">
+        <div className="text-center text-white">
+          <h1 className="text-2xl md:text-4xl font-bold mb-4">つづく</h1>
+          <p className="text-sm md:text-base opacity-70">遊んでいただきありがとうございます</p>
+        </div>
+      </div>
+    )
+  }
+
+  // シーンが存在しない場合はエンド画面を表示
+  if (!currentChapter.scenes[currentSceneIndex]) {
+    return (
+      <div className="relative h-full w-full overflow-hidden flex items-center justify-center bg-black">
+        <div className="text-center text-white">
+          <h1 className="text-2xl md:text-4xl font-bold mb-4">つづく</h1>
+          <p className="text-sm md:text-base opacity-70">遊んでいただきありがとうございます</p>
+        </div>
+      </div>
+    )
+  }
+
+  const currentScene = currentChapter.scenes[currentSceneIndex]
+  const currentBackground =
+    currentScene.background === "station_morning" ? stationMorning :
+    currentScene.background === "office_morning" ? officeMorning :
+    currentScene.background === "meeting_room" ? meetingRoom :
+    currentScene.background === "bar_night" ? barNight :
+    currentScene.background === "cafe_lunch" ? cafeLunch :
+    currentScene.background === "blue_leaf" ? blueLeaf :
+    currentScene.background === "rain_road" ? rainRoad :
+    currentScene.background === "night_coffee" ? nightCoffee :
+    currentScene.background === "aoba_room" ? aobaRoom :
+    stationMorning
+
+  const currentLine = currentScene.lines[currentLineIndex] || currentScene.lines[0]
+
+  // 現在のシーンの選択肢を取得
+  const choices = currentScene.options || []
+  // シーンの最後の行が表示され、テキストが完了したときに選択肢を表示
+  const shouldShowChoices = choices.length > 0 && 
+    currentLineIndex === currentScene.lines.length - 1 &&
+    isTextComplete
+
+  // 選択肢ボタンのクリックハンドラー（選択状態を更新）
+  const handleChoiceSelect = (choiceId: string) => {
+    setSelectedChoiceId(choiceId)
+    // 選択時に決定ボタンを表示
+    setShowProceedButton(true)
   }
 
   // タイトル画面を表示
@@ -666,24 +781,29 @@ const ChapterPlayer = () => {
                 )
               })}
             </div>
-            {/* 決定ボタン */}
-            <div className="fixed bottom-6 md:bottom-8 left-0 right-0 px-4 md:px-8 flex justify-center z-20">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation()
-                  handleChoiceConfirm()
+            {/* 決定ボタン（選択時にのみ表示） */}
+            {showProceedButton && selectedChoiceId && (
+              <div 
+                className="fixed bottom-6 md:bottom-8 left-0 right-0 px-4 md:px-8 flex justify-center z-20"
+                style={{
+                  opacity: showProceedButton ? 1 : 0,
+                  transform: showProceedButton ? 'translateY(0)' : 'translateY(20px)',
+                  transition: 'opacity 0.4s ease-out, transform 0.4s ease-out',
                 }}
-                disabled={!selectedChoiceId}
-                className={`min-h-[56px] px-8 py-4 md:px-10 md:py-4 rounded-lg font-semibold text-base md:text-lg transition-all duration-200 touch-manipulation ${
-                  selectedChoiceId
-                    ? 'bg-white text-black hover:bg-white/90 active:scale-[0.97] shadow-lg'
-                    : 'bg-gray-500/50 text-gray-300 cursor-not-allowed'
-                }`}
-                style={{ WebkitTapHighlightColor: 'transparent' }}
               >
-                決定
-              </button>
-            </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleChoiceConfirm()
+                  }}
+                  className="group relative min-h-[52px] px-10 py-3 md:px-12 md:py-3.5 rounded-full font-medium text-sm md:text-base tracking-wide transition-all duration-300 touch-manipulation bg-white/95 text-black hover:bg-white hover:scale-[1.02] active:scale-[0.98] shadow-[0_4px_20px_rgba(255,255,255,0.3)] hover:shadow-[0_6px_30px_rgba(255,255,255,0.4)] backdrop-blur-sm border border-white/20"
+                  style={{ WebkitTapHighlightColor: 'transparent' }}
+                >
+                  <span className="relative z-10">Proceed</span>
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white to-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <>
