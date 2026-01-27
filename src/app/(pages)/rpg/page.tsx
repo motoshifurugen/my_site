@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import ChapterPlayer from './components/ChapterPlayer'
 
 export default function Rpg() {
@@ -72,7 +72,13 @@ export default function Rpg() {
       className="fixed inset-0 w-screen overflow-hidden"
       style={{ height: 'calc(var(--vh, 1vh) * 100)' }}
     >
-      <ChapterPlayer />
+      <Suspense fallback={
+        <div className="flex items-center justify-center h-full">
+          <div className="text-white">読み込み中...</div>
+        </div>
+      }>
+        <ChapterPlayer />
+      </Suspense>
     </div>
   )
 }
