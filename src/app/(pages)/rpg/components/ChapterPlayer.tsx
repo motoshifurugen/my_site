@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
+import { useSearchParams } from "next/navigation"
 import { chapter1 } from "../data/chapter1"
 import { chapter2 } from "../data/chapter2"
 import { chapter3 } from "../data/chapter3"
@@ -19,13 +20,22 @@ import blueLeaf from "../../../../../img/rpg/blue_leaf.png"
 import rainRoad from "../../../../../img/rpg/rain_road.png"
 import nightCoffee from "../../../../../img/rpg/night_coffee.png"
 import aoba1 from "../../../../../img/rpg/person/aoba_1.png"
+import aoba2 from "../../../../../img/rpg/person/aoba_2.png"
+import aoba3 from "../../../../../img/rpg/person/aoba_3.png"
+import aoba4 from "../../../../../img/rpg/person/aoba_4.png"
 import kise1 from "../../../../../img/rpg/person/kise_1.png"
+import kise2 from "../../../../../img/rpg/person/kise_2.png"
+import kise3 from "../../../../../img/rpg/person/kise_3.png"
+import saegusa1 from "../../../../../img/rpg/person/saegusa_1.png" 
 import blueLeafLogo from "../../../../../img/rpg/logo/blue_leaf_logo.png"
 import aobaRoom from "../../../../../img/rpg/aoba_room.png"
 import blueSky from "../../../../../img/rpg/blue_sky.png"
+import afterCafe from "../../../../../img/rpg/after_cafe.png"
+import clientRoom from "../../../../../img/rpg/client_room.png"
+import nightPlatform from "../../../../../img/rpg/night_platform.png"
 
 // 第6章のルート選択を管理するための型
-type Chapter6Route = 'continue' | 'talk_to_aoba' | 'consult_kise' | null
+type Chapter6Route = 'bad_end' | 'true_end' | 'another_end' | null
 
 // 1文字ずつフェードインするテキストコンポーネント
 const FadeInText = ({ 
@@ -125,10 +135,41 @@ const FadeInText = ({
 }
 
 const ChapterPlayer = () => {
-  const [showTitleScreen, setShowTitleScreen] = useState(true)
-  const [titleScreenOpacity, setTitleScreenOpacity] = useState(1)
-  const [currentChapterIndex, setCurrentChapterIndex] = useState(0)
-  const [currentSceneIndex, setCurrentSceneIndex] = useState(0)
+  const searchParams = useSearchParams()
+  const chapterParam = searchParams.get('chapter')
+  
+  // クエリパラメータから章番号を取得（1-6、無効な値の場合は0）
+  const getInitialChapterIndex = () => {
+    if (!chapterParam) return 0
+    const chapterNum = parseInt(chapterParam, 10)
+    // 1-5の範囲で、かつ有効な数値の場合のみ
+    if (!isNaN(chapterNum) && chapterNum >= 1 && chapterNum <= 5) {
+      return chapterNum - 1 // 0ベースのインデックスに変換
+    }
+    // 第6章が指定された場合、第5章の最後のシーンから開始
+    if (chapterNum === 6) {
+      return 4 // 第5章のインデックス
+    }
+    return 0
+  }
+  
+  const initialChapterIndex = getInitialChapterIndex()
+  // 第6章が指定された場合、第5章の最後のシーンから開始
+  const getInitialSceneIndex = () => {
+    if (chapterParam) {
+      const chapterNum = parseInt(chapterParam, 10)
+      if (chapterNum === 6) {
+        // 第5章の最後のシーン（選択肢があるシーン）から開始
+        return chapter5.scenes.length - 1
+      }
+    }
+    return 0
+  }
+  
+  const [showTitleScreen, setShowTitleScreen] = useState(!chapterParam) // クエリパラメータがある場合はタイトル画面をスキップ
+  const [titleScreenOpacity, setTitleScreenOpacity] = useState(!chapterParam ? 1 : 0)
+  const [currentChapterIndex, setCurrentChapterIndex] = useState(initialChapterIndex)
+  const [currentSceneIndex, setCurrentSceneIndex] = useState(getInitialSceneIndex())
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
   const [isTextComplete, setIsTextComplete] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
@@ -149,11 +190,11 @@ const ChapterPlayer = () => {
   // 第6章のルートに応じて章を動的に構築
   const getChapters = () => {
     const baseChapters = [chapter1, chapter2, chapter3, chapter4, chapter5]
-    if (chapter6Route === 'continue') {
+    if (chapter6Route === 'bad_end') {
       return [...baseChapters, chapter6a]
-    } else if (chapter6Route === 'talk_to_aoba') {
+    } else if (chapter6Route === 'true_end') {
       return [...baseChapters, chapter6b]
-    } else if (chapter6Route === 'consult_kise') {
+    } else if (chapter6Route === 'another_end') {
       return [...baseChapters, chapter6c]
     }
     return baseChapters
@@ -366,12 +407,12 @@ const ChapterPlayer = () => {
     if (selectedChoiceId) {
       // 第5章の最後のシーンの選択の場合、第6章のルートを決定
       if (currentChapterIndex === 4 && currentSceneIndex === currentChapter?.scenes.length - 1) {
-        if (selectedChoiceId === 'continue') {
-          setChapter6Route('continue')
-        } else if (selectedChoiceId === 'talk_to_aoba') {
-          setChapter6Route('talk_to_aoba')
-        } else if (selectedChoiceId === 'consult_kise') {
-          setChapter6Route('consult_kise')
+        if (selectedChoiceId === 'bad_end') {
+          setChapter6Route('bad_end')
+        } else if (selectedChoiceId === 'true_end') {
+          setChapter6Route('true_end')
+        } else if (selectedChoiceId === 'another_end') {
+          setChapter6Route('another_end')
         }
         // 選択状態をリセット
         setSelectedChoiceId(null)
@@ -393,7 +434,13 @@ const ChapterPlayer = () => {
   const getCharacterImage = (imagePath: string) => {
     const characterImageMap: Record<string, any> = {
       "aoba_1.png": aoba1,
+      "aoba_2.png": aoba2,
+      "aoba_3.png": aoba3,
+      "aoba_4.png": aoba4,
       "kise_1.png": kise1,
+      "kise_2.png": kise2,
+      "kise_3.png": kise3,
+      "saegusa_1.png": saegusa1,
     }
     return characterImageMap[imagePath] || null
   }
@@ -404,6 +451,7 @@ const ChapterPlayer = () => {
       "赤羽": "あかばね",
       "青葉": "あおば",
       "黄瀬": "きせ",
+      "三枝": "さえぐさ",
     }
     return furiganaMap[speaker] || ""
   }
@@ -493,15 +541,30 @@ const ChapterPlayer = () => {
 
   // エンディングページを表示
   if (showEnding) {
-    const endingLabel = chapter6Route === 'continue' ? 'A' : chapter6Route === 'talk_to_aoba' ? 'B' : 'C'
+    const endingLabel = chapter6Route === 'bad_end' ? 'Bad End' : chapter6Route === 'true_end' ? 'True End' : 'Another End'
+    
+    // エンディングルートに応じて背景画像を選択
+    const getEndingBackground = () => {
+      if (chapter6Route === 'bad_end') {
+        return rainRoad // Bad End用の暗い雰囲気の背景
+      } else if (chapter6Route === 'true_end') {
+        return nightPlatform // True End用の明るい背景
+      } else if (chapter6Route === 'another_end') {
+        return afterCafe // Another End用のカフェ背景
+      }
+      return blueSky // デフォルト
+    }
+    
+    const endingBackground = getEndingBackground()
+    const endingBackgroundAlt = chapter6Route === 'bad_end' ? 'Rain Road' : chapter6Route === 'true_end' ? 'Blue Sky' : 'After Cafe'
     
     return (
       <div className="relative h-full w-full overflow-hidden flex items-center justify-center">
         {/* 背景画像 */}
         <div className="absolute inset-0">
           <Image
-            src={blueSky}
-            alt="Blue Sky"
+            src={endingBackground}
+            alt={endingBackgroundAlt}
             fill
             className="object-cover"
             priority
@@ -513,10 +576,10 @@ const ChapterPlayer = () => {
         
         {/* エンディングコンテンツ */}
         <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-3xl md:text-5xl font-bold mb-2 md:mb-4 tracking-wide">
-            Ending {endingLabel}
+          <h1 className="text-3xl md:text-5xl font-bold mb-2 md:mb-4 tracking-wide text-white">
+            {endingLabel}
           </h1>
-          <p className="text-lg md:text-2xl mb-8 md:mb-12 opacity-90 font-light">
+          <p className="text-lg md:text-2xl mb-8 md:mb-12 opacity-90 font-light text-white">
             Thank you for playing
           </p>
           
@@ -579,6 +642,9 @@ const ChapterPlayer = () => {
     currentScene.background === "rain_road" ? rainRoad :
     currentScene.background === "night_coffee" ? nightCoffee :
     currentScene.background === "aoba_room" ? aobaRoom :
+    currentScene.background === "after_cafe" ? afterCafe :
+    currentScene.background === "client_room" ? clientRoom :
+    currentScene.background === "night_platform" ? nightPlatform :
     stationMorning
 
   const currentLine = currentScene.lines[currentLineIndex] || currentScene.lines[0]

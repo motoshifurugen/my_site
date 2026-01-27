@@ -26,333 +26,188 @@ export type Scene = {
 }
 
 export const chapter6c: { title: string; scenes: Scene[] } = {
-  title: '黄瀬に相談する（Cルート）',
+  title: '海が見える回り道',
   scenes: [
     {
-      id: 'ch6c_sc1_consult',
-      background: 'bar_night',
+      id: 'ch6c_sc1',
+      background: 'client_room',
       lines: [
-        {
-          speaker: '',
-          text: '帰り際に、黄瀬を飲みに誘う。',
+        { speaker: '', text: '三枝氏の問いかけに対し、青葉が追い詰められている。' },
+        { speaker: '青葉', text: '「私は……」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
         },
-        {
-          speaker: '赤羽',
-          text: '「黄瀬……ちょっと相談したいことがある」',
+        { speaker: '', text: '彼女の手が震えている。',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
         },
-        {
-          speaker: '',
-          text: '黄瀬は軽く笑う。',
+        { speaker: '', text: 'マニュアル通りの答えを吐き出すか、答えられずに無能の烙印を押されるか。',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
         },
-        {
-          speaker: '黄瀬',
-          text: '「青葉か？」',
+        { speaker: '', text: 'どちらにせよ、今の青葉には荷が重すぎる。',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
         },
-        {
-          speaker: '',
-          text: '俺はうなずく。',
+        { speaker: '', text: '俺が作り上げた「完璧な部下」という仮面が、今にも剥がれ落ちそうだ。',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
         },
-        {
-          speaker: '',
-          text: '黄瀬は、想定内といった顔で言う。',
+        { speaker: '', text: 'これ以上続けさせれば、彼女は決定的に傷つくか、\nあるいは心を殺して「完成」してしまう。' },
+        { speaker: '赤羽', text: '（……もういい）' },
+        { speaker: '赤羽', text: '「三枝専務」' },
+        { speaker: '', text: '俺は立ち上がり、資料を閉じた。' },
+        { speaker: '赤羽', text: '「申し訳ありません。本日の提案は、取り下げさせていただきます」' },
+        { speaker: '青葉', text: '「赤羽さん！？」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'aoba_1.png',
               position: 'center',
             },
           ],
         },
-        {
-          speaker: '黄瀬',
-          text: '「そう思ったから、青葉も誘ってある。三人で飲もう」',
+        { speaker: '', text: '青葉が叫ぶ。三枝氏も眉をひそめる。',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'aoba_1.png',
               position: 'center',
             },
           ],
         },
-        {
-          speaker: '',
-          text: 'どうやら俺は、黄瀬のことを、甘く見ていたようだ。',
-        }
+        { speaker: '三枝', text: '「どういうことだね？」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '赤羽', text: '「ご指摘の通りです。我々のプランには、現場への配慮が欠けていました。……このまま進めても、御社のためにならない」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: 'これは、ビジネスマンとしての敗北だ。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: 'だが、青葉に「心を殺した回答」を言わせるよりはずっといい。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '赤羽', text: '「出直してまいります」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: '俺は深く頭を下げ、青葉を促して部屋を出た。' },
       ],
     },
     {
-      id: 'ch6c_sc2_drinking',
-      background: 'bar_night',
+      id: 'ch6c_sc3',
+      background: 'after_cafe',
       lines: [
-        {
-          speaker: '',
-          text: '居酒屋。テーブルは三角形。青葉、黄瀬、そして、俺。\nぎこちない空気。',
+        { speaker: '', text: '近くのカフェに入る。' },
+        { speaker: '', text: '今にも泣きそうな顔で、青葉が口を開く。' },
+        { speaker: '青葉', text: '「……すみません。私が答えられなかったせいで、商談が」',
           characters: [
             {
-              image: 'aoba_1.png',
-              position: 'left',
-            },
-            {
-              image: 'kise_1.png',
-              position: 'right',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '黄瀬が仕切る。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'left',
-            },
-            {
-              image: 'kise_1.png',
-              position: 'right',
-            },
-          ],
-        },
-        {
-          speaker: '黄瀬',
-          text: '「さあ、今日の主役は赤羽だ。話せ！」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'left',
-            },
-            {
-              image: 'kise_1.png',
-              position: 'right',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '青葉は、笑顔でグラスを持ち上げる。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'left',
-            },
-            {
-              image: 'kise_1.png',
-              position: 'right',
-            },
-          ],
-        },
-        {
-          speaker: '青葉',
-          text: '「赤羽さん、何話すんですか？」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'left',
-            },
-            {
-              image: 'kise_1.png',
-              position: 'right',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '俺は一瞬言葉に詰まるが、黄瀬の視線を受け、少しずつ吐き出す。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'left',
-            },
-            {
-              image: 'kise_1.png',
-              position: 'right',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '自分の合理的判断で青葉のやり方を変えてしまったこと',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'left',
-            },
-            {
-              image: 'kise_1.png',
-              position: 'right',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '仕事上の効率を優先して、青葉の無邪気さや感性を押さえたこと',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'left',
-            },
-            {
-              image: 'kise_1.png',
-              position: 'right',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '青葉は静かに聞く。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'left',
-            },
-            {
-              image: 'kise_1.png',
-              position: 'right',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'ch6c_sc3_essence',
-      background: 'bar_night',
-      lines: [
-        {
-          speaker: '',
-          text: '俺が話し終えた後、青葉が笑う。',
-          characters: [
-            {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
-            }
+            },
           ],
         },
-        {
-          speaker: '青葉',
-          text: '「……赤羽さん、真面目すぎます」',
+        { speaker: '赤羽', text: '「いや、あれでよかったんだ」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
-            }
+            },
           ],
         },
-        {
-          speaker: '青葉',
-          text: '「私は、仕事とプライベートで使い分けていただけです。\n仕事では効率的に振る舞うけど、普段は相変わらずおしゃべりで、遅いんですよ」',
+        { speaker: '', text: '俺はコーヒーを飲む。苦い。',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
-            }
+            },
           ],
         },
-        {
-          speaker: '',
-          text: '俺は初めて、青葉の本当の性格を知る。',
+        { speaker: '赤羽', text: '「契約は流れるだろうな」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
-            }
+            },
           ],
         },
-        {
-          speaker: '',
-          text: '無邪気さ、おしゃべり、理論では説明できない存在感',
+        { speaker: '青葉', text: '「どうして、止めたんですか？　私、マニュアル通りなら答えられました」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
-            }
+            },
           ],
         },
-        {
-          speaker: '赤羽',
-          text: '「死んでいなかった」',
+        { speaker: '赤羽', text: '「そうだな」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
-            }
+            },
           ],
         },
-        {
-          speaker: '',
-          text: '——その感覚が、胸の奥で静かに広がる。',
+        { speaker: '', text: '俺は青葉を見る。',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
-            }
+            },
           ],
         },
-        {
-          speaker: '青葉',
-          text: '「勝手に、殺さないでください。」',
+        { speaker: '赤羽', text: '「でも、それを言ったら、お前は本当に『そういう人間』になっちまう気がした」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
-            }
+            },
           ],
         },
-        {
-          speaker: '',
-          text: '俺は黄瀬と笑いながら、グラスを乾杯する。',
-        }
-      ],
-    },
-    {
-      id: 'ch6c_sc5_change',
-      background: 'station_morning',
-      lines: [
-        {
-          speaker: '',
-          text: '俺は、徐々に変わる。',
-        },
-        {
-          speaker: '',
-          text: '通勤ルートを変えてみる',
-        },
-        {
-          speaker: '',
-          text: '青葉の誘いで社員飲みに参加する',
-        },
-        {
-          speaker: '',
-          text: '効率や正しさだけで判断せず、状況に応じて柔軟に選択する',
-        },
-        {
-          speaker: '',
-          text: '青葉は以前のまま、無邪気で、おしゃべりで、遅い。',
+        { speaker: '青葉', text: '「え？」',
           characters: [
             {
               image: 'aoba_1.png',
@@ -360,9 +215,7 @@ export const chapter6c: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        {
-          speaker: '',
-          text: 'それでも、俺はその存在によって少しだけ世界を広げられた感覚を抱く。',
+        { speaker: '赤羽', text: '「仕事は取れなかった。俺の評価も下がる。……でもな」',
           characters: [
             {
               image: 'aoba_1.png',
@@ -370,25 +223,7 @@ export const chapter6c: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        {
-          speaker: '赤羽',
-          text: '（正しさも大事だけど、誰かの存在を壊さないことも大事だ）',
-        },
-        {
-          speaker: '',
-          text: '評価も効率も、失うことがある。',
-        },
-        {
-          speaker: '',
-          text: 'でも、人の本質は、失われない。',
-        },
-        {
-          speaker: '',
-          text: '無邪気に笑いながら、仕事中にも関わらず、話しかける新人がいる。',
-        },
-        {
-          speaker: '青葉',
-          text: '「赤羽さん、聞いてくださいよ。今日も面白いことが…」',
+        { speaker: '', text: '俺はネクタイを緩め、大きく息を吸った。',
           characters: [
             {
               image: 'aoba_1.png',
@@ -396,13 +231,51 @@ export const chapter6c: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        {
-          speaker: '赤羽',
-          text: '（これが、正しいかどうかじゃない。大事なのは、この瞬間を失わないことだ）',
+        { speaker: '', text: '不思議と、後悔はなかった。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
+        { speaker: '赤羽', text: '「嘘をついて勝つより、負けて息がしやすい方がいい。\n……今の俺は、そう思うんだよ」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: '青葉はしばらく俺を見ていたが、やがてふっと力を抜いて笑った。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '青葉', text: '「……赤羽さん、変なの」',
+          characters: [
+            {
+              image: 'aoba_3.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '赤羽', text: '「正しくはない、かもな」',
+          characters: [
+            {
+              image: 'aoba_3.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: '商談は大失敗だ。' },
+        { speaker: '', text: 'でも、これで良かった。と言える日が、いつか来るかもしれない。' },
+        { speaker: '', text: 'そんな根拠のない希望を感じながら、外の景色を見た。' },
+        { speaker: '', text: 'この世界が、昨日よりも少しだけ透き通って見えた。' },
       ],
     },
   ],
 }
-
-
