@@ -83,7 +83,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '青葉', text: '「赤羽さん」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
@@ -91,7 +91,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '赤羽', text: '「先方へのメール、見たぞ。\n『できる限り早く対応します』と書いてあるな」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
@@ -99,7 +99,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '青葉', text: '「はい、少しでも安心してもらおうと思って」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
@@ -107,7 +107,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '赤羽', text: '「駄目だ」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
@@ -115,7 +115,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '青葉', text: '「え？」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
@@ -123,7 +123,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '赤羽', text: '「『できる限り』という言葉は、相手に勝手な期待を抱かせる。\nいつになるか分からないという不安は、俺たちへの不信感につながる」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
@@ -131,7 +131,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '赤羽', text: '「ビジネスで必要なのは『優しさ』じゃない。『正確なコミット』だ」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
@@ -139,7 +139,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '赤羽', text: '「不確定な約束をするくらいなら、確実な納期を伝えて、相手に判断させるのが誠意だ」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
@@ -147,7 +147,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '', text: '青葉がハッとした顔をする。',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
@@ -155,7 +155,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '青葉', text: '「……私、ただ相手に喜んでほしくて……でも、それが逆に無責任だったんですね」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
@@ -163,7 +163,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '赤羽', text: '「そうだ。感情で仕事をすると、リスクになる。気をつけろ」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],
@@ -171,7 +171,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '青葉', text: '「はい……すみません」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],

@@ -20,6 +20,9 @@ import blueLeaf from "../../../../../img/rpg/blue_leaf.png"
 import rainRoad from "../../../../../img/rpg/rain_road.png"
 import nightCoffee from "../../../../../img/rpg/night_coffee.png"
 import aoba1 from "../../../../../img/rpg/person/aoba_1.png"
+import aoba2 from "../../../../../img/rpg/person/aoba_2.png"
+import aoba3 from "../../../../../img/rpg/person/aoba_3.png"
+import aoba4 from "../../../../../img/rpg/person/aoba_4.png"
 import kise1 from "../../../../../img/rpg/person/kise_1.png"
 import blueLeafLogo from "../../../../../img/rpg/logo/blue_leaf_logo.png"
 import aobaRoom from "../../../../../img/rpg/aoba_room.png"
@@ -425,6 +428,9 @@ const ChapterPlayer = () => {
   const getCharacterImage = (imagePath: string) => {
     const characterImageMap: Record<string, any> = {
       "aoba_1.png": aoba1,
+      "aoba_2.png": aoba2,
+      "aoba_3.png": aoba3,
+      "aoba_4.png": aoba4,
       "kise_1.png": kise1,
     }
     return characterImageMap[imagePath] || null

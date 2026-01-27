@@ -38,7 +38,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         { speaker: '青葉', text: '「はい。私がメインで進行し、技術的な補足を赤羽さんが行う。想定問答も完璧です」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_4.png',
               position: 'center',
             },
           ],
@@ -46,7 +46,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         { speaker: '', text: '青葉はタブレットを確認する。',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_4.png',
               position: 'center',
             },
           ],
@@ -54,7 +54,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         { speaker: '', text: '今回の相手は、人事部長の佐々木氏。\n実務的で、数字を好むタイプだ。',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_4.png',
               position: 'center',
             },
           ],
@@ -62,7 +62,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         { speaker: '赤羽', text: '「佐々木さんなら、このコスト削減プランで確実に落ちる。\n余計な情に訴える必要はない。淡々と、メリットだけを提示しよう」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_4.png',
               position: 'center',
             },
           ],
@@ -70,7 +70,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         { speaker: '青葉', text: '「分かりました」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_4.png',
               position: 'center',
             },
           ],
@@ -166,7 +166,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         { speaker: '青葉', text: '「え……？」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_2.png',
               position: 'center',
             },
           ],

@@ -45,7 +45,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         { speaker: '', text: 'オフィスに着くと、青葉はすでに席にいた。',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_4.png',
               position: 'center',
             },
           ],
@@ -53,7 +53,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         { speaker: '', text: 'キーボードを打つ手は、以前より格段に速くなっていた。',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_4.png',
               position: 'center',
             },
           ],
@@ -61,7 +61,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         { speaker: '', text: '画面を覗くと、曖昧な表現は消え、事実と数字だけが整然と並んでいる。',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_4.png',
               position: 'center',
             },
           ],
@@ -69,7 +69,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         { speaker: '青葉', text: '「赤羽さん、おはようございます」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_4.png',
               position: 'center',
             },
           ],
@@ -77,7 +77,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         { speaker: '', text: '声は明るい。',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_4.png',
               position: 'center',
             },
           ],
@@ -85,7 +85,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         { speaker: '赤羽', text: '「おはよう」',
           characters: [
             {
-              image: 'aoba_1.png',
+              image: 'aoba_4.png',
               position: 'center',
             },
           ],
