@@ -164,7 +164,7 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         { speaker: '黄瀬', text: '「お前、ほんと冒険しねえな」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],
@@ -172,7 +172,7 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         { speaker: '赤羽', text: '「何がだ」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],
@@ -180,7 +180,7 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         { speaker: '黄瀬', text: '「ここに来て五年、\n毎回最初の一言目が『ポテサラ』だろ。たまには『本日のおすすめ』とか行ってみろよ」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],
@@ -188,7 +188,7 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         { speaker: '', text: '黄瀬はメニュー表をパタパタと仰ぐ。',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],
@@ -196,7 +196,7 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         { speaker: '赤羽', text: '「外れを引く時間が無駄だ」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],
@@ -204,7 +204,7 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         { speaker: '黄瀬', text: '「その『無駄』が、酒の肴になるのによ」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],
@@ -212,7 +212,7 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         { speaker: '赤羽', text: '「よくわからん」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],

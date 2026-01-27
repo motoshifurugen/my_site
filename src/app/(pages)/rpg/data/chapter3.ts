@@ -190,7 +190,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         { speaker: '黄瀬', text: '「へえ、すげえじゃん。お前のコピーロボット一丁上がりってか」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_3.png',
               position: 'center',
             },
           ],
@@ -198,7 +198,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         { speaker: '', text: '黄瀬は悪気なく笑った。',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_3.png',
               position: 'center',
             },
           ],
@@ -206,7 +206,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         { speaker: '黄瀬', text: '「これで仕事も楽になるな。乾杯！」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_3.png',
               position: 'center',
             },
           ],
@@ -214,7 +214,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         { speaker: '', text: 'グラスを合わせる音が響く。',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_3.png',
               position: 'center',
             },
           ],
@@ -222,7 +222,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         { speaker: '赤羽', text: '「……ああ」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_3.png',
               position: 'center',
             },
           ],

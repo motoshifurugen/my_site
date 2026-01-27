@@ -335,7 +335,7 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         { speaker: '', text: '俺が即答すると、黄瀬は笑った。',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],
@@ -343,7 +343,7 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         { speaker: '黄瀬', text: '「お前いまこの店にいるやつ全員的に回したぞ」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],
@@ -351,7 +351,7 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         { speaker: '黄瀬', text: '「まあでも、それで数字が出てるんだから、なにも言えないよな」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],

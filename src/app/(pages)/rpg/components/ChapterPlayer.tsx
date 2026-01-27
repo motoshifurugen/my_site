@@ -24,6 +24,8 @@ import aoba2 from "../../../../../img/rpg/person/aoba_2.png"
 import aoba3 from "../../../../../img/rpg/person/aoba_3.png"
 import aoba4 from "../../../../../img/rpg/person/aoba_4.png"
 import kise1 from "../../../../../img/rpg/person/kise_1.png"
+import kise2 from "../../../../../img/rpg/person/kise_2.png"
+import kise3 from "../../../../../img/rpg/person/kise_3.png"
 import blueLeafLogo from "../../../../../img/rpg/logo/blue_leaf_logo.png"
 import aobaRoom from "../../../../../img/rpg/aoba_room.png"
 import blueSky from "../../../../../img/rpg/blue_sky.png"
@@ -432,6 +434,8 @@ const ChapterPlayer = () => {
       "aoba_3.png": aoba3,
       "aoba_4.png": aoba4,
       "kise_1.png": kise1,
+      "kise_2.png": kise2,
+      "kise_3.png": kise3,
     }
     return characterImageMap[imagePath] || null
   }

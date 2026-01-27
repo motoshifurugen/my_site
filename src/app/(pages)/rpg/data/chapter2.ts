@@ -187,7 +187,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '黄瀬', text: '「あー、またフラれたわ」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],
@@ -195,7 +195,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '', text: '黄瀬がスマホをいじりながらぼやく。',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],
@@ -203,7 +203,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '赤羽', text: '「今度はなんだ」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],
@@ -243,7 +243,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '黄瀬', text: '「だよなあ？でも、向こうは『迷子になる時間も楽しみたかった』とか言うわけよ」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],
@@ -251,7 +251,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '', text: '黄瀬は枝豆の皮を放り投げる。',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],
@@ -259,7 +259,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '黄瀬', text: '「正解ルートを行くのが、必ずしも楽しいデートじゃないってことかねえ」',
           characters: [
             {
-              image: 'kise_1.png',
+              image: 'kise_2.png',
               position: 'center',
             },
           ],
