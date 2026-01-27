@@ -26,465 +26,31 @@ export type Scene = {
 }
 
 export const chapter6b: { title: string; scenes: Scene[] } = {
-  title: '青葉と話す（Bルート）',
+  title: '雑音のファンファーレ',
   scenes: [
     {
-      id: 'ch6b_sc1_talk',
-      background: 'cafe_lunch',
-      lines: [
-        {
-          speaker: '',
-          text: '仕事終わり、俺は青葉を呼び止める。',
-        },
-        {
-          speaker: '赤羽',
-          text: '「青葉、少し……時間あるか」',
-        },
-        {
-          speaker: '',
-          text: '青葉は、少し驚いた顔をしてから、すぐにいつもの調子で笑う。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '青葉',
-          text: '「ありますよ。今日、わりと早く終わったので」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '静かなカフェ。',
-        },
-        {
-          speaker: '',
-          text: '仕事の話をするには、少しだけ柔らかすぎる場所。',
-        },
-        {
-          speaker: '',
-          text: '青葉が先に口を開く。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '青葉',
-          text: '「……赤羽さん」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '少し、真面目な声。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '青葉',
-          text: '「私、最近……評価、上がりました」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: 'それは、事実だった。上司の反応も、周囲の視線も、変わっている。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '青葉',
-          text: '「赤羽さんのおかげです」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '俺は、胸が詰まる。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '青葉',
-          text: '「効率とか、優先順位とか……正直、最初は全然わからなかったです」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '青葉',
-          text: '「今も、たぶん遅いですけど」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '俺は、視線を落とす。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '赤羽',
-          text: '「……青葉」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '赤羽',
-          text: '「俺は」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '少し、間を置く。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '赤羽',
-          text: '「お前のやり方を、否定した」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '赤羽',
-          text: '「それが正しいと、思ってた」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '青葉は、きょとんとする。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '赤羽',
-          text: '「でも……あれは、俺の都合だった」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '合理性。評価。自分が信じてきた"安全な生き方"。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '赤羽',
-          text: '「お前の"無駄なところ"を、俺は、邪魔だと思った」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '言葉にした瞬間、逃げ場がなくなる。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '青葉は、すぐには何も言わない。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: 'ストローで、氷をつつく。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '青葉',
-          text: '「……うーん」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '少し考えてから、言う。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '青葉',
-          text: '「たしかに、やりづらくなったところはあります」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '正直だ。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '青葉',
-          text: '「でも」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '顔を上げる。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '青葉',
-          text: '「全部、嫌だったわけじゃないです」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '青葉',
-          text: '「評価されるの、嬉しかったですし」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '青葉',
-          text: '「そうですね……お詫びとして」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '青葉が、にやっと笑う。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '青葉',
-          text: '「駅前のシュークリーム、奢ってください」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '重くなりすぎた空気が、少しだけ緩む。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'ch6b_sc5_change',
-      background: 'office_morning',
-      lines: [
-        {
-          speaker: '',
-          text: 'それ以降、俺は少しずつ変わっていった。',
-        },
-        {
-          speaker: '',
-          text: '青葉に「相談してから決める」場面が増えた',
-        },
-        {
-          speaker: '',
-          text: '即断せず、「別のやり方」を一度考えるようになった',
-        },
-        {
-          speaker: '',
-          text: '正解が一つだと決めつけなくなった',
-        },
-        {
-          speaker: '',
-          text: 'ただし、結果は常に良いわけではない。',
-        },
-      ],
-    },
-    {
-      id: 'ch6b_sc6_failure',
+      id: 'ch6b_sc1',
       background: 'meeting_room',
       lines: [
-        {
-          speaker: '',
-          text: '以前、効率重視で進めていれば成功していたかもしれない商談。',
-        },
-        {
-          speaker: '',
-          text: '遠回りを選んだ結果、\nクライアントから断りの連絡が入った。',
-        },
-        {
-          speaker: '',
-          text: '上司に詰められる。',
-        },
-        {
-          speaker: '上司',
-          text: '「なぜ、あの形のままで進めなかった？」',
-        },
-        {
-          speaker: '',
-          text: '俺は、説明する。\n関係性。長期的な信頼。クライアントが抱く"言葉にならない違和感"。',
-        },
-        {
-          speaker: '',
-          text: '上司は、納得していない表情のまま去っていった。',
-        },
-        {
-          speaker: '',
-          text: '評価は、下がる。',
-        },
+        { speaker: '', text: '青葉が答えあぐねている。' },
+        { speaker: '', text: '「正解」を言おうとして、唇が震えている。' },
+        { speaker: '赤羽', text: '（違う）' },
+        { speaker: '', text: '俺は直感する。この相手に、その嘘は通用しない。' },
+        { speaker: '赤羽', text: '「……恐れ入ります、専務」' },
+        { speaker: '', text: '俺は青葉の言葉を遮った。' },
+        { speaker: '赤羽', text: '「担当の青葉は、実は別の懸念を持っていました」' },
+        { speaker: '', text: '青葉が驚いて俺を見る。' },
+        { speaker: '赤羽', text: '「彼女は現場を回り、効率化の裏で『現場のモチベーションが下がるリスク』を報告書にまとめていました。……それを『数字にならない』と弾いたのは私です」' },
       ],
     },
     {
-      id: 'ch6b_sc7_acceptance',
-      background: 'rain_road',
+      id: 'ch6b_sc2',
+      background: 'meeting_room',
       lines: [
-        {
-          speaker: '',
-          text: '帰り道、青葉と並んで駅まで歩く。',
-        },
-        {
-          speaker: '赤羽',
-          text: '「……すまなかったな」',
-        },
-        {
-          speaker: '',
-          text: '青葉は、首を振る。',
+        { speaker: '三枝', text: '「ほう？」' },
+        { speaker: '赤羽', text: '「青葉。……例の、ボツにした案。口頭でいい、説明できるか」' },
+        { speaker: '', text: '俺が促すと、青葉は一瞬戸惑い、すぐに覚悟を決めた目を向けた。' },
+        { speaker: '青葉', text: '「は、はい！……実は、現場の方々は、休憩所の配置と動線について、非効率でも今のままがいいと……」',
           characters: [
             {
               image: 'aoba_1.png',
@@ -492,55 +58,33 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        {
-          speaker: '青葉',
-          text: '「いいと思います」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '青葉',
-          text: '「たぶん、あれ、うまくいっても、あとで壊れてました」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '',
-          text: '根拠はない。でも、青葉はそう感じている。',
-        },
-        {
-          speaker: '',
-          text: '俺は、初めて思う。',
-        },
-        {
-          speaker: '赤羽',
-          text: '（正しさは、後から証明されるものじゃない）',
-        },
+        { speaker: '', text: '青葉が語り出す。数字には表れない、現場の「匂い」の話。' },
+        { speaker: '', text: 'それは、スマートなプレゼンではなかった。' },
+        { speaker: '', text: 'だが、三枝氏の重心が少しだけ、前に傾いたように感じた。' },
+        { speaker: '', text: '返答は後日いただくことを確認し、俺たちはオフィスを後にした。' },
       ],
     },
     {
-      id: 'ch6b_sc8_end',
+      id: 'ch6b_sc3',
       background: 'office_morning',
       lines: [
-        {
-          speaker: '',
-          text: '評価は落ちたが、俺は、自分を責めていない。',
-        },
-        {
-          speaker: '',
-          text: '正しさを疑った。それだけだ。',
-        },
-        {
-          speaker: '',
-          text: '青葉は、相変わらず仕事が遅く、相変わらずよく喋る。',
+        { speaker: '', text: '結局、商談は成立しなかった。' },
+        { speaker: '', text: '上司に詰められる。' },
+        { speaker: '上司', text: '「なぜ、あの形のままで進めなかった？」' },
+        { speaker: '', text: '俺は、説明する。' },
+        { speaker: '', text: '長期的な信頼。クライアントが抱く"言葉にならない違和感"。' },
+        { speaker: '', text: '上司は、納得していない表情のまま去っていった。' },
+        { speaker: '', text: '評価は、下がる' },
+      ],
+    },
+    {
+      id: 'ch6b_sc4',
+      background: 'station_morning',
+      lines: [
+        { speaker: '', text: '夜。駅まで青葉と並んで歩く。' },
+        { speaker: '赤羽', text: '「……すまなかったな」' },
+        { speaker: '', text: '青葉は、首を振る。' },
+        { speaker: '青葉', text: '「いいと思います」',
           characters: [
             {
               image: 'aoba_1.png',
@@ -548,21 +92,19 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        {
-          speaker: '',
-          text: 'それでも——',
+        { speaker: '青葉', text: '「たぶん、あれ、うまくいっても、あとで壊れてました」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
-        {
-          speaker: '',
-          text: '職場は、少しだけ、長く続きそうな空気になった。',
-        },
-        {
-          speaker: '赤羽',
-          text: '（正しさを選ばなかった日を、俺は、失敗だとは思わない）',
-        },
+        { speaker: '', text: '根拠はない。でも、青葉はそう感じている。' },
+        { speaker: '', text: '俺は、初めて思う。' },
+        { speaker: '赤羽', text: '（正しさは、後から証明されるものじゃない）' },
+        { speaker: '', text: '駅のホームから見上げた空には、いつもより多くの星が輝いて見えた。' },
       ],
     },
   ],
 }
-
-

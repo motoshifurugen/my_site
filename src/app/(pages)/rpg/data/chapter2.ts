@@ -26,16 +26,14 @@ export type Scene = {
 }
 
 export const chapter2: { title: string; scenes: Scene[] } = {
-  title: '違和感の輪郭',
+  title: '不要な嗅覚',
   scenes: [
     {
-      id: 'ch2_sc1_cafe_lunch',
+      id: 'ch2_sc1',
       background: 'cafe_lunch',
       lines: [
-        {
-          speaker: '',
-          text: '昼休み。\n社内のカフェテリアは、雨の日特有の湿り気を含んだ空気で満ちていた。',
-        },
+        { speaker: '', text: '昼休み。' },
+        { speaker: '', text: '社内のカフェテリアは、雨の日特有の、湿り気を含んだ空気で満ちていた。' },
         { speaker: '青葉', text: '「今日の雨、匂いが面白くないですか？」',
           characters: [
             {
@@ -43,18 +41,16 @@ export const chapter2: { title: string; scenes: Scene[] } = {
               position: 'center',
             },
           ],
-         },
-        { speaker: '', text: '青葉が、少し身を乗り出して言う。',
+        },
+        { speaker: '', text: '青葉が、少し身を乗り出して言った。',
           characters: [
             {
               image: 'aoba_1.png',
               position: 'center',
             },
           ],
-         },
-        {
-          speaker: '青葉',
-          text: '「土の香りが強くて……なんか、安心する感じで」',
+        },
+        { speaker: '青葉', text: '「土の香りが強くて……なんか、安心する感じで」',
           characters: [
             {
               image: 'aoba_1.png',
@@ -63,37 +59,28 @@ export const chapter2: { title: string; scenes: Scene[] } = {
           ],
         },
         { speaker: '赤羽', text: '（ペトリコール……）' },
-        {
-          speaker: '',
-          text: '乾いた地表に降った雨で発生する揮発性物質。\n化学現象としては理解できる。',
-        },
-        { speaker: '赤羽', text: '（……が、仕事には関係ない）' },
-        { speaker: '', text: 'そう心の中で整理しながら、口には出さない。' },
-        {
-          speaker: '',
-          text: '周囲では、何人かの同僚が自然と青葉の話に耳を傾けている。',
-        },
+        { speaker: '', text: '雨が乾いた地表のアスファルトや土に落ちた際、植物由来の油分や細菌が生成する物質がエアロゾルとなり、独特の匂いを発生させる現象。' },
+        { speaker: '', text: '化学的なメカニズムは説明できる。' },
+        { speaker: '', text: 'だが、仕事には１ミリも関係がない。' },
+        { speaker: '', text: '周囲では、何人かの同僚が自然と青葉の話に耳を傾けている。' },
         { speaker: '社員', text: '「わかる」' },
         { speaker: '社員', text: '「なんか、落ち着くよね」' },
-        { speaker: '社員', text: '「青葉ちゃんがいると、空気が和むよね」' },
-        {
-          speaker: '',
-          text: '俺は、その様子を一歩引いた位置から眺めながら、時間と進捗を頭の中で並べていた。',
-        },
+        { speaker: '社員', text: '「青葉ちゃんがいると、和むなあ」' },
         { speaker: '', text: '和む。' },
-        {
-          speaker: '',
-          text: 'だが、業務は進まない。その事実だけが、静かに残る。',
-        },
+        { speaker: '', text: 'その曖昧な評価が、俺には理解できない。' },
+        { speaker: '', text: '和んだところで、業務効率は上がらない。数字も出ない。' },
+        { speaker: '', text: '俺は、その様子を一歩引いた位置から眺めながら、\n午後のスケジュールを脳内で再構築していた。' },
+        { speaker: '', text: '彼女の周りだけ、時間がゆっくり流れている。\nそれは組織にとって、遅延となる危険性も持っている。' },
       ],
     },
     {
-      id: 'ch2_sc2_work_instruction_1',
+      id: 'ch2_sc2',
       background: 'office_morning',
       lines: [
-        {
-          speaker: '',
-          text: '午後、青葉がまとめた資料を確認する。\n内容は間違っていない。だが、構成が独自すぎる。',
+        { speaker: '', text: '午後、トラブルの報告が入った。' },
+        { speaker: '', text: '青葉が担当する顧客から、納期についての問い合わせが来ていたらしい。' },
+        { speaker: '赤羽', text: '「青葉」' },
+        { speaker: '青葉', text: '「赤羽さん」',
           characters: [
             {
               image: 'aoba_1.png',
@@ -101,17 +88,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '赤羽', text: '「ここ、フォーマット使えばもっと早い」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-         },
-        {
-          speaker: '赤羽',
-          text: '「先方もその形式に慣れてる。確認も早くなる」',
+        { speaker: '赤羽', text: '「先方へのメール、見たぞ。\n『できる限り早く対応します』と書いてあるな」',
           characters: [
             {
               image: 'aoba_1.png',
@@ -119,118 +96,95 @@ export const chapter2: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '青葉', text: '「なるほど……！」',
+        { speaker: '青葉', text: '「はい、少しでも安心してもらおうと思って」',
           characters: [
             {
               image: 'aoba_1.png',
               position: 'center',
             },
           ],
-         },
-        { speaker: '', text: '青葉は素直に頷き、メモを取る。',
+        },
+        { speaker: '赤羽', text: '「駄目だ」',
           characters: [
             {
               image: 'aoba_1.png',
               position: 'center',
             },
           ],
-         },
-        { speaker: '', text: '反発はない。' },
-        { speaker: '', text: 'ただ、処理に時間がかかっている。' },
+        },
+        { speaker: '青葉', text: '「え？」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '赤羽', text: '「『できる限り』という言葉は、相手に勝手な期待を抱かせる。\nいつになるか分からないという不安は、俺たちへの不信感につながる」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '赤羽', text: '「ビジネスで必要なのは『優しさ』じゃない。『正確なコミット』だ」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '赤羽', text: '「不確定な約束をするくらいなら、確実な納期を伝えて、相手に判断させるのが誠意だ」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: '青葉がハッとした顔をする。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '青葉', text: '「……私、ただ相手に喜んでほしくて……でも、それが逆に無責任だったんですね」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '赤羽', text: '「そうだ。感情で仕事をすると、リスクになる。気をつけろ」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '青葉', text: '「はい……すみません」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: 'デスクに戻った青葉の背中は、いつもより一回り小さく見えた。' },
       ],
     },
     {
-      id: 'ch2_sc3_work_instruction_2',
-      background: 'office_morning',
-      lines: [
-        { speaker: '', text: '別の案件。進捗が、明らかに遅れている。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-         },
-        {
-          speaker: '赤羽',
-          text: '「ここ、詰まってたなら、もう少し早く相談してほしかった」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        { speaker: '', text: '声は荒げない。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        {
-          speaker: '赤羽',
-          text: '「一人で抱えるより、早く出したほうが、結果的にお客さんのためになる」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-         },
-        { speaker: '', text: '青葉は、一瞬だけ言葉を探す。',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-         },
-        {
-          speaker: '青葉',
-          text: '「……すみません。自分でやりきった方がいいかなって」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        { speaker: '赤羽', text: '「時と場合による」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-         },
-        { speaker: '赤羽', text: '「仕事は、完成度より優先順位だ」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-         },
-        { speaker: '青葉', text: '「はい」',
-          characters: [
-            {
-              image: 'aoba_1.png',
-              position: 'center',
-            },
-          ],
-         },
-        { speaker: '', text: 'その声は、いつもより少しだけ小さい。' },
-      ],
-    },
-    {
-      id: 'ch2_sc4_night_bar',
+      id: 'ch2_sc3',
       background: 'bar_night',
       lines: [
-        { 
-          speaker: '', 
-          text: '同じ店。同じ席。',
+        { speaker: '', text: '夜。同じ店。同じ席。'},
+        { speaker: '黄瀬', text: '「あー、またフラれたわ」',
           characters: [
             {
               image: 'kise_1.png',
@@ -238,9 +192,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { 
-          speaker: '黄瀬', 
-          text: '「青葉、最近どうよ」',
+        { speaker: '', text: '黄瀬がスマホをいじりながらぼやく。',
           characters: [
             {
               image: 'kise_1.png',
@@ -248,9 +200,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { 
-          speaker: '', 
-          text: '黄瀬が、何気なく聞く。',
+        { speaker: '赤羽', text: '「今度はなんだ」',
           characters: [
             {
               image: 'kise_1.png',
@@ -258,9 +208,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { 
-          speaker: '赤羽', 
-          text: '「……改善点は多い」',
+        { speaker: '黄瀬', text: '「『一緒にいても息が詰まる』だとよ」',
           characters: [
             {
               image: 'kise_1.png',
@@ -268,9 +216,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        {
-          speaker: '',
-          text: 'そう答えながら、昼のカフェテリアの光景が、頭をよぎる。',
+        { speaker: '黄瀬', text: '「俺さ、デートのコースも完璧に組んだんだぜ？\n移動時間も、店の予約も、映画の上映時間も。最短ルートで、一番効率よく楽しめるように」',
           characters: [
             {
               image: 'kise_1.png',
@@ -278,9 +224,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { 
-          speaker: '黄瀬', 
-          text: '「でもさ」',
+        { speaker: '', text: '俺はグラスを傾ける。',
           characters: [
             {
               image: 'kise_1.png',
@@ -288,9 +232,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { 
-          speaker: '', 
-          text: '黄瀬は、グラスを傾けながら続ける。',
+        { speaker: '赤羽', text: '「何が悪い。完璧じゃないか」',
           characters: [
             {
               image: 'kise_1.png',
@@ -298,9 +240,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        {
-          speaker: '黄瀬',
-          text: '「正しいこと言ってりゃ、全部うまくいくってわけじゃない」',
+        { speaker: '黄瀬', text: '「だよなあ？でも、向こうは『迷子になる時間も楽しみたかった』とか言うわけよ」',
           characters: [
             {
               image: 'kise_1.png',
@@ -308,9 +248,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { 
-          speaker: '', 
-          text: '胸の奥に、小さな違和感が、確かに残る。',
+        { speaker: '', text: '黄瀬は枝豆の皮を放り投げる。',
           characters: [
             {
               image: 'kise_1.png',
@@ -318,9 +256,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { 
-          speaker: '', 
-          text: '――自分の正しさが、何かを削っている気がする。',
+        { speaker: '黄瀬', text: '「正解ルートを行くのが、必ずしも楽しいデートじゃないってことかねえ」',
           characters: [
             {
               image: 'kise_1.png',
@@ -328,17 +264,10 @@ export const chapter2: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { 
-          speaker: '', 
-          text: '理由は、まだない。',
-          characters: [
-            {
-              image: 'kise_1.png',
-              position: 'center',
-            },
-          ],
-        },
-        { speaker: '', text: 'だが、予感は、輪郭を持ち始めていた。' },
+        { speaker: '', text: '人間は面倒くさい。' },
+        { speaker: '', text: 'だからこそ、仕事ではマニュアル化を徹底している。' },
+        { speaker: '', text: '迷子にならないように。' },
+        { speaker: '', text: 'それは、間違っていないはずだ。' },
       ],
     },
   ],
