@@ -94,11 +94,46 @@ export const chapter6c: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '三枝', text: '「どういうことだね？」' },
-        { speaker: '赤羽', text: '「ご指摘の通りです。我々のプランには、現場への配慮が欠けていました。……このまま進めても、御社のためにならない」' },
-        { speaker: '', text: 'それは、ビジネスマンとしての敗北だ。' },
-        { speaker: '', text: 'だが、青葉に「心を殺した回答」を言わせるよりはずっといい。' },
-        { speaker: '赤羽', text: '「出直してまいります」' },
+        { speaker: '三枝', text: '「どういうことだね？」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '赤羽', text: '「ご指摘の通りです。我々のプランには、現場への配慮が欠けていました。……このまま進めても、御社のためにならない」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: 'これは、ビジネスマンとしての敗北だ。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: 'だが、青葉に「心を殺した回答」を言わせるよりはずっといい。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '赤羽', text: '「出直してまいります」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
         { speaker: '', text: '俺は深く頭を下げ、青葉を促して部屋を出た。' },
       ],
     },

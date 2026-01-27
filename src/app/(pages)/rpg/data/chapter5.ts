@@ -85,10 +85,38 @@ export const chapter5: { title: string; scenes: Scene[] } = {
       lines: [
         { speaker: '', text: '通された応接室。' },
         { speaker: '', text: '入ってきたのは、佐々木氏ではなかった。' },
-        { speaker: '', text: '初老の男性。\n上質なスーツを着崩し、穏やかな笑みを浮かべているが、眼光は鋭い。' },
-        { speaker: '三枝', text: '「専務の三枝です。佐々木が急な体調不良でね。私が代わりに聞かせてもらいますよ」' },
-        { speaker: '', text: '三枝実（さえぐさ　みのる）。この会社の創業メンバーの一人。' },
-        { speaker: '', text: '「合理的」よりも「直感」や「人となり」で会社を大きくしてきた、\n俺が最も苦手とするタイプだ。' },
+        { speaker: '', text: '初老の男性。\n上質なスーツを着崩し、穏やかな笑みを浮かべているが、眼光は鋭い。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '三枝', text: '「専務の三枝です。佐々木が急な体調不良でね。私が代わりに聞かせてもらいますよ」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: '三枝実（さえぐさ　みのる）。この会社の創業メンバーの一人。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: '「合理的」よりも「直感」や「人となり」で会社を大きくしてきた、\n俺が最も苦手とするタイプだ。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
         { speaker: '青葉', text: '「は、はじめまして。青葉と申します」',
           characters: [
             {
@@ -136,8 +164,22 @@ export const chapter5: { title: string; scenes: Scene[] } = {
       background: 'meeting_room',
       lines: [
         { speaker: '', text: 'プレゼンが始まる。青葉の語り口は流暢だ。' },
-        { speaker: '', text: 'しかし、三枝専務は資料をほとんど見ない。' },
-        { speaker: '', text: '青葉の顔を、じっと見つめているだけだ。' },
+        { speaker: '', text: 'しかし、三枝専務は資料をほとんど見ない。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: '青葉の顔を、じっと見つめているだけだ。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
         { speaker: '青葉', text: '「――以上により、御社の経費は年間15%削減可能です」',
           characters: [
             {
@@ -146,11 +188,39 @@ export const chapter5: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '', text: '青葉が説明を終える。' },
+        { speaker: '', text: '青葉が説明を終える。',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
         { speaker: '', text: '静寂。' },
-        { speaker: '', text: '三枝専務は、ゆっくりと眼鏡を外した。' },
-        { speaker: '三枝', text: '「……綺麗なプレゼンだ」' },
-        { speaker: '三枝', text: '「非の打ち所がない。よく勉強している」' },
+        { speaker: '', text: '三枝氏は、ゆっくりと眼鏡を外した。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '三枝', text: '「……綺麗なプレゼンだ」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '三枝', text: '「非の打ち所がない。よく勉強している」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
         { speaker: '青葉', text: '「あ、ありがとうございます」',
           characters: [
             {
@@ -159,20 +229,62 @@ export const chapter5: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '三枝', text: '「…………」' },
-        { speaker: '三枝', text: '「で？」' },
-        { speaker: '', text: '三枝氏が、優しい笑みを保ったまま続ける。' },
-        { speaker: '三枝', text: '「君は、どう思うんだね？」' },
-        { speaker: '青葉', text: '「え……？」',
+        { speaker: '三枝', text: '「うん……」',
           characters: [
             {
-              image: 'aoba_2.png',
+              image: 'saegusa_1.png',
               position: 'center',
             },
           ],
         },
-        { speaker: '三枝', text: '「このプランで、現場の人間が喜ぶと、君自身は本気で思っているのかね？」' },
-        { speaker: '', text: '問いかけは静かだった。だが、部屋の空気が一気に薄くなる。' },
+        { speaker: '三枝', text: '「で？」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: '三枝氏が、優しい笑みを保ったまま続ける。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '三枝', text: '「君は、どう思うんだね？」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '青葉', text: '「え……？」',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '三枝', text: '「このプランで、現場の人間が喜ぶと、君自身は本気で思っているのかね？」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: '問いかけは静かだった。だが、部屋の空気が一気に薄くなる。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
         { speaker: '', text: '青葉が言葉に詰まる。マニュアルにはない質問。' },
         { speaker: '', text: '俺は手元のペンを握りしめる。これは、試されている。' },
         { speaker: '', text: '「効率」という鎧の下にある、俺たちの「中身」を。' },

@@ -88,11 +88,39 @@ export const chapter6a: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '', text: '三枝氏は、数秒間、青葉を見ていた。' },
-        { speaker: '', text: '失望も、怒りも見せない。' },
-        { speaker: '三枝', text: '「そうか」' },
-        { speaker: '三枝', text: '「よくわかったよ。……忙しい中、来てもらって悪かったね」' },
-        { speaker: '', text: '立ち上がる三枝氏。' },
+        { speaker: '', text: '三枝氏は、数秒間、青葉を見ていた。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: '表情からは、何も読み取れない。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '三枝', text: '「そうか」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '三枝', text: '「よくわかったよ。……忙しい中、来てもらって悪かったね」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: '立ち上がる三枝氏。'},
         { speaker: '青葉', text: '「え、あの、契約の件は……」',
           characters: [
             {
@@ -101,7 +129,14 @@ export const chapter6a: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '三枝', text: '「後ほど、佐々木から連絡させるよ」' },
+        { speaker: '三枝', text: '「後ほど、佐々木から連絡させるよ」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
         { speaker: '', text: '背中越しに、扉が閉まる音だけが響いた。' },
         { speaker: '', text: '拒絶だ。' },
         { speaker: '', text: '怒鳴られるよりも深く、冷たい拒絶。' },

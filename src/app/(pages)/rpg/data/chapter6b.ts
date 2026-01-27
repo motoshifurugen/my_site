@@ -49,10 +49,38 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
           ],
         },
         { speaker: '赤羽', text: '（違う）' },
-        { speaker: '', text: '俺は直感する。この相手に、その嘘は通用しない。' },
-        { speaker: '赤羽', text: '「……恐れ入ります、専務」' },
-        { speaker: '', text: '俺は青葉の言葉を遮った。' },
-        { speaker: '赤羽', text: '「担当の青葉は、実は別の懸念を持っていました」' },
+        { speaker: '', text: '俺は直感する。この相手に、その嘘は通用しない。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '赤羽', text: '「……恐れ入ります、専務」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '', text: '俺は青葉の言葉を遮った。',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
+        { speaker: '赤羽', text: '「担当の青葉は、実は別の懸念を持っていました」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
         { speaker: '', text: '青葉が驚いて俺を見る。',
           characters: [
             {
@@ -69,7 +97,14 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '三枝', text: '「ほう？」' },
+        { speaker: '三枝', text: '「ほう？」',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
+        },
         { speaker: '赤羽', text: '「青葉。……例の、ボツにした案。口頭でいい、説明できるか」',
           characters: [
             {
