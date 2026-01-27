@@ -30,6 +30,9 @@ import saegusa1 from "../../../../../img/rpg/person/saegusa_1.png"
 import blueLeafLogo from "../../../../../img/rpg/logo/blue_leaf_logo.png"
 import aobaRoom from "../../../../../img/rpg/aoba_room.png"
 import blueSky from "../../../../../img/rpg/blue_sky.png"
+import afterCafe from "../../../../../img/rpg/after_cafe.png"
+import clientRoom from "../../../../../img/rpg/client_room.png"
+import nightPlatform from "../../../../../img/rpg/night_platform.png"
 
 // 第6章のルート選択を管理するための型
 type Chapter6Route = 'bad_end' | 'true_end' | 'another_end' | null
@@ -540,13 +543,28 @@ const ChapterPlayer = () => {
   if (showEnding) {
     const endingLabel = chapter6Route === 'bad_end' ? 'Bad End' : chapter6Route === 'true_end' ? 'True End' : 'Another End'
     
+    // エンディングルートに応じて背景画像を選択
+    const getEndingBackground = () => {
+      if (chapter6Route === 'bad_end') {
+        return rainRoad // Bad End用の暗い雰囲気の背景
+      } else if (chapter6Route === 'true_end') {
+        return nightPlatform // True End用の明るい背景
+      } else if (chapter6Route === 'another_end') {
+        return afterCafe // Another End用のカフェ背景
+      }
+      return blueSky // デフォルト
+    }
+    
+    const endingBackground = getEndingBackground()
+    const endingBackgroundAlt = chapter6Route === 'bad_end' ? 'Rain Road' : chapter6Route === 'true_end' ? 'Blue Sky' : 'After Cafe'
+    
     return (
       <div className="relative h-full w-full overflow-hidden flex items-center justify-center">
         {/* 背景画像 */}
         <div className="absolute inset-0">
           <Image
-            src={blueSky}
-            alt="Blue Sky"
+            src={endingBackground}
+            alt={endingBackgroundAlt}
             fill
             className="object-cover"
             priority
@@ -558,10 +576,10 @@ const ChapterPlayer = () => {
         
         {/* エンディングコンテンツ */}
         <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-3xl md:text-5xl font-bold mb-2 md:mb-4 tracking-wide">
+          <h1 className="text-3xl md:text-5xl font-bold mb-2 md:mb-4 tracking-wide text-white">
             {endingLabel}
           </h1>
-          <p className="text-lg md:text-2xl mb-8 md:mb-12 opacity-90 font-light">
+          <p className="text-lg md:text-2xl mb-8 md:mb-12 opacity-90 font-light text-white">
             Thank you for playing
           </p>
           
@@ -624,6 +642,9 @@ const ChapterPlayer = () => {
     currentScene.background === "rain_road" ? rainRoad :
     currentScene.background === "night_coffee" ? nightCoffee :
     currentScene.background === "aoba_room" ? aobaRoom :
+    currentScene.background === "after_cafe" ? afterCafe :
+    currentScene.background === "client_room" ? clientRoom :
+    currentScene.background === "night_platform" ? nightPlatform :
     stationMorning
 
   const currentLine = currentScene.lines[currentLineIndex] || currentScene.lines[0]

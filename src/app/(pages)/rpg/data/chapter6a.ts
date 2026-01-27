@@ -30,7 +30,7 @@ export const chapter6a: { title: string; scenes: Scene[] } = {
   scenes: [
     {
       id: 'ch6a_sc1',
-      background: 'meeting_room',
+      background: 'client_room',
       lines: [
         { speaker: '', text: '青葉の視線が泳ぐ。俺を見る。',
           characters: [
@@ -146,7 +146,7 @@ export const chapter6a: { title: string; scenes: Scene[] } = {
     },
     {
       id: 'ch6a_sc3',
-      background: 'office_morning',
+      background: 'rain_road',
       lines: [
         { speaker: '青葉', text: '「……完璧な回答だったはずです」',
           characters: [

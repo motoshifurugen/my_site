@@ -81,7 +81,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
     },
     {
       id: 'ch5_sc2',
-      background: 'meeting_room',
+      background: 'client_room',
       lines: [
         { speaker: '', text: '通された応接室。' },
         { speaker: '', text: '入ってきたのは、佐々木氏ではなかった。' },
@@ -161,7 +161,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
     },
     {
       id: 'ch5_sc3',
-      background: 'meeting_room',
+      background: 'client_room',
       lines: [
         { speaker: '', text: 'プレゼンが始まる。青葉の語り口は流暢だ。' },
         { speaker: '', text: 'しかし、三枝専務は資料をほとんど見ない。',

@@ -30,7 +30,7 @@ export const chapter6c: { title: string; scenes: Scene[] } = {
   scenes: [
     {
       id: 'ch6c_sc1',
-      background: 'meeting_room',
+      background: 'client_room',
       lines: [
         { speaker: '', text: '三枝氏の問いかけに対し、青葉が追い詰められている。' },
         { speaker: '青葉', text: '「私は……」',
@@ -139,9 +139,9 @@ export const chapter6c: { title: string; scenes: Scene[] } = {
     },
     {
       id: 'ch6c_sc3',
-      background: 'cafe_lunch',
+      background: 'after_cafe',
       lines: [
-        { speaker: '', text: '近くのカフェ。' },
+        { speaker: '', text: '近くのカフェに入る。' },
         { speaker: '', text: '今にも泣きそうな顔で、青葉が口を開く。' },
         { speaker: '青葉', text: '「……すみません。私が答えられなかったせいで、商談が」',
           characters: [

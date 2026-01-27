@@ -30,7 +30,7 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
   scenes: [
     {
       id: 'ch6b_sc1',
-      background: 'meeting_room',
+      background: 'client_room',
       lines: [
         { speaker: '', text: '青葉が答えあぐねている。',
           characters: [
@@ -139,7 +139,7 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
         },
         { speaker: '', text: 'それは、スマートなプレゼンではなかった。'},
         { speaker: '', text: 'だが、三枝氏の重心が少しだけ、前に傾いたように感じた。' },
-        { speaker: '', text: '返答は後日いただくことを確認し、俺たちはオフィスを後にした。' },
+        { speaker: '', text: '返答は後日いただくことを確認し、俺たちはビルを後にした。' },
       ],
     },
     {
@@ -157,7 +157,7 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
     },
     {
       id: 'ch6b_sc4',
-      background: 'station_morning',
+      background: 'night_platform',
       lines: [
         { speaker: '', text: '夜。駅まで青葉と並んで歩く。',
           characters: [
