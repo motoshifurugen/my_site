@@ -1091,7 +1091,7 @@ const ChapterPlayer = () => {
 
               return (
                 <div
-                  key={index}
+                  key={`${character.image}-${character.position ?? 'center'}`}
                   className={`absolute flex w-full ${positionClass}`}
                   style={{
                     top: '2rem',
@@ -1261,12 +1261,12 @@ const ChapterPlayer = () => {
 
             {/* 下部エリア：テキストボックス */}
             <div
-              className="relative h-32 mb-4 bg-gradient-to-br from-slate-800 to-slate-900 border-t-2 border-white/20"
+              className="relative h-32 mb-4 bg-slate-900/70 backdrop-blur-md border-t-2 border-white/20"
               style={getTextBoxStyle()}
             >
               {/* 話者名（左上に飛び出した領域） */}
               {currentLine.speaker && (
-                <div className="absolute bottom-full left-4 md:left-6 px-6 py-1.5 bg-gradient-to-br from-slate-800 to-slate-900 border-2 border-white/20 rounded-t-md">
+                <div className="absolute bottom-full left-4 md:left-6 px-6 py-1.5 bg-slate-900/70 backdrop-blur-md border-2 border-white/20 rounded-t-md">
                   {/* 振り仮名 */}
                   <div className="text-[9px] text-white/70 leading-tight">
                     {getFurigana(currentLine.speaker)}
