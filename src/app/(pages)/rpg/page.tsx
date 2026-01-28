@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, Suspense } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import ChapterPlayer from './components/ChapterPlayer'
 
 export default function Rpg() {
@@ -25,7 +25,7 @@ export default function Rpg() {
     const checkOrientation = () => {
       // ビューポート高さを更新（アドレスバーの表示/非表示に対応）
       setViewportHeight()
-      
+
       if (!checkMobile()) {
         setIsPortrait(false)
         return
@@ -53,7 +53,7 @@ export default function Rpg() {
   // モバイルで縦向きの場合は回転を促すメッセージを表示
   if (isMobile && isPortrait) {
     return (
-      <div 
+      <div
         className="fixed inset-0 w-screen flex items-center justify-center bg-black text-white"
         style={{ height: 'calc(var(--vh, 1vh) * 100)' }}
       >
@@ -68,15 +68,17 @@ export default function Rpg() {
   }
 
   return (
-    <div 
+    <div
       className="fixed inset-0 w-screen overflow-hidden"
       style={{ height: 'calc(var(--vh, 1vh) * 100)' }}
     >
-      <Suspense fallback={
-        <div className="flex items-center justify-center h-full">
-          <div className="text-white">読み込み中...</div>
-        </div>
-      }>
+      <Suspense
+        fallback={
+          <div className="flex items-center justify-center h-full">
+            <div className="text-white">読み込み中...</div>
+          </div>
+        }
+      >
         <ChapterPlayer />
       </Suspense>
     </div>

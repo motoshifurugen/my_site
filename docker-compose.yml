@@ -8,5 +8,6 @@ services:
       - /app/node_modules
       - /app/.next
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
+    command: sh -c "npm run build && npm run start"
     restart: unless-stopped

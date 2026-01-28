@@ -1,48 +1,48 @@
 'use client'
 
-import { useState, useEffect, useRef } from "react"
-import Image from "next/image"
-import { useSearchParams } from "next/navigation"
-import { chapter1 } from "../data/chapter1"
-import { chapter2 } from "../data/chapter2"
-import { chapter3 } from "../data/chapter3"
-import { chapter4 } from "../data/chapter4"
-import { chapter5 } from "../data/chapter5"
-import { chapter6a } from "../data/chapter6a"
-import { chapter6b } from "../data/chapter6b"
-import { chapter6c } from "../data/chapter6c"
-import stationMorning from "../../../../../img/rpg/station_morning.png"
-import officeMorning from "../../../../../img/rpg/office_morning.png"
-import meetingRoom from "../../../../../img/rpg/meeting_room.png"
-import barNight from "../../../../../img/rpg/bar_night.png"
-import cafeLunch from "../../../../../img/rpg/cafe_lunch.png"
-import blueLeaf from "../../../../../img/rpg/blue_leaf.png"
-import rainRoad from "../../../../../img/rpg/rain_road.png"
-import nightCoffee from "../../../../../img/rpg/night_coffee.png"
-import aoba1 from "../../../../../img/rpg/person/aoba_1.png"
-import aoba2 from "../../../../../img/rpg/person/aoba_2.png"
-import aoba3 from "../../../../../img/rpg/person/aoba_3.png"
-import aoba4 from "../../../../../img/rpg/person/aoba_4.png"
-import kise1 from "../../../../../img/rpg/person/kise_1.png"
-import kise2 from "../../../../../img/rpg/person/kise_2.png"
-import kise3 from "../../../../../img/rpg/person/kise_3.png"
-import saegusa1 from "../../../../../img/rpg/person/saegusa_1.png" 
-import blueLeafLogo from "../../../../../img/rpg/logo/blue_leaf_logo.png"
-import aobaRoom from "../../../../../img/rpg/aoba_room.png"
-import blueSky from "../../../../../img/rpg/blue_sky.png"
-import afterCafe from "../../../../../img/rpg/after_cafe.png"
-import clientRoom from "../../../../../img/rpg/client_room.png"
-import nightPlatform from "../../../../../img/rpg/night_platform.png"
+import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
+import afterCafe from '../../../../../img/rpg/after_cafe.png'
+import aobaRoom from '../../../../../img/rpg/aoba_room.png'
+import barNight from '../../../../../img/rpg/bar_night.png'
+import blueLeaf from '../../../../../img/rpg/blue_leaf.png'
+import blueSky from '../../../../../img/rpg/blue_sky.png'
+import cafeLunch from '../../../../../img/rpg/cafe_lunch.png'
+import clientRoom from '../../../../../img/rpg/client_room.png'
+import blueLeafLogo from '../../../../../img/rpg/logo/blue_leaf_logo.png'
+import meetingRoom from '../../../../../img/rpg/meeting_room.png'
+import nightCoffee from '../../../../../img/rpg/night_coffee.png'
+import nightPlatform from '../../../../../img/rpg/night_platform.png'
+import officeMorning from '../../../../../img/rpg/office_morning.png'
+import aoba1 from '../../../../../img/rpg/person/aoba_1.png'
+import aoba2 from '../../../../../img/rpg/person/aoba_2.png'
+import aoba3 from '../../../../../img/rpg/person/aoba_3.png'
+import aoba4 from '../../../../../img/rpg/person/aoba_4.png'
+import kise1 from '../../../../../img/rpg/person/kise_1.png'
+import kise2 from '../../../../../img/rpg/person/kise_2.png'
+import kise3 from '../../../../../img/rpg/person/kise_3.png'
+import saegusa1 from '../../../../../img/rpg/person/saegusa_1.png'
+import rainRoad from '../../../../../img/rpg/rain_road.png'
+import stationMorning from '../../../../../img/rpg/station_morning.png'
+import { chapter1 } from '../data/chapter1'
+import { chapter2 } from '../data/chapter2'
+import { chapter3 } from '../data/chapter3'
+import { chapter4 } from '../data/chapter4'
+import { chapter5 } from '../data/chapter5'
+import { chapter6a } from '../data/chapter6a'
+import { chapter6b } from '../data/chapter6b'
+import { chapter6c } from '../data/chapter6c'
 
 // 第6章のルート選択を管理するための型
 type Chapter6Route = 'bad_end' | 'true_end' | 'another_end' | null
 
 // 1文字ずつフェードインするテキストコンポーネント
-const FadeInText = ({ 
-  text, 
-  delay = 20, 
-  onComplete 
-}: { 
+const FadeInText = ({
+  text,
+  delay = 20,
+  onComplete,
+}: {
   text: string
   delay?: number
   onComplete?: () => void
@@ -60,11 +60,11 @@ const FadeInText = ({
     // テキストが変更されたら即座にリセット
     setVisibleChars(0)
     setIsReady(false)
-    
+
     let timer: NodeJS.Timeout | null = null
     let timeoutId: NodeJS.Timeout | null = null
     let rafId: number | null = null
-    
+
     // requestAnimationFrameを使って確実に次のフレームまで待つ
     rafId = requestAnimationFrame(() => {
       // さらに次のフレームまで待つ（確実に非表示状態を維持）
@@ -137,7 +137,7 @@ const FadeInText = ({
 const ChapterPlayer = () => {
   const searchParams = useSearchParams()
   const chapterParam = searchParams.get('chapter')
-  
+
   // クエリパラメータから章番号を取得（1-6、無効な値の場合は0）
   const getInitialChapterIndex = () => {
     if (!chapterParam) return 0
@@ -152,7 +152,7 @@ const ChapterPlayer = () => {
     }
     return 0
   }
-  
+
   const initialChapterIndex = getInitialChapterIndex()
   // 第6章が指定された場合、第5章の最後のシーンから開始
   const getInitialSceneIndex = () => {
@@ -165,21 +165,30 @@ const ChapterPlayer = () => {
     }
     return 0
   }
-  
+
   const [showTitleScreen, setShowTitleScreen] = useState(!chapterParam) // クエリパラメータがある場合はタイトル画面をスキップ
-  const [titleScreenOpacity, setTitleScreenOpacity] = useState(!chapterParam ? 1 : 0)
-  const [currentChapterIndex, setCurrentChapterIndex] = useState(initialChapterIndex)
-  const [currentSceneIndex, setCurrentSceneIndex] = useState(getInitialSceneIndex())
+  const [titleScreenOpacity, setTitleScreenOpacity] = useState(
+    !chapterParam ? 1 : 0,
+  )
+  const [currentChapterIndex, setCurrentChapterIndex] =
+    useState(initialChapterIndex)
+  const [currentSceneIndex, setCurrentSceneIndex] = useState(
+    getInitialSceneIndex(),
+  )
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
   const [isTextComplete, setIsTextComplete] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
-  const [transitionPhase, setTransitionPhase] = useState<'idle' | 'fadeOut' | 'white' | 'waiting' | 'fadeIn'>('idle')
+  const [transitionPhase, setTransitionPhase] = useState<
+    'idle' | 'fadeOut' | 'white' | 'waiting' | 'fadeIn'
+  >('idle')
   const [showChapterTitle, setShowChapterTitle] = useState(false)
   const [chapterTitleOpacity, setChapterTitleOpacity] = useState(0)
-  const [chapterTitleTransform, setChapterTitleTransform] = useState('translateX(100px)')
+  const [chapterTitleTransform, setChapterTitleTransform] =
+    useState('translateX(100px)')
   const [selectedChoiceId, setSelectedChoiceId] = useState<string | null>(null)
   const [chapter6Route, setChapter6Route] = useState<Chapter6Route>(null)
-  const [shouldTransitionToChapter6, setShouldTransitionToChapter6] = useState(false)
+  const [shouldTransitionToChapter6, setShouldTransitionToChapter6] =
+    useState(false)
   const [showProceedButton, setShowProceedButton] = useState(false)
   const [showEnding, setShowEnding] = useState(false)
   const currentSceneIndexRef = useRef(currentSceneIndex)
@@ -226,9 +235,9 @@ const ChapterPlayer = () => {
           setShowChapterTitle(true)
           setChapterTitleOpacity(0)
           setChapterTitleTransform('translateX(100px)')
-          
+
           const rafIds: number[] = []
-          
+
           // フェードイン（横からスッと）
           const rafId1 = requestAnimationFrame(() => {
             const rafId2 = requestAnimationFrame(() => {
@@ -238,17 +247,17 @@ const ChapterPlayer = () => {
             rafIds.push(rafId2)
           })
           rafIds.push(rafId1)
-          
+
           // 3秒表示してからフェードアウト
           const fadeOutTimer = setTimeout(() => {
             setChapterTitleOpacity(0)
           }, 3000)
-          
+
           // フェードアウト完了後に要素を非表示
           const hideChapterTitleTimer = setTimeout(() => {
             setShowChapterTitle(false)
           }, 4500)
-          
+
           // クリーンアップは不要（コンポーネントがアンマウントされるまで実行される）
         }
       }, 800) // フェードアウト時間
@@ -262,9 +271,9 @@ const ChapterPlayer = () => {
       setShowChapterTitle(true)
       setChapterTitleOpacity(0)
       setChapterTitleTransform('translateX(100px)')
-      
+
       const rafIds: number[] = []
-      
+
       // フェードイン（横からスッと）- requestAnimationFrameで確実に次のフレームで実行
       const rafId1 = requestAnimationFrame(() => {
         const rafId2 = requestAnimationFrame(() => {
@@ -274,20 +283,20 @@ const ChapterPlayer = () => {
         rafIds.push(rafId2)
       })
       rafIds.push(rafId1)
-      
+
       // 3秒表示してからフェードアウト（ゆっくりその場で）
       const fadeOutTimer = setTimeout(() => {
         setChapterTitleOpacity(0)
         // フェードアウト時は位置はそのまま（transformは変更しない）
       }, 3000)
-      
+
       // フェードアウト完了後に要素を非表示
       const hideTimer = setTimeout(() => {
         setShowChapterTitle(false)
       }, 4500) // フェードアウトが1.5秒かかるので、3000 + 1500 = 4500
-      
+
       return () => {
-        rafIds.forEach(id => cancelAnimationFrame(id))
+        rafIds.forEach((id) => cancelAnimationFrame(id))
         clearTimeout(fadeOutTimer)
         clearTimeout(hideTimer)
       }
@@ -297,31 +306,34 @@ const ChapterPlayer = () => {
   // 章が変わったときにタイトルを表示（第2章以降）
   useEffect(() => {
     // 章が変わったときのみ表示（初回マウント時は除外）
-    if (currentChapterIndex !== prevChapterIndexRef.current && isMountedRef.current) {
+    if (
+      currentChapterIndex !== prevChapterIndexRef.current &&
+      isMountedRef.current
+    ) {
       setShowChapterTitle(true)
       setChapterTitleOpacity(0)
       setChapterTitleTransform('translateX(100px)')
-      
+
       // 遷移アニメーション完了後0.5秒待つ
       const delay = 500
-      
+
       // フェードイン（横からスッと）
       const showTimer = setTimeout(() => {
         setChapterTitleOpacity(1)
         setChapterTitleTransform('translateX(0)')
       }, delay)
-      
+
       // 3秒表示してからフェードアウト（ゆっくりその場で）
       const fadeOutTimer = setTimeout(() => {
         setChapterTitleOpacity(0)
         // フェードアウト時は位置はそのまま（transformは変更しない）
       }, delay + 3000) // 待機時間 + 3秒表示
-      
+
       // フェードアウト完了後に要素を非表示
       const hideTimer = setTimeout(() => {
         setShowChapterTitle(false)
       }, delay + 4500) // 待機時間 + 3秒表示 + 1.5秒フェードアウト
-      
+
       return () => {
         clearTimeout(showTimer)
         clearTimeout(fadeOutTimer)
@@ -336,7 +348,8 @@ const ChapterPlayer = () => {
     if (!currentChapter) return
     const currentScene = currentChapter.scenes[currentSceneIndex]
     if (!currentScene) return
-    const currentLine = currentScene.lines[currentLineIndex] || currentScene.lines[0]
+    const currentLine =
+      currentScene.lines[currentLineIndex] || currentScene.lines[0]
     setIsTextComplete(false)
     // シーンが変わったら選択状態をリセット
     setSelectedChoiceId(null)
@@ -354,7 +367,7 @@ const ChapterPlayer = () => {
 
     // フェーズ1: テキストフェードアウト
     setTransitionPhase('fadeOut')
-    
+
     // フェーズ2: 白へのフェード
     setTimeout(() => {
       setTransitionPhase('white')
@@ -370,7 +383,7 @@ const ChapterPlayer = () => {
       // 最新のchapters配列を取得
       const currentChapters = getChapters()
       const chapter = currentChapters[chapterIndex]
-      
+
       if (chapter && sceneIndex < chapter.scenes.length - 1) {
         // 同じ章内の次のシーンへ
         setCurrentSceneIndex(sceneIndex + 1)
@@ -384,15 +397,21 @@ const ChapterPlayer = () => {
     }, fadeOutDuration + whiteFadeDuration)
 
     // フェーズ4: 白画面からのフェードイン
-    setTimeout(() => {
-      setTransitionPhase('fadeIn')
-    }, fadeOutDuration + whiteFadeDuration + waitDuration)
+    setTimeout(
+      () => {
+        setTransitionPhase('fadeIn')
+      },
+      fadeOutDuration + whiteFadeDuration + waitDuration,
+    )
 
     // 遷移完了
-    setTimeout(() => {
-      setIsTransitioning(false)
-      setTransitionPhase('idle')
-    }, fadeOutDuration + whiteFadeDuration + waitDuration + fadeInDuration)
+    setTimeout(
+      () => {
+        setIsTransitioning(false)
+        setTransitionPhase('idle')
+      },
+      fadeOutDuration + whiteFadeDuration + waitDuration + fadeInDuration,
+    )
   }, [isTransitioning, chapter6Route])
 
   // 選択が解除されたら決定ボタンを非表示
@@ -406,7 +425,10 @@ const ChapterPlayer = () => {
   const handleChoiceConfirm = () => {
     if (selectedChoiceId) {
       // 第5章の最後のシーンの選択の場合、第6章のルートを決定
-      if (currentChapterIndex === 4 && currentSceneIndex === currentChapter?.scenes.length - 1) {
+      if (
+        currentChapterIndex === 4 &&
+        currentSceneIndex === currentChapter?.scenes.length - 1
+      ) {
         if (selectedChoiceId === 'bad_end') {
           setChapter6Route('bad_end')
         } else if (selectedChoiceId === 'true_end') {
@@ -433,14 +455,14 @@ const ChapterPlayer = () => {
   // キャラクター画像を取得
   const getCharacterImage = (imagePath: string) => {
     const characterImageMap: Record<string, any> = {
-      "aoba_1.png": aoba1,
-      "aoba_2.png": aoba2,
-      "aoba_3.png": aoba3,
-      "aoba_4.png": aoba4,
-      "kise_1.png": kise1,
-      "kise_2.png": kise2,
-      "kise_3.png": kise3,
-      "saegusa_1.png": saegusa1,
+      'aoba_1.png': aoba1,
+      'aoba_2.png': aoba2,
+      'aoba_3.png': aoba3,
+      'aoba_4.png': aoba4,
+      'kise_1.png': kise1,
+      'kise_2.png': kise2,
+      'kise_3.png': kise3,
+      'saegusa_1.png': saegusa1,
     }
     return characterImageMap[imagePath] || null
   }
@@ -448,12 +470,12 @@ const ChapterPlayer = () => {
   // 話者名から振り仮名を取得
   const getFurigana = (speaker: string): string => {
     const furiganaMap: Record<string, string> = {
-      "赤羽": "あかばね",
-      "青葉": "あおば",
-      "黄瀬": "きせ",
-      "三枝": "さえぐさ",
+      赤羽: 'あかばね',
+      青葉: 'あおば',
+      黄瀬: 'きせ',
+      三枝: 'さえぐさ',
     }
-    return furiganaMap[speaker] || ""
+    return furiganaMap[speaker] || ''
   }
 
   const handleClick = () => {
@@ -474,14 +496,20 @@ const ChapterPlayer = () => {
       setCurrentLineIndex(currentLineIndex + 1)
     } else {
       // 第6章の最後のシーンの最後の行がクリックされたらエンディングページを表示
-      if (currentChapterIndex === 5 && currentSceneIndex === currentChapter.scenes.length - 1) {
+      if (
+        currentChapterIndex === 5 &&
+        currentSceneIndex === currentChapter.scenes.length - 1
+      ) {
         setShowEnding(true)
         return
       }
-      
+
       // 現在のシーンのテキストが最後の場合、遷移アニメーションを開始
       // シーンの切り替えは遷移アニメーション中（白画面で覆われている間）に行う
-      if (currentSceneIndex < currentChapter.scenes.length - 1 || currentChapterIndex < chapters.length - 1) {
+      if (
+        currentSceneIndex < currentChapter.scenes.length - 1 ||
+        currentChapterIndex < chapters.length - 1
+      ) {
         setIsTransitioning(true)
       }
       // すべての章が終わった場合は何もしない（エンド画面が表示される）
@@ -493,47 +521,53 @@ const ChapterPlayer = () => {
     if (transitionPhase === 'idle') {
       return { opacity: 0, pointerEvents: 'none' }
     }
-    
+
     if (transitionPhase === 'fadeOut') {
-      return { 
+      return {
         opacity: 0,
         transition: 'opacity 0.8s ease-out',
-        pointerEvents: 'none'
+        pointerEvents: 'none',
       }
     }
-    
+
     if (transitionPhase === 'white') {
-      return { 
+      return {
         opacity: 1,
         backgroundColor: 'rgba(220, 220, 220, 1)',
         transition: 'opacity 0.4s ease-in',
-        pointerEvents: 'none'
+        pointerEvents: 'none',
       }
     }
-    
+
     if (transitionPhase === 'waiting') {
-      return { 
+      return {
         opacity: 1,
         backgroundColor: 'rgba(220, 220, 220, 1)',
-        pointerEvents: 'none'
+        pointerEvents: 'none',
       }
     }
-    
+
     // fadeIn phase
-    return { 
+    return {
       opacity: 0,
       backgroundColor: 'rgba(220, 220, 220, 1)',
       transition: 'opacity 0.4s ease-out',
-      pointerEvents: 'none'
+      pointerEvents: 'none',
     }
   }
 
   // テキストボックスのフェードアウトスタイル
   const getTextBoxStyle = (): React.CSSProperties => {
-    if (transitionPhase === 'fadeOut' || transitionPhase === 'white' || transitionPhase === 'waiting' || transitionPhase === 'fadeIn') {
+    if (
+      transitionPhase === 'fadeOut' ||
+      transitionPhase === 'white' ||
+      transitionPhase === 'waiting' ||
+      transitionPhase === 'fadeIn'
+    ) {
       return {
         opacity: 0,
-        transition: transitionPhase === 'fadeOut' ? 'opacity 0.8s ease-out' : 'none',
+        transition:
+          transitionPhase === 'fadeOut' ? 'opacity 0.8s ease-out' : 'none',
       }
     }
     return {}
@@ -541,8 +575,13 @@ const ChapterPlayer = () => {
 
   // エンディングページを表示
   if (showEnding) {
-    const endingLabel = chapter6Route === 'bad_end' ? 'Bad End' : chapter6Route === 'true_end' ? 'True End' : 'Another End'
-    
+    const endingLabel =
+      chapter6Route === 'bad_end'
+        ? 'Bad End'
+        : chapter6Route === 'true_end'
+          ? 'True End'
+          : 'Another End'
+
     // エンディングルートに応じて背景画像を選択
     const getEndingBackground = () => {
       if (chapter6Route === 'bad_end') {
@@ -554,10 +593,15 @@ const ChapterPlayer = () => {
       }
       return blueSky // デフォルト
     }
-    
+
     const endingBackground = getEndingBackground()
-    const endingBackgroundAlt = chapter6Route === 'bad_end' ? 'Rain Road' : chapter6Route === 'true_end' ? 'Blue Sky' : 'After Cafe'
-    
+    const endingBackgroundAlt =
+      chapter6Route === 'bad_end'
+        ? 'Rain Road'
+        : chapter6Route === 'true_end'
+          ? 'Blue Sky'
+          : 'After Cafe'
+
     return (
       <div className="relative h-full w-full overflow-hidden flex items-center justify-center">
         {/* 背景画像 */}
@@ -573,7 +617,7 @@ const ChapterPlayer = () => {
         </div>
         {/* オーバーレイ */}
         <div className="absolute inset-0 bg-black/40" />
-        
+
         {/* エンディングコンテンツ */}
         <div className="relative z-10 text-center text-white px-4">
           <h1 className="text-3xl md:text-5xl font-bold mb-2 md:mb-4 tracking-wide text-white">
@@ -582,7 +626,7 @@ const ChapterPlayer = () => {
           <p className="text-lg md:text-2xl mb-8 md:mb-12 opacity-90 font-light text-white">
             Thank you for playing
           </p>
-          
+
           {/* Return to the Choice ボタン */}
           <button
             onClick={(e) => {
@@ -613,7 +657,9 @@ const ChapterPlayer = () => {
       <div className="relative h-full w-full overflow-hidden flex items-center justify-center bg-black">
         <div className="text-center text-white">
           <h1 className="text-2xl md:text-4xl font-bold mb-4">つづく</h1>
-          <p className="text-sm md:text-base opacity-70">遊んでいただきありがとうございます</p>
+          <p className="text-sm md:text-base opacity-70">
+            遊んでいただきありがとうございます
+          </p>
         </div>
       </div>
     )
@@ -625,7 +671,9 @@ const ChapterPlayer = () => {
       <div className="relative h-full w-full overflow-hidden flex items-center justify-center bg-black">
         <div className="text-center text-white">
           <h1 className="text-2xl md:text-4xl font-bold mb-4">つづく</h1>
-          <p className="text-sm md:text-base opacity-70">遊んでいただきありがとうございます</p>
+          <p className="text-sm md:text-base opacity-70">
+            遊んでいただきありがとうございます
+          </p>
         </div>
       </div>
     )
@@ -633,26 +681,40 @@ const ChapterPlayer = () => {
 
   const currentScene = currentChapter.scenes[currentSceneIndex]
   const currentBackground =
-    currentScene.background === "station_morning" ? stationMorning :
-    currentScene.background === "office_morning" ? officeMorning :
-    currentScene.background === "meeting_room" ? meetingRoom :
-    currentScene.background === "bar_night" ? barNight :
-    currentScene.background === "cafe_lunch" ? cafeLunch :
-    currentScene.background === "blue_leaf" ? blueLeaf :
-    currentScene.background === "rain_road" ? rainRoad :
-    currentScene.background === "night_coffee" ? nightCoffee :
-    currentScene.background === "aoba_room" ? aobaRoom :
-    currentScene.background === "after_cafe" ? afterCafe :
-    currentScene.background === "client_room" ? clientRoom :
-    currentScene.background === "night_platform" ? nightPlatform :
-    stationMorning
+    currentScene.background === 'station_morning'
+      ? stationMorning
+      : currentScene.background === 'office_morning'
+        ? officeMorning
+        : currentScene.background === 'meeting_room'
+          ? meetingRoom
+          : currentScene.background === 'bar_night'
+            ? barNight
+            : currentScene.background === 'cafe_lunch'
+              ? cafeLunch
+              : currentScene.background === 'blue_leaf'
+                ? blueLeaf
+                : currentScene.background === 'rain_road'
+                  ? rainRoad
+                  : currentScene.background === 'night_coffee'
+                    ? nightCoffee
+                    : currentScene.background === 'aoba_room'
+                      ? aobaRoom
+                      : currentScene.background === 'after_cafe'
+                        ? afterCafe
+                        : currentScene.background === 'client_room'
+                          ? clientRoom
+                          : currentScene.background === 'night_platform'
+                            ? nightPlatform
+                            : stationMorning
 
-  const currentLine = currentScene.lines[currentLineIndex] || currentScene.lines[0]
+  const currentLine =
+    currentScene.lines[currentLineIndex] || currentScene.lines[0]
 
   // 現在のシーンの選択肢を取得
   const choices = currentScene.options || []
   // シーンの最後の行が表示され、テキストが完了したときに選択肢を表示
-  const shouldShowChoices = choices.length > 0 && 
+  const shouldShowChoices =
+    choices.length > 0 &&
     currentLineIndex === currentScene.lines.length - 1 &&
     isTextComplete
 
@@ -666,7 +728,7 @@ const ChapterPlayer = () => {
   // タイトル画面を表示
   if (showTitleScreen) {
     return (
-      <div 
+      <div
         className="relative h-full w-full overflow-hidden cursor-pointer select-none"
         onClick={handleTitleScreenClick}
         style={{
@@ -701,17 +763,23 @@ const ChapterPlayer = () => {
         </div>
         {/* クリックして開始テキスト（画面下部に固定） */}
         <div className="absolute bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 z-20 flex items-end justify-center gap-2">
-          <p className="text-lg md:text-xl font-semibold animate-pulse" style={{ color: '#000000' }}>
+          <p
+            className="text-lg md:text-xl font-semibold animate-pulse"
+            style={{ color: '#000000' }}
+          >
             Press to Start
           </p>
-          <div className="w-3 h-1.5 m-1 rounded-sm animate-pulse" style={{ backgroundColor: '#000000' }} />
+          <div
+            className="w-3 h-1.5 m-1 rounded-sm animate-pulse"
+            style={{ backgroundColor: '#000000' }}
+          />
         </div>
       </div>
     )
   }
 
   return (
-    <div 
+    <div
       className="relative h-full w-full overflow-hidden select-none cursor-pointer"
       onClick={handleClick}
     >
@@ -726,67 +794,80 @@ const ChapterPlayer = () => {
           quality={90}
         />
       </div>
-      
+
       {/* 遷移オーバーレイ（白フェード用） */}
-      <div 
+      <div
         className="absolute inset-0 z-50"
         style={getTransitionOverlayStyle()}
       />
-      
+
       {/* キャラクター画像 */}
-      {((currentLine.characters && currentLine.characters.length > 0) || (currentScene.characters && currentScene.characters.length > 0)) && (
+      {((currentLine.characters && currentLine.characters.length > 0) ||
+        (currentScene.characters && currentScene.characters.length > 0)) && (
         <div className="absolute inset-0 z-[5] flex items-center justify-center">
-          {(currentLine.characters || currentScene.characters || []).map((character, index) => {
-            const characterImage = getCharacterImage(character.image)
-            if (!characterImage) return null
-            
-            const positionClass = 
-              character.position === 'left' ? 'justify-start' :
-              character.position === 'right' ? 'justify-end' :
-              'justify-center'
-            
-            return (
-              <div
-                key={index}
-                className={`absolute flex w-full ${positionClass}`}
-                style={{
-                  top: '2rem',
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  opacity: transitionPhase === 'fadeOut' || transitionPhase === 'white' || transitionPhase === 'waiting' || transitionPhase === 'fadeIn' 
-                    ? 0 
-                    : 1,
-                  transition: transitionPhase === 'fadeOut' ? 'opacity 0.8s ease-out' : 'opacity 0.4s ease-out',
-                }}
-              >
-                <div className="relative h-full" style={{ maxWidth: '50%' }}>
-                  <Image
-                    src={characterImage}
-                    alt={character.image}
-                    width={800}
-                    height={1200}
-                    className="object-contain h-full w-auto"
-                    priority={index === 0}
-                    quality={90}
-                  />
+          {(currentLine.characters || currentScene.characters || []).map(
+            (character, index) => {
+              const characterImage = getCharacterImage(character.image)
+              if (!characterImage) return null
+
+              const positionClass =
+                character.position === 'left'
+                  ? 'justify-start'
+                  : character.position === 'right'
+                    ? 'justify-end'
+                    : 'justify-center'
+
+              return (
+                <div
+                  key={index}
+                  className={`absolute flex w-full ${positionClass}`}
+                  style={{
+                    top: '2rem',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    opacity:
+                      transitionPhase === 'fadeOut' ||
+                      transitionPhase === 'white' ||
+                      transitionPhase === 'waiting' ||
+                      transitionPhase === 'fadeIn'
+                        ? 0
+                        : 1,
+                    transition:
+                      transitionPhase === 'fadeOut'
+                        ? 'opacity 0.8s ease-out'
+                        : 'opacity 0.4s ease-out',
+                  }}
+                >
+                  <div className="relative h-full" style={{ maxWidth: '50%' }}>
+                    <Image
+                      src={characterImage}
+                      alt={character.image}
+                      width={800}
+                      height={1200}
+                      className="object-contain h-full w-auto"
+                      priority={index === 0}
+                      quality={90}
+                    />
+                  </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            },
+          )}
         </div>
       )}
-      
+
       {/* 章タイトル表示（右上） */}
       {showChapterTitle && (
-        <div 
+        <div
           className="absolute top-4 right-4 md:top-6 md:right-6 z-40 px-5 py-2.5 md:px-8 md:py-3 bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm border border-slate-600/50 rounded-lg shadow-[0_2px_12px_rgba(0,0,0,0.4)]"
           style={{
             opacity: chapterTitleOpacity,
             transform: chapterTitleTransform,
-            transition: chapterTitleOpacity === 0 
-              ? 'opacity 1.5s ease-in-out' // フェードアウト時はゆっくり
-              : 'opacity 0.5s ease-out, transform 0.5s ease-out', // フェードイン時はスッと
+            transition:
+              chapterTitleOpacity === 0
+                ? 'opacity 1.5s ease-in-out' // フェードアウト時はゆっくり
+                : 'opacity 0.5s ease-out, transform 0.5s ease-out', // フェードイン時はスッと
           }}
         >
           <div className="flex items-center gap-3">
@@ -800,7 +881,7 @@ const ChapterPlayer = () => {
           </div>
         </div>
       )}
-      
+
       {/* ゲーム画面のコンテンツエリア */}
       <div className="relative z-10 flex h-full w-full flex-col">
         {/* 選択肢ボタン表示エリア（全画面表示） */}
@@ -817,28 +898,56 @@ const ChapterPlayer = () => {
                       handleChoiceSelect(choice.choiceId || '')
                     }}
                     className={`group relative w-full min-h-[56px] px-5 py-4 md:px-6 md:py-4 backdrop-blur-md border rounded-lg text-left transition-all duration-200 touch-manipulation ${
-                        isSelected
-                          ? 'bg-white/20 border-white/40 shadow-[0_0_20px_rgba(255,255,255,0.2)]'
-                          : 'bg-black/70 border-white/20 hover:bg-black/80 hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]'
-                      } active:scale-[0.97]`}
+                      isSelected
+                        ? 'bg-white/20 border-white/40 shadow-[0_0_20px_rgba(255,255,255,0.2)]'
+                        : 'bg-black/70 border-white/20 hover:bg-black/80 hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]'
+                    } active:scale-[0.97]`}
                     style={{ WebkitTapHighlightColor: 'transparent' }}
                   >
                     <div className="flex items-center justify-between">
-                      <div className={`text-base md:text-base leading-relaxed font-medium transition-colors drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] pr-8 ${
-                        isSelected ? 'text-white' : 'text-white group-hover:text-white'
-                      }`}>
+                      <div
+                        className={`text-base md:text-base leading-relaxed font-medium transition-colors drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] pr-8 ${
+                          isSelected
+                            ? 'text-white'
+                            : 'text-white group-hover:text-white'
+                        }`}
+                      >
                         {choice.text}
                       </div>
-                      <div className={`ml-4 transition-opacity duration-200 flex-shrink-0 ${
-                        isSelected ? 'opacity-100' : 'opacity-0 md:opacity-0 group-hover:opacity-100 md:group-hover:opacity-100'
-                      }`}>
+                      <div
+                        className={`ml-4 transition-opacity duration-200 flex-shrink-0 ${
+                          isSelected
+                            ? 'opacity-100'
+                            : 'opacity-0 md:opacity-0 group-hover:opacity-100 md:group-hover:opacity-100'
+                        }`}
+                      >
                         {isSelected ? (
-                          <svg className="w-5 h-5 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          <svg
+                            className="w-5 h-5 md:w-4 md:h-4 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M5 13l4 4L19 7"
+                            />
                           </svg>
                         ) : (
-                          <svg className="w-5 h-5 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          <svg
+                            className="w-5 h-5 md:w-4 md:h-4 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M9 5l7 7-7 7"
+                            />
                           </svg>
                         )}
                       </div>
@@ -849,11 +958,13 @@ const ChapterPlayer = () => {
             </div>
             {/* 決定ボタン（選択時にのみ表示） */}
             {showProceedButton && selectedChoiceId && (
-              <div 
+              <div
                 className="fixed bottom-6 md:bottom-8 left-0 right-0 px-4 md:px-8 flex justify-center z-20"
                 style={{
                   opacity: showProceedButton ? 1 : 0,
-                  transform: showProceedButton ? 'translateY(0)' : 'translateY(20px)',
+                  transform: showProceedButton
+                    ? 'translateY(0)'
+                    : 'translateY(20px)',
                   transition: 'opacity 0.4s ease-out, transform 0.4s ease-out',
                 }}
               >
@@ -875,42 +986,42 @@ const ChapterPlayer = () => {
           <>
             {/* 上部エリア（将来的にUIなどを配置） */}
             <div className="flex-1" />
-            
+
             {/* 下部エリア：テキストボックス */}
-          <div 
-            className="relative h-32 mb-4 bg-black/70 backdrop-blur-sm border-t-2 border-white/20"
-            style={getTextBoxStyle()}
-          >
-            {/* 話者名（左上に飛び出した領域） */}
-            {currentLine.speaker && (
-              <div className="absolute bottom-full left-4 md:left-6 px-6 py-1.5 bg-black/70 backdrop-blur-sm border-2 border-white/20 rounded-t-md">
-                {/* 振り仮名 */}
-                <div className="text-[9px] text-white/70 leading-tight">
-                  {getFurigana(currentLine.speaker)}
+            <div
+              className="relative h-32 mb-4 bg-gradient-to-br from-slate-800 to-slate-900 border-t-2 border-white/20"
+              style={getTextBoxStyle()}
+            >
+              {/* 話者名（左上に飛び出した領域） */}
+              {currentLine.speaker && (
+                <div className="absolute bottom-full left-4 md:left-6 px-6 py-1.5 bg-gradient-to-br from-slate-800 to-slate-900 border-2 border-white/20 rounded-t-md">
+                  {/* 振り仮名 */}
+                  <div className="text-[9px] text-white/70 leading-tight">
+                    {getFurigana(currentLine.speaker)}
+                  </div>
+                  {/* 話者名 */}
+                  <div className="text-base md:text-lg font-bold text-white">
+                    {currentLine.speaker}
+                  </div>
                 </div>
-                {/* 話者名 */}
-                <div className="text-base md:text-lg font-bold text-white">
-                  {currentLine.speaker}
+              )}
+              <div className="container mx-auto px-4 py-6">
+                {/* テキスト */}
+                <div className="text-sm md:text-base leading-relaxed text-white">
+                  <FadeInText
+                    text={currentLine.text}
+                    delay={20}
+                    onComplete={() => setIsTextComplete(true)}
+                  />
                 </div>
               </div>
-            )}
-            <div className="container mx-auto px-4 py-6">
-              {/* テキスト */}
-              <div className="text-sm md:text-base leading-relaxed text-white">
-                <FadeInText 
-                  text={currentLine.text} 
-                  delay={20} 
-                  onComplete={() => setIsTextComplete(true)}
-                />
-              </div>
+              {/* クリックを促す■（右下） */}
+              {isTextComplete && !isTransitioning && (
+                <div className="absolute bottom-6 right-4 md:bottom-4 md:right-6">
+                  <div className="w-3 h-1.5 bg-white/60 rounded-sm" />
+                </div>
+              )}
             </div>
-            {/* クリックを促す■（右下） */}
-            {isTextComplete && !isTransitioning && (
-              <div className="absolute bottom-6 right-4 md:bottom-4 md:right-6">
-                <div className="w-3 h-1.5 bg-white/60 rounded-sm" />
-              </div>
-            )}
-          </div>
           </>
         )}
       </div>
@@ -919,4 +1030,3 @@ const ChapterPlayer = () => {
 }
 
 export default ChapterPlayer
-

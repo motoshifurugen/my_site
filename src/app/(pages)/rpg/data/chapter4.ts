@@ -32,16 +32,24 @@ export const chapter4: { title: string; scenes: Scene[] } = {
       id: 'ch4_sc1',
       background: 'station_morning',
       lines: [
-        { speaker: '', text: '朝。駅からオフィスまでの道を歩きながら、俺はネクタイを少し緩めた。' },
+        {
+          speaker: '',
+          text: '朝。駅からオフィスまでの道を歩きながら、俺はネクタイを少し緩めた。',
+        },
         { speaker: '', text: '最近、息が浅い。' },
-        { speaker: '', text: '空気は薄くないはずなのに、肺の奥まで酸素が入ってこない感覚がある。' },
+        {
+          speaker: '',
+          text: '空気は薄くないはずなのに、肺の奥まで酸素が入ってこない感覚がある。',
+        },
       ],
     },
     {
       id: 'ch4_sc2',
       background: 'office_morning',
       lines: [
-        { speaker: '', text: 'オフィスに入ると、青葉はすでに席にいた。',
+        {
+          speaker: '',
+          text: 'オフィスに入ると、青葉はすでに席にいた。',
           characters: [
             {
               image: 'aoba_4.png',
@@ -49,7 +57,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '青葉', text: '「おはようございます、赤羽さん」',
+        {
+          speaker: '青葉',
+          text: '「おはようございます、赤羽さん」',
           characters: [
             {
               image: 'aoba_4.png',
@@ -57,7 +67,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '', text: '一寸の狂いもない挨拶。完璧な発声。',
+        {
+          speaker: '',
+          text: '一寸の狂いもない挨拶。完璧な発声。',
           characters: [
             {
               image: 'aoba_4.png',
@@ -65,7 +77,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '', text: '……コピーロボット',
+        {
+          speaker: '',
+          text: '……コピーロボット',
           characters: [
             {
               image: 'aoba_4.png',
@@ -73,7 +87,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '赤羽', text: '「おはよう」',
+        {
+          speaker: '赤羽',
+          text: '「おはよう」',
           characters: [
             {
               image: 'aoba_4.png',
@@ -82,7 +98,10 @@ export const chapter4: { title: string; scenes: Scene[] } = {
           ],
         },
         { speaker: '', text: 'キーボードを叩く音が、規則正しく響く。' },
-        { speaker: '', text: 'かつて俺が不快だと思っていたノイズは、完全に消滅していた。' },
+        {
+          speaker: '',
+          text: 'かつて俺が不快だと思っていたノイズは、完全に消滅していた。',
+        },
         { speaker: '', text: '静かで、効率的で、無駄がない。' },
         { speaker: '赤羽', text: '（……これが、俺の作った静けさか）' },
       ],
@@ -91,7 +110,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
       id: 'ch4_sc3',
       background: 'office_morning',
       lines: [
-        { speaker: '', text: '午前中。青葉が資料を持ってくる。',
+        {
+          speaker: '',
+          text: '午前中。青葉が資料を持ってくる。',
           characters: [
             {
               image: 'aoba_4.png',
@@ -99,7 +120,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '青葉', text: '「こちら、確認お願いします」',
+        {
+          speaker: '青葉',
+          text: '「こちら、確認お願いします」',
           characters: [
             {
               image: 'aoba_4.png',
@@ -107,7 +130,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '', text: '無駄のない一言。無駄のない動作。\n俺は資料に目を通す。',
+        {
+          speaker: '',
+          text: '無駄のない一言。無駄のない動作。\n俺は資料に目を通す。',
           characters: [
             {
               image: 'aoba_4.png',
@@ -119,7 +144,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         { speaker: '', text: '……正しい。' },
         { speaker: '', text: 'それなのに。' },
         { speaker: '赤羽', text: '「青葉」' },
-        { speaker: '青葉', text: '「はい」',
+        {
+          speaker: '青葉',
+          text: '「はい」',
           characters: [
             {
               image: 'aoba_4.png',
@@ -127,7 +154,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '', text: '俺は、一瞬言葉に詰まる。',
+        {
+          speaker: '',
+          text: '俺は、一瞬言葉に詰まる。',
           characters: [
             {
               image: 'aoba_4.png',
@@ -135,7 +164,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '赤羽', text: '（何を、確認したいんだ）',
+        {
+          speaker: '赤羽',
+          text: '（何を、確認したいんだ）',
           characters: [
             {
               image: 'aoba_4.png',
@@ -143,7 +174,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '', text: '誤字はない。論理も破綻していない。',
+        {
+          speaker: '',
+          text: '誤字はない。論理も破綻していない。',
           characters: [
             {
               image: 'aoba_4.png',
@@ -151,7 +184,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '', text: 'それでも、',
+        {
+          speaker: '',
+          text: 'それでも、',
           characters: [
             {
               image: 'aoba_4.png',
@@ -159,7 +194,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '', text: '以前ならここにあった何かが、見当たらない。',
+        {
+          speaker: '',
+          text: '以前ならここにあった何かが、見当たらない。',
           characters: [
             {
               image: 'aoba_4.png',
@@ -167,7 +204,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '赤羽', text: '「……いや、いい」',
+        {
+          speaker: '赤羽',
+          text: '「……いや、いい」',
           characters: [
             {
               image: 'aoba_4.png',
@@ -175,7 +214,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '', text: '青葉は少し間を置いて、頷いた。',
+        {
+          speaker: '',
+          text: '青葉は少し間を置いて、頷いた。',
           characters: [
             {
               image: 'aoba_4.png',
@@ -190,7 +231,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
       background: 'cafe_lunch',
       lines: [
         { speaker: '', text: '昼休み。カフェテリア。' },
-        { speaker: '', text: '青葉は同僚と並んで座っている。',
+        {
+          speaker: '',
+          text: '青葉は同僚と並んで座っている。',
           characters: [
             {
               image: 'aoba_4.png',
@@ -198,7 +241,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '', text: '会話は、仕事の進捗。タスク管理。納期……',
+        {
+          speaker: '',
+          text: '会話は、仕事の進捗。タスク管理。納期……',
           characters: [
             {
               image: 'aoba_4.png',
@@ -206,7 +251,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '', text: '以前のような、どうでもいい雑談はない。',
+        {
+          speaker: '',
+          text: '以前のような、どうでもいい雑談はない。',
           characters: [
             {
               image: 'aoba_4.png',
@@ -214,7 +261,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '同僚', text: '「青葉ちゃん、仕事早くなったよね」',
+        {
+          speaker: '同僚',
+          text: '「青葉ちゃん、仕事早くなったよね」',
           characters: [
             {
               image: 'aoba_4.png',
@@ -222,7 +271,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '青葉', text: '「ありがとうございます。赤羽さんに鍛えられて、無駄が減りました」',
+        {
+          speaker: '青葉',
+          text: '「ありがとうございます。赤羽さんに鍛えられて、無駄が減りました」',
           characters: [
             {
               image: 'aoba_4.png',
@@ -237,14 +288,19 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         { speaker: '', text: 'それが、余計につらい。' },
         { speaker: '', text: '壊れたことに、本人は気づいていない。' },
         { speaker: '', text: 'いや――' },
-        { speaker: '', text: '気づいていて、受け入れてしまったのかもしれない。' },
+        {
+          speaker: '',
+          text: '気づいていて、受け入れてしまったのかもしれない。',
+        },
       ],
     },
     {
       id: 'ch4_sc5',
       background: 'bar_night',
       lines: [
-        { speaker: '', text: '夜。また、黄瀬と飲んでいる。',
+        {
+          speaker: '',
+          text: '夜。また、黄瀬と飲んでいる。',
           characters: [
             {
               image: 'kise_1.png',
@@ -252,7 +308,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '黄瀬', text: '「なんかお前…」',
+        {
+          speaker: '黄瀬',
+          text: '「なんかお前…」',
           characters: [
             {
               image: 'kise_1.png',
@@ -260,7 +318,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '', text: '黄瀬が枝豆をつまみながら、ぼそりと言う。',
+        {
+          speaker: '',
+          text: '黄瀬が枝豆をつまみながら、ぼそりと言う。',
           characters: [
             {
               image: 'kise_1.png',
@@ -268,7 +328,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '黄瀬', text: '「渚を失った朋也みたいな顔してるぞ」',
+        {
+          speaker: '黄瀬',
+          text: '「渚を失った朋也みたいな顔してるぞ」',
           characters: [
             {
               image: 'kise_1.png',
@@ -276,7 +338,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '赤羽', text: '「は？」',
+        {
+          speaker: '赤羽',
+          text: '「は？」',
           characters: [
             {
               image: 'kise_1.png',
@@ -284,7 +348,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '黄瀬', text: '「大きな取引先でも無くしたのかよ」',
+        {
+          speaker: '黄瀬',
+          text: '「大きな取引先でも無くしたのかよ」',
           characters: [
             {
               image: 'kise_1.png',
@@ -292,7 +358,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '', text: '俺はグラスを置く。',
+        {
+          speaker: '',
+          text: '俺はグラスを置く。',
           characters: [
             {
               image: 'kise_1.png',
@@ -300,7 +368,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '赤羽', text: '「順調だよ。青葉も育った。チームの数字もいい」',
+        {
+          speaker: '赤羽',
+          text: '「順調だよ。青葉も育った。チームの数字もいい」',
           characters: [
             {
               image: 'kise_1.png',
@@ -308,7 +378,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '黄瀬', text: '「なら、よかった」',
+        {
+          speaker: '黄瀬',
+          text: '「なら、よかった」',
           characters: [
             {
               image: 'kise_1.png',
@@ -316,7 +388,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '黄瀬', text: '「たまには、チームで飲み会とかやってもいいんじゃないか？\n他の部署の連中が言ってたよ。『あそこは軍隊みたいで、近づきがたい』って」',
+        {
+          speaker: '黄瀬',
+          text: '「たまには、チームで飲み会とかやってもいいんじゃないか？\n他の部署の連中が言ってたよ。『あそこは軍隊みたいで、近づきがたい』って」',
           characters: [
             {
               image: 'kise_1.png',
@@ -324,7 +398,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '赤羽', text: '「コミュニケーション課題を飲み会で解決しようとする奴が、一番嫌いだ」',
+        {
+          speaker: '赤羽',
+          text: '「コミュニケーション課題を飲み会で解決しようとする奴が、一番嫌いだ」',
           characters: [
             {
               image: 'kise_1.png',
@@ -332,7 +408,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '', text: '俺が即答すると、黄瀬は笑った。',
+        {
+          speaker: '',
+          text: '俺が即答すると、黄瀬は笑った。',
           characters: [
             {
               image: 'kise_2.png',
@@ -340,7 +418,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '黄瀬', text: '「お前いまこの店にいるやつ全員的に回したぞ」',
+        {
+          speaker: '黄瀬',
+          text: '「お前いまこの店にいるやつ全員的に回したぞ」',
           characters: [
             {
               image: 'kise_2.png',
@@ -348,7 +428,9 @@ export const chapter4: { title: string; scenes: Scene[] } = {
             },
           ],
         },
-        { speaker: '黄瀬', text: '「まあでも、それで数字が出てるんだから、なにも言えないよな」',
+        {
+          speaker: '黄瀬',
+          text: '「まあでも、それで数字が出てるんだから、なにも言えないよな」',
           characters: [
             {
               image: 'kise_2.png',
