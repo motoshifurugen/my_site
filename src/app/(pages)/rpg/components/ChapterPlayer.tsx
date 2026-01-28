@@ -26,20 +26,20 @@ import saegusa1 from '../../../../../img/rpg/person/saegusa_1.png'
 import rainRoad from '../../../../../img/rpg/rain_road.png'
 import stationMorning from '../../../../../img/rpg/station_morning.png'
 import { chapter1 } from '../data/chapter1'
-import { chapter2 } from '../data/chapter2'
-import { chapter3 } from '../data/chapter3'
-import { chapter4 } from '../data/chapter4'
-import { chapter5 } from '../data/chapter5'
-import { chapter6a } from '../data/chapter6a'
-import { chapter6b } from '../data/chapter6b'
-import { chapter6c } from '../data/chapter6c'
 import { chapter1 as chapter1Eng } from '../data/chapter1_eng'
+import { chapter2 } from '../data/chapter2'
 import { chapter2 as chapter2Eng } from '../data/chapter2_eng'
+import { chapter3 } from '../data/chapter3'
 import { chapter3 as chapter3Eng } from '../data/chapter3_eng'
+import { chapter4 } from '../data/chapter4'
 import { chapter4 as chapter4Eng } from '../data/chapter4_eng'
+import { chapter5 } from '../data/chapter5'
 import { chapter5 as chapter5Eng } from '../data/chapter5_eng'
+import { chapter6a } from '../data/chapter6a'
 import { chapter6a as chapter6aEng } from '../data/chapter6a_eng'
+import { chapter6b } from '../data/chapter6b'
 import { chapter6b as chapter6bEng } from '../data/chapter6b_eng'
+import { chapter6c } from '../data/chapter6c'
 import { chapter6c as chapter6cEng } from '../data/chapter6c_eng'
 
 // 第6章のルート選択を管理するための型
@@ -47,6 +47,61 @@ type Chapter6Route = 'bad_end' | 'true_end' | 'another_end' | null
 
 // 言語の型
 type Language = 'ja' | 'en'
+
+// プリロードする全画像のリスト（静的なためコンポーネント外に定義）
+const ALL_IMAGES_TO_PRELOAD = [
+  // 背景画像
+  afterCafe,
+  aobaRoom,
+  barNight,
+  blueLeaf,
+  blueSky,
+  cafeLunch,
+  clientRoom,
+  meetingRoom,
+  nightCoffee,
+  nightPlatform,
+  officeMorning,
+  rainRoad,
+  stationMorning,
+  // キャラクター画像
+  aoba1,
+  aoba2,
+  aoba3,
+  aoba4,
+  kise1,
+  kise2,
+  kise3,
+  saegusa1,
+] as const
+
+// 画像プリロード関数
+const preloadAllImages = (
+  onProgress: (progress: number) => void,
+): Promise<void> => {
+  const totalImages = ALL_IMAGES_TO_PRELOAD.length
+  let loadedCount = 0
+
+  const loadImage = (imageSrc: { src: string } | string): Promise<void> => {
+    return new Promise((resolve) => {
+      const img = new window.Image()
+      const src = typeof imageSrc === 'string' ? imageSrc : imageSrc.src
+      img.onload = () => {
+        loadedCount++
+        onProgress(Math.round((loadedCount / totalImages) * 100))
+        resolve()
+      }
+      img.onerror = () => {
+        loadedCount++
+        onProgress(Math.round((loadedCount / totalImages) * 100))
+        resolve()
+      }
+      img.src = src
+    })
+  }
+
+  return Promise.all(ALL_IMAGES_TO_PRELOAD.map(loadImage)).then(() => {})
+}
 
 // 1文字ずつフェードインするテキストコンポーネント
 const FadeInText = ({
@@ -181,6 +236,8 @@ const ChapterPlayer = () => {
   const [titleScreenOpacity, setTitleScreenOpacity] = useState(
     !chapterParam ? 1 : 0,
   )
+  const [showLoading, setShowLoading] = useState(false)
+  const [loadingProgress, setLoadingProgress] = useState(0)
   const [currentChapterIndex, setCurrentChapterIndex] =
     useState(initialChapterIndex)
   const [currentSceneIndex, setCurrentSceneIndex] = useState(
@@ -276,46 +333,59 @@ const ChapterPlayer = () => {
     // モーダルは自動で閉じない（×ボタンまたはモーダル外クリックで閉じる）
   }
 
+  // ローディング完了後にゲームを開始
+  const startGameAfterLoading = () => {
+    setShowLoading(false)
+    setShowTitleScreen(false)
+    // タイトル画面が消えたら第1章のタイトルを表示
+    if (currentChapter) {
+      setShowChapterTitle(true)
+      setChapterTitleOpacity(0)
+      setChapterTitleTransform('translateX(100px)')
+
+      const rafIds: number[] = []
+
+      // フェードイン（横からスッと）
+      const rafId1 = requestAnimationFrame(() => {
+        const rafId2 = requestAnimationFrame(() => {
+          setChapterTitleOpacity(1)
+          setChapterTitleTransform('translateX(0)')
+        })
+        rafIds.push(rafId2)
+      })
+      rafIds.push(rafId1)
+
+      // 3秒表示してからフェードアウト
+      setTimeout(() => {
+        setChapterTitleOpacity(0)
+      }, 3000)
+
+      // フェードアウト完了後に要素を非表示
+      setTimeout(() => {
+        setShowChapterTitle(false)
+      }, 4500)
+    }
+  }
+
   // タイトル画面からゲーム開始
-  const handleTitleScreenClick = () => {
+  const handleTitleScreenClick = async () => {
     // 設定モーダルが開いている場合は何もしない
     if (showSettingsModal) return
+    // 既にローディング中の場合は何もしない
+    if (showLoading) return
 
     if (showTitleScreen) {
-      setTitleScreenOpacity(0)
-      const hideTimer = setTimeout(() => {
-        setShowTitleScreen(false)
-        // タイトル画面が消えたら第1章のタイトルを表示
-        if (currentChapter) {
-          setShowChapterTitle(true)
-          setChapterTitleOpacity(0)
-          setChapterTitleTransform('translateX(100px)')
+      // ローディング画面を表示
+      setShowLoading(true)
+      setLoadingProgress(0)
 
-          const rafIds: number[] = []
+      // 画像をプリロード
+      await preloadAllImages(setLoadingProgress)
 
-          // フェードイン（横からスッと）
-          const rafId1 = requestAnimationFrame(() => {
-            const rafId2 = requestAnimationFrame(() => {
-              setChapterTitleOpacity(1)
-              setChapterTitleTransform('translateX(0)')
-            })
-            rafIds.push(rafId2)
-          })
-          rafIds.push(rafId1)
-
-          // 3秒表示してからフェードアウト
-          const fadeOutTimer = setTimeout(() => {
-            setChapterTitleOpacity(0)
-          }, 3000)
-
-          // フェードアウト完了後に要素を非表示
-          const hideChapterTitleTimer = setTimeout(() => {
-            setShowChapterTitle(false)
-          }, 4500)
-
-          // クリーンアップは不要（コンポーネントがアンマウントされるまで実行される）
-        }
-      }, 800) // フェードアウト時間
+      // プリロード完了後、少し待ってからゲーム開始
+      setTimeout(() => {
+        startGameAfterLoading()
+      }, 300)
     }
   }
 
@@ -779,6 +849,49 @@ const ChapterPlayer = () => {
     setSelectedChoiceId(choiceId)
     // 選択時に決定ボタンを表示
     setShowProceedButton(true)
+  }
+
+  // ローディング画面を表示
+  if (showLoading) {
+    return (
+      <div className="relative h-full w-full overflow-hidden select-none">
+        {/* 背景画像 */}
+        <div className="absolute inset-0">
+          <Image
+            src={blueLeaf}
+            alt="Blue Leaf"
+            fill
+            className="object-cover"
+            priority
+            quality={90}
+          />
+        </div>
+        {/* オーバーレイ */}
+        <div className="absolute inset-0 bg-black/50" />
+
+        {/* ローディングコンテンツ */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-8">
+          {/* ローディングテキスト */}
+          <p className="text-white text-lg md:text-xl font-medium mb-6 tracking-wide">
+            Now Loading...
+          </p>
+
+          {/* プログレスバー */}
+          <div className="w-full max-w-xs md:max-w-sm">
+            <div className="h-2 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm">
+              <div
+                className="h-full bg-white rounded-full transition-all duration-200 ease-out"
+                style={{ width: `${loadingProgress}%` }}
+              />
+            </div>
+            {/* パーセンテージ表示 */}
+            <p className="text-white/80 text-sm mt-3 text-center">
+              {loadingProgress}%
+            </p>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   // タイトル画面を表示
