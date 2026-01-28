@@ -33,9 +33,20 @@ import { chapter5 } from '../data/chapter5'
 import { chapter6a } from '../data/chapter6a'
 import { chapter6b } from '../data/chapter6b'
 import { chapter6c } from '../data/chapter6c'
+import { chapter1 as chapter1Eng } from '../data/chapter1_eng'
+import { chapter2 as chapter2Eng } from '../data/chapter2_eng'
+import { chapter3 as chapter3Eng } from '../data/chapter3_eng'
+import { chapter4 as chapter4Eng } from '../data/chapter4_eng'
+import { chapter5 as chapter5Eng } from '../data/chapter5_eng'
+import { chapter6a as chapter6aEng } from '../data/chapter6a_eng'
+import { chapter6b as chapter6bEng } from '../data/chapter6b_eng'
+import { chapter6c as chapter6cEng } from '../data/chapter6c_eng'
 
 // 第6章のルート選択を管理するための型
 type Chapter6Route = 'bad_end' | 'true_end' | 'another_end' | null
+
+// 言語の型
+type Language = 'ja' | 'en'
 
 // 1文字ずつフェードインするテキストコンポーネント
 const FadeInText = ({
@@ -191,6 +202,19 @@ const ChapterPlayer = () => {
     useState(false)
   const [showProceedButton, setShowProceedButton] = useState(false)
   const [showEnding, setShowEnding] = useState(false)
+  // サーバーとクライアントで一致させるため、初期値は常に'ja'にする
+  const [language, setLanguage] = useState<Language>('ja')
+  const [showSettingsModal, setShowSettingsModal] = useState(false)
+
+  // クライアントサイドでのみlocalStorageから言語設定を読み込む
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedLang = localStorage.getItem('rpg_language') as Language
+      if (savedLang === 'en' || savedLang === 'ja') {
+        setLanguage(savedLang)
+      }
+    }
+  }, [])
   const currentSceneIndexRef = useRef(currentSceneIndex)
   const currentChapterIndexRef = useRef(currentChapterIndex)
   const prevChapterIndexRef = useRef(currentChapterIndex)
@@ -198,15 +222,34 @@ const ChapterPlayer = () => {
 
   // 第6章のルートに応じて章を動的に構築
   const getChapters = () => {
-    const baseChapters = [chapter1, chapter2, chapter3, chapter4, chapter5]
-    if (chapter6Route === 'bad_end') {
-      return [...baseChapters, chapter6a]
-    } else if (chapter6Route === 'true_end') {
-      return [...baseChapters, chapter6b]
-    } else if (chapter6Route === 'another_end') {
-      return [...baseChapters, chapter6c]
+    // 言語に応じて適切な章データを選択
+    if (language === 'en') {
+      const baseChapters = [
+        chapter1Eng,
+        chapter2Eng,
+        chapter3Eng,
+        chapter4Eng,
+        chapter5Eng,
+      ]
+      if (chapter6Route === 'bad_end') {
+        return [...baseChapters, chapter6aEng]
+      } else if (chapter6Route === 'true_end') {
+        return [...baseChapters, chapter6bEng]
+      } else if (chapter6Route === 'another_end') {
+        return [...baseChapters, chapter6cEng]
+      }
+      return baseChapters
+    } else {
+      const baseChapters = [chapter1, chapter2, chapter3, chapter4, chapter5]
+      if (chapter6Route === 'bad_end') {
+        return [...baseChapters, chapter6a]
+      } else if (chapter6Route === 'true_end') {
+        return [...baseChapters, chapter6b]
+      } else if (chapter6Route === 'another_end') {
+        return [...baseChapters, chapter6c]
+      }
+      return baseChapters
     }
-    return baseChapters
   }
 
   const chapters = getChapters()
@@ -224,8 +267,20 @@ const ChapterPlayer = () => {
     currentChapterIndexRef.current = currentChapterIndex
   }, [currentChapterIndex])
 
+  // 言語選択ハンドラー
+  const handleLanguageSelect = (lang: Language) => {
+    setLanguage(lang)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('rpg_language', lang)
+    }
+    // モーダルは自動で閉じない（×ボタンまたはモーダル外クリックで閉じる）
+  }
+
   // タイトル画面からゲーム開始
   const handleTitleScreenClick = () => {
+    // 設定モーダルが開いている場合は何もしない
+    if (showSettingsModal) return
+
     if (showTitleScreen) {
       setTitleScreenOpacity(0)
       const hideTimer = setTimeout(() => {
@@ -633,7 +688,8 @@ const ChapterPlayer = () => {
               e.stopPropagation()
               // 第5章の最後のシーン（選択肢の場面）に戻る
               setCurrentChapterIndex(4)
-              setCurrentSceneIndex(chapter5.scenes.length - 1)
+              const chapter5Data = language === 'en' ? chapter5Eng : chapter5
+              setCurrentSceneIndex(chapter5Data.scenes.length - 1)
               setCurrentLineIndex(0)
               setShowEnding(false)
               setChapter6Route(null)
@@ -729,7 +785,7 @@ const ChapterPlayer = () => {
   if (showTitleScreen) {
     return (
       <div
-        className="relative h-full w-full overflow-hidden cursor-pointer select-none"
+        className="relative h-full w-full overflow-hidden select-none cursor-pointer"
         onClick={handleTitleScreenClick}
         style={{
           opacity: titleScreenOpacity,
@@ -761,8 +817,41 @@ const ChapterPlayer = () => {
             quality={90}
           />
         </div>
+        {/* 設定ボタン（画面右上） */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            setShowSettingsModal(true)
+          }}
+          className="absolute top-6 md:top-8 right-4 md:right-8 z-30 min-h-[48px] px-6 py-2.5 md:px-8 md:py-3 rounded-full font-medium text-sm md:text-base tracking-wide transition-all duration-300 touch-manipulation bg-black/70 text-white border-2 border-white/20 hover:bg-black/80 hover:border-white/30 backdrop-blur-sm"
+          style={{ WebkitTapHighlightColor: 'transparent' }}
+          aria-label="Settings"
+        >
+          <span className="relative z-10 flex items-center gap-2">
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+            <span>Settings</span>
+          </span>
+        </button>
         {/* クリックして開始テキスト（画面下部に固定） */}
-        <div className="absolute bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 z-20 flex items-end justify-center gap-2">
+        <div className="absolute bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 z-20 flex items-end justify-center gap-2 pointer-events-none">
           <p
             className="text-lg md:text-xl font-semibold animate-pulse"
             style={{ color: '#000000' }}
@@ -774,6 +863,76 @@ const ChapterPlayer = () => {
             style={{ backgroundColor: '#000000' }}
           />
         </div>
+        {/* 設定モーダル */}
+        {showSettingsModal && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+            onClick={(e) => {
+              e.stopPropagation()
+              setShowSettingsModal(false)
+            }}
+          >
+            <div
+              className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl shadow-2xl border border-slate-600/50 p-8 md:p-10 max-w-md w-full mx-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* モーダルヘッダー */}
+              <div className="flex items-center justify-between mb-10">
+                <h2 className="text-xl md:text-2xl font-bold text-white tracking-tight">
+                  Settings
+                </h2>
+                <button
+                  onClick={() => setShowSettingsModal(false)}
+                  className="text-slate-400 hover:text-white transition-colors p-2 -mr-2"
+                  aria-label="Close"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+              {/* 言語選択セクション */}
+              <div>
+                <label className="block text-sm font-medium text-slate-400 mb-6 tracking-wide uppercase">
+                  Language / 言語
+                </label>
+                <div className="flex gap-1 bg-slate-700/30 p-1 rounded-2xl">
+                  <button
+                    onClick={() => handleLanguageSelect('ja')}
+                    className={`flex-1 px-6 py-4 rounded-xl text-sm md:text-base font-medium transition-colors duration-300 border-2 ${
+                      language === 'ja'
+                        ? 'text-white border-white/30 bg-slate-600/40'
+                        : 'text-slate-400 border-transparent hover:text-slate-300'
+                    }`}
+                  >
+                    日本語
+                  </button>
+                  <button
+                    onClick={() => handleLanguageSelect('en')}
+                    className={`flex-1 px-6 py-4 rounded-xl text-sm md:text-base font-medium transition-colors duration-300 border-2 ${
+                      language === 'en'
+                        ? 'text-white border-white/30 bg-slate-600/40'
+                        : 'text-slate-400 border-transparent hover:text-slate-300'
+                    }`}
+                  >
+                    English
+                  </button>
+                </div>
+              </div>
+              {/* 将来的に他の設定をここに追加 */}
+            </div>
+          </div>
+        )}
       </div>
     )
   }
