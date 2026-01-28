@@ -63,7 +63,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'The counterpart this time is Mr. Sasaki, the HR Manager. He\'s the practical type who likes numbers.',
+          text: 'The counterpart this time is Mr. Sasaki, the HR Manager. \nHe\'s the practical type who likes numbers.',
           characters: [
             {
               image: 'aoba_4.png',
@@ -73,7 +73,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Akabane',
-          text: '"If it\'s Mr. Sasaki, he\'ll definitely bite on this cost-cutting plan. No need to appeal to unnecessary emotions. Let\'s just present the benefits calmly."',
+          text: '"If it\'s Mr. Sasaki, he\'ll definitely bite on this cost-cutting plan. \nNo need to appeal to unnecessary emotions. Let\'s just present the benefits calmly."',
           characters: [
             {
               image: 'aoba_4.png',
@@ -126,7 +126,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Saegusa',
-          text: '"I\'m Saegusa, the Senior Managing Director. Sasaki had a sudden health issue. I\'ll listen in his place."',
+          text: '"I\'m Saegusa, the Senior Managing Director. \nSasaki had a sudden health issue. I\'ll listen in his place."',
           characters: [
             {
               image: 'saegusa_1.png',

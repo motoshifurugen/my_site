@@ -88,7 +88,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: 'Colleague', text: '"It is kind of calming, isn\'t it?"' },
         {
           speaker: 'Colleague',
-          text: '"Having Aoba-chan around really softens the mood."',
+          text: '"Having your around really softens the mood."',
         },
         { speaker: '', text: 'Soften.' },
         {
@@ -105,7 +105,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'Time flows slowly only around her. To an organization, that should be nothing but a "lag."',
+          text: 'Time flows slowly only around her. \nTo an organization, that should be nothing but a "lag."',
         },
       ],
     },
@@ -174,7 +174,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Akabane',
-          text: '"\'As quickly as possible\' creates arbitrary expectations for the other party. If you\'re even a day late, they\'ll feel betrayed."',
+          text: '"\'As quickly as possible\' creates arbitrary expectations for the other party. \nIf you\'re even a day late, they\'ll feel betrayed."',
           characters: [
             {
               image: 'aoba_2.png',
@@ -194,7 +194,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Akabane',
-          text: '"Business doesn\'t need \'kindness.\' It needs a \'precise commitment.\' Instead of making an uncertain promise, true sincerity is giving a definite delivery date and letting the client decide."',
+          text: '"Business doesn\'t need \'kindness.\' It needs a \'precise commitment.\' \nInstead of making an uncertain promise, true sincerity is giving a definite delivery date and letting the client decide."',
           characters: [
             {
               image: 'aoba_2.png',

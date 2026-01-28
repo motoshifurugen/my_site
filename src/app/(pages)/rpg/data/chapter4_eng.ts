@@ -181,7 +181,7 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Colleague',
-          text: '"Aoba-chan, you\'ve gotten so much faster at work."',
+          text: '"You\'ve gotten so much faster at work."',
         },
         {
           speaker: 'Aoba',
@@ -239,7 +239,7 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Kise',
-          text: '"You look like Tomoya after he lost Nagisa."',
+          text: '"You look like a Dementor just sucked the soul right out of you."',
           characters: [
             {
               image: 'kise_2.png',
@@ -289,7 +289,7 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Kise',
-          text: '"Then that\'s good. But maybe you should have a team drinking party or something? People in other departments were saying, \'That place is like the military, it\'s hard to approach.\'"',
+          text: '"Then that\'s good. But maybe you should have a team drinking party or something? \nPeople in other departments were saying, \'That place is like the military, it\'s hard to approach.\'"',
           characters: [
             {
               image: 'kise_2.png',

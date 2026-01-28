@@ -35,27 +35,72 @@ export const chapter6a: { title: string; scenes: Scene[] } = {
         {
           speaker: '',
           text: 'Aoba\'s gaze wanders. She looks at me.',
+          characters: [
+            {
+              image: 'aoba_2.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'I nod wordlessly.',
+          characters: [
+            {
+              image: 'aoba_2.png',
+              position: 'center',
+            },
+          ],
         },
-        { speaker: 'Akabane', text: '(Don\'t say anything unnecessary. Reply with logic.)' },
+        {
+          speaker: 'Akabane',
+          text: '(Don\'t say anything unnecessary. Reply with logic.)',
+          characters: [
+            {
+              image: 'aoba_2.png',
+              position: 'center',
+            },
+          ],
+        },
         {
           speaker: '',
           text: 'Aoba tightens her expression.',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'Killing her emotions, she speaks the "correct answer."',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: 'Aoba',
           text: '"...Yes. I am certain that for the people on the ground, operational efficiency will lead to long-term benefits. I believe future figures should be prioritized over temporary burdens."',
+          characters: [
+            {
+              image: 'aoba_4.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'A perfect answer. As a business matter, nothing is wrong.',
+          characters: [
+            {
+              image: 'aoba_4.png',
+              position: 'center',
+            },
+          ],
         },
       ],
     },
@@ -66,18 +111,42 @@ export const chapter6a: { title: string; scenes: Scene[] } = {
         {
           speaker: '',
           text: 'Mr. Saegusa looked at Aoba for a few seconds.',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'He showed neither disappointment nor anger.',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: 'Saegusa',
           text: '"I see."',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: 'Saegusa',
           text: '"I understand well. ...Thank you for coming while you\'re busy."',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
@@ -86,10 +155,22 @@ export const chapter6a: { title: string; scenes: Scene[] } = {
         {
           speaker: 'Aoba',
           text: '"Eh, um, about the contract..."',
+          characters: [
+            {
+              image: 'aoba_4.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: 'Saegusa',
           text: '"I\'ll have Sasaki contact you later."',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
@@ -120,18 +201,42 @@ export const chapter6a: { title: string; scenes: Scene[] } = {
         {
           speaker: '',
           text: '"...It should have been a perfect answer."',
+          characters: [
+            {
+              image: 'aoba_4.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'On the way back, Aoba mutters.',
+          characters: [
+            {
+              image: 'aoba_4.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: 'Akabane',
           text: '"It was,"',
+          characters: [
+            {
+              image: 'aoba_4.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'I reply.',
+          characters: [
+            {
+              image: 'aoba_4.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
@@ -156,14 +261,32 @@ export const chapter6a: { title: string; scenes: Scene[] } = {
         {
           speaker: 'Aoba',
           text: '"Next time, I\'ll prepare materials that exclude emotional arguments even further."',
+          characters: [
+            {
+              image: 'aoba_4.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'Watching her say that calmly, I realized.',
+          characters: [
+            {
+              image: 'aoba_4.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'From now on, no matter how much we succeed, we will never be able to connect with "humans" like Mr. Saegusa again.',
+          characters: [
+            {
+              image: 'aoba_4.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',

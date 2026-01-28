@@ -273,7 +273,7 @@ const ChapterPlayer = () => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('rpg_language', lang)
     }
-    setShowSettingsModal(false)
+    // モーダルは自動で閉じない（×ボタンまたはモーダル外クリックで閉じる）
   }
 
   // タイトル画面からゲーム開始
@@ -873,17 +873,17 @@ const ChapterPlayer = () => {
             }}
           >
             <div
-              className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-2xl border border-slate-600/50 p-6 md:p-8 max-w-md w-full mx-4"
+              className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl shadow-2xl border border-slate-600/50 p-8 md:p-10 max-w-md w-full mx-4"
               onClick={(e) => e.stopPropagation()}
             >
               {/* モーダルヘッダー */}
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl md:text-2xl font-bold text-white">
+              <div className="flex items-center justify-between mb-10">
+                <h2 className="text-xl md:text-2xl font-bold text-white tracking-tight">
                   Settings
                 </h2>
                 <button
                   onClick={() => setShowSettingsModal(false)}
-                  className="text-slate-400 hover:text-white transition-colors"
+                  className="text-slate-400 hover:text-white transition-colors p-2 -mr-2"
                   aria-label="Close"
                 >
                   <svg
@@ -902,24 +902,27 @@ const ChapterPlayer = () => {
                 </button>
               </div>
               {/* 言語選択セクション */}
-              <div className="mb-6">
-                <div className="flex gap-3">
+              <div>
+                <label className="block text-sm font-medium text-slate-400 mb-6 tracking-wide uppercase">
+                  Language / 言語
+                </label>
+                <div className="flex gap-1 bg-slate-700/30 p-1 rounded-2xl">
                   <button
                     onClick={() => handleLanguageSelect('ja')}
-                    className={`flex-1 px-4 py-3 rounded-lg font-medium text-sm md:text-base transition-all duration-200 ${
+                    className={`flex-1 px-6 py-4 rounded-xl text-sm md:text-base font-medium transition-colors duration-300 border-2 ${
                       language === 'ja'
-                        ? 'bg-white/95 text-black shadow-lg'
-                        : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
+                        ? 'text-white border-white/30 bg-slate-600/40'
+                        : 'text-slate-400 border-transparent hover:text-slate-300'
                     }`}
                   >
                     日本語
                   </button>
                   <button
                     onClick={() => handleLanguageSelect('en')}
-                    className={`flex-1 px-4 py-3 rounded-lg font-medium text-sm md:text-base transition-all duration-200 ${
+                    className={`flex-1 px-6 py-4 rounded-xl text-sm md:text-base font-medium transition-colors duration-300 border-2 ${
                       language === 'en'
-                        ? 'bg-white/95 text-black shadow-lg'
-                        : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
+                        ? 'text-white border-white/30 bg-slate-600/40'
+                        : 'text-slate-400 border-transparent hover:text-slate-300'
                     }`}
                   >
                     English

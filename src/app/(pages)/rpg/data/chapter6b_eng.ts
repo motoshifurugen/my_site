@@ -35,39 +35,96 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
         {
           speaker: '',
           text: 'Aoba is struggling to answer.',
+          characters: [
+            {
+              image: 'aoba_2.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'Her lips are trembling as she tries to speak the "correct answer."',
+          characters: [
+            {
+              image: 'aoba_2.png',
+              position: 'center',
+            },
+          ],
         },
-        { speaker: 'Akabane', text: '(No.)' },
+        {
+          speaker: 'Akabane',
+          text: '(No.)',
+        },
         {
           speaker: '',
           text: 'I have an intuition.',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'That lie won\'t work on this man.',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: 'Akabane',
           text: '"...Forgive me, Director."',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'I cut across Aoba\'s words.',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: 'Akabane',
           text: '"The person in charge, Aoba, actually had another concern."',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'Aoba looks at me in surprise.',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: 'Akabane',
           text: '"She visited the sites and summarized the \'risk of lowering staff motivation\' behind the efficiency in a report. ...I am the one who rejected it because it \'doesn\'t turn into numbers.\'"',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
       ],
     },
@@ -78,26 +135,62 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
         {
           speaker: 'Saegusa',
           text: '"Oh?"',
+          characters: [
+            {
+              image: 'saegusa_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: 'Akabane',
           text: '"Aoba. ...That plan I rejected. Just an oral explanation is fine, can you describe it?"',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'When I prompted her, Aoba was flustered for a moment, then immediately turned eyes of resolve toward him.',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: 'Aoba',
           text: '"Y-Yes! ...Actually, the people on the ground said they prefer the current layout and flow of the breakroom, even if it\'s inefficient..."',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'Aoba begins to speak.',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'A story about the "scent" of the site that doesn\'t appear in numbers.',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
@@ -154,22 +247,52 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
         {
           speaker: '',
           text: 'Night. Walking side-by-side with Aoba to the station.',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: 'Akabane',
           text: '"...I\'m sorry about that."',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',
           text: 'Aoba shakes her head.',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: 'Aoba',
           text: '"I think it was for the best."',
+          characters: [
+            {
+              image: 'aoba_1.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: 'Aoba',
           text: '"Probably, even if that went well, it would have broken later anyway."',
+          characters: [
+            {
+              image: 'aoba_3.png',
+              position: 'center',
+            },
+          ],
         },
         {
           speaker: '',

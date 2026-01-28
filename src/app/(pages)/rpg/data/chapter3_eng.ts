@@ -173,7 +173,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'She doesn\'t throw in digressions like before. She doesn\'t stop talking to worry about someone\'s expression.',
+          text: 'She doesn\'t throw in digressions like before. \nShe doesn\'t stop talking to worry about someone\'s expression.',
         },
         { speaker: '', text: 'The meeting ended five minutes early.' },
         { speaker: '', text: 'Efficient. Impeccable.' },

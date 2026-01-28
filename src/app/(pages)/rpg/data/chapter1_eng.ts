@@ -42,11 +42,11 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'To me, "correctness" is reproducibility. If the conditions are met, the result can be recreated.',
+          text: 'To me, "correctness" is reproducibility. \nIf the conditions are met, the result can be recreated.',
         },
         {
           speaker: '',
-          text: 'Correct procedures. Correct judgments. As long as you don\'t deviate from them, you won\'t make a major mistake.',
+          text: 'Correct procedures. Correct judgments. \nAs long as you don\'t deviate from them, you won\'t make a major mistake.',
         },
         {
           speaker: '',
@@ -109,7 +109,7 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'It can\'t be explained by logic, but the environment doesn\'t crumble because of her. She is an incomprehensible anomaly.',
+          text: 'It can\'t be explained by logic, but the environment doesn\'t crumble because of her. \nShe is an incomprehensible anomaly.',
         },
         {
           speaker: 'Aoba',
@@ -123,7 +123,7 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'She stops in front of my desk, her voice bouncing. I can feel the surrounding air loosen slightly.',
+          text: 'She stops in front of my desk, her voice bouncing. \nI can feel the surrounding air loosen slightly.',
           characters: [
             {
               image: 'aoba_1.png',
