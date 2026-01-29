@@ -139,10 +139,10 @@ const RippleEffect = ({ x, y, onComplete }: RippleEffectProps) => {
       />
       {/* Center dot */}
       <div
-        className="absolute rounded-full bg-white/50"
+        className="absolute rounded-full border-2 border-white/50"
         style={{
-          width: 8,
-          height: 8,
+          width: 16,
+          height: 16,
           left: '50%',
           top: '50%',
           transform: 'translate(-50%, -50%)',
