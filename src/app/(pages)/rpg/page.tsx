@@ -59,8 +59,11 @@ export default function Rpg() {
       >
         <div className="text-center px-4">
           <h2 className="text-xl font-bold mb-2">画面を横にしてください</h2>
-          <p className="text-sm opacity-80">
+          <p className="text-sm opacity-80 mb-2">
             このゲームは横画面でプレイできます
+          </p>
+          <p className="text-sm opacity-60">
+            Please rotate to landscape
           </p>
         </div>
       </div>
