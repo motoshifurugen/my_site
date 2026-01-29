@@ -41,6 +41,7 @@ import { chapter6b } from '../data/chapter6b'
 import { chapter6b as chapter6bEng } from '../data/chapter6b_eng'
 import { chapter6c } from '../data/chapter6c'
 import { chapter6c as chapter6cEng } from '../data/chapter6c_eng'
+import TapRipple from './TapRipple'
 
 // 第6章のルート選択を管理するための型
 type Chapter6Route = 'bad_end' | 'true_end' | 'another_end' | null
@@ -276,6 +277,7 @@ const ChapterPlayer = () => {
   const currentChapterIndexRef = useRef(currentChapterIndex)
   const prevChapterIndexRef = useRef(currentChapterIndex)
   const isMountedRef = useRef(false)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   // 第6章のルートに応じて章を動的に構築
   const getChapters = () => {
@@ -728,7 +730,13 @@ const ChapterPlayer = () => {
           : 'After Cafe'
 
     return (
-      <div className="relative h-full w-full overflow-hidden flex items-center justify-center">
+      <div
+        ref={containerRef}
+        className="relative h-full w-full overflow-hidden flex items-center justify-center"
+      >
+        {/* タップエフェクト */}
+        <TapRipple containerRef={containerRef} />
+
         {/* 背景画像 */}
         <div className="absolute inset-0">
           <Image
@@ -854,7 +862,13 @@ const ChapterPlayer = () => {
   // ローディング画面を表示
   if (showLoading) {
     return (
-      <div className="relative h-full w-full overflow-hidden select-none">
+      <div
+        ref={containerRef}
+        className="relative h-full w-full overflow-hidden select-none"
+      >
+        {/* タップエフェクト */}
+        <TapRipple containerRef={containerRef} />
+
         {/* 背景画像 */}
         <div className="absolute inset-0">
           <Image
@@ -898,6 +912,7 @@ const ChapterPlayer = () => {
   if (showTitleScreen) {
     return (
       <div
+        ref={containerRef}
         className="relative h-full w-full overflow-hidden select-none cursor-pointer"
         onClick={handleTitleScreenClick}
         style={{
@@ -905,6 +920,9 @@ const ChapterPlayer = () => {
           transition: 'opacity 0.8s ease-out',
         }}
       >
+        {/* タップエフェクト */}
+        <TapRipple containerRef={containerRef} />
+
         {/* 背景画像 */}
         <div className="absolute inset-0">
           <Image
@@ -1052,9 +1070,13 @@ const ChapterPlayer = () => {
 
   return (
     <div
+      ref={containerRef}
       className="relative h-full w-full overflow-hidden select-none cursor-pointer"
       onClick={handleClick}
     >
+      {/* タップエフェクト */}
+      <TapRipple containerRef={containerRef} />
+
       {/* 背景画像 */}
       <div className="absolute inset-0">
         <Image
