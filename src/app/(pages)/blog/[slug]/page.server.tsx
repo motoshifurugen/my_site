@@ -1,9 +1,12 @@
 import { Post } from '@/types/posts'
 
+// Server-side uses API_URL (absolute), fallback to localhost
+const getServerApiUrl = () =>
+  process.env.API_URL || 'http://localhost:3000/my_site/api'
+
 // SSG
 export async function generateStaticParams() {
-  const apiUrl =
-    process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/my_site/api'
+  const apiUrl = getServerApiUrl()
   try {
     const res = await fetch(`${apiUrl}/blog/`, {
       cache: 'force-cache',
@@ -23,8 +26,7 @@ export async function generateStaticParams() {
 }
 
 export const getBlogArticle = async (slug: string) => {
-  const apiUrl =
-    process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/my_site/api'
+  const apiUrl = getServerApiUrl()
   try {
     const res = await fetch(`${apiUrl}/blog/${slug}`, {
       cache: 'force-cache',
