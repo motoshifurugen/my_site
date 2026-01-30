@@ -9,5 +9,6 @@ services:
       - /app/.next
     environment:
       - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=/my_site/api
     command: sh -c "npm run build && npm run start"
     restart: unless-stopped

@@ -70,7 +70,9 @@ const config: Config = {
         },
         cloudMove3: {
           '0%': { transform: 'translateX(-100%) translateY(20px) scale(1.5)' },
-          '100%': { transform: 'translateX(100vw) translateY(-20px) scale(1.5)' },
+          '100%': {
+            transform: 'translateX(100vw) translateY(-20px) scale(1.5)',
+          },
         },
         cloudMove4: {
           '0%': { transform: 'translateX(100vw) translateY(-20px) scale(1)' },
@@ -109,13 +111,14 @@ const config: Config = {
         xxs: '0.625rem',
       },
       backgroundImage: {
-        'sky-mobile': 'linear-gradient(to bottom, rgb(134, 179, 224), rgb(134, 179, 224))',
+        'sky-mobile':
+          'linear-gradient(to bottom, rgb(134, 179, 224), rgb(134, 179, 224))',
         'night-mobile': 'linear-gradient(to bottom, #2E2E3F, #2E2E3F)',
       },
     },
   },
   plugins: [
-    function({ addComponents }: PluginAPI) {
+    function ({ addComponents }: PluginAPI) {
       addComponents({
         '.cloud': {
           position: 'absolute',
@@ -229,7 +232,7 @@ const config: Config = {
           },
         },
       })
-    }
+    },
   ],
 }
 export default config
