@@ -12,5 +12,6 @@ services:
     environment:
       - NODE_ENV=production
       - NEXT_PUBLIC_API_URL=/my_site/api
+      - API_URL=http://localhost:3000/my_site/api
     command: sh -c "npm run build && npm run start"
     restart: unless-stopped
