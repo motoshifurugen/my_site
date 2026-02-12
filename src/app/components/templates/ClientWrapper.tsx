@@ -21,7 +21,9 @@ const ClientWrapper: React.FC<{ children: React.ReactNode }> = ({
     pathname?.startsWith(`${BASE_PATH}/rpg`) || pathname?.startsWith('/rpg')
   const isPrivacyPage =
     pathname?.startsWith(`${BASE_PATH}/my-kitchen/privacy`) ||
-    pathname?.startsWith('/my-kitchen/privacy')
+    pathname?.startsWith('/my-kitchen/privacy') ||
+    pathname?.startsWith(`${BASE_PATH}/hugmi/privacy`) ||
+    pathname?.startsWith('/hugmi/privacy')
 
   useEffect(() => {
     setTimeout(() => {
