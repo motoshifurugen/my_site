@@ -27,6 +27,9 @@ const ClientWrapper: React.FC<{ children: React.ReactNode }> = ({
   const isTermsPage =
     pathname?.startsWith(`${BASE_PATH}/my-kitchen/terms`) ||
     pathname?.startsWith('/my-kitchen/terms')
+  const isLegalPage =
+    pathname?.startsWith(`${BASE_PATH}/my-kitchen/legal`) ||
+    pathname?.startsWith('/my-kitchen/legal')
 
   useEffect(() => {
     setTimeout(() => {
@@ -34,8 +37,8 @@ const ClientWrapper: React.FC<{ children: React.ReactNode }> = ({
     }, 2000) // 2秒後にローディングを終了
   }, [])
 
-  // RPGページ、プライバシーページ、または利用規約ページの場合は、ヘッダーとフッターを表示しない
-  if (isRpgPage || isPrivacyPage || isTermsPage) {
+  // RPGページ、プライバシーページ、利用規約ページ、または特定商取引法ページの場合は、ヘッダーとフッターを表示しない
+  if (isRpgPage || isPrivacyPage || isTermsPage || isLegalPage) {
     return (
       <I18nProvider>
         <HtmlLangUpdater />
