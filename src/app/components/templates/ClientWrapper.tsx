@@ -24,6 +24,9 @@ const ClientWrapper: React.FC<{ children: React.ReactNode }> = ({
     pathname?.startsWith('/my-kitchen/privacy') ||
     pathname?.startsWith(`${BASE_PATH}/hugmi/privacy`) ||
     pathname?.startsWith('/hugmi/privacy')
+  const isTermsPage =
+    pathname?.startsWith(`${BASE_PATH}/my-kitchen/terms`) ||
+    pathname?.startsWith('/my-kitchen/terms')
 
   useEffect(() => {
     setTimeout(() => {
@@ -31,8 +34,8 @@ const ClientWrapper: React.FC<{ children: React.ReactNode }> = ({
     }, 2000) // 2秒後にローディングを終了
   }, [])
 
-  // RPGページまたはプライバシーページの場合は、ヘッダーとフッターを表示しない
-  if (isRpgPage || isPrivacyPage) {
+  // RPGページ、プライバシーページ、または利用規約ページの場合は、ヘッダーとフッターを表示しない
+  if (isRpgPage || isPrivacyPage || isTermsPage) {
     return (
       <I18nProvider>
         <HtmlLangUpdater />
