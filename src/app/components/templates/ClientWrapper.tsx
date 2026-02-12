@@ -19,6 +19,9 @@ const ClientWrapper: React.FC<{ children: React.ReactNode }> = ({
   const pathname = usePathname()
   const isRpgPage =
     pathname?.startsWith(`${BASE_PATH}/rpg`) || pathname?.startsWith('/rpg')
+  const isPrivacyPage =
+    pathname?.startsWith(`${BASE_PATH}/my-kitchen/privacy`) ||
+    pathname?.startsWith('/my-kitchen/privacy')
 
   useEffect(() => {
     setTimeout(() => {
@@ -26,8 +29,8 @@ const ClientWrapper: React.FC<{ children: React.ReactNode }> = ({
     }, 2000) // 2秒後にローディングを終了
   }, [])
 
-  // RPGページの場合は、ヘッダーとフッターを表示しない
-  if (isRpgPage) {
+  // RPGページまたはプライバシーページの場合は、ヘッダーとフッターを表示しない
+  if (isRpgPage || isPrivacyPage) {
     return (
       <I18nProvider>
         <HtmlLangUpdater />
