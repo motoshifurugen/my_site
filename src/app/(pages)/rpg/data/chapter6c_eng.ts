@@ -34,7 +34,7 @@ export const chapter6c: { title: string; scenes: Scene[] } = {
       lines: [
         {
           speaker: '',
-          text: 'Against Mr. Saegusa\'s questioning, Aoba is cornered.',
+          text: "Against Mr. Saegusa's questioning, Aoba is cornered.",
         },
         {
           speaker: 'Aoba',
@@ -92,7 +92,7 @@ export const chapter6c: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Akabane',
-          text: '(...That\'s enough.)',
+          text: "(...That's enough.)",
         },
         {
           speaker: '',
@@ -246,7 +246,7 @@ export const chapter6c: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'It\'s bitter.',
+          text: "It's bitter.",
           characters: [
             {
               image: 'aoba_2.png',
@@ -296,7 +296,7 @@ export const chapter6c: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Akabane',
-          text: '"But I felt that if you said that, you\'d truly turn into \'that kind of person\' for real."',
+          text: "\"But I felt that if you said that, you'd truly turn into 'that kind of person' for real.\"",
           characters: [
             {
               image: 'aoba_2.png',
@@ -396,4 +396,3 @@ export const chapter6c: { title: string; scenes: Scene[] } = {
     },
   ],
 }
-

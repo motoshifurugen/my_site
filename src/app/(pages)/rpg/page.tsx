@@ -62,9 +62,7 @@ export default function Rpg() {
           <p className="text-sm opacity-80 mb-2">
             このゲームは横画面でプレイできます
           </p>
-          <p className="text-sm opacity-60">
-            Please rotate to landscape
-          </p>
+          <p className="text-sm opacity-60">Please rotate to landscape</p>
         </div>
       </div>
     )

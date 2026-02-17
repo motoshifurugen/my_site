@@ -46,7 +46,7 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'Correct procedures. Correct judgments. \nAs long as you don\'t deviate from them, you won\'t make a major mistake.',
+          text: "Correct procedures. Correct judgments. \nAs long as you don't deviate from them, you won't make a major mistake.",
         },
         {
           speaker: '',
@@ -100,7 +100,7 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'Aoba isn\'t fast at her job. In fact, she\'s slow. Her efficiency is poor.',
+          text: "Aoba isn't fast at her job. In fact, she's slow. Her efficiency is poor.",
         },
         { speaker: '', text: 'Instead,' },
         {
@@ -109,7 +109,7 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'It can\'t be explained by logic, but the environment doesn\'t crumble because of her. \nShe is an incomprehensible anomaly.',
+          text: "It can't be explained by logic, but the environment doesn't crumble because of her. \nShe is an incomprehensible anomaly.",
         },
         {
           speaker: 'Aoba',
@@ -202,17 +202,17 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         { speaker: '', text: 'There were no dissenting opinions.' },
         {
           speaker: '',
-          text: 'It was just a method everyone wasn\'t used to.',
+          text: "It was just a method everyone wasn't used to.",
         },
         {
           speaker: '',
-          text: 'Follow the new rules. Don\'t bring in unnecessary emotions.',
+          text: "Follow the new rules. Don't bring in unnecessary emotions.",
         },
         {
           speaker: '',
           text: 'By proceeding with the determined steps without wasting time, the numbers came out clean.',
         },
-        { speaker: '', text: 'It\'s not that I argued anyone down.' },
+        { speaker: '', text: "It's not that I argued anyone down." },
         {
           speaker: '',
           text: 'I simply understood the rules of society and adapted to them.',
@@ -269,7 +269,7 @@ export const chapter1: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Kise',
-          text: '"It\'s been five years since we started coming here, and your first words are always \'potato salad.\' Try the \'Today\'s Special\' for once."',
+          text: "\"It's been five years since we started coming here, and your first words are always 'potato salad.' Try the 'Today's Special' for once.\"",
           characters: [
             {
               image: 'kise_2.png',
@@ -330,4 +330,3 @@ export const chapter1: { title: string; scenes: Scene[] } = {
     },
   ],
 }
-

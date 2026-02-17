@@ -96,7 +96,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'Her voice is bright. But it\'s thin. A constant tone, like a recorded message.',
+          text: "Her voice is bright. But it's thin. A constant tone, like a recorded message.",
           characters: [
             {
               image: 'aoba_4.png',
@@ -116,7 +116,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'There is no problem. In fact, it\'s ideal.',
+          text: "There is no problem. In fact, it's ideal.",
         },
         { speaker: '', text: '—And yet.' },
       ],
@@ -127,12 +127,12 @@ export const chapter3: { title: string; scenes: Scene[] } = {
       lines: [
         {
           speaker: '',
-          text: 'I noticed that the small potted plant by Aoba\'s desk was gone before I knew it.',
+          text: "I noticed that the small potted plant by Aoba's desk was gone before I knew it.",
         },
         { speaker: 'Akabane', text: '(...She cleaned it up.)' },
         {
           speaker: '',
-          text: 'Rational. It\'s better not to keep things unnecessary for work.',
+          text: "Rational. It's better not to keep things unnecessary for work.",
         },
         {
           speaker: '',
@@ -173,7 +173,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'She doesn\'t throw in digressions like before. \nShe doesn\'t stop talking to worry about someone\'s expression.',
+          text: "She doesn't throw in digressions like before. \nShe doesn't stop talking to worry about someone's expression.",
         },
         { speaker: '', text: 'The meeting ended five minutes early.' },
         { speaker: '', text: 'Efficient. Impeccable.' },
@@ -198,7 +198,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'There isn\'t a single extra sentence anywhere.',
+          text: "There isn't a single extra sentence anywhere.",
         },
         {
           speaker: '',
@@ -223,14 +223,14 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'I didn\'t yell at her. I didn\'t deny her.',
+          text: "I didn't yell at her. I didn't deny her.",
         },
         {
           speaker: '',
           text: 'I simply continued to present the "correct way" quietly and robbed her of her "self."',
         },
-        { speaker: '', text: 'This isn\'t growth.' },
-        { speaker: '', text: 'It\'s optimization.' },
+        { speaker: '', text: "This isn't growth." },
+        { speaker: '', text: "It's optimization." },
         {
           speaker: '',
           text: 'I optimized a human being to function as part of a system.',
@@ -349,7 +349,7 @@ export const chapter3: { title: string; scenes: Scene[] } = {
         { speaker: '', text: 'Copy-robot.' },
         {
           speaker: '',
-          text: 'Kise\'s lighthearted remark sticks in my ear and won\'t leave.',
+          text: "Kise's lighthearted remark sticks in my ear and won't leave.",
         },
         {
           speaker: '',
@@ -368,4 +368,3 @@ export const chapter3: { title: string; scenes: Scene[] } = {
     },
   ],
 }
-

@@ -38,7 +38,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'Aoba and I head to the client\'s office in a company car.',
+          text: "Aoba and I head to the client's office in a company car.",
         },
         { speaker: 'Akabane', text: '"You have the flow in your head?"' },
         {
@@ -63,7 +63,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'The counterpart this time is Mr. Sasaki, the HR Manager. \nHe\'s the practical type who likes numbers.',
+          text: "The counterpart this time is Mr. Sasaki, the HR Manager. \nHe's the practical type who likes numbers.",
           characters: [
             {
               image: 'aoba_4.png',
@@ -73,7 +73,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Akabane',
-          text: '"If it\'s Mr. Sasaki, he\'ll definitely bite on this cost-cutting plan. \nNo need to appeal to unnecessary emotions. Let\'s just present the benefits calmly."',
+          text: "\"If it's Mr. Sasaki, he'll definitely bite on this cost-cutting plan. \nNo need to appeal to unnecessary emotions. Let's just present the benefits calmly.\"",
           characters: [
             {
               image: 'aoba_4.png',
@@ -93,7 +93,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'If we move according to the manual, there\'s no factor for failure.',
+          text: "If we move according to the manual, there's no factor for failure.",
         },
         {
           speaker: '',
@@ -196,7 +196,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Akabane',
-          text: '(Don\'t be rattled. Even if the person changes, the correct business answer doesn\'t. Overwhelm him with numbers.)',
+          text: "(Don't be rattled. Even if the person changes, the correct business answer doesn't. Overwhelm him with numbers.)",
           characters: [
             {
               image: 'aoba_1.png',
@@ -212,7 +212,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
       lines: [
         {
           speaker: '',
-          text: 'The presentation begins. Aoba\'s speaking style is fluent.',
+          text: "The presentation begins. Aoba's speaking style is fluent.",
         },
         {
           speaker: '',
@@ -226,7 +226,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'He is simply staring intently at Aoba\'s face.',
+          text: "He is simply staring intently at Aoba's face.",
           characters: [
             {
               image: 'saegusa_1.png',
@@ -357,7 +357,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'Aoba is at a loss for words. A question that isn\'t in the manual.',
+          text: "Aoba is at a loss for words. A question that isn't in the manual.",
         },
         {
           speaker: '',
@@ -375,7 +375,7 @@ export const chapter5: { title: string; scenes: Scene[] } = {
           choiceId: 'bad_end',
         },
         {
-          text: 'Tell Aoba\'s honest feelings',
+          text: "Tell Aoba's honest feelings",
           choiceId: 'true_end',
         },
         {
@@ -386,4 +386,3 @@ export const chapter5: { title: string; scenes: Scene[] } = {
     },
   ],
 }
-

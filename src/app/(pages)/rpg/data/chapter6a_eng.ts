@@ -34,7 +34,7 @@ export const chapter6a: { title: string; scenes: Scene[] } = {
       lines: [
         {
           speaker: '',
-          text: 'Aoba\'s gaze wanders. She looks at me.',
+          text: "Aoba's gaze wanders. She looks at me.",
           characters: [
             {
               image: 'aoba_2.png',
@@ -54,7 +54,7 @@ export const chapter6a: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Akabane',
-          text: '(Don\'t say anything unnecessary. Reply with logic.)',
+          text: "(Don't say anything unnecessary. Reply with logic.)",
           characters: [
             {
               image: 'aoba_2.png',
@@ -240,19 +240,19 @@ export const chapter6a: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'We probably won\'t get the contract.',
+          text: "We probably won't get the contract.",
         },
         {
           speaker: '',
-          text: 'But our method isn\'t wrong.',
+          text: "But our method isn't wrong.",
         },
         {
           speaker: '',
-          text: 'What was wrong was the other party\'s emotional judgment criteria.',
+          text: "What was wrong was the other party's emotional judgment criteria.",
         },
         {
           speaker: '',
-          text: 'I try to justify it to myself, but my throat is parched as if it\'s burning.',
+          text: "I try to justify it to myself, but my throat is parched as if it's burning.",
         },
         {
           speaker: '',
@@ -296,4 +296,3 @@ export const chapter6a: { title: string; scenes: Scene[] } = {
     },
   ],
 }
-

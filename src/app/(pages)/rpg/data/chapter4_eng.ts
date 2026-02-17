@@ -42,7 +42,7 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'The oxygen shouldn\'t be thin, but I have a sensation that it\'s not reaching the depths of my lungs.',
+          text: "The oxygen shouldn't be thin, but I have a sensation that it's not reaching the depths of my lungs.",
         },
       ],
     },
@@ -72,7 +72,7 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'A greeting without a hair\'s breadth of error. Perfect vocalization.',
+          text: "A greeting without a hair's breadth of error. Perfect vocalization.",
           characters: [
             {
               image: 'aoba_4.png',
@@ -149,7 +149,7 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         { speaker: 'Akabane', text: '(What do I want to confirm?)' },
         {
           speaker: '',
-          text: 'There are no typos. The logic isn\'t broken.',
+          text: "There are no typos. The logic isn't broken.",
         },
         {
           speaker: '',
@@ -177,7 +177,7 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'There\'s no trivial small talk like before.',
+          text: "There's no trivial small talk like before.",
         },
         {
           speaker: 'Colleague',
@@ -198,13 +198,13 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'Aoba\'s expression is calm. No dissatisfaction, no anger.',
+          text: "Aoba's expression is calm. No dissatisfaction, no anger.",
         },
         {
           speaker: '',
           text: 'That makes it even more painful.',
         },
-        { speaker: 'Akabane', text: '(She doesn\'t realize she\'s broken.)' },
+        { speaker: 'Akabane', text: "(She doesn't realize she's broken.)" },
         { speaker: '', text: 'Or—' },
         {
           speaker: '',
@@ -289,7 +289,7 @@ export const chapter4: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Kise',
-          text: '"Then that\'s good. But maybe you should have a team drinking party or something? \nPeople in other departments were saying, \'That place is like the military, it\'s hard to approach.\'"',
+          text: "\"Then that's good. But maybe you should have a team drinking party or something? \nPeople in other departments were saying, 'That place is like the military, it's hard to approach.'\"",
           characters: [
             {
               image: 'kise_2.png',
@@ -341,4 +341,3 @@ export const chapter4: { title: string; scenes: Scene[] } = {
     },
   ],
 }
-

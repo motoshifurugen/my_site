@@ -68,7 +68,7 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'That lie won\'t work on this man.',
+          text: "That lie won't work on this man.",
           characters: [
             {
               image: 'saegusa_1.png',
@@ -88,7 +88,7 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'I cut across Aoba\'s words.',
+          text: "I cut across Aoba's words.",
           characters: [
             {
               image: 'saegusa_1.png',
@@ -118,7 +118,7 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Akabane',
-          text: '"She visited the sites and summarized the \'risk of lowering staff motivation\' behind the efficiency in a report. ...I am the one who rejected it because it \'doesn\'t turn into numbers.\'"',
+          text: "\"She visited the sites and summarized the 'risk of lowering staff motivation' behind the efficiency in a report. ...I am the one who rejected it because it 'doesn't turn into numbers.'\"",
           characters: [
             {
               image: 'aoba_1.png',
@@ -194,11 +194,11 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'It wasn\'t a smart presentation.',
+          text: "It wasn't a smart presentation.",
         },
         {
           speaker: '',
-          text: 'But I felt Mr. Saegusa\'s center of gravity lean forward just a little.',
+          text: "But I felt Mr. Saegusa's center of gravity lean forward just a little.",
         },
         {
           speaker: '',
@@ -212,7 +212,7 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
       lines: [
         {
           speaker: '',
-          text: 'In the end, the deal didn\'t go through.',
+          text: "In the end, the deal didn't go through.",
         },
         {
           speaker: '',
@@ -296,7 +296,7 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'There\'s no basis.',
+          text: "There's no basis.",
         },
         {
           speaker: '',
@@ -308,7 +308,7 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Akabane',
-          text: '(Correctness isn\'t something to be proven after the fact.)',
+          text: "(Correctness isn't something to be proven after the fact.)",
         },
         {
           speaker: '',
@@ -318,4 +318,3 @@ export const chapter6b: { title: string; scenes: Scene[] } = {
     },
   ],
 }
-

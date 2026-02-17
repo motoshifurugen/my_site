@@ -97,7 +97,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'Even if the mood is softened, operational efficiency doesn\'t go up. The numbers don\'t move.',
+          text: "Even if the mood is softened, operational efficiency doesn't go up. The numbers don't move.",
         },
         {
           speaker: '',
@@ -174,7 +174,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Akabane',
-          text: '"\'As quickly as possible\' creates arbitrary expectations for the other party. \nIf you\'re even a day late, they\'ll feel betrayed."',
+          text: "\"'As quickly as possible' creates arbitrary expectations for the other party. \nIf you're even a day late, they'll feel betrayed.\"",
           characters: [
             {
               image: 'aoba_2.png',
@@ -194,7 +194,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Akabane',
-          text: '"Business doesn\'t need \'kindness.\' It needs a \'precise commitment.\' \nInstead of making an uncertain promise, true sincerity is giving a definite delivery date and letting the client decide."',
+          text: "\"Business doesn't need 'kindness.' It needs a 'precise commitment.' \nInstead of making an uncertain promise, true sincerity is giving a definite delivery date and letting the client decide.\"",
           characters: [
             {
               image: 'aoba_2.png',
@@ -204,7 +204,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'Aoba\'s face lit up with realization.',
+          text: "Aoba's face lit up with realization.",
           characters: [
             {
               image: 'aoba_2.png',
@@ -244,7 +244,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: '',
-          text: 'Aoba\'s back as she returned to her desk looked a size smaller than usual.',
+          text: "Aoba's back as she returned to her desk looked a size smaller than usual.",
         },
       ],
     },
@@ -285,7 +285,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Kise',
-          text: '"She said, \'I can\'t even breathe when I\'m with you.\'"',
+          text: "\"She said, 'I can't even breathe when I'm with you.'\"",
           characters: [
             {
               image: 'kise_2.png',
@@ -345,7 +345,7 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         },
         {
           speaker: 'Kise',
-          text: '"I guess taking the \'correct route\' isn\'t necessarily a fun date. Humans are a pain."',
+          text: "\"I guess taking the 'correct route' isn't necessarily a fun date. Humans are a pain.\"",
           characters: [
             {
               image: 'kise_2.png',
@@ -360,12 +360,11 @@ export const chapter2: { title: string; scenes: Scene[] } = {
         { speaker: '', text: 'Humans are a pain.' },
         {
           speaker: '',
-          text: 'That\'s exactly why I stick to thorough manuals at work.',
+          text: "That's exactly why I stick to thorough manuals at work.",
         },
-        { speaker: '', text: 'So we don\'t get lost.' },
-        { speaker: '', text: 'That shouldn\'t be wrong.' },
+        { speaker: '', text: "So we don't get lost." },
+        { speaker: '', text: "That shouldn't be wrong." },
       ],
     },
   ],
 }
-
