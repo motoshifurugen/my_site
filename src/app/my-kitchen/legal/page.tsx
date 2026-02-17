@@ -14,10 +14,10 @@ export default function LegalPage() {
             <p>
               メール：
               <a
-                href="mailto:furugenmotoshig@gmail.com"
+                href="mailto:my-kitchen-support@furugen-island.com"
                 className="text-teal-500 dark:text-night-teal hover:underline ml-1"
               >
-                furugenmotoshig@gmail.com
+                my-kitchen-support@furugen-island.com
               </a>
             </p>
             <p className="mt-2">※お問い合わせはメールにてお願いいたします。</p>

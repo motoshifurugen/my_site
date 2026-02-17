@@ -82,7 +82,7 @@ export default function PrivacyPage() {
           本ポリシーに関するお問い合わせは、以下までご連絡ください。
         </p>
         <p className="mt-2">
-          連絡先：furugenmotoshig@gmail.com
+          連絡先：my-kitchen-support@furugen-island.com
         </p>
       </section>
     </main>

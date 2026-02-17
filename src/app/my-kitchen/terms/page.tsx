@@ -106,10 +106,10 @@ export default function TermsPage() {
             <p>
               連絡先：
               <a
-                href="mailto:furugenmotoshig@gmail.com"
+                href="mailto:my-kitchen-support@furugen-island.com"
                 className="text-teal-500 dark:text-night-teal hover:underline ml-1"
               >
-                furugenmotoshig@gmail.com
+                my-kitchen-support@furugen-island.com
               </a>
             </p>
             <p>制定日：2026-02-12</p>
