@@ -204,7 +204,7 @@ const ShogiPage: React.FC = () => {
           （時間：{gameData.time}秒）
         </span>
       </div>
-      <div className="flex h-screen w-full items-start justify-center p-8">
+      <div className="flex h-full w-full max-w-screen-md items-start justify-center p-8">
         <div className="grid grid-cols-9 w-full">
           {field.map((col: number[], colIndex: number) => {
             return (
