@@ -30,6 +30,8 @@ const ClientWrapper: React.FC<{ children: React.ReactNode }> = ({
   const isLegalPage =
     pathname?.startsWith(`${BASE_PATH}/my-kitchen/legal`) ||
     pathname?.startsWith('/my-kitchen/legal')
+  const isShogiPage =
+    pathname?.startsWith(`${BASE_PATH}/shogi`) || pathname?.startsWith('/shogi')
 
   useEffect(() => {
     setTimeout(() => {
@@ -38,7 +40,7 @@ const ClientWrapper: React.FC<{ children: React.ReactNode }> = ({
   }, [])
 
   // RPGページ、プライバシーページ、利用規約ページ、または特定商取引法ページの場合は、ヘッダーとフッターを表示しない
-  if (isRpgPage || isPrivacyPage || isTermsPage || isLegalPage) {
+  if (isRpgPage || isPrivacyPage || isTermsPage || isLegalPage || isShogiPage) {
     return (
       <I18nProvider>
         <HtmlLangUpdater />
