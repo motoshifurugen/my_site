@@ -1,10 +1,9 @@
 'use client'
 
-import { useState } from "react"
-import { Piece, GameData } from "./type"
-import { field } from "./constants"
-import { getReach } from "./utils/pieceMove"
-import { initialPieces } from "./constants"
+import { useState } from 'react'
+import { field, initialPieces } from './constants'
+import { GameData, Piece } from './type'
+import { getReach } from './utils/pieceMove'
 
 const ShogiPage: React.FC = () => {
   const [gameData, setGameData] = useState<GameData>({
@@ -34,7 +33,7 @@ const ShogiPage: React.FC = () => {
   const [pawnBlack7, setPawnBlack7] = useState<Piece>(initialPieces[17])
   const [pawnBlack8, setPawnBlack8] = useState<Piece>(initialPieces[18])
   const [pawnBlack9, setPawnBlack9] = useState<Piece>(initialPieces[19])
-  
+
   const [kingWhite, setKingWhite] = useState<Piece>(initialPieces[20])
   const [rookWhite, setRookWhite] = useState<Piece>(initialPieces[21])
   const [bishopWhite, setBishopWhite] = useState<Piece>(initialPieces[22])
@@ -60,19 +59,43 @@ const ShogiPage: React.FC = () => {
     kingBlack,
     rookBlack,
     bishopBlack,
-    goldBlack1, goldBlack2,
-    silverBlack1, silverBlack2,
-    knightBlack1, knightBlack2,
-    lanceBlack1, lanceBlack2,
-    pawnBlack1, pawnBlack2, pawnBlack3, pawnBlack4, pawnBlack5, pawnBlack6, pawnBlack7, pawnBlack8, pawnBlack9,
+    goldBlack1,
+    goldBlack2,
+    silverBlack1,
+    silverBlack2,
+    knightBlack1,
+    knightBlack2,
+    lanceBlack1,
+    lanceBlack2,
+    pawnBlack1,
+    pawnBlack2,
+    pawnBlack3,
+    pawnBlack4,
+    pawnBlack5,
+    pawnBlack6,
+    pawnBlack7,
+    pawnBlack8,
+    pawnBlack9,
     kingWhite,
     rookWhite,
     bishopWhite,
-    goldWhite1, goldWhite2,
-    silverWhite1, silverWhite2,
-    knightWhite1, knightWhite2,
-    lanceWhite1, lanceWhite2,
-    pawnWhite1, pawnWhite2, pawnWhite3, pawnWhite4, pawnWhite5, pawnWhite6, pawnWhite7, pawnWhite8, pawnWhite9,
+    goldWhite1,
+    goldWhite2,
+    silverWhite1,
+    silverWhite2,
+    knightWhite1,
+    knightWhite2,
+    lanceWhite1,
+    lanceWhite2,
+    pawnWhite1,
+    pawnWhite2,
+    pawnWhite3,
+    pawnWhite4,
+    pawnWhite5,
+    pawnWhite6,
+    pawnWhite7,
+    pawnWhite8,
+    pawnWhite9,
   ])
 
   const setPiece = (piece: Piece): void => {
@@ -200,51 +223,87 @@ const ShogiPage: React.FC = () => {
         <span>
           {gameData.player === 'black' ? 'あなたの' : 'コンピューターの'}番です
         </span>
-        <span>
-          （時間：{gameData.time}秒）
-        </span>
+        <span>（時間：{gameData.time}秒）</span>
       </div>
       <div className="flex h-full w-full max-w-screen-md items-start justify-center p-8">
         <div className="grid grid-cols-9 w-full">
           {field.map((col: number[], colIndex: number) => {
             return (
-            <div key={`col_${colIndex}`} id="col_${colIndex}" className="w-full h-full">
-              {col.map((row: number, rowIndex: number) => {
-                const cell: [number, number] = field[colIndex][rowIndex].toString().split('').map(Number) as [number, number]
-                return (
-                  <div key={`${colIndex}-${rowIndex}`} id="row_${rowIndex}" className="border-2 border-main-black w-1/9 aspect-square flex items-center justify-center">
-                    {(() => {
-                      const piece = pieceList.find((piece: Piece) => piece.position[0] === cell[0] && piece.position[1] === cell[1])
-                      if (piece) {
-                        if (piece.color === 'white') {
-                          return <span className="font-bold rotate-180">{piece.name}</span>
+              <div
+                key={`col_${colIndex}`}
+                id="col_${colIndex}"
+                className="w-full h-full"
+              >
+                {col.map((row: number, rowIndex: number) => {
+                  const cell: [number, number] = field[colIndex][rowIndex]
+                    .toString()
+                    .split('')
+                    .map(Number) as [number, number]
+                  return (
+                    <div
+                      key={`${colIndex}-${rowIndex}`}
+                      id="row_${rowIndex}"
+                      className="border-2 border-main-black w-1/9 aspect-square flex items-center justify-center"
+                    >
+                      {(() => {
+                        const piece = pieceList.find(
+                          (piece: Piece) =>
+                            piece.position[0] === cell[0] &&
+                            piece.position[1] === cell[1],
+                        )
+                        if (piece) {
+                          if (piece.color === 'white') {
+                            return (
+                              <span className="font-bold rotate-180">
+                                {piece.name}
+                              </span>
+                            )
+                          }
+                          if (piece.hold) {
+                            return (
+                              <button
+                                className="w-full h-full font-bold bg-night-teal text-white"
+                                onClick={() => selectPiece(piece)}
+                              >
+                                {piece.name}
+                              </button>
+                            )
+                          } else {
+                            return (
+                              <button
+                                className="w-full h-full font-bold"
+                                onClick={() => selectPiece(piece)}
+                              >
+                                {piece.name}
+                              </button>
+                            )
+                          }
                         }
-                        if (piece.hold) {
-                          return <button
-                            className="w-full h-full font-bold bg-night-teal text-white"
-                            onClick={() => selectPiece(piece)}>{piece.name}</button>
-                        } else {
-                          return <button
-                            className="w-full h-full font-bold"
-                            onClick={() => selectPiece(piece)}>{piece.name}</button>
+                        const holdedPiece = pieceList.find(
+                          (piece: Piece) => piece.hold,
+                        )
+                        if (holdedPiece) {
+                          if (
+                            getReach(holdedPiece)[cell[0]].includes(cell[1])
+                          ) {
+                            return (
+                              <button
+                                className="w-full h-full font-bold text-night-teal"
+                                onClick={() => movePiece(holdedPiece, cell)}
+                              >
+                                ⚫︎
+                              </button>
+                            )
+                          }
                         }
-                      }
-                      const holdedPiece = pieceList.find((piece: Piece) => piece.hold)
-                      if (holdedPiece) {
-                        if (getReach(holdedPiece)[cell[0]].includes(cell[1])) {
-                          return <button
-                            className="w-full h-full font-bold text-night-teal"
-                            onClick={() => movePiece(holdedPiece, cell)}>⚫︎</button>
-                        }
-                      }
-                      return null
-                    })()}
-                  </div>
-                )
-              })}
-            </div>
-          )
-        })}
+                        return null
+                      })()}
+                    </div>
+                  )
+                })}
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>
