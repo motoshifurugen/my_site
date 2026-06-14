@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "prettier --write \"src/**/*.{ts,tsx}\" && next build",
+    "build:prod": "next build",
     "start": "next start",
     "start:api": "next dev -p 3001",
     "lint": "run-p -l -c --aggregate-output lint:*",
