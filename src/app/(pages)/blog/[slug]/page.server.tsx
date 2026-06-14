@@ -1,46 +1,16 @@
-import { Post } from '@/types/posts'
+import { getAllPostsMeta, getPostBySlug } from '@/app/api/utils/getPostData'
 
-// Server-side uses API_URL (absolute), fallback to localhost
-const getServerApiUrl = () =>
-  process.env.API_URL || 'http://localhost:3000/my_site/api'
-
-// SSG
+// SSG: 静的パラメータはローカルの記事（src/posts/*.mdx）から生成する。
+// 外部 API への fetch をやめ、API 障害・URL 変更でビルドが落ちる依存を排除する（Issue #157）。
+// getAllPostsMeta は限定公開を除外するため、従来の /blog/ fetch と同じ公開記事集合になる。
 export async function generateStaticParams() {
-  const apiUrl = getServerApiUrl()
-  try {
-    const res = await fetch(`${apiUrl}/blog/`, {
-      cache: 'force-cache',
-    })
-    if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(`Failed to fetch data from ${apiUrl}/blog/: ${errorText}`)
-    }
-    const blogData = await res.json()
-    return blogData.map((blog: Post) => ({
-      slug: blog.slug,
-    }))
-  } catch (error) {
-    console.error('Error fetching blog data:', error)
-    throw new Error('Failed to fetch blog data')
-  }
+  const posts = await getAllPostsMeta()
+  return posts.map((post) => ({
+    slug: post.slug,
+  }))
 }
 
+// 記事本文もローカルから直接読み込む（ビルド時のリモート依存なし）。
 export const getBlogArticle = async (slug: string) => {
-  const apiUrl = getServerApiUrl()
-  try {
-    const res = await fetch(`${apiUrl}/blog/${slug}`, {
-      cache: 'force-cache',
-    })
-    if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(
-        `Failed to fetch data from ${apiUrl}/blog/${slug}: ${errorText}`,
-      )
-    }
-    const blogArticle = await res.json()
-    return blogArticle
-  } catch (error) {
-    console.error('Error fetching blog article:', error)
-    throw new Error('Failed to fetch blog article')
-  }
+  return await getPostBySlug(slug)
 }

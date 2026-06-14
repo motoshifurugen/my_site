@@ -35,6 +35,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# node:test の一時トランスパイル成果物（after フックで削除されるが、異常終了時の残留に備える）
+*.test-build.mjs
+.getPostData.pageserver-build.mjs
+
 # .env.local
 # .env.production
 

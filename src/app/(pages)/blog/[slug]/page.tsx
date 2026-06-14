@@ -3,6 +3,10 @@ import ArticleContent from '@/app/components/templates/ArticleContent'
 import { Metadata } from 'next'
 import { getBlogArticle } from './page.server'
 
+// 静的書き出し（output: export）で [slug] を事前生成するため、route セグメントから
+// generateStaticParams を公開する（Next は page.server.tsx 側の export を拾わない）。
+export { generateStaticParams } from './page.server'
+
 export async function generateMetadata({
   params,
 }: {
