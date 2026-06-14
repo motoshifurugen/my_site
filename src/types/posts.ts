@@ -5,3 +5,10 @@ export type Post = {
   tags: string[]
   content: string
 }
+
+export type PostMeta = {
+  slug: string
+  title: string
+  date: string
+  tags: string[]
+}

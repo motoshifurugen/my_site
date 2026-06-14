@@ -1,48 +1,29 @@
 import BlogCard from '@/app/components/molecules/BlogCard'
 import { useI18n } from '@/i18n'
-import { useEffect, useState } from 'react'
+import { PostMeta } from '@/types/posts'
+import { useState } from 'react'
 
 interface BlogGridProps {
-  blogData: any
+  blogData: PostMeta[]
 }
 
 const BlogGrid: React.FC<BlogGridProps> = ({ blogData }) => {
   const { t } = useI18n()
   const [loadIndex, setLoadIndex] = useState(10)
-  const [isEmpty, setIsEmpty] = useState(false)
-  const [currentPost, setCurrentPost] = useState<any[]>([])
 
-  useEffect(() => {
-    if (blogData.length <= 10) {
-      setIsEmpty(true)
-    }
-  }, [blogData])
+  // blogData は getAllPostsMeta で日付降順に整列済み。state/useEffect を介すと
+  // 静的プリレンダー時に初期HTMLのグリッドが空になるため props から直接派生する。
+  const currentPost = blogData.slice(0, loadIndex)
+  const isEmpty = loadIndex >= blogData.length
 
   const displayMore = () => {
-    const newLoadIndex = loadIndex + 10
-    setLoadIndex(newLoadIndex)
-    if (newLoadIndex >= blogData.length) {
-      setIsEmpty(true)
-    }
+    setLoadIndex(loadIndex + 10)
   }
-
-  useEffect(() => {
-    // 日付の新しい順にソート
-    const sortedData = [...blogData].sort((a, b) => {
-      const dateA = new Date(a.date).getTime()
-      const dateB = new Date(b.date).getTime()
-      return dateB - dateA
-    })
-
-    // 現在の表示件数分のデータを取得
-    const currentData = sortedData.slice(0, loadIndex)
-    setCurrentPost(currentData)
-  }, [blogData, loadIndex])
 
   return (
     <>
       <div className="grid auto-rows-fr grid-cols-1 gap-6 md:grid-cols-2">
-        {currentPost.map((post: any) => (
+        {currentPost.map((post) => (
           <div key={post.slug} className="h-full">
             <BlogCard post={post} />
           </div>
