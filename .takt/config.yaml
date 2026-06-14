@@ -1,0 +1,45 @@
+# takt project config — my_site
+#
+# 目的: takt のデフォルトを AI-CEO 開発プロセスへ一致させる。
+#   - 日本語 / claude 駆動（別 API 課金なし、既存 claude 認証を利用）
+#   - default workflow = テスト先行（plan → write_tests → draft → peer-review）
+#   - 成果物は必ず PR（main へ直 push しない）。Closes でイシューと結線。
+#   - 設計の真実の源は GitHub イシュー（task-policy 準拠）。
+#
+# 重要な運用規約（pipeline 実行時）:
+#   必ず `-i <issue>` でイシュー参照を渡す。理由:
+#   pipeline モードはイシューが無いと task 文字列“全文”を PR タイトル / commit message に
+#   使い、256 字超で PR 作成が失敗する。イシューを渡せば
+#   タイトル=`[#N] <イシュー名>` / commit=`feat: <イシュー名> (#N)` に必ず収まる。
+#   → 設計判断・追加指示は CLI 引数ではなくイシュー本文/コメント（SoT）に書く。
+#
+# 起動は必ず setsid 経由（セッション非依存）:
+#   setsid infra/run-takt.sh /projects/my_site <issue> < /dev/null > /tmp/takt-<n>.log 2>&1 &
+
+language: ja
+provider: claude
+
+# pipeline 実行は常に PR を作る（レビュー前に main へ入れない）。
+auto_pr: true
+draft_pr: false
+base_branch: main
+
+pipeline:
+  # 自動生成ブランチの接頭辞（例: feat/blog-list-ssg-...）。
+  default_branch_prefix: "feat/"
+  # commit / PR ともイシュー由来で短く収める（テンプレ変数: {title} {issue}）。
+  commit_message_template: "feat: {title} (#{issue})"
+  # PR 本文テンプレ（変数: {title} {issue} {issue_body} {report}）。
+  # Closes でマージ時にイシューを自動クローズする。
+  pr_body_template: |
+    ## 概要
+    GitHub Issue #{issue}「{title}」を takt（default workflow: テスト先行）で実装。
+
+    {issue_body}
+
+    ---
+    {report}
+
+    Closes #{issue}
+
+    🤖 Generated with takt + Claude Code
