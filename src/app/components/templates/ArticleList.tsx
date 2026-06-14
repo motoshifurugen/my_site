@@ -1,88 +1,33 @@
 'use client'
 
+import AnimatedLine from '@/app/components/atoms/AnimatedLine'
 import BlogGrid from '@/app/components/organisms/BlogGrid'
-import Sidebar from '@/app/components/templates/Sidebar'
-import { useRouter, useSearchParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
-import { FiRefreshCw } from 'react-icons/fi'
-
-import LoadingCircle from '@/app/components/atoms/LoadingCircle'
+import PageFace from '@/app/components/organisms/PageFace'
 import styles from '@/app/components/templates/ArticleContent.module.css'
+import MaintenanceTemplate from '@/app/components/templates/MaintenanceTemplate'
+import Sidebar from '@/app/components/templates/Sidebar'
 import { useI18n } from '@/i18n'
+import { PostMeta } from '@/types/posts'
+import { useRouter, useSearchParams } from 'next/navigation'
+import React, { Suspense } from 'react'
+import { FiRefreshCw } from 'react-icons/fi'
+import nextConfig from '../../../../next.config.mjs'
 
-const getBlogData = async () => {
-  const apiUrl =
-    process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/my_site/api'
-  try {
-    const res = await fetch(`${apiUrl}/blog/`, {
-      cache: 'force-cache',
-    })
-    const blogData = await res.json()
-    return blogData
-  } catch (error) {
-    console.error('Error fetching blog data:', error)
-    throw new Error('Failed to fetch blog data')
-  }
+const BASE_PATH = nextConfig.basePath || ''
+const public_flag = true
+
+interface ArticleListProps {
+  initialPosts: PostMeta[]
 }
 
-const parseDate = (dateString: string): Date => {
-  try {
-    const date = new Date(dateString)
-    if (isNaN(date.getTime())) {
-      console.error('Invalid date:', dateString)
-      return new Date(0) // 無効な日付の場合は最小値を返す
-    }
-    return date
-  } catch (error) {
-    console.error('Error parsing date:', dateString)
-    return new Date(0)
-  }
+interface PostListViewProps {
+  posts: PostMeta[]
+  selectedTag: string | null
 }
 
-const ArticleList: React.FC = () => {
+const PostListView: React.FC<PostListViewProps> = ({ posts, selectedTag }) => {
   const { t } = useI18n()
-  const [blogData, setBlogData] = useState<any[]>([])
-  const [filteredData, setFilteredData] = useState<any[]>([])
-  const [selectedTag, setSelectedTag] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const searchParams = useSearchParams()
-  const tagName = searchParams.get('tag')
   const router = useRouter()
-
-  useEffect(() => {
-    getBlogData().then((data) => {
-      // 日付の新しい順に並び替え（新しい配列を作成）
-      const sortedData = [...data].sort((a: any, b: any) => {
-        const dateA = parseDate(a.date)
-        const dateB = parseDate(b.date)
-        return dateB.getTime() - dateA.getTime()
-      })
-      setBlogData(sortedData)
-      setFilteredData(sortedData)
-      setIsLoading(false)
-    })
-  }, [])
-
-  useEffect(() => {
-    if (tagName) {
-      setSelectedTag(tagName)
-      const filtered = blogData.filter((post) => post.tags.includes(tagName))
-      setFilteredData(filtered)
-    } else {
-      setSelectedTag(null)
-      setFilteredData(blogData)
-    }
-  }, [tagName, blogData])
-
-  const resetFilter = () => {
-    setSelectedTag(null)
-    setFilteredData(blogData)
-    router.push('/blog')
-  }
-
-  if (isLoading) {
-    return <LoadingCircle isLoading={isLoading} />
-  }
 
   return (
     <div className="flex justify-center">
@@ -93,7 +38,7 @@ const ArticleList: React.FC = () => {
               <>
                 <div className="text-xl font-bold">『{selectedTag}』</div>
                 <button
-                  onClick={resetFilter}
+                  onClick={() => router.push('/blog')}
                   className="relative flex items-center rounded px-6 py-3 text-lg text-main-black transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-teal after:transition-all after:duration-300 hover:after:w-full dark:text-night-white dark:after:bg-night-teal"
                 >
                   {t.blog.all}
@@ -104,13 +49,56 @@ const ArticleList: React.FC = () => {
               <div className="py-3 text-xl font-bold">{t.blog.all}</div>
             )}
           </div>
-          <BlogGrid blogData={filteredData} />
+          <BlogGrid blogData={posts} />
         </div>
         <div className="mt-16 flex-grow lg:ml-10">
           <Sidebar SidebarComponents={[]} />
         </div>
       </div>
     </div>
+  )
+}
+
+// useSearchParams は静的書き出しで <Suspense> 境界が必須のため、
+// タグ絞り込みはこの子コンポーネントに隔離する。
+const FilterablePostList: React.FC<ArticleListProps> = ({ initialPosts }) => {
+  const searchParams = useSearchParams()
+  const selectedTag = searchParams.get('tag')
+  const posts = selectedTag
+    ? initialPosts.filter((post) => post.tags.includes(selectedTag))
+    : initialPosts
+
+  return <PostListView posts={posts} selectedTag={selectedTag} />
+}
+
+const ArticleList: React.FC<ArticleListProps> = ({ initialPosts }) => {
+  const { t } = useI18n()
+
+  if (!public_flag) {
+    return (
+      <MaintenanceTemplate
+        title={t.blog.title}
+        imagePath={`${BASE_PATH}/images/cats/coming_soon.png`}
+      />
+    )
+  }
+
+  return (
+    <>
+      <section>
+        <PageFace title={t.blog.title} subtitle="" mainMessage={<></>} />
+      </section>
+
+      <AnimatedLine />
+
+      <section>
+        <Suspense
+          fallback={<PostListView posts={initialPosts} selectedTag={null} />}
+        >
+          <FilterablePostList initialPosts={initialPosts} />
+        </Suspense>
+      </section>
+    </>
   )
 }
 
