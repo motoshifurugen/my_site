@@ -146,16 +146,21 @@ export type TranslationKeys = {
       blogUpdate: string
       notification: string
     }
-    items: {
-      '2025-09-27': { title: string; linkText: string }
-      '2025-08-20': { title: string; linkText: string }
-      '2025-04-22': { title: string; linkText: string }
-      '2025-04-21': { title: string; linkText: string }
-      '2025-04-01': { title: string; linkText: string }
-      // '2025-03-08-blog': { title: string; linkText: string };
-      [key: string]: { title: string; linkText: string }
-    }
+    items: AnnouncementItems
   }
 }
+
+export type AnnouncementItem = { title: string; linkText: string }
+
+// items のキーは有限 union とし、未定義キーをコンパイル時に検出する（index signature を持たせない）。
+export type AnnouncementItems = {
+  '2025-09-27': AnnouncementItem
+  '2025-08-20': AnnouncementItem
+  '2025-04-22': AnnouncementItem
+  '2025-04-21': AnnouncementItem
+  '2025-04-01': AnnouncementItem
+}
+
+export type AnnouncementItemKey = keyof AnnouncementItems
 
 export type Translations = Record<Locale, TranslationKeys>
