@@ -27,7 +27,7 @@ const MessageBoard = () => {
                 </span>
               </p>
               <p className="m-0 mt-2 w-full text-base md:mt-0">
-                {(t.announcements.items as any)[announcement.titleKey]?.title}
+                {t.announcements.items[announcement.titleKey].title}
                 {announcement.link && (
                   <>
                     {' '}
@@ -36,9 +36,8 @@ const MessageBoard = () => {
                       className="text-teal underline dark:text-night-teal"
                     >
                       {
-                        (t.announcements.items as any)[
-                          announcement.link.textKey
-                        ]?.linkText
+                        t.announcements.items[announcement.link.textKey]
+                          .linkText
                       }
                     </a>
                   </>

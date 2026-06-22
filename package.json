@@ -7,7 +7,7 @@
     "build": "prettier --write \"src/**/*.{ts,tsx}\" && next build",
     "start": "next start",
     "start:api": "next dev -p 3001",
-    "test": "node --import tsx --test $(find src -name '*.test.ts')",
+    "test": "node --import tsx --test $(find src \\( -name '*.test.ts' -o -name '*.test.tsx' \\))",
     "lint": "run-p -l -c --aggregate-output lint:*",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --check .",

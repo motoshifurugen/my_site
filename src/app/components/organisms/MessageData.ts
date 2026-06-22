@@ -1,12 +1,14 @@
+import type { AnnouncementItemKey } from '@/i18n'
+
 export interface AnnouncementLink {
   url: string
-  textKey: string
+  textKey: AnnouncementItemKey
 }
 
 export interface AnnouncementData {
   date: string
   categoryKey: 'blogUpdate' | 'notification'
-  titleKey: string
+  titleKey: AnnouncementItemKey
   link?: AnnouncementLink
 }
 
