@@ -148,6 +148,11 @@ export type TranslationKeys = {
     }
     items: AnnouncementItems
   }
+  errors: {
+    title: string
+    message: string
+    retry: string
+  }
 }
 
 export type AnnouncementItem = { title: string; linkText: string }
