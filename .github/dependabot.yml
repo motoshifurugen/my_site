@@ -1,0 +1,27 @@
+version: 2
+updates:
+  # npm 依存の継続監視（セキュリティ更新は別途自動 PR）
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    open-pull-requests-limit: 10
+    labels:
+      - 'dependencies'
+    groups:
+      # 開発依存・型定義はまとめて 1 PR に集約しノイズを抑える
+      dev-dependencies:
+        dependency-type: 'development'
+    ignore:
+      # major アップグレード（Next.js 16 系等）は破壊的変更を伴うため
+      # 個別 Issue で計画的に対応する（Dependabot の自動 major PR は抑制）
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+
+  # GitHub Actions の継続監視
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    labels:
+      - 'dependencies'
