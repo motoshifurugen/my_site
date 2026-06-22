@@ -7,6 +7,7 @@
     "build": "prettier --write \"src/**/*.{ts,tsx}\" && next build",
     "start": "next start",
     "start:api": "next dev -p 3001",
+    "test": "node --import tsx --test $(find src -name '*.test.ts')",
     "lint": "run-p -l -c --aggregate-output lint:*",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --check .",
@@ -72,6 +73,7 @@
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^4.0.0",
     "tailwindcss": "^3.4.10",
+    "tsx": "^4.22.4",
     "typescript": "^5"
   },
   "type": "module"
