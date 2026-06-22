@@ -1,14 +1,14 @@
 // app/api/likes/route.ts
-import { Octokit } from '@octokit/rest'
 import { NextRequest, NextResponse } from 'next/server'
-
-const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN,
-})
+import {
+  LIKES_ISSUE_LABEL,
+  likeIssueTitle,
+  octokit,
+  parseLikeCount,
+} from './githubLikes'
 
 const GITHUB_OWNER = process.env.GITHUB_OWNER || ''
 const GITHUB_REPO = process.env.GITHUB_REPO || ''
-const LIKES_ISSUE_LABEL = 'blog-likes'
 
 export async function GET(request: NextRequest) {
   try {
@@ -85,7 +85,7 @@ async function getLikeCount(articleId: string) {
         const newIssue = await octokit.issues.create({
           owner: GITHUB_OWNER,
           repo: GITHUB_REPO,
-          title: `likes-${articleId}`,
+          title: likeIssueTitle(articleId),
           body: '0',
           labels: [LIKES_ISSUE_LABEL],
         })
@@ -124,7 +124,7 @@ async function getLikeCount(articleId: string) {
 
 // イシューを検索する関数（複数の方法を試す）
 async function findLikeIssue(articleId: string) {
-  const targetTitle = `likes-${articleId}`
+  const targetTitle = likeIssueTitle(articleId)
 
   // 方法1: ラベルで検索（open状態）
   try {
@@ -201,10 +201,4 @@ async function updateLike(articleId: string, liked: boolean) {
     issueNumber,
     liked,
   }
-}
-
-// Issueのbodyからいいね数を解析
-function parseLikeCount(body: string): number {
-  const count = parseInt(body.trim(), 10)
-  return isNaN(count) ? 0 : count
 }
