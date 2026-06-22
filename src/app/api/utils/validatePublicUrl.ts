@@ -1,15 +1,15 @@
 import dns from 'dns'
 import net from 'net'
+import { Agent, buildConnector } from 'undici'
 
 /**
  * SSRF 対策: 外部公開してよい URL かを検証するユーティリティ。
  *
- * - スキームは http / https のみ許可
- * - ホスト名を名前解決し、プライベート / ループバック / リンクローカル /
- *   クラウドメタデータ（169.254.169.254 等）に解決される宛先を拒否
- *
- * 注意: DNS リバインディング（解決後に IP が変わる攻撃）までは完全に防げない。
- * 個人サイトの OG 取得用途として現実的な多層防御に留める。
+ * 多層防御:
+ * 1. assertPublicUrl … スキームを http/https に限定し、初回 URL の宛先を検証
+ * 2. createSafeDispatcher … 実際に TCP 接続する直前に解決先 IP を検証する
+ *    undici Agent。リダイレクト先・DNS リバインディングも接続層でブロックする
+ *    （初回 URL だけ検証しても fetch がリダイレクトを追従するため）。
  */
 
 export class UnsafeUrlError extends Error {
@@ -65,11 +65,16 @@ function isPrivateIpv6(ip: string): boolean {
     addr.startsWith('fe8') || // リンクローカル fe80::/10
     addr.startsWith('fe9') ||
     addr.startsWith('fea') ||
-    addr.startsWith('feb')
+    addr.startsWith('feb') ||
+    addr.startsWith('fec') || // 廃止サイトローカル fec0::/10
+    addr.startsWith('fed') ||
+    addr.startsWith('fee') ||
+    addr.startsWith('fef') ||
+    addr.startsWith('ff') // マルチキャスト ff00::/8
   )
 }
 
-function isPrivateIp(ip: string): boolean {
+export function isPrivateIp(ip: string): boolean {
   const type = net.isIP(ip)
   if (type === 4) return isPrivateIpv4(ip)
   if (type === 6) return isPrivateIpv6(ip)
@@ -122,4 +127,66 @@ export async function assertPublicUrl(rawUrl: string): Promise<URL> {
   }
 
   return parsed
+}
+
+/**
+ * 名前解決の結果がプライベート宛先なら接続を失敗させる dns.lookup 互換関数。
+ * undici の connector に渡され、ホスト名指定の接続（リダイレクト先含む）を守る。
+ */
+function safeLookup(
+  hostname: string,
+  options: dns.LookupOneOptions | dns.LookupAllOptions,
+  callback: (
+    err: NodeJS.ErrnoException | null,
+    address: string | dns.LookupAddress[],
+    family?: number,
+  ) => void,
+): void {
+  dns.lookup(hostname, { ...options, all: true }, (err, addresses) => {
+    if (err) {
+      callback(err, '', undefined)
+      return
+    }
+    for (const { address } of addresses) {
+      if (isPrivateIp(address)) {
+        callback(
+          new UnsafeUrlError(`Blocked private address: ${address}`),
+          '',
+          undefined,
+        )
+        return
+      }
+    }
+    if ((options as dns.LookupAllOptions).all) {
+      callback(null, addresses)
+    } else {
+      callback(null, addresses[0].address, addresses[0].family)
+    }
+  })
+}
+
+/**
+ * SSRF を接続層で防ぐ undici Agent を生成する。
+ *
+ * - ホスト名指定の接続は safeLookup で解決先 IP を検証
+ * - IP リテラル指定の接続（リダイレクト先が生 IP の場合など、lookup を経由しない）
+ *   は接続関数側で直接検証
+ *
+ * これにより初回 URL だけでなく、リダイレクト先や DNS リバインディングによる
+ * プライベート宛先到達も接続が確立する前にブロックされる。
+ */
+export function createSafeDispatcher(): Agent {
+  const baseConnector = buildConnector({ lookup: safeLookup })
+  return new Agent({
+    connect: (opts, cb) => {
+      if (net.isIP(opts.hostname) && isPrivateIp(opts.hostname)) {
+        cb(
+          new UnsafeUrlError(`Blocked private address: ${opts.hostname}`),
+          null,
+        )
+        return
+      }
+      baseConnector(opts, cb)
+    },
+  })
 }

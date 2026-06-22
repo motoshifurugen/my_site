@@ -1,5 +1,6 @@
 import {
   assertPublicUrl,
+  createSafeDispatcher,
   UnsafeUrlError,
 } from '@/app/api/utils/validatePublicUrl'
 import { NextRequest, NextResponse } from 'next/server'
@@ -26,7 +27,13 @@ export const GET = async (req: NextRequest) => {
       throw e
     }
 
-    const { result, error } = await ogs({ url, timeout: 5 })
+    // 接続層でも検証: リダイレクト先や DNS リバインディングによる
+    // プライベート宛先到達を、TCP 接続が確立する前にブロックする
+    const { result, error } = await ogs({
+      url,
+      timeout: 5,
+      fetchOptions: { dispatcher: createSafeDispatcher() },
+    })
     if (error) {
       return NextResponse.json(
         { error: 'Failed to fetch Open Graph data' },
