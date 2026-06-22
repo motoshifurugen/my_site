@@ -1,6 +1,5 @@
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import rehypeKatex from 'rehype-katex'
-import rehypePrism from 'rehype-prism'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
@@ -13,7 +12,6 @@ import Sidebar from '@/app/components/templates/Sidebar'
 
 import EmbedArticle from '@/app/components/molecules/EmbedArticle'
 import type { Post } from '@/types/posts'
-import 'prismjs/components/prism-python.js'
 import 'prismjs/themes/prism-tomorrow.css'
 import React, { ReactNode } from 'react'
 
@@ -47,7 +45,7 @@ const codeBlockComponents = {
       .split(':')
 
     return (
-      <CodeBlock className={props.className} fileName={file}>
+      <CodeBlock language={lang} fileName={file}>
         {content}
       </CodeBlock>
     )
@@ -102,7 +100,7 @@ const ArticleContent: React.FC<ArticleContentProps> = ({
             options={{
               mdxOptions: {
                 remarkPlugins: [remarkGfm, remarkMath],
-                rehypePlugins: [rehypePrism, rehypeKatex, rehypeSlug],
+                rehypePlugins: [rehypeKatex, rehypeSlug],
               },
             }}
           />
