@@ -1,25 +1,15 @@
 'use client'
 
+import type { TankaTag } from '@/types/tanka'
 import { motion } from 'framer-motion'
 import React, { useEffect, useMemo, useState } from 'react'
 import TankaLikeButton from './TankaLikeButton'
-
-interface Tag {
-  id: number
-  name: string
-  slug: string
-  category: string
-  description?: string
-  score: number
-  assignedBy: string
-  assignedAt: string
-}
 
 interface TankaCardProps {
   tanka: string
   createdAt: string
   index: number
-  tags?: Tag[]
+  tags?: TankaTag[]
   tweetId?: string
 }
 
@@ -84,7 +74,7 @@ const TankaCard: React.FC<TankaCardProps> = ({
 
   // タグをカテゴリ別にグループ化（メモ化）
   const groupedTags = useMemo(() => {
-    const groups: { [key: string]: Tag[] } = {}
+    const groups: { [key: string]: TankaTag[] } = {}
     tags.forEach((tag) => {
       if (!groups[tag.category]) {
         groups[tag.category] = []

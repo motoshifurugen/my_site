@@ -12,6 +12,7 @@ import Tags from '@/app/components/molecules/Tags'
 import Sidebar from '@/app/components/templates/Sidebar'
 
 import EmbedArticle from '@/app/components/molecules/EmbedArticle'
+import type { Post } from '@/types/posts'
 import 'prismjs/components/prism-python.js'
 import 'prismjs/themes/prism-tomorrow.css'
 import React, { ReactNode } from 'react'
@@ -19,7 +20,7 @@ import React, { ReactNode } from 'react'
 import styles from './ArticleContent.module.css'
 
 interface ArticleContentProps {
-  blogArticle: any
+  blogArticle: Post
   SidebarComponents: React.ReactNode[]
 }
 
@@ -81,7 +82,7 @@ const ArticleContent: React.FC<ArticleContentProps> = ({
           <p className="text-main-black dark:text-night-white">
             {blogArticle.date}
           </p>
-          <LikeButton articleId={blogArticle.id || blogArticle.slug} />
+          <LikeButton articleId={blogArticle.slug} />
         </div>
         <h1 className="text-main-black dark:text-night-white">
           {blogArticle.title}
