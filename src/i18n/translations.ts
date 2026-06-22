@@ -236,6 +236,12 @@ export const translations: Translations = {
         // },
       },
     },
+    errors: {
+      title: 'エラーが発生しました',
+      message:
+        'ページの表示中に問題が発生しました。お手数ですが再試行してください。',
+      retry: '再試行',
+    },
   },
   en: {
     common: {
@@ -478,6 +484,12 @@ export const translations: Translations = {
         //   linkText: 'Blog',
         // },
       },
+    },
+    errors: {
+      title: 'Something went wrong',
+      message:
+        'An error occurred while displaying this page. Please try again.',
+      retry: 'Retry',
     },
   },
 }
