@@ -2,12 +2,13 @@ import LoadingCircle from '@/app/components/atoms/LoadingCircle'
 import Tags from '@/app/components/molecules/Tags'
 import styles from '@/app/components/templates/ArticleContent.module.css'
 import { useLikeCount } from '@/app/hooks/useLikeCount'
+import type { PostMeta } from '@/types/posts'
 import { Heart } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 interface BlogPostProps {
-  post: any
+  post: PostMeta
 }
 
 const BlogPost: React.FC<BlogPostProps> = ({ post }) => {

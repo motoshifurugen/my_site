@@ -1,16 +1,7 @@
-import type { PostMeta } from '@/types/posts'
+import type { Post, PostMeta } from '@/types/posts'
 import fs from 'fs'
 import matter from 'gray-matter'
 import path from 'path'
-
-interface PostData {
-  slug: string
-  title?: string
-  date?: string
-  tags?: string[]
-  content: string
-  [key: string]: any // その他のメタデータに対応
-}
 
 // 一覧・サイトマップから除外する非公開記事のタグ
 const LIMITED_TAG = '限定公開'
@@ -31,7 +22,7 @@ if (!fs.existsSync(postsDirectoryPath)) {
   fs.mkdirSync(postsDirectoryPath, { recursive: true })
 }
 
-export async function getPostBySlug(slug: string): Promise<PostData> {
+export async function getPostBySlug(slug: string): Promise<Post> {
   const realSlug = slug.replace(/\.mdx$/, '')
 
   // パストラバーサル対策: `../` や `/` を含む不正な slug を拒否
@@ -53,20 +44,18 @@ export async function getPostBySlug(slug: string): Promise<PostData> {
 
   return {
     slug: realSlug,
-    ...matterResult.data,
-    content: matterResult.content,
+    title: matterResult.data.title,
     date: matterResult.data.date,
+    tags: matterResult.data.tags || [],
+    content: matterResult.content,
   }
 }
 
-export async function getAllPosts(): Promise<PostData[]> {
+export async function getAllPosts(): Promise<Post[]> {
   const slugs = fs.readdirSync(postsDirectoryPath)
   const posts = await Promise.all(slugs.map((slug) => getPostBySlug(slug)))
   // 限定公開タグを持つ記事を除外
-  return posts.filter((post) => {
-    const tags = post.tags || []
-    return !tags.includes(LIMITED_TAG)
-  })
+  return posts.filter((post) => !post.tags.includes(LIMITED_TAG))
 }
 
 // 無効な日付は最小値（エポック）として扱い、ソートを安全にする

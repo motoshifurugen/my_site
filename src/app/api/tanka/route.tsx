@@ -1,5 +1,31 @@
+import type { TankaData, TankaResponse } from '@/types/tanka'
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
+
+// Supabase から返る行の形（snake_case・ネストした tanka_tags）。インフラの実装詳細のため
+// ここに閉じ込め、ドメイン型（TankaData 等）とは分離する。
+type SupabaseTagRelation = {
+  score: number
+  assigned_by: string
+  assigned_at: string
+  tags: {
+    id: number
+    name: string
+    slug: string
+    category: string
+    description?: string
+  }
+}
+
+type SupabaseTankaRow = {
+  tweet_id: string
+  author_id: string
+  created_at: string
+  extracted_at: string
+  original_text: string
+  tanka: string
+  tanka_tags: SupabaseTagRelation[] | null
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -69,38 +95,43 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // レスポンスデータの整形
-    const formattedData =
-      tankaData?.map((tanka) => ({
-        id: tanka.tweet_id, // 既に文字列として取得済み
-        tanka: tanka.tanka,
-        originalText: tanka.original_text,
-        createdAt: tanka.created_at,
-        extractedAt: tanka.extracted_at,
-        tweetId: tanka.tweet_id, // 既に文字列として取得済み
-        tags:
-          tanka.tanka_tags?.map((tagRelation: any) => ({
-            id: tagRelation.tags.id,
-            name: tagRelation.tags.name,
-            slug: tagRelation.tags.slug,
-            category: tagRelation.tags.category,
-            description: tagRelation.tags.description,
-            score: tagRelation.score,
-            assignedBy: tagRelation.assigned_by,
-            assignedAt: tagRelation.assigned_at,
-          })) || [],
-      })) || []
+    // レスポンスデータの整形（snake_case の行 → camelCase のドメイン形）
+    // supabase-js は to-one リレーション（tanka_tags.tags）も配列として型推論するが、
+    // この select の実体は単一オブジェクト。実データ形に合わせ、境界で一度だけ行型へ補正する。
+    const rows = (tankaData ?? []) as unknown as SupabaseTankaRow[]
+    const formattedData: TankaData[] = rows.map((tanka) => ({
+      id: tanka.tweet_id, // 既に文字列として取得済み
+      tanka: tanka.tanka,
+      originalText: tanka.original_text,
+      createdAt: tanka.created_at,
+      extractedAt: tanka.extracted_at,
+      tweetId: tanka.tweet_id, // 既に文字列として取得済み
+      tags:
+        tanka.tanka_tags?.map((tagRelation) => ({
+          id: tagRelation.tags.id,
+          name: tagRelation.tags.name,
+          slug: tagRelation.tags.slug,
+          category: tagRelation.tags.category,
+          description: tagRelation.tags.description,
+          score: tagRelation.score,
+          assignedBy: tagRelation.assigned_by,
+          assignedAt: tagRelation.assigned_at,
+        })) || [],
+    }))
 
-    return NextResponse.json({
+    const totalPages = Math.ceil((count || 0) / limit)
+    const body: TankaResponse = {
       tanka: formattedData,
       pagination: {
         currentPage: page,
         totalItems: count || 0,
-        totalPages: Math.ceil((count || 0) / limit),
-        hasNext: page < Math.ceil((count || 0) / limit),
+        totalPages,
+        hasNext: page < totalPages,
         hasPrev: page > 1,
       },
-    })
+    }
+
+    return NextResponse.json(body)
   } catch (error) {
     console.error('API error:', error)
     return NextResponse.json(

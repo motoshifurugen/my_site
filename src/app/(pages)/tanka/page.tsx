@@ -1,5 +1,6 @@
 'use client'
 
+import type { TankaData, TankaResponse } from '@/types/tanka'
 import { motion } from 'framer-motion'
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { useI18n } from '../../../i18n/context'
@@ -8,15 +9,15 @@ import TankaSkeleton from '../../components/atoms/TankaSkeleton'
 import TankaCard from '../../components/molecules/TankaCard'
 import PageFace from '../../components/organisms/PageFace'
 
-// キャッシュ用の型定義
-interface CacheEntry {
-  data: any
+// キャッシュ用の型定義（保存する値の型をジェネリクスで受け取る）
+interface CacheEntry<T> {
+  data: T
   timestamp: number
   expiresAt: number
 }
 
 interface CacheStore {
-  [key: string]: CacheEntry
+  [key: string]: CacheEntry<TankaResponse>
 }
 
 // グローバルキャッシュストア
@@ -28,7 +29,7 @@ const CACHE_DURATION = 5 * 60 * 1000
 // キャッシュユーティリティ関数
 const getCacheKey = (page: number, limit: number) => `tanka-${page}-${limit}`
 
-const getFromCache = (key: string): any | null => {
+const getFromCache = (key: string): TankaResponse | null => {
   const entry = cacheStore[key]
   if (!entry) return null
 
@@ -41,7 +42,7 @@ const getFromCache = (key: string): any | null => {
   return entry.data
 }
 
-const setCache = (key: string, data: any): void => {
+const setCache = (key: string, data: TankaResponse): void => {
   const now = Date.now()
   cacheStore[key] = {
     data,
@@ -56,16 +57,6 @@ const clearCache = (): void => {
       delete cacheStore[key]
     }
   })
-}
-
-interface TankaData {
-  id: string
-  tanka: string
-  originalText: string
-  createdAt: string
-  extractedAt: string
-  tags?: any[]
-  tweetId?: string
 }
 
 interface InfiniteScrollState {
@@ -340,7 +331,7 @@ const TankaPage: React.FC = () => {
                   tanka={tanka.tanka}
                   createdAt={tanka.createdAt}
                   index={index}
-                  tags={tanka.tags || []}
+                  tags={tanka.tags}
                   tweetId={tanka.tweetId}
                 />
               ))}
