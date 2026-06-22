@@ -142,9 +142,11 @@ return <h1>{t.blog.title}</h1>
 
 ## Deployment
 
-- **Platform**: Vercel
+- **Static site**: GitHub Pages, deployed by CI (`.github/workflows/nextjs.yml`) on push to `main`. This is the canonical deploy path.
+- **API**: Vercel, reached from the static site via `NEXT_PUBLIC_API_URL`.
 - **Base Path**: `/my_site`
-- **Build**: Prettier formatting runs before build
+- **Build**: Prettier formatting runs before build; CI injects `output: export` (`static_site_generator: next`) to produce the static `out/`.
+- **Note**: the `deploy` script in `package.json` is legacy and does not work with the current config (`output: "export"` is disabled, so `out/` is not generated).
 
 ## Notes for AI Assistants
 

@@ -30,7 +30,7 @@ Furugen's Island is a personal portfolio and blog website built with modern web 
 
 ### Live Site
 - **URL**: https://furugen-island.com/my_site
-- **Platform**: Vercel
+- **Hosting**: GitHub Pages (static export) for the site, Vercel for the API
 - **Base Path**: `/my_site`
 
 ---
@@ -544,10 +544,15 @@ animation: {
   "dev": "next dev",
   "build": "prettier --write \"src/**/*.{ts,tsx}\" && next build",
   "start": "next start",
-  "lint": "next lint --ignore-path .eslintignore . && prettier --check \"src/**/*.{ts,tsx}\"",
-  "fix": "next lint --fix --ignore-path .eslintignore . && prettier --write \"src/**/*.{ts,tsx}\""
+  "start:api": "next dev -p 3001",
+  "test": "node --import tsx --test $(find src -name '*.test.ts')",
+  "lint": "run-p -l -c --aggregate-output lint:*",
+  "fix": "run-s fix:prettier fix:eslint",
+  "deploy": "npm run build && touch out/.nojekyll && git add -f out && git commit -m 'Deploy to GitHub Pages' && git push origin `git subtree split --prefix out master`:gh-pages --force"
 }
 ```
+
+> The `deploy` script is a legacy artifact: with `output: "export"` disabled in `next.config.mjs`, `next build` does not emit `out/`, so `touch out/.nojekyll` fails. The CI workflow below is the canonical deployment path.
 
 ### Next.js Configuration
 
@@ -565,7 +570,7 @@ animation: {
 
 | Variable | Scope | Purpose |
 |----------|-------|---------|
-| `NEXT_PUBLIC_API_URL` | Public | API base URL |
+| `NEXT_PUBLIC_API_URL` | Public (build-time) | API base URL |
 | `GITHUB_TOKEN` | Server | GitHub API auth |
 | `GITHUB_OWNER` | Server | Repository owner |
 | `GITHUB_REPO` | Server | Repository name |
@@ -573,22 +578,41 @@ animation: {
 | `SUPABASE_SERVICE_ROLE_KEY` | Server | Supabase auth |
 | `ANTHROPIC_API_KEY` | Server | Claude API key |
 
+`NEXT_PUBLIC_API_URL` is inlined at build time and points the static site at the API host. Its value differs per environment:
+
+| Environment | Value | Source |
+|-------------|-------|--------|
+| Local (`npm run dev`) | unset → code fallback (`http://localhost:3000/my_site/api` or `/my_site/api`) | `.env.local` (commented out) |
+| Production | `https://furugen-island.com/my_site/api` | `.env.production` |
+| CI (GitHub Pages build) | `https://my-site-nine-opal.vercel.app/my_site/api` | `.github/workflows/nextjs.yml` |
+| Docker | `/my_site/api` | `docker-compose.yml` |
+
+> `API_URL` is declared in `docker-compose.yml` only and is **not referenced anywhere in the source** (`process.env.API_URL` has zero usages); it has no effect on the running app.
+
 ### Deployment
 
-**Platform**: Vercel
+**Platform**: GitHub Pages (static site) + Vercel (API)
 
-**Configuration** (`vercel.json`):
+The site is split into two hosting targets:
+- **Static site**: deployed to GitHub Pages by CI.
+- **API**: hosted on Vercel; the static site reaches it via `NEXT_PUBLIC_API_URL`.
+
+**vercel.json** only configures a redirect (not a framework preset):
 ```json
 {
-  "framework": "nextjs"
+  "redirects": [
+    { "source": "/", "destination": "/my_site", "permanent": true }
+  ]
 }
 ```
 
-**Build Process**:
-1. Prettier formats all TypeScript files
-2. Next.js builds the application
-3. Static pages are generated
-4. Deployed to Vercel edge network
+**Canonical build & deploy (`.github/workflows/nextjs.yml`)**:
+1. Triggered by a push to `main` (or manual `workflow_dispatch`).
+2. `actions/configure-pages` injects `output: export` (via `static_site_generator: next`) so the build produces a static export — `next.config.mjs` keeps `output: "export"` commented out and relies on this.
+3. `NEXT_PUBLIC_API_URL` is set to the Vercel API URL, then `next build` emits the static site to `out/`.
+4. `actions/upload-pages-artifact` uploads `out/`, and `actions/deploy-pages` publishes it to GitHub Pages.
+
+The custom domain (`furugen-island.com`) is configured outside this repository (no `CNAME` file is tracked here).
 
 ---
 
