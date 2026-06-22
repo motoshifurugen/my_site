@@ -1,4 +1,8 @@
-import { getAllSlugs, getPostBySlug } from '@/app/api/utils/getPostData'
+import {
+  getAllSlugs,
+  getPostBySlug,
+  isValidSlug,
+} from '@/app/api/utils/getPostData'
 import { NextRequest, NextResponse } from 'next/server'
 
 const GET = async (
@@ -6,6 +10,12 @@ const GET = async (
   { params }: { params: { slug: string } },
 ) => {
   const { slug } = params
+
+  // パストラバーサル対策: 不正な slug は 404
+  if (!isValidSlug(slug)) {
+    return new NextResponse(null, { status: 404 })
+  }
+
   try {
     const blogArticle = await getPostBySlug(slug)
 

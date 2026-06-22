@@ -18,6 +18,14 @@ const LIMITED_TAG = '限定公開'
 // posts ディレクトリのパスを取得
 const postsDirectoryPath = path.join(process.cwd(), 'src', 'posts')
 
+// パストラバーサル対策: slug に許可する文字（英数字・ハイフン・アンダースコアのみ）
+const VALID_SLUG = /^[a-zA-Z0-9_-]+$/
+
+// slug が安全（パストラバーサルを含まない）かを判定
+export function isValidSlug(slug: string): boolean {
+  return VALID_SLUG.test(slug.replace(/\.mdx$/, ''))
+}
+
 // ディレクトリが存在しない場合に作成
 if (!fs.existsSync(postsDirectoryPath)) {
   fs.mkdirSync(postsDirectoryPath, { recursive: true })
@@ -25,6 +33,12 @@ if (!fs.existsSync(postsDirectoryPath)) {
 
 export async function getPostBySlug(slug: string): Promise<PostData> {
   const realSlug = slug.replace(/\.mdx$/, '')
+
+  // パストラバーサル対策: `../` や `/` を含む不正な slug を拒否
+  if (!isValidSlug(realSlug)) {
+    throw new Error(`Invalid slug: ${slug}`)
+  }
+
   const fullPath = path.join(postsDirectoryPath, `${realSlug}.mdx`)
 
   // ファイルが存在するか確認
