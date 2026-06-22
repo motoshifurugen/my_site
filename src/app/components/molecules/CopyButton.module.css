@@ -1,0 +1,28 @@
+.button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: #323e52;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button:hover {
+  background-color: #3b4a63;
+}
+
+.message {
+  position: absolute;
+  top: 0.5rem;
+  right: 3rem;
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.3rem;
+  font-size: 0.8rem;
+}

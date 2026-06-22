@@ -58,7 +58,7 @@ Furugen's Island is a personal portfolio and blog website built with modern web 
 | gray-matter | YAML frontmatter parsing |
 | remark-gfm | GitHub Flavored Markdown |
 | remark-math + rehype-katex | LaTeX math support |
-| rehype-prism + prismjs | Syntax highlighting |
+| prismjs (server-side highlighting) | Syntax highlighting |
 | tocbot | Table of contents generation |
 
 ### 3D & Animation
