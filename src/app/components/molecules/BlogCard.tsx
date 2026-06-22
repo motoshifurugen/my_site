@@ -1,7 +1,6 @@
 import LoadingCircle from '@/app/components/atoms/LoadingCircle'
 import Tags from '@/app/components/molecules/Tags'
 import styles from '@/app/components/templates/ArticleContent.module.css'
-import { useLikeCount } from '@/app/hooks/useLikeCount'
 import type { PostMeta } from '@/types/posts'
 import { Heart } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -9,12 +8,12 @@ import React, { useState } from 'react'
 
 interface BlogPostProps {
   post: PostMeta
+  likeCount: number
 }
 
-const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
+const BlogPost: React.FC<BlogPostProps> = ({ post, likeCount }) => {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const likeCount = useLikeCount(post.slug)
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault()
