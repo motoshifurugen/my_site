@@ -16,6 +16,7 @@ const WorkList: React.FC = () => {
           description={work.description}
           tags={work.tags}
           date={work.date}
+          priority={index === 0}
         />
       ))}
     </div>

@@ -11,6 +11,7 @@ interface WorkCardProps {
   description: string
   tags: string[]
   date: string
+  priority?: boolean
 }
 
 const WorkCard: React.FC<WorkCardProps> = ({
@@ -20,6 +21,7 @@ const WorkCard: React.FC<WorkCardProps> = ({
   description,
   tags,
   date,
+  priority = false,
 }) => {
   return (
     <div className="relative mb-8 overflow-hidden rounded p-3 md:p-5">
@@ -29,6 +31,8 @@ const WorkCard: React.FC<WorkCardProps> = ({
         width={500}
         height={500}
         className="w-full"
+        sizes="(min-width: 768px) 33vw, 100vw"
+        priority={priority}
       />
       <div className="my-2 py-2 md:py-4">
         <div className="noto-sans-jp mb-2 text-lg font-bold text-main-black dark:text-night-white md:text-xl">
