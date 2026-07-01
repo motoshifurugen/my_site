@@ -1,5 +1,7 @@
 // app/api/likes/route.ts
 import { NextRequest, NextResponse } from 'next/server'
+import { getClientIP } from '../utils/clientIp'
+import { checkRateLimit } from '../utils/rateLimit'
 import {
   LIKES_ISSUE_LABEL,
   likeIssueTitle,
@@ -32,10 +34,40 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const { articleId, liked } = await request.json()
+  let body: unknown
+  try {
+    body = await request.json()
+  } catch {
+    return NextResponse.json(
+      { error: 'リクエストボディが不正です' },
+      { status: 400 },
+    )
+  }
 
-  if (!articleId) {
+  const { articleId, liked } = (body ?? {}) as {
+    articleId?: unknown
+    liked?: unknown
+  }
+
+  if (typeof articleId !== 'string' || articleId.length === 0) {
     return NextResponse.json({ error: '記事IDが必要です' }, { status: 400 })
+  }
+
+  // 改ざん入力を拒否する（liked は boolean のみ受理）
+  if (typeof liked !== 'boolean') {
+    return NextResponse.json(
+      { error: 'likedパラメータが必要です' },
+      { status: 400 },
+    )
+  }
+
+  // (IP, endpoint) 単位のレート制限。上限到達時は書込みせず 429 を返す
+  const allowed = await checkRateLimit(getClientIP(request), 'likes')
+  if (!allowed) {
+    return NextResponse.json(
+      { error: 'リクエストが多すぎます。しばらくしてから再試行してください' },
+      { status: 429 },
+    )
   }
 
   try {
