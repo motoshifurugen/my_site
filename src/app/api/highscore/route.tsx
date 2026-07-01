@@ -1,5 +1,8 @@
 import { Octokit } from '@octokit/rest'
 import { NextRequest, NextResponse } from 'next/server'
+import { getClientIP } from '../utils/clientIp'
+import { checkRateLimit } from '../utils/rateLimit'
+import { isValidScore } from './scoreValidation'
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
@@ -24,10 +27,32 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const { score } = await request.json()
-  if (typeof score !== 'number') {
-    return NextResponse.json({ error: 'scoreが必要です' }, { status: 400 })
+  let body: unknown
+  try {
+    body = await request.json()
+  } catch {
+    return NextResponse.json(
+      { error: 'リクエストボディが不正です' },
+      { status: 400 },
+    )
   }
+
+  const { score } = (body ?? {}) as { score?: unknown }
+
+  // NaN/Infinity/負値/巨大値/小数/非数値をすべて拒否する（改ざん対策）
+  if (!isValidScore(score)) {
+    return NextResponse.json({ error: 'scoreが不正です' }, { status: 400 })
+  }
+
+  // (IP, endpoint) 単位のレート制限。上限到達時は書込みせず 429 を返す
+  const allowed = await checkRateLimit(getClientIP(request), 'highscore')
+  if (!allowed) {
+    return NextResponse.json(
+      { error: 'リクエストが多すぎます。しばらくしてから再試行してください' },
+      { status: 429 },
+    )
+  }
+
   try {
     const current = await getHighScore()
     if (score > current.highScore) {

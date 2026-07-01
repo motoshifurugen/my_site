@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
+import { getClientIP } from '../utils/clientIp'
 
 // tweet_idを正規化する関数（文字列として扱う）
 function normalizeTweetId(raw: any): string | null {
@@ -7,24 +8,6 @@ function normalizeTweetId(raw: any): string | null {
   const s = String(raw).trim()
   if (!/^\d+$/.test(s)) return null
   return s
-}
-
-// クライアントIPアドレスを取得する関数
-function getClientIP(request: NextRequest): string {
-  // Vercelの場合
-  const forwarded = request.headers.get('x-forwarded-for')
-  if (forwarded) {
-    return forwarded.split(',')[0].trim()
-  }
-
-  // その他のプロキシ
-  const realIP = request.headers.get('x-real-ip')
-  if (realIP) {
-    return realIP
-  }
-
-  // フォールバック
-  return '127.0.0.1'
 }
 
 export async function GET(request: NextRequest) {
