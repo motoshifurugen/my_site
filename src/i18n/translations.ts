@@ -28,7 +28,7 @@ export const translations: Translations = {
       closeMenu: 'メニューを閉じる',
     },
     footer: {
-      copyright: '© 2024 furugen',
+      copyright: 'Furugen Island',
       cities: {
         oka: '沖縄',
         hij: '広島',
@@ -269,7 +269,7 @@ export const translations: Translations = {
       closeMenu: 'Close menu',
     },
     footer: {
-      copyright: '© 2024 furugen',
+      copyright: 'Furugen Island',
       cities: {
         oka: 'Okinawa',
         hij: 'Hiroshima',
