@@ -12,6 +12,11 @@ updates:
       # 開発依存・型定義はまとめて 1 PR に集約しノイズを抑える
       dev-dependencies:
         dependency-type: 'development'
+      # Font Awesome はアイコンと svg-core を lockstep で上げないと
+      # fontawesome-common-types が二重化し型エラーで build が落ちるため 1 PR に束ねる
+      fortawesome:
+        patterns:
+          - '@fortawesome/*'
     ignore:
       # major アップグレード（Next.js 16 系等）は破壊的変更を伴うため
       # 個別 Issue で計画的に対応する（Dependabot の自動 major PR は抑制）
