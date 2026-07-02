@@ -138,7 +138,7 @@ const TankaCard: React.FC<TankaCardProps> = ({
                   writingMode: 'vertical-rl',
                   textOrientation: 'upright',
                   fontFamily:
-                    '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                    '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", var(--font-noto-serif-jp), "BIZ UDPMincho", serif',
                   userSelect: 'none',
                 }}
               >

@@ -42,7 +42,7 @@ const ScoreChart = ({ config }: { config: ScoreChartConfig }) => {
   const targetY = yForScore(config.targetScore)
 
   return (
-    <div className="w-full rounded-2xl bg-white p-6 shadow-sm dark:bg-night-gray dark:text-night-white">
+    <div className="w-full rounded-lg bg-white p-6 shadow-card dark:bg-night-gray dark:text-night-white">
       <h3 className="mb-4 text-center text-xl font-bold text-main-black dark:text-night-white">
         {title}
       </h3>

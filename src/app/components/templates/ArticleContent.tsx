@@ -74,7 +74,7 @@ const ArticleContent: React.FC<ArticleContentProps> = ({
   return (
     <div className="mb-10 flex min-h-screen w-full max-w-screen-lg justify-start md:max-w-full">
       <div
-        className={`w-full max-w-full rounded-lg bg-white p-2 pb-24 text-main-black shadow-sm dark:bg-night-gray dark:text-night-white md:p-10 xl:px-[4em] ${styles.articleContent}`}
+        className={`w-full max-w-full rounded-lg bg-white p-2 pb-24 text-main-black shadow-card dark:bg-night-gray dark:text-night-white md:p-10 xl:px-[4em] ${styles.articleContent}`}
       >
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
           <p className="text-main-black dark:text-night-white">

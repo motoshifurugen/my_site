@@ -3,11 +3,30 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
-import { Inter } from 'next/font/google'
+import { DM_Sans, Noto_Sans_JP, Noto_Serif_JP } from 'next/font/google'
 import 'tailwindcss/tailwind.css'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-dm-sans',
+})
+
+const notoSansJP = Noto_Sans_JP({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-noto-sans-jp',
+})
+
+// book / tanka の縦書き明朝スタックが名指し参照するため next/font で読み込む。
+// 非可変フォントのため実際に使う weight（book:300/400, TankaCard:500）を明示する
+const notoSerifJP = Noto_Serif_JP({
+  weight: ['300', '400', '500'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-noto-serif-jp',
+})
 
 export const metadata: Metadata = {
   title:
@@ -49,20 +68,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" suppressHydrationWarning={true}>
-      <head>
-        {/* Google Fonts読み込み */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className={inter.className}>
+      <body
+        className={`${dmSans.variable} ${notoSansJP.variable} ${notoSerifJP.variable}`}
+      >
         <ThemeProvider attribute="class">
           <ClientWrapper>{children}</ClientWrapper>
         </ThemeProvider>

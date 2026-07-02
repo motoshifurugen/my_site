@@ -45,7 +45,7 @@ const BookmarkPage = ({ bookmark }: { bookmark: BookmarkData }) => {
         paddingRight: '1rem',
         paddingTop: '1.5rem',
         paddingBottom: '1.5rem',
-        fontFamily: '"Noto Sans JP", sans-serif',
+        fontFamily: 'var(--font-noto-sans-jp), sans-serif',
       }}
     >
       {/* STEP3B: 栞エリア（本の間に挟まっている感覚） */}
@@ -104,7 +104,7 @@ const BookmarkPage = ({ bookmark }: { bookmark: BookmarkData }) => {
           <div
             className="text-main-black dark:text-night-white relative w-full h-full flex items-center justify-center"
             style={{
-              fontFamily: '"Noto Sans JP", sans-serif',
+              fontFamily: 'var(--font-noto-sans-jp), sans-serif',
               fontSize: '0.65rem',
               lineHeight: '2',
               letterSpacing: '0.05em',
@@ -488,7 +488,7 @@ export default function BookPage() {
               className="absolute top-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
               style={{
                 fontFamily:
-                  '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                  '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", var(--font-noto-serif-jp), "BIZ UDPMincho", serif',
                 fontSize: '0.7rem',
                 color: 'rgba(0, 0, 0, 0.6)',
                 writingMode: 'horizontal-tb',
@@ -513,7 +513,7 @@ export default function BookPage() {
               className="absolute top-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
               style={{
                 fontFamily:
-                  '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                  '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", var(--font-noto-serif-jp), "BIZ UDPMincho", serif',
                 fontSize: '0.7rem',
                 color: 'rgba(0, 0, 0, 0.6)',
                 writingMode: 'horizontal-tb',
@@ -542,7 +542,7 @@ export default function BookPage() {
               className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
               style={{
                 fontFamily:
-                  '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                  '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", var(--font-noto-serif-jp), "BIZ UDPMincho", serif',
                 fontSize: '0.65rem',
                 color: 'rgba(0, 0, 0, 0.5)',
                 writingMode: 'horizontal-tb',
@@ -561,7 +561,7 @@ export default function BookPage() {
                 className="relative flex h-full w-full flex-col items-center justify-center"
                 style={{
                   fontFamily:
-                    '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                    '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", var(--font-noto-serif-jp), "BIZ UDPMincho", serif',
                 }}
               >
                 {/* 右閉じの本を表現する縦線（右側） */}
@@ -580,7 +580,7 @@ export default function BookPage() {
                 <div
                   style={{
                     fontFamily:
-                      '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                      '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", var(--font-noto-serif-jp), "BIZ UDPMincho", serif',
                     fontSize: 'clamp(2.5rem, 8vw, 4rem)',
                     letterSpacing: '0.15em',
                     color: '#ECF0F1',
@@ -610,7 +610,7 @@ export default function BookPage() {
                 <div
                   style={{
                     fontFamily:
-                      '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                      '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", var(--font-noto-serif-jp), "BIZ UDPMincho", serif',
                     fontSize: '0.7rem',
                     letterSpacing: '0.2em',
                     color: '#BDC3C7',
@@ -634,14 +634,14 @@ export default function BookPage() {
                   paddingTop: '1.5rem',
                   paddingBottom: '1.5rem',
                   fontFamily:
-                    '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                    '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", var(--font-noto-serif-jp), "BIZ UDPMincho", serif',
                 }}
               >
                 <div
                   className="text-main-black dark:text-night-white"
                   style={{
                     fontFamily:
-                      '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                      '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", var(--font-noto-serif-jp), "BIZ UDPMincho", serif',
                     fontSize: '0.85rem',
                     lineHeight: '3',
                     letterSpacing: '0.08em',
@@ -671,14 +671,14 @@ export default function BookPage() {
                   paddingTop: '3.5rem',
                   paddingBottom: '3.5rem',
                   fontFamily:
-                    '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                    '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", var(--font-noto-serif-jp), "BIZ UDPMincho", serif',
                 }}
               >
                 <div
                   className="text-main-black dark:text-night-white"
                   style={{
                     fontFamily:
-                      '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif',
+                      '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", var(--font-noto-serif-jp), "BIZ UDPMincho", serif',
                     fontSize: 'clamp(0.65rem, 3vw, 0.85rem)',
                     letterSpacing: '0.08em',
                     width: '100%',

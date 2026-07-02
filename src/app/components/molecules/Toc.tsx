@@ -26,7 +26,7 @@ const Toc: React.FC = () => {
     <>
       <div ref={ref} className="mt-5"></div> {/* スクロール監視用 */}
       <div
-        className={`rounded-lg bg-white p-4 shadow-sm transition-all duration-300 dark:bg-night-gray ${
+        className={`rounded-lg bg-white p-4 shadow-card transition-all duration-300 dark:bg-night-gray ${
           !inView ? 'fixed top-20 z-50 w-[312px]' : ''
         }`}
       >

@@ -24,7 +24,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, likeCount }) => {
   return (
     <>
       {isLoading && <LoadingCircle isLoading={isLoading} />}
-      <div className="relative mx-auto w-full rounded bg-white p-5 text-main-black shadow-sm dark:bg-night-gray dark:text-night-white">
+      <div className="relative mx-auto w-full rounded-lg bg-white p-5 text-main-black shadow-card transition duration-300 hover:-translate-y-0.5 hover:shadow-card-hover dark:bg-night-gray dark:text-night-white">
         <a href={`/blog/${post.slug}`} onClick={handleClick} className="block">
           <div className="flex items-center justify-between">
             <span>{post.date}</span>

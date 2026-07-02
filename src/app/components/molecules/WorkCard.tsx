@@ -24,7 +24,7 @@ const WorkCard: React.FC<WorkCardProps> = ({
   priority = false,
 }) => {
   return (
-    <div className="relative mb-8 overflow-hidden rounded p-3 md:p-5">
+    <div className="relative mb-8 overflow-hidden rounded-lg p-3 md:p-5">
       <Image
         src={`${BASE_PATH}${src}`}
         alt={alt}

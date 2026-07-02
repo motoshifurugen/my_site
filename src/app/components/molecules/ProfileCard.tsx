@@ -13,7 +13,7 @@ const ProfileCard = () => {
   const { t } = useI18n()
 
   return (
-    <div className="w-80 rounded-lg bg-white px-6 py-10 shadow-sm dark:bg-night-gray">
+    <div className="w-80 rounded-lg bg-white px-6 py-10 shadow-card dark:bg-night-gray">
       <div className="flex items-center">
         <Image
           src={`${BASE_PATH}/images/profile_icon.png`}
