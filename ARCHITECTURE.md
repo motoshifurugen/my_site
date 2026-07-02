@@ -1,6 +1,6 @@
 # Project Architecture Documentation
 
-Comprehensive technical documentation for Furugen's Island.
+Comprehensive technical documentation for Furugen Island.
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@ Comprehensive technical documentation for Furugen's Island.
 
 ## Overview
 
-Furugen's Island is a personal portfolio and blog website built with modern web technologies. The project showcases:
+Furugen Island is a personal portfolio and blog website built with modern web technologies. The project showcases:
 
 - **Blog System**: MDX-powered posts with code highlighting, math rendering, and table of contents
 - **Portfolio**: Skills timeline and work history

@@ -1,4 +1,4 @@
-# Furugen's Island 🏝️ - ブログ付きポートフォリオサイト
+# Furugen Island 🏝️ - ブログ付きポートフォリオサイト
 
 [![最終コミット](https://img.shields.io/github/last-commit/motoshifurugen/my_site?style=flat-square)](https://github.com/motoshifurugen/my_site/commits/main)
 [![GitHub Pagesでデプロイ](https://img.shields.io/badge/Deploy-GitHub%20Pages-222?logo=githubpages&style=flat-square)](https://github.com/motoshifurugen/my_site/actions/workflows/nextjs.yml)
