@@ -1,11 +1,12 @@
-// ブログのハブ化で追加する i18n キー（Issue #229 / TDD 先行）の契約を固定する単体テスト。
+// ブログの i18n キー契約を固定する単体テスト。
 //
-// #229 は次の 2 つを翻訳へ追加する（文言そのものはプロダクト側で自然に調整可）:
-//   - t.blog.lead        : ブログの立ち位置を一言添える文（PageFace に配置）
-//   - t.blog.channels    : { heading, zenn, note } の外部チャンネル導線の文言
-// 型 Translations は ja/en 双方に同一 shape を要求するため片側更新は型エラーになるが、
-// 本テストは「両ロケールでキーが揃い、値が非空文字列である」ことを実行時に明示的に固定する
-// （片側更新・空プレースホルダの防止）。既存 translations.test.ts と同じ流儀で書く。
+// 経緯:
+//   - #229 で t.blog.lead（立ち位置の一文）と t.blog.channels（{ heading, zenn, note }）を追加。
+//   - #243 で t.blog.lead を削除（ブログ説明文の非表示）。channels は維持する。
+// 型 Translations は ja/en 双方に同一 shape を要求するため片側更新は型エラーになる。
+// 本テストは「両ロケールで channels のキーが揃い非空である」ことに加え、
+// 「blog.lead が両ロケールから削除済み（残存しない）」ことを実行時に明示的に固定する
+// （片側取り残し・空プレースホルダ・lead 残存の防止）。既存 translations.test.ts と同じ流儀で書く。
 //
 // 実行: プロジェクトルートで `npm test`（node --import tsx --test）。
 // 実装前は blog.lead / blog.channels 未追加のため RED、実装後に GREEN。
@@ -19,12 +20,11 @@ const LOCALES: Locale[] = ['ja', 'en']
 const CHANNEL_KEYS = ['heading', 'zenn', 'note'] as const
 
 for (const locale of LOCALES) {
-  test(`translations[${locale}]: blog.lead が非空文字列である`, () => {
-    // Given: 当該ロケールの blog ブロック
-    const lead = translations[locale].blog.lead
-    // Then: 立ち位置の一文が非空の文字列で定義されている
-    assert.equal(typeof lead, 'string')
-    assert.ok(lead.length > 0, `blog.lead が空文字（${locale}）`)
+  test(`translations[${locale}]: blog.lead キーを持たない（#243 で削除）`, () => {
+    // Given: 当該ロケールの blog ブロック（型からも lead は除去済みのため cast して残存を検査）
+    const blog = translations[locale].blog as Record<string, unknown>
+    // Then: 説明文（lead）は翻訳キーごと削除され、残存しない
+    assert.equal(blog.lead, undefined, `blog.lead が残存している（${locale}）`)
   })
 
   test(`translations[${locale}]: blog.channels ブロックが存在する`, () => {
