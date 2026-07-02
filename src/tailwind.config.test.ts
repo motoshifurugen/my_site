@@ -44,15 +44,22 @@ test('teal.DEFAULT: CSS標準色 teal(#008080) から差し替えられている
   )
 })
 
-test('orange: CSS標準色 darkorange(#FF8C00) から柔らかいアンバーへ差し替えられている', () => {
-  // Given/When: config の orange（スカラー値）
-  const orange = getColors().orange
-  // Then: #FF8C00 ではない有効な hex
-  assert.ok(isHex(orange), 'orange が #RRGGBB 形式である')
+test('orange.DEFAULT: darkorange(#FF8C00) ではなく既存アンバー(#F59E0B)を維持する', () => {
+  // Given/When: config の orange（Issue #233 でスケール化されたオブジェクト）
+  const orange = getColors().orange as Record<string, string>
+  // Then: DEFAULT は bg-orange / text-orange（Tags 等）の解決先。
+  //       スケール化しても既存利用箇所を無影響に保つため #F59E0B を維持する。
+  assert.ok(orange, 'orange が定義されている')
+  assert.ok(isHex(orange.DEFAULT), 'orange.DEFAULT が #RRGGBB 形式である')
   assert.notEqual(
-    (orange as string).toLowerCase(),
+    orange.DEFAULT.toLowerCase(),
     '#ff8c00',
-    'orange は darkorange ではない',
+    'orange.DEFAULT は darkorange ではない',
+  )
+  assert.equal(
+    orange.DEFAULT.toUpperCase(),
+    '#F59E0B',
+    'orange.DEFAULT は既存値 #F59E0B を維持する',
   )
 })
 
