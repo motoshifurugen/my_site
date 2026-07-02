@@ -2,6 +2,7 @@
 
 import AnimatedLine from '@/app/components/atoms/AnimatedLine'
 import BlogGrid from '@/app/components/organisms/BlogGrid'
+import ChannelLinks from '@/app/components/organisms/ChannelLinks'
 import PageFace from '@/app/components/organisms/PageFace'
 import styles from '@/app/components/templates/ArticleContent.module.css'
 import MaintenanceTemplate from '@/app/components/templates/MaintenanceTemplate'
@@ -59,7 +60,7 @@ const PostListView: React.FC<PostListViewProps> = ({ posts, selectedTag }) => {
   )
 }
 
-// useSearchParams は静的書き出しで <Suspense> 境界が必須のため、
+// useSearchParams は静的書き出しで Suspense 境界が必須のため、
 // タグ絞り込みはこの子コンポーネントに隔離する。
 const FilterablePostList: React.FC<ArticleListProps> = ({ initialPosts }) => {
   const searchParams = useSearchParams()
@@ -86,10 +87,18 @@ const ArticleList: React.FC<ArticleListProps> = ({ initialPosts }) => {
   return (
     <>
       <section>
-        <PageFace title={t.blog.title} subtitle="" mainMessage={<></>} />
+        <PageFace
+          title={t.blog.title}
+          subtitle=""
+          mainMessage={<p>{t.blog.lead}</p>}
+        />
       </section>
 
       <AnimatedLine />
+
+      <section className="mx-auto w-full max-w-screen-lg px-4 md:px-10">
+        <ChannelLinks />
+      </section>
 
       <section>
         <Suspense
