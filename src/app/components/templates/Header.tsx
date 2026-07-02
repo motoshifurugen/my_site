@@ -44,6 +44,14 @@ const Header = () => {
     setMenuOpen(false)
   }, [pathname])
 
+  // メニューを開いている間は背後のスクロールをロックする
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [menuOpen])
+
   return (
     <header
       className={`
@@ -76,13 +84,27 @@ const Header = () => {
 
         <div className="flex md:ml-auto md:justify-end">
           <nav
+            data-open={menuOpen ? 'true' : 'false'}
             className={`
-            item-left fixed right-0 top-0 flex
-            h-full flex-col flex-wrap transition-all duration-150 ease-in-out md:flex-row
-            ${menuOpen ? 'translate-x-0 bg-white dark:bg-night-black' : 'translate-x-full bg-transparent'} w-full px-4 pt-20
-            md:relative md:translate-x-0 md:bg-transparent md:p-0
+            item-left group fixed right-0 top-0 flex
+            size-full flex-col flex-wrap px-4 pt-20 ease-out md:flex-row
+            ${menuOpen ? 'pointer-events-auto' : 'pointer-events-none'}
+            md:pointer-events-auto md:relative md:bg-transparent md:p-0
           `}
           >
+            {/* 半透明＋backdrop-blur の背景（backdrop-filter 非対応時は不透明度を上げる）。
+                項目・背景ともに open で同時にフェードイン/アウトする。 */}
+            <div
+              aria-hidden="true"
+              className={`
+              absolute inset-0 -z-10 bg-white/90 backdrop-blur-md transition-opacity duration-200
+              ease-out supports-[backdrop-filter]:bg-white/70
+              dark:bg-night-black/90 dark:supports-[backdrop-filter]:bg-night-black/70
+              ${menuOpen ? 'opacity-100' : 'opacity-0'}
+              motion-reduce:transition-none md:hidden
+            `}
+            />
+
             {links.map((link, index) => (
               <HeaderLinkButton
                 key={index}
@@ -99,8 +121,8 @@ const Header = () => {
               index={links.length}
             />
 
-            {/* スマホメニュー内のコントロール群（横並び） */}
-            <div className="mt-6 pr-8 flex items-center justify-end space-x-4 md:hidden">
+            {/* スマホメニュー内のコントロール群（横並び）。項目と同じく open で表示する */}
+            <div className="mt-6 flex items-center justify-end space-x-4 pr-8 opacity-0 transition-opacity duration-200 ease-out group-data-[open=true]:opacity-100 motion-reduce:transition-none md:hidden">
               <ThemeSwitch />
               <LanguageSwitcher />
             </div>

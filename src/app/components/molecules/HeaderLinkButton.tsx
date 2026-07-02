@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
+import { headerMenuItemMotionClass } from './headerMenuItemMotion'
 import { staggerStyle } from './staggerStyle'
 
 interface HeaderLinkButtonProps {
@@ -15,7 +16,7 @@ const HeaderLinkButton: React.FC<HeaderLinkButtonProps> = ({
 }) => {
   return (
     <Link
-      className="mt-6 flex animate-fade-in-up items-center pr-8 hover:opacity-50 motion-reduce:animate-none md:mr-10 md:mt-0 md:pr-0"
+      className={`mt-6 flex items-center pr-8 hover:opacity-50 md:mr-10 md:mt-0 md:pr-0 ${headerMenuItemMotionClass}`}
       style={staggerStyle(index)}
       href={href}
     >
