@@ -139,7 +139,6 @@ export type TranslationKeys = {
     title: string
     all: string
     findOutMore: string
-    lead: string
     channels: {
       heading: string
       zenn: string

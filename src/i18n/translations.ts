@@ -198,7 +198,6 @@ export const translations: Translations = {
       title: 'ブログ',
       all: 'すべて',
       findOutMore: 'もっと見る',
-      lead: '日々の考えごとや暮らしの記録。技術の話は Zenn、ラフな雑記は note に書いています。',
       channels: {
         heading: '他の場所でも書いています',
         zenn: '技術記事は Zenn へ',
@@ -453,7 +452,6 @@ export const translations: Translations = {
       title: 'Blog',
       all: 'All',
       findOutMore: 'Find Out More',
-      lead: 'Notes on everyday thoughts and daily life. I write about tech on Zenn and casual jottings on note.',
       channels: {
         heading: 'I also write in other places',
         zenn: 'Tech articles on Zenn',

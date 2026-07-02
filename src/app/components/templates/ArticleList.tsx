@@ -87,11 +87,7 @@ const ArticleList: React.FC<ArticleListProps> = ({ initialPosts }) => {
   return (
     <>
       <section>
-        <PageFace
-          title={t.blog.title}
-          subtitle=""
-          mainMessage={<p>{t.blog.lead}</p>}
-        />
+        <PageFace title={t.blog.title} subtitle="" />
       </section>
 
       <AnimatedLine />

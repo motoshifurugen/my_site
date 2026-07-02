@@ -9,9 +9,9 @@
 //   - ChannelLinks を import している
 //   - JSX に <ChannelLinks を配置している
 //   - <ChannelLinks は記事一覧の <Suspense より前（＝上）に置かれている（常設・二重描画回避）
-//   - PageFace に t.blog.lead を配線している（subtitle/mainMessage が空でなくなる）
+//   - PageFace に説明文（t.blog.lead / mainMessage）を配線しない（#243 で削除。空 <p> の余白も残さない）
 //
-// トークン（import 名・<ChannelLinks・<Suspense・t.blog.lead）は Prettier 整形で安定するため、
+// トークン（import 名・<ChannelLinks・<Suspense・t.blog.lead・mainMessage）は Prettier 整形で安定するため、
 // 空白差異に依存しない構造契約として扱う。
 //
 // 実行: プロジェクトルートで `npm test`（node --import tsx --test）。
@@ -53,10 +53,15 @@ test('ArticleList: ChannelLinks を記事一覧（<Suspense）より上に配置
   )
 })
 
-test('ArticleList: PageFace に立ち位置の一文（t.blog.lead）を配線する', () => {
-  // Given/When/Then: 空だった mainMessage/subtitle を lead 文言で埋める
+test('ArticleList: PageFace に説明文（t.blog.lead / mainMessage）を配線しない', () => {
+  // Given/When/Then: 説明文は #243 で削除。lead 参照も mainMessage 配線も残さない
+  // （mainMessage を渡さないことで PageFace の条件付きレンダリングにより要素ごと非表示になり余白が残らない）
   assert.ok(
-    source.includes('t.blog.lead'),
-    't.blog.lead を参照して PageFace に配線する',
+    !source.includes('t.blog.lead'),
+    't.blog.lead を参照しない（#243 で削除）',
+  )
+  assert.ok(
+    !source.includes('mainMessage'),
+    'mainMessage を配線しない（空要素の余白を残さない）',
   )
 })

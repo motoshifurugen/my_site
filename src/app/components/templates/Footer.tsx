@@ -19,7 +19,8 @@ const iconLinks = [
 
 export default function Footer() {
   const { t } = useI18n()
-  const year = new Date().getFullYear()
+  // #243: コピーライト年は 2024 固定（現在年の動的表示を廃止）
+  const year = 2024
 
   return (
     <div className="relative z-20 bg-sand py-10 dark:bg-night-black">

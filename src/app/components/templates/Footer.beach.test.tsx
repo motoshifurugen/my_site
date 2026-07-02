@@ -1,7 +1,7 @@
 // フッター砂浜テーマ刷新（Issue #228 UI刷新 6 / TDD 先行）の契約を固定する単体テスト。
 //
 // #228 は Footer に以下を導入する:
-//   - コピーライトを「© {年} Furugen Island」表示（年は new Date().getFullYear() で動的生成）
+//   - コピーライトを「© 2024 Furugen Island」表示（年は #243 で 2024 固定。旧: 動的生成）
 //   - SNS リンクに Zenn / note を追加（外部リンクは target="_blank" rel="noopener noreferrer"）
 //   - フッター上端に飛び出すビーチ装飾（aria-hidden・クリック不可・ダーク非表示）
 //   - モバイル固定高さ h-32 の解消（h-auto md:h-32 へ）
@@ -85,14 +85,25 @@ test('Footer: コピーライトが Furugen Island 名義で描画される', ()
   assert.ok(html.includes('Furugen Island'), 'Furugen Island を含む')
 })
 
-test('Footer: コピーライトの年が new Date().getFullYear() で動的生成される', () => {
-  // Given: 実行時の現在年
-  const year = String(new Date().getFullYear())
+test('Footer: コピーライトの年が 2024 固定で描画される', () => {
+  // Given/When: フッターを描画する
+  const html = render()
+  // Then: 固定年 2024 が描画される（© 2024 Furugen Island）
+  assert.ok(html.includes('© 2024'), '© 2024 を含む')
+})
+
+test('Footer: コピーライトの年が new Date() の現在年に依存しない', () => {
+  // Given: 実行時の現在年（2024 固定なら本来出力されないはずの値）
+  const currentYear = String(new Date().getFullYear())
   // When: フッターを描画する
   const html = render()
-  // Then: 現在年が描画され、旧固定表記「© 2024 furugen」は残っていない
-  assert.ok(html.includes(year), `現在年 ${year} を含む`)
-  assert.ok(!html.includes('© 2024 furugen'), '旧コピーライト表記を含まない')
+  // Then: 動的年生成へ戻ると現在年が漏れる。現在年が 2024 以外のとき、その年は含まれない
+  if (currentYear !== '2024') {
+    assert.ok(
+      !html.includes(currentYear),
+      `動的な現在年 ${currentYear} を含まない（2024 固定であること）`,
+    )
+  }
 })
 
 test('Footer: Zenn リンクが新規タブ属性付きで描画される', () => {
