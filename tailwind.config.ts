@@ -35,7 +35,11 @@ const config: Config = {
           800: '#08453F',
           900: '#06332E',
         },
-        orange: '#F59E0B',
+        orange: {
+          DEFAULT: '#F59E0B',
+          50: '#FEF3C7',
+          800: '#92400E',
+        },
       },
       animation: {
         'fade-in': 'fadeIn 10s ease-in-out',

@@ -135,11 +135,21 @@ test('ArticleContent: ブログ本文カードのモバイル p-2 を p-5 へ引
   assert.ok(!hasBareClass(source, 'p-2'), 'p-2 を含まない')
 })
 
-test('MessageBoard: top パネルのモバイル px-2 を px-4 へ引き上げる', () => {
+test('MessageBoard: top パネルのモバイル padding を 16px（p-4）以上に保つ', () => {
   // Given/When: top ページのお知らせパネルを読む
   const source = read('components/organisms/MessageBoard.tsx')
-  // Then: モバイルの横 padding は px-4（16px）以上にする
-  assert.ok(hasBareClass(source, 'px-4'), 'px-4 を含む')
-  // Then: 窮屈な px-2（8px）は残さない
+  // Then: モバイルの内側 padding は 16px 以上にする（p-4 は px-4 を内包する等価表記）
+  assert.ok(hasBareClass(source, 'p-4'), 'p-4 を含む')
+  // Then: 窮屈な px-2 / p-2（8px）は残さない
   assert.ok(!hasBareClass(source, 'px-2'), 'px-2 を含まない')
+  assert.ok(!hasBareClass(source, 'p-2'), 'p-2 を含まない')
+})
+
+test('MessageBoard: 縦横同値 padding は冗長な px-4 py-4 でなく p-4 に短縮する', () => {
+  // Given/When: top ページのお知らせパネルを読む
+  const source = read('components/organisms/MessageBoard.tsx')
+  // Then: eslint tailwindcss/enforces-shorthand を誘発する冗長表記を残さない
+  //       （px-N py-N が同値なら shorthand p-N に統一する）
+  assert.ok(!source.includes('px-4 py-4'), 'px-4 py-4 の冗長表記を含まない')
+  assert.ok(!source.includes('py-4 px-4'), 'py-4 px-4 の冗長表記を含まない')
 })
