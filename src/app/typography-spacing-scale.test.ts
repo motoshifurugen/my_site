@@ -126,13 +126,14 @@ test('BlogGrid: 詰まった gap-6 を残さない', () => {
 // カード・パネルのモバイル内側 padding を p-5/px-4 下限へ引き上げ、
 // 文字が枠に接近する p-2/px-2（8px）を残さない。
 // ------------------------------------------------------------------
-test('ArticleContent: ブログ本文カードのモバイル p-2 を p-5 へ引き上げる', () => {
+test('ArticleContent: ブログ本文カードのモバイル p-2 を p-6 へ引き上げる', () => {
   // Given/When: 記事本文テンプレートを読む
   const source = read('components/templates/ArticleContent.tsx')
-  // Then: モバイルの内側 padding は p-5（20px）以上にする
-  assert.ok(hasBareClass(source, 'p-5'), 'p-5 を含む')
-  // Then: 窮屈な p-2（8px）は残さない（pb-24/md:p-10 は別クラスのため影響なし）
+  // Then: モバイルの内側 padding は p-6（24px, 20px 以上）にする（#232 で p-5→p-6 へ再引き上げ）
+  assert.ok(hasBareClass(source, 'p-6'), 'p-6 を含む')
+  // Then: 窮屈な p-2（8px）・中途半端な p-5 は残さない（md:p-10 は別クラスのため影響なし）
   assert.ok(!hasBareClass(source, 'p-2'), 'p-2 を含まない')
+  assert.ok(!hasBareClass(source, 'p-5'), 'p-5 を含まない')
 })
 
 test('MessageBoard: top パネルのモバイル padding を 16px（p-4）以上に保つ', () => {

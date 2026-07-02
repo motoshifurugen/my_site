@@ -54,7 +54,7 @@ const codeBlockComponents = {
     return <div {...props} />
   },
   p: (props: JSX.IntrinsicAttributes & { children?: ReactNode }) => (
-    <div {...props} />
+    <div {...props} className={styles.articleParagraph} />
   ),
   a: (
     props: JSX.IntrinsicAttributes & { href?: string; children?: ReactNode },
@@ -74,7 +74,7 @@ const ArticleContent: React.FC<ArticleContentProps> = ({
   return (
     <div className="mb-10 flex min-h-screen w-full max-w-screen-lg justify-start md:max-w-full">
       <div
-        className={`w-full max-w-full rounded-lg bg-white p-5 pb-24 text-main-black shadow-card dark:bg-night-gray dark:text-night-white md:p-10 xl:px-[4em] ${styles.articleContent}`}
+        className={`w-full max-w-full rounded-lg bg-white p-6 pb-12 text-main-black shadow-card dark:bg-night-gray dark:text-night-white md:p-10 xl:px-16 ${styles.articleContent}`}
       >
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
           <p className="text-main-black dark:text-night-white">
