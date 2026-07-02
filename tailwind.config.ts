@@ -2,6 +2,10 @@ import type { Config } from 'tailwindcss'
 import type { PluginAPI } from 'tailwindcss/types/config'
 
 const config: Config = {
+  // タッチ端末の sticky hover を避けるため、全 `hover:` を @media (hover: hover) 化する（Issue #240）。
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
