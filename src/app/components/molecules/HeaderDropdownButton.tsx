@@ -4,6 +4,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { staggerStyle } from './staggerStyle'
 
 interface SubMenuItem {
   href: string
@@ -24,7 +25,10 @@ const HeaderDropdownButton: React.FC<HeaderDropdownButtonProps> = ({
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="mt-6 flex animate-fade-in-up items-center pr-8 md:mr-10 md:mt-0 md:pr-0">
+    <div
+      className="mt-6 flex animate-fade-in-up items-center pr-8 motion-reduce:animate-none md:mr-10 md:mt-0 md:pr-0"
+      style={staggerStyle(index)}
+    >
       <div
         className="relative inline-block ml-auto md:ml-0 cursor-pointer"
         onMouseEnter={() => window.innerWidth >= 768 && setIsOpen(true)}

@@ -106,7 +106,7 @@ const Header = () => {
             </div>
 
             <div className="ml-auto mt-6 pr-7 md:m-0 md:pr-0">
-              <GithubLinkButton />
+              <GithubLinkButton index={links.length + 1} />
             </div>
 
             {/* デスクトップでのテーマ・言語切り替え */}
