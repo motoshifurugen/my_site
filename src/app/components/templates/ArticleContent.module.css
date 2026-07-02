@@ -34,7 +34,7 @@
 /* ------------------------- */
 /* 文字関係 */
 /* ------------------------- */
-.articleContent p {
+.articleParagraph {
   margin: 16px 0;
   font-size: 16px;
   line-height: 1.9;
