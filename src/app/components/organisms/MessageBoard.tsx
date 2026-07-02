@@ -16,7 +16,7 @@ const MessageBoard = () => {
   const { t } = useI18n()
 
   return (
-    <div className="my-20 rounded-md bg-white/15 px-2 py-4 dark:bg-night-black/50">
+    <div className="my-20 rounded-md bg-white/15 px-4 py-4 dark:bg-night-black/50">
       <h3 className="mb-2 select-none">{t.announcements.title}</h3>
       <ul className="m-0 list-none p-0">
         {announcementsData.map((announcement, index) => (

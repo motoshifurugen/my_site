@@ -27,7 +27,7 @@ const BlogGrid: React.FC<BlogGridProps> = ({ blogData }) => {
 
   return (
     <>
-      <div className="grid auto-rows-fr grid-cols-1 gap-6 md:grid-cols-2">
+      <div className="grid auto-rows-fr grid-cols-1 gap-8 md:grid-cols-2">
         {currentPost.map((post) => (
           <div key={post.slug} className="h-full">
             <BlogCard post={post} likeCount={likeCounts[post.slug] ?? 0} />

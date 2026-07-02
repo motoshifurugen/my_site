@@ -100,12 +100,12 @@ const Header = () => {
             />
 
             {/* スマホメニュー内のコントロール群（横並び） */}
-            <div className="mt-6 pr-7 flex items-center justify-end space-x-4 md:hidden">
+            <div className="mt-6 pr-8 flex items-center justify-end space-x-4 md:hidden">
               <ThemeSwitch />
               <LanguageSwitcher />
             </div>
 
-            <div className="ml-auto mt-6 pr-7 md:m-0 md:pr-0">
+            <div className="ml-auto mt-6 pr-8 md:m-0 md:pr-0">
               <GithubLinkButton index={links.length + 1} />
             </div>
 

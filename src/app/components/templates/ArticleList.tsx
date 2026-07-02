@@ -36,7 +36,7 @@ const PostListView: React.FC<PostListViewProps> = ({ posts, selectedTag }) => {
           <div className="mb-4 flex items-center justify-between text-main-black dark:text-night-white">
             {selectedTag ? (
               <>
-                <div className="text-xl font-bold">『{selectedTag}』</div>
+                <h2>『{selectedTag}』</h2>
                 <button
                   onClick={() => router.push('/blog')}
                   className="relative flex items-center rounded px-6 py-3 text-lg text-main-black transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-teal after:transition-all after:duration-300 hover:after:w-full dark:text-night-white dark:after:bg-night-teal"
@@ -46,7 +46,7 @@ const PostListView: React.FC<PostListViewProps> = ({ posts, selectedTag }) => {
                 </button>
               </>
             ) : (
-              <div className="py-3 text-xl font-bold">{t.blog.all}</div>
+              <h2>{t.blog.all}</h2>
             )}
           </div>
           <BlogGrid blogData={posts} />

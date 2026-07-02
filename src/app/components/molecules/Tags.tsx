@@ -29,7 +29,7 @@ const Tags: React.FC<TagsProps> = ({ tags }) => {
   }
 
   return (
-    <div className="my-6 flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2">
       {tags.map((tag: string, index: number) => (
         <span
           key={index}
