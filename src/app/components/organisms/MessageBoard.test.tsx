@@ -25,8 +25,9 @@ test('MessageBoard: ja ロケールで announcement タイトルを描画する'
   // Given/When: 日本語で描画する
   const html = renderBoard('ja')
   // Then: items から解決したタイトルが本文に含まれる
+  // 2025-04-22 は announcementsData に存在する（旧 2025-09-27 はデータから除かれている）。
   assert.ok(
-    html.includes(translations.ja.announcements.items['2025-09-27'].title),
+    html.includes(translations.ja.announcements.items['2025-04-22'].title),
   )
 })
 
@@ -35,16 +36,16 @@ test('MessageBoard: en ロケールで announcement タイトルを描画する'
   const html = renderBoard('en')
   // Then: items から解決した英語タイトルが本文に含まれる
   assert.ok(
-    html.includes(translations.en.announcements.items['2025-09-27'].title),
+    html.includes(translations.en.announcements.items['2025-04-22'].title),
   )
 })
 
 test('MessageBoard: link を持つ announcement の linkText を描画する', () => {
   // Given/When: 日本語で描画する
   const html = renderBoard('ja')
-  // Then: link 付きお知らせの linkText（短歌）がリンク表示される
+  // Then: link 付きお知らせの linkText がリンク表示される
   assert.ok(
-    html.includes(translations.ja.announcements.items['2025-09-27'].linkText),
+    html.includes(translations.ja.announcements.items['2025-04-22'].linkText),
   )
 })
 
