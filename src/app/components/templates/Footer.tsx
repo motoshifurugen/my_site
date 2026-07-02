@@ -21,23 +21,21 @@ export default function Footer() {
               <div className="rightFooter w-full select-none md:w-3/4">
                 <p className="mb-1 text-lg md:mb-3">Motoshi Furugen</p>
                 <p className="flex items-center">
-                  <span className="mr-1">🇯🇵</span>
                   {t.footer.cities.oka}
                   <FontAwesomeIcon
                     icon={faPlane}
-                    className="mx-1 text-xxs opacity-70"
+                    className="mx-1 text-xs opacity-70"
                   />
                   {t.footer.cities.hij}
                   <FontAwesomeIcon
                     icon={faPlane}
-                    className="mx-1 text-xxs opacity-70"
+                    className="mx-1 text-xs opacity-70"
                   />
                   {t.footer.cities.tyo}
                   <FontAwesomeIcon
                     icon={faPlane}
-                    className="mx-1 text-xxs opacity-70"
+                    className="mx-1 text-xs opacity-70"
                   />
-                  <span className="mr-1">🇵🇭</span>
                   {t.footer.cities.bcd}
                 </p>
               </div>

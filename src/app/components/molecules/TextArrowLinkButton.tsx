@@ -16,31 +16,28 @@ const TextArrowLinkButton: React.FC<TextArrowLinkButtonProps> = ({
   href,
 }) => {
   return (
-    <>
-      <a
-        href={`${BASE_PATH}${href}`}
-        className="group mt-6 flex select-none items-center"
-      >
-        <h3>{text}</h3>
+    <a
+      href={`${BASE_PATH}${href}`}
+      className="group mt-6 flex select-none items-center"
+    >
+      <h3 className="group-hover:underline">{text}</h3>
 
-        {/* テキストの右につける矢印 */}
-        <button
-          className="
-            relative ml-5 size-8
-            max-h-[32px] max-w-[32px]
-            rounded-full border
-            border-main-black border-opacity-20
-            align-middle text-xs text-main-black transition-all group-hover:bg-main-white
-            group-hover:text-main-black dark:border-main-white dark:text-main-white
-            dark:group-hover:bg-night-white"
-          type="button"
-        >
-          <span>
-            <FontAwesomeIcon icon={faArrowRight} />
-          </span>
-        </button>
-      </a>
-    </>
+      {/* テキストの右につける矢印 */}
+      <button
+        className="
+          relative ml-5 size-8
+          max-h-[32px] max-w-[32px]
+          rounded-full border
+          border-main-black border-opacity-20
+          align-middle text-xs text-main-black
+          dark:border-main-white dark:text-main-white"
+        type="button"
+      >
+        <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+          <FontAwesomeIcon icon={faArrowRight} />
+        </span>
+      </button>
+    </a>
   )
 }
 
