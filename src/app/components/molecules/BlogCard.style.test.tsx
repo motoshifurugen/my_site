@@ -106,3 +106,23 @@ test('BlogCard: 浮き上がりを滑らかにする transition が付与され�
   // Then: transition クラスがある（影・移動を滑らかに）
   assert.ok(html.includes('transition'), 'transition を含む')
 })
+
+// --- Issue #226 UI刷新 4/4: カード見出しのスケール1段整理 ---
+// タイトルは記事本文の h1 と同格には見せず、カード見出しとして1段下げる
+// （text-xl md:text-2xl → text-lg md:text-xl）。見出し階層 h1 > h2 > h3 を
+// カード内でも崩さないための下げ幅を固定する。
+
+test('BlogCard: カード見出しをカード用スケール text-lg md:text-xl に1段整理する', () => {
+  // Given/When: BlogCard を描画する
+  const html = render()
+  // Then: モバイル text-lg / md 以上 text-xl のカード見出しスケールになる
+  assert.ok(html.includes('text-lg'), 'text-lg を含む')
+  assert.ok(html.includes('md:text-xl'), 'md:text-xl を含む')
+})
+
+test('BlogCard: 旧タイトルスケール text-2xl を残さない', () => {
+  // Given/When: BlogCard を描画する
+  const html = render()
+  // Then: 本文見出し相当の大きさ（text-2xl）はカードでは使わない
+  assert.ok(!html.includes('text-2xl'), 'text-2xl を含まない')
+})

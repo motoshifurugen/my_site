@@ -32,7 +32,7 @@ const codeBlockComponents = {
     // インラインコードの場合（preタグでラップされていない場合）
     if (!props.className) {
       return (
-        <code className="bg-slate-100 text-rose-600 dark:bg-slate-800 dark:text-rose-400 rounded px-1.5 py-0.5 text-[0.9em] font-mono">
+        <code className="bg-slate-100 text-rose-600 dark:bg-slate-800 dark:text-rose-400 rounded px-1.5 py-0.5 text-sm font-mono">
           {String(props.children)}
         </code>
       )
@@ -74,7 +74,7 @@ const ArticleContent: React.FC<ArticleContentProps> = ({
   return (
     <div className="mb-10 flex min-h-screen w-full max-w-screen-lg justify-start md:max-w-full">
       <div
-        className={`w-full max-w-full rounded-lg bg-white p-2 pb-24 text-main-black shadow-card dark:bg-night-gray dark:text-night-white md:p-10 xl:px-[4em] ${styles.articleContent}`}
+        className={`w-full max-w-full rounded-lg bg-white p-5 pb-24 text-main-black shadow-card dark:bg-night-gray dark:text-night-white md:p-10 xl:px-[4em] ${styles.articleContent}`}
       >
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
           <p className="text-main-black dark:text-night-white">
@@ -85,7 +85,11 @@ const ArticleContent: React.FC<ArticleContentProps> = ({
         <h1 className="text-main-black dark:text-night-white">
           {blogArticle.title}
         </h1>
-        {blogArticle.tags && <Tags tags={blogArticle.tags} />}
+        {blogArticle.tags && (
+          <div className="my-6">
+            <Tags tags={blogArticle.tags} />
+          </div>
+        )}
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"

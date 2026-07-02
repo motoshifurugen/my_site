@@ -109,3 +109,24 @@ test('Tags: `短編小説` も `ブログ` と同じ orange 系分岐になる',
   // Then: orange 系トークンが付く
   assert.ok(html.includes('orange'), 'orange 系トークンを含む')
 })
+
+// --- Issue #226 UI刷新 4/4: 近接バランス（上下マージンを配置側へ委譲） ---
+// タグ群は「直前の見出し/本文と関連の高い要素」であり、コンポーネント内蔵の
+// my-6（上下24px）は関連度に対して間延びする。上下マージンは配置側（呼び出し元）で
+// 制御し、Tags 自身は横並びレイアウトのみを担う。
+
+test('Tags: 内蔵の縦マージン my-6 を撤去する（余白は配置側で制御）', () => {
+  // Given/When: 技術タグを描画する
+  const html = renderTags(['React'])
+  // Then: コンポーネントが上下マージンを抱え込まない
+  assert.ok(!html.includes('my-6'), 'my-6 を含まない')
+})
+
+test('Tags: 横並びレイアウト（flex flex-wrap gap-2）は維持する', () => {
+  // Given/When: 技術タグを描画する
+  const html = renderTags(['React'])
+  // Then: my-6 撤去後も折り返し可能な横並びは保つ
+  assert.ok(html.includes('flex'), 'flex を含む')
+  assert.ok(html.includes('flex-wrap'), 'flex-wrap を含む')
+  assert.ok(html.includes('gap-2'), 'gap-2 を含む')
+})

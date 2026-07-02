@@ -36,7 +36,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, likeCount }) => {
             </div>
           </div>
           <div
-            className={`mt-4 text-xl font-bold md:text-2xl ${styles.truncate2Lines}`}
+            className={`mt-4 text-lg font-bold md:text-xl ${styles.truncate2Lines}`}
           >
             {post.title}
           </div>
