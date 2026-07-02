@@ -19,6 +19,7 @@ const config: Config = {
         'night-gray': '#4B4B5A',
         'night-orange': '#FBBF24',
         'like-pink': '#E95B6B',
+        sand: '#F3E9D2',
         white: '#FFFFFF',
         gray: '#E5E7E6',
         teal: {
