@@ -2,7 +2,7 @@
 
 .articleContent {
   margin-bottom: 2rem;
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: var(--font-noto-sans-jp), sans-serif;
   font-optical-sizing: auto;
   white-space: pre-wrap;
   word-wrap: break-word;

@@ -33,7 +33,7 @@ const StatCard = ({ stat, index }: { stat: StatItem; index: number }) => {
       >
         {/* Front side */}
         <motion.div
-          className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-white p-4 text-center shadow-sm dark:bg-night-gray dark:text-night-white"
+          className="absolute inset-0 flex flex-col items-center justify-center rounded-lg bg-white p-4 text-center shadow-card dark:bg-night-gray dark:text-night-white"
           style={{
             backfaceVisibility: 'hidden',
             transform: 'rotateY(0deg)',
@@ -47,7 +47,7 @@ const StatCard = ({ stat, index }: { stat: StatItem; index: number }) => {
 
         {/* Back side */}
         <motion.div
-          className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-teal p-4 text-center shadow-sm dark:bg-night-teal"
+          className="absolute inset-0 flex flex-col items-center justify-center rounded-lg bg-teal p-4 text-center shadow-card dark:bg-night-teal"
           style={{
             backfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
