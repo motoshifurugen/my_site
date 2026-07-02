@@ -2,6 +2,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
+import { headerMenuItemMotionClass } from './headerMenuItemMotion'
 import { staggerStyle } from './staggerStyle'
 
 interface GithubLinkButtonProps {
@@ -11,7 +12,7 @@ interface GithubLinkButtonProps {
 const GithubLinkButton: React.FC<GithubLinkButtonProps> = ({ index }) => {
   return (
     <Link
-      className="mr-auto mt-8 animate-fade-in-up motion-reduce:animate-none md:mt-0"
+      className={`mr-auto mt-8 md:mt-0 ${headerMenuItemMotionClass}`}
       style={staggerStyle(index)}
       href="https://github.com/motoshifurugen/my_site"
       target="_blank"

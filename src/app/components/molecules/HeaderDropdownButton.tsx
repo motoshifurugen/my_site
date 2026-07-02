@@ -4,6 +4,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { headerMenuItemMotionClass } from './headerMenuItemMotion'
 import { staggerStyle } from './staggerStyle'
 
 interface SubMenuItem {
@@ -26,17 +27,17 @@ const HeaderDropdownButton: React.FC<HeaderDropdownButtonProps> = ({
 
   return (
     <div
-      className="mt-6 flex animate-fade-in-up items-center pr-8 motion-reduce:animate-none md:mr-10 md:mt-0 md:pr-0"
+      className={`mt-6 flex items-center pr-8 md:mr-10 md:mt-0 md:pr-0 ${headerMenuItemMotionClass}`}
       style={staggerStyle(index)}
     >
       <div
-        className="relative inline-block ml-auto md:ml-0 cursor-pointer"
+        className="relative ml-auto inline-block cursor-pointer md:ml-0"
         onMouseEnter={() => window.innerWidth >= 768 && setIsOpen(true)}
         onMouseLeave={() => window.innerWidth >= 768 && setIsOpen(false)}
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center cursor-pointer"
+          className="flex cursor-pointer items-center"
         >
           <span className="noto-sans-jp select-none text-lg font-bold text-main-black dark:text-night-white md:text-base">
             {text}
@@ -54,7 +55,7 @@ const HeaderDropdownButton: React.FC<HeaderDropdownButtonProps> = ({
                 <Link
                   key={subIndex}
                   href={item.href}
-                  className="block w-full px-4 py-3 text-right md:text-center text-base font-bold text-black dark:text-night-white hover:bg-gray-100 dark:hover:bg-night-gray"
+                  className="hover:bg-gray-100 block w-full px-4 py-3 text-right text-base font-bold text-black dark:text-night-white dark:hover:bg-night-gray md:text-center"
                   onClick={() => setIsOpen(false)}
                 >
                   {item.text}
