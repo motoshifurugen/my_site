@@ -85,41 +85,72 @@ test('Header: 背景に backdrop-blur を用いる', () => {
   assert.ok(html.includes('backdrop-blur-md'), 'backdrop-blur-md を含む')
 })
 
-test('Header: backdrop-filter 対応時はライト背景が半透明（bg-white/70）', () => {
+// 注（Issue #240 UI刷新 10 / 要件4）: 背景をさらに透過させる。
+// backdrop-filter 対応時: ライト bg-white/50・ダーク bg-night-black/50。
+// 非対応フォールバック: ライト bg-white/60・ダーク bg-night-black/60（旧 /90・/70 から引き下げ）。
+// backdrop-blur-md は維持し、可読性を確保する。
+
+test('Header: backdrop-filter 対応時はライト背景がより透過する（bg-white/50）', () => {
   // Given/When: ヘッダーを描画する
   const html = render()
-  // Then: @supports 側で半透明にし後ろを透けさせる
+  // Then: @supports 側で半透明を強め後ろを透けさせる
   assert.ok(
-    html.includes('supports-[backdrop-filter]:bg-white/70'),
-    'supports-[backdrop-filter]:bg-white/70 を含む',
+    html.includes('supports-[backdrop-filter]:bg-white/50'),
+    'supports-[backdrop-filter]:bg-white/50 を含む',
   )
 })
 
-test('Header: backdrop-filter 対応時はダーク背景が半透明（dark:bg-night-black/70）', () => {
+test('Header: backdrop-filter 対応時はダーク背景がより透過する（dark:bg-night-black/50）', () => {
   // Given/When: ヘッダーを描画する
   const html = render()
-  // Then: ダークでも @supports 側で半透明
+  // Then: ダークでも @supports 側で半透明を強める
   assert.ok(
-    html.includes('dark:supports-[backdrop-filter]:bg-night-black/70'),
-    'dark:supports-[backdrop-filter]:bg-night-black/70 を含む',
+    html.includes('dark:supports-[backdrop-filter]:bg-night-black/50'),
+    'dark:supports-[backdrop-filter]:bg-night-black/50 を含む',
   )
 })
 
-test('Header: backdrop-filter 非対応向けに不透明度を上げたフォールバック背景を持つ（ライト）', () => {
+test('Header: backdrop-filter 非対応向けフォールバックもより透過する（ライト bg-white/60）', () => {
   // Given/When: ヘッダーを描画する
   const html = render()
-  // Then: blur が効かない環境でも可読性を確保する不透明寄りの背景
-  assert.ok(html.includes('bg-white/90'), 'bg-white/90 を含む')
+  // Then: blur 非対応環境でも従来より透過（/90 → /60）しつつ可読性を確保する
+  assert.ok(html.includes('bg-white/60'), 'bg-white/60 を含む')
 })
 
-test('Header: backdrop-filter 非対応向けフォールバック背景を持つ（ダーク）', () => {
+test('Header: backdrop-filter 非対応向けフォールバックもより透過する（ダーク dark:bg-night-black/60）', () => {
   // Given/When: ヘッダーを描画する
   const html = render()
-  // Then: ダークでも非対応フォールバックを持つ
+  // Then: ダークでも非対応フォールバックを透過（/90 → /60）させる
   assert.ok(
-    html.includes('dark:bg-night-black/90'),
-    'dark:bg-night-black/90 を含む',
+    html.includes('dark:bg-night-black/60'),
+    'dark:bg-night-black/60 を含む',
   )
+})
+
+test('Header: 旧・重い背景不透明度（/90・/70）は残さない（透過アップの回帰防止）', () => {
+  // Given/When: ヘッダーを描画する
+  const html = render()
+  // Then: 要件4「もっと透明に」を満たすため、旧値へは戻っていない
+  assert.ok(!html.includes('bg-white/90'), 'bg-white/90 を含まない')
+  assert.ok(
+    !html.includes('dark:bg-night-black/90'),
+    'dark:bg-night-black/90 を含まない',
+  )
+  assert.ok(
+    !html.includes('supports-[backdrop-filter]:bg-white/70'),
+    'supports-[backdrop-filter]:bg-white/70 を含まない',
+  )
+  assert.ok(
+    !html.includes('dark:supports-[backdrop-filter]:bg-night-black/70'),
+    'dark:supports-[backdrop-filter]:bg-night-black/70 を含まない',
+  )
+})
+
+test('Header: backdrop-blur-md は維持する（透過を上げても文字可読性を確保）', () => {
+  // Given/When: ヘッダーを描画する
+  const html = render()
+  // Then: blur は残す（要件4の「文字が読める範囲」担保）
+  assert.ok(html.includes('backdrop-blur-md'), 'backdrop-blur-md を含む')
 })
 
 // --- 2. 遷移タイミングの統一（transition-all / 横スライドの廃止） ---

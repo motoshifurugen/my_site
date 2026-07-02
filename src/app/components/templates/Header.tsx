@@ -97,9 +97,9 @@ const Header = () => {
             <div
               aria-hidden="true"
               className={`
-              absolute inset-0 -z-10 bg-white/90 backdrop-blur-md transition-opacity duration-200
-              ease-out supports-[backdrop-filter]:bg-white/70
-              dark:bg-night-black/90 dark:supports-[backdrop-filter]:bg-night-black/70
+              absolute inset-0 -z-10 bg-white/60 backdrop-blur-md transition-opacity duration-200
+              ease-out supports-[backdrop-filter]:bg-white/50
+              dark:bg-night-black/60 dark:supports-[backdrop-filter]:bg-night-black/50
               ${menuOpen ? 'opacity-100' : 'opacity-0'}
               motion-reduce:transition-none md:hidden
             `}
@@ -128,7 +128,10 @@ const Header = () => {
             </div>
 
             <div className="ml-auto mt-6 pr-8 md:m-0 md:pr-0">
-              <GithubLinkButton index={links.length + 1} />
+              <GithubLinkButton
+                index={links.length + 1}
+                onClick={() => setMenuOpen(false)}
+              />
             </div>
 
             {/* デスクトップでのテーマ・言語切り替え */}
