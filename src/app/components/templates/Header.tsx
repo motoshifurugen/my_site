@@ -32,10 +32,7 @@ const Header = () => {
   ]
 
   // エンタメドロップダウンメニュー
-  const entertainmentItems = [
-    { href: '/game', text: t.common.game },
-    { href: '/tanka', text: t.common.tanka },
-  ]
+  const entertainmentItems = [{ href: '/game', text: t.common.game }]
 
   useEffect(() => {
     // ページ遷移後にスクロール位置をトップにリセット
@@ -59,7 +56,7 @@ const Header = () => {
           {/* タイトルボタン（トップページ以外で表示） */}
           <div className="flex-1">
             {!isMainPage && (
-              <TitleLinkButton href={`/`} text="Furugen's Island" />
+              <TitleLinkButton href={`/`} text="Furugen Island" />
             )}
           </div>
 

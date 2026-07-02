@@ -18,7 +18,7 @@ export default function TitleAnimation() {
         { opacity: 0 },
         {
           duration: 1.5,
-          text: "Furugen's<br />Island",
+          text: 'Furugen<br />Island',
           ease: 'power4.inOut',
           parse: true,
           opacity: 1,

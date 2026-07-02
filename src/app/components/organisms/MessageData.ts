@@ -14,15 +14,6 @@ export interface AnnouncementData {
 
 export const announcementsData: AnnouncementData[] = [
   {
-    date: '2025/09/27',
-    categoryKey: 'notification',
-    titleKey: '2025-09-27',
-    link: {
-      url: 'https://furugen-island.com/my_site/tanka',
-      textKey: '2025-09-27',
-    },
-  },
-  {
     date: '2025/08/20',
     categoryKey: 'notification',
     titleKey: '2025-08-20',
