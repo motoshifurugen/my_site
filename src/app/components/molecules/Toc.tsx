@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
-import tocbot from 'tocbot'
+import * as tocbot from 'tocbot'
 
 const Toc: React.FC = () => {
   const { ref, inView } = useInView({
