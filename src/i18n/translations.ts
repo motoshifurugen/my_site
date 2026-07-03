@@ -38,7 +38,7 @@ export const translations: Translations = {
     },
     profile: {
       title: 'プロフィール',
-      subtitle: '古堅基史（Furugen, Motoshi）',
+      subtitle: '古堅基史',
       career: {
         title: '足跡',
         1998: '1998年',
@@ -47,40 +47,40 @@ export const translations: Translations = {
         2021: '2021年',
         2023: '2023年',
         current: '〜 現在',
-        desc1998: '沖縄に生まれる',
-        desc2017: '高校卒業後、理学部物理学科へ進学する',
-        desc2020: '大学休学中にプログラミングを始める',
-        desc2021: '長期インターンでWebエンジニアを経験する',
-        desc2023: '大学卒業後、エンジニアとして就職する',
-        descCurrent: 'フロントエンドエンジニアとして奮闘中',
+        desc1998: '沖縄の海を見る',
+        desc2017: '理学部物理学科へ進学',
+        desc2020: '大学休学中にプログラミングの道へ',
+        desc2021: '長期インターンでWebエンジニア',
+        desc2023: '東京で就職し、ソフトウェア開発を担当',
+        descCurrent: 'プロダクトエンジニア',
       },
       interest: {
         title: '興味',
         content:
-          '物理学が目に見えない自然の法則を解き明かすように、プログラミングによってデータという見えない情報を扱うことに楽しさを感じています。一方で、サービスを通してつながるエンドユーザーへの意識の重要性も感じています。デザインやジェネラティブアートにも関心があり、ワクワクするようなユーザー体験を提供したいです。自分自身、強いメンタルの持ち主ではないので、メンタルヘルスも大切にしています。',
+          '物理学が目に見えない自然の法則を解き明かすように、手で掴めないデータを扱うことに楽しさを感じる。デザインやアートにも関心があり、ワクワクするようなユーザー体験を考える日々。自分自身が楽しめるように、メンタルヘルスも大切にする。',
       },
       passion: {
         title: '趣味',
-        reading: '・読書　　　：不定期で友達と読書会を開催しています。',
-        tanka: '・短歌　　　：Xで気ままに200首以上の短歌を書いています。',
-        walking: '・散歩　　　：朝・昼・晩の散歩が日課です。',
-        driving: '・ドライブ　：目的地もなく運転します。',
-        eisa: '・エイサー　：沖縄の伝統芸能です。',
-        guitar: '・ギター　　：アルペジオ練習中です。',
-        baseball: '・野球　　　：外野専門です。プロ野球を見るのも好きです。',
-        darts: '・ダーツ　　：19が好きです。',
-        bowling: '・ボウリング：ハウスボールを曲げたがりです。',
+        reading: '読書　・・・・・・特に、紙派',
+        tanka: '短歌　・・・・・・特に、中澤系',
+        walking: '散歩　・・・・・・特に、公園',
+        driving: 'ドライブ　・・・・特に、あてもなく',
+        eisa: 'エイサー　・・・・特に、道じゅねー',
+        guitar: 'ギター　・・・・・特に、Dm',
+        baseball: '野球　・・・・・・特に、上林誠知',
+        darts: 'ダーツ　・・・・・特に、19',
+        bowling: 'ボウリング　・・・特に、フック',
       },
       mbti: {
         title: 'MBTI',
         type: 'INFP-A',
         typeName: '（仲介者）',
-        introvert: '内向型（I）：散歩や読書など、一人で過ごす時間が好き',
-        intuitive: '直感型（N）：短歌やエイサーなど、創造や表現活動が好き',
-        feeling: '感情型（F）：自分にも他人にも感情の変化に興味あり',
+        introvert: '内向型',
+        intuitive: '直感型',
+        feeling: '感情型',
         prospecting:
-          '探索型（P）：考えるまでに行動してみて調整していくスタイル',
-        assertive: '自己主張的（A）：常に心に根拠なき自信がある',
+          '探索型',
+        assertive: '自己主張的',
       },
     },
     skills: {
@@ -191,7 +191,7 @@ export const translations: Translations = {
     },
     profileCard: {
       description:
-        '沖縄生まれ、ブルーハーツ育ち。考える前に行動する、なんくるないさ系エンジニアです。',
+        '沖縄生まれ、ブルーハーツ育ち。考える前に行動する、なんくるないさ系エンジニア。',
       viewProfile: 'プロフィールを見る',
     },
     blog: {
@@ -265,9 +265,9 @@ export const translations: Translations = {
     home: {
       title: 'Welcome',
       subtitle: 'to my site',
-      description: 'This site showcases my work and blog posts.',
+      description: 'This site showcases my work and posts.',
       mainMessage:
-        'To support mental health,\nTo the world that spreads beyond the screen,\nI put my thoughts into code,\nContinuing to challenge myself every day,\nI am a software engineer with a "nankurunaisa" spirit.',
+        'I am a product engineer, \ncrafting App with JS / PHP / Python, \nexporing AI technologies.\nCode → Walk around → Drink coffee.',
     },
     navigation: {
       toggleMenu: 'Toggle menu',
@@ -284,7 +284,7 @@ export const translations: Translations = {
     },
     profile: {
       title: 'Profile',
-      subtitle: 'Furugen, Motoshi',
+      subtitle: 'Motoshi Furugen',
       career: {
         title: 'Career',
         1998: '1998',
