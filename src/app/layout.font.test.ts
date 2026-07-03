@@ -1,60 +1,74 @@
-// フォント読み込み一本化（Issue #223 UI刷新 1/3 / TDD 先行）の契約を固定する単体テスト。
+// フォント自己ホスト化（Google Fonts 非依存化）の契約を固定する単体テスト。
 //
-// #223 は next/font(Inter) と <link> 直書きの Google Fonts の二重ロードを解消し、
-// next/font/google の DM Sans + Noto Sans JP へ一本化する:
-//   - Inter を削除する
-//   - Google Fonts の <link>（fonts.googleapis.com / fonts.gstatic.com）を全削除する
-//   - next/font/google から DM_Sans / Noto_Sans_JP を読み込む
-// 完了条件「layout.tsx から Google Fonts の <link> タグが消えている」を固定する。
+// 経緯:
+//   - #223 で <link> 直書きを撤去し next/font/google へ一本化した
+//   - その後、next/font/google がビルド/dev 時に Google Fonts へフェッチする性質により
+//     ネットワークが遅い環境で大量の AbortError と起動遅延（コンパイル25秒超）が発生
+//   - @fontsource-variable/* の自己ホストへ移行し、ビルド時のネットワーク依存を撤廃した
+// 契約:
+//   - layout.tsx は Google Fonts のホストにも next/font/google にも依存しない
+//   - DM Sans / Noto Sans JP / Noto Serif JP を @fontsource-variable/* で読み込む
+//   - globals.css が --font-dm-sans / --font-noto-sans-jp / --font-noto-serif-jp を
+//     @fontsource の生成ファミリー名（'... Variable'）へ割り当てる
 //
-// RootLayout を node で描画すると next/font/google の実行に失敗するため、
-// レンダリングではなくソースの静的検査で契約を固定する（plan のテスト観点に従う）。
-//
+// レンダリングではなくソースの静的検査で契約を固定する（従来方針を踏襲）。
 // 実行: プロジェクトルートで `npm test`（node --import tsx --test）。
-// 実装前は Inter / <link> が残っているため RED、実装後に GREEN になることを期待する。
 
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { test } from 'node:test'
 
-const source = readFileSync(new URL('./layout.tsx', import.meta.url), 'utf8')
+const layout = readFileSync(new URL('./layout.tsx', import.meta.url), 'utf8')
+const globals = readFileSync(new URL('./globals.css', import.meta.url), 'utf8')
 
 test('layout: Google Fonts の <link>（fonts.googleapis.com）が消えている', () => {
-  // Given/When: layout.tsx のソース
-  // Then: Google Fonts stylesheet のホストが残っていない
   assert.ok(
-    !source.includes('fonts.googleapis.com'),
+    !layout.includes('fonts.googleapis.com'),
     'fonts.googleapis.com を含まない',
   )
 })
 
 test('layout: preconnect 先（fonts.gstatic.com）も消えている', () => {
-  // Given/When: layout.tsx のソース
-  // Then: Google Fonts の preconnect も残っていない
   assert.ok(
-    !source.includes('fonts.gstatic.com'),
+    !layout.includes('fonts.gstatic.com'),
     'fonts.gstatic.com を含まない',
   )
 })
 
-test('layout: Inter を読み込まない（next/font から削除されている）', () => {
-  // Given/When: layout.tsx のソース
-  // Then: Inter への参照が残っていない
-  assert.ok(!source.includes('Inter'), 'Inter を含まない')
+test('layout: Inter を読み込まない', () => {
+  assert.ok(!layout.includes('Inter'), 'Inter を含まない')
 })
 
-test('layout: next/font/google に一本化されている', () => {
-  // Given/When: layout.tsx のソース
-  // Then: next/font/google を利用している
+test('layout: next/font/google に依存しない（ビルド時フェッチの再混入防止）', () => {
+  assert.ok(!layout.includes('next/font/google'), 'next/font/google を含まない')
+})
+
+test('layout: 3ファミリーを @fontsource-variable で自己ホストする', () => {
   assert.ok(
-    source.includes('next/font/google'),
-    'next/font/google を利用している',
+    layout.includes('@fontsource-variable/dm-sans'),
+    'DM Sans を @fontsource で読み込む',
+  )
+  assert.ok(
+    layout.includes('@fontsource-variable/noto-sans-jp'),
+    'Noto Sans JP を @fontsource で読み込む',
+  )
+  assert.ok(
+    layout.includes('@fontsource-variable/noto-serif-jp'),
+    'Noto Serif JP を @fontsource で読み込む',
   )
 })
 
-test('layout: DM Sans と Noto Sans JP を next/font で読み込む', () => {
-  // Given/When: layout.tsx のソース
-  // Then: DM_Sans / Noto_Sans_JP を import している
-  assert.ok(source.includes('DM_Sans'), 'DM_Sans を読み込む')
-  assert.ok(source.includes('Noto_Sans_JP'), 'Noto_Sans_JP を読み込む')
+test('globals.css: --font-* 変数を @fontsource の生成ファミリー名へ割り当てる', () => {
+  assert.ok(
+    globals.includes("--font-dm-sans: 'DM Sans Variable'"),
+    '--font-dm-sans を定義する',
+  )
+  assert.ok(
+    globals.includes("--font-noto-sans-jp: 'Noto Sans JP Variable'"),
+    '--font-noto-sans-jp を定義する',
+  )
+  assert.ok(
+    globals.includes("--font-noto-serif-jp: 'Noto Serif JP Variable'"),
+    '--font-noto-serif-jp を定義する',
+  )
 })
