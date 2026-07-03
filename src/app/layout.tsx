@@ -3,30 +3,16 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
-import { DM_Sans, Noto_Sans_JP, Noto_Serif_JP } from 'next/font/google'
+// フォントは Google Fonts へのビルド時フェッチをやめ @fontsource で自己ホストする
+// （旧方式はネットワークが遅い環境で大量タイムアウトし dev/build を止めていた）。
+// unicode-range 分割された CSS + woff2 が _next/static に同梱される。
+// 各ファミリーと --font-* CSS 変数の対応は globals.css で定義する。
+import '@fontsource-variable/dm-sans'
+import '@fontsource-variable/noto-sans-jp'
+// book / tanka の縦書き明朝スタック（weight 300/400/500）が可変フォント1面でまかなえる
+import '@fontsource-variable/noto-serif-jp'
 import 'tailwindcss/tailwind.css'
 import './globals.css'
-
-const dmSans = DM_Sans({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-dm-sans',
-})
-
-const notoSansJP = Noto_Sans_JP({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-noto-sans-jp',
-})
-
-// book / tanka の縦書き明朝スタックが名指し参照するため next/font で読み込む。
-// 非可変フォントのため実際に使う weight（book:300/400, TankaCard:500）を明示する
-const notoSerifJP = Noto_Serif_JP({
-  weight: ['300', '400', '500'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-noto-serif-jp',
-})
 
 export const metadata: Metadata = {
   title:
@@ -68,9 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" suppressHydrationWarning={true}>
-      <body
-        className={`${dmSans.variable} ${notoSansJP.variable} ${notoSerifJP.variable}`}
-      >
+      <body>
         <ThemeProvider attribute="class">
           <ClientWrapper>{children}</ClientWrapper>
         </ThemeProvider>

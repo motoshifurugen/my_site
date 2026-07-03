@@ -22,7 +22,15 @@
 }
 
 @layer base {
-  /* フォントの設定 */
+  /* フォントの設定
+     ファミリー名は @fontsource-variable/*（layout.tsx で import）の生成名。
+     旧 next/font/google が body className で注入していた変数を :root で定義する */
+  :root {
+    --font-dm-sans: 'DM Sans Variable';
+    --font-noto-sans-jp: 'Noto Sans JP Variable';
+    --font-noto-serif-jp: 'Noto Serif JP Variable';
+  }
+
   .noto-sans-jp {
     font-family: var(--font-noto-sans-jp), sans-serif;
     font-optical-sizing: auto;
