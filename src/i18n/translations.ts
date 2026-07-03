@@ -295,47 +295,47 @@ export const translations: Translations = {
         current: '~ Present',
         desc1998: 'Born in Okinawa',
         desc2017:
-          'After graduating from high school, entered the Faculty of Science, Department of Physics',
-        desc2020: 'Started programming during university leave',
+          'After graduating from high school, leaned about physics at university',
+        desc2020: 'Started programming',
         desc2021:
           'Experienced as a web engineer through a long-term internship',
         desc2023:
-          'Graduated from university and started working as an engineer',
-        descCurrent: 'Currently working hard as a frontend engineer',
+          'Started working as a software engineer',
+        descCurrent: 'Currently working as a product engineer',
       },
       interest: {
         title: 'Interest',
         content:
-          'Just as physics unveils the invisible laws of nature, I find joy in handling invisible information called data through programming. At the same time, I feel the importance of being conscious of end users who connect through services. I am also interested in design and generative art, and want to provide exciting user experiences. Since I am not someone with strong mental fortitude, I also value mental health.',
+          'Just as physics reveals the invisible laws of nature, I find joy in handling data by programming. I also find the importance of design and art.',
       },
       passion: {
         title: 'Passion',
-        reading: '• Reading: I irregularly organize book clubs with friends.',
-        tanka: '• Tanka: I have written over 200 tanka poems casually on X.',
+        reading: '• Reading: I like to share feelings with my friends.',
+        tanka: '• Tanka: I like to write tanka poems casually.',
         walking:
-          '• Walking: Morning, afternoon, and evening walks are my daily routine.',
-        driving: '• Driving: I drive without any destination.',
+          '• Walking: Everywhere, anytime.',
+        driving: '• Driving: Everywhere, anytime.',
         eisa: '• Eisa: Traditional performing art of Okinawa.',
-        guitar: '• Guitar: Currently practicing arpeggios.',
+        guitar: '• Guitar: Especially, I like Dm.',
         baseball:
-          '• Baseball: I specialize in outfield. I also enjoy watching professional baseball.',
-        darts: '• Darts: I like 19.',
-        bowling: '• Bowling: I like to curve house balls.',
+          '• Baseball: Enjoying to watch and play baseball.',
+        darts: '• Darts: I usually try to hit 19.',
+        bowling: '• Bowling: Curving ball is fun.',
       },
       mbti: {
         title: 'MBTI',
         type: 'INFP-A',
         typeName: '(Mediator)',
         introvert:
-          'Introverted (I): I like spending time alone, such as walking and reading',
+          'Introverted',
         intuitive:
-          'Intuitive (N): I enjoy creative and expressive activities like tanka and eisa',
+          'Intuitive',
         feeling:
-          'Feeling (F): I am interested in emotional changes in both myself and others',
+          'Feeling',
         prospecting:
-          'Prospecting (P): My style is to take action first and then adjust',
+          'Prospecting',
         assertive:
-          'Assertive (A): I always have unfounded confidence in my heart',
+          'Assertive',
       },
     },
     skills: {
