@@ -386,11 +386,7 @@ export default function BookPage() {
   const buildPageMapping = () => {
     const mapping: Array<{
       type:
-        | 'cover'
-        | 'table-of-contents'
-        | 'content'
-        | 'bookmark'
-        | 'back-cover'
+        'cover' | 'table-of-contents' | 'content' | 'bookmark' | 'back-cover'
       chapterIndex?: number
       pageIndex?: number
       bookmark?: BookmarkData

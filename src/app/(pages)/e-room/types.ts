@@ -2,11 +2,7 @@ import type { LucideIcon } from 'lucide-react'
 import type { StaticImageData } from 'next/image'
 
 export type SkillType =
-  | 'Overall'
-  | 'Listening'
-  | 'Reading'
-  | 'Writing'
-  | 'Speaking'
+  'Overall' | 'Listening' | 'Reading' | 'Writing' | 'Speaking'
 
 export interface ScoreTest {
   date: string
