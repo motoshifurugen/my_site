@@ -19,19 +19,3 @@ export function getLocaleFromPath(pathname: string): Locale {
 
   return defaultLocale
 }
-
-// 言語付きのパスを生成するヘルパー関数
-export function getLocalizedPath(pathname: string, locale: Locale): string {
-  const segments = pathname.split('/').filter(Boolean)
-  const firstSegment = segments[0]
-
-  // 既に言語プレフィックスがある場合は置き換え
-  if (locales.includes(firstSegment as Locale)) {
-    segments[0] = locale
-  } else {
-    // 言語プレフィックスがない場合は追加
-    segments.unshift(locale)
-  }
-
-  return '/' + segments.join('/')
-}

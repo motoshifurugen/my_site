@@ -78,8 +78,7 @@ export const translations: Translations = {
         introvert: '内向型',
         intuitive: '直感型',
         feeling: '感情型',
-        prospecting:
-          '探索型',
+        prospecting: '探索型',
         assertive: '自己主張的',
       },
     },
@@ -299,8 +298,7 @@ export const translations: Translations = {
         desc2020: 'Started programming',
         desc2021:
           'Experienced as a web engineer through a long-term internship',
-        desc2023:
-          'Started working as a software engineer',
+        desc2023: 'Started working as a software engineer',
         descCurrent: 'Currently working as a product engineer',
       },
       interest: {
@@ -312,13 +310,11 @@ export const translations: Translations = {
         title: 'Passion',
         reading: '• Reading: I like to share feelings with my friends.',
         tanka: '• Tanka: I like to write tanka poems casually.',
-        walking:
-          '• Walking: Everywhere, anytime.',
+        walking: '• Walking: Everywhere, anytime.',
         driving: '• Driving: Everywhere, anytime.',
         eisa: '• Eisa: Traditional performing art of Okinawa.',
         guitar: '• Guitar: Especially, I like Dm.',
-        baseball:
-          '• Baseball: Enjoying to watch and play baseball.',
+        baseball: '• Baseball: Enjoying to watch and play baseball.',
         darts: '• Darts: I usually try to hit 19.',
         bowling: '• Bowling: Curving ball is fun.',
       },
@@ -326,16 +322,11 @@ export const translations: Translations = {
         title: 'MBTI',
         type: 'INFP-A',
         typeName: '(Mediator)',
-        introvert:
-          'Introverted',
-        intuitive:
-          'Intuitive',
-        feeling:
-          'Feeling',
-        prospecting:
-          'Prospecting',
-        assertive:
-          'Assertive',
+        introvert: 'Introverted',
+        intuitive: 'Intuitive',
+        feeling: 'Feeling',
+        prospecting: 'Prospecting',
+        assertive: 'Assertive',
       },
     },
     skills: {
