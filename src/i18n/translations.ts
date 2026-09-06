@@ -152,6 +152,31 @@ export const translations: Translations = {
           description:
             '朝が苦手な自分を救うために、名言で始まる朝のルーティンアプリを作成しました。',
         },
+        hobby07: {
+          title: '短編ストーリー型RPG',
+          description:
+            '「正しさとは何か」をテーマに、主人公を操作するマルチエンディング型ゲームを制作しました。',
+        },
+        hobby08: {
+          title: 'わたしの台所図鑑 | 料理記録アプリ',
+          description:
+            'うまくできた日も 少し焦げた日も、料理の記録を、楽しく静かに残すアプリです。',
+        },
+        hobby09: {
+          title: 'マイダッシュボード',
+          description:
+            'ピクセル調の自分向けダッシュボードを作成し、イシューや家計簿を管理しています。',
+        },
+        hobby10: {
+          title: '沖縄マラソンモチベ上げアプリ',
+          description:
+            '友人たちと記録をシェアしながらおきなわマラソンを走っているような気持ちになれるアプリです。',
+        },
+        hobby11: {
+          title: '宴陣 | 飲み会調整アプリ',
+          description:
+            '企画する側も参加する側も楽しいLINE連携した飲み会調整アプリを作りました。',
+        },
       },
       skillNames: {
         php: 'PHP（Laravel、CakePHP）',
@@ -165,7 +190,6 @@ export const translations: Translations = {
       tags: {
         teamDevelopment: '#チーム開発',
         personalDevelopment: '#個人開発',
-        cursorDevelopment: '#Cursor開発',
       },
       timeline: {
         year: '年',
@@ -210,6 +234,10 @@ export const translations: Translations = {
         notification: 'お知らせ',
       },
       items: {
+        '2026-09-06': {
+          title: '作品集に新しい作品を追加しました。',
+          linkText: '作品集',
+        },
         '2025-09-27': {
           title: '作成した短歌のページを追加しました。',
           linkText: '短歌',
@@ -399,6 +427,31 @@ export const translations: Translations = {
           description:
             'To save myself who is not good at mornings, I created a morning routine app that starts with famous quotes.',
         },
+        hobby07: {
+          title: 'Short Story RPG',
+          description:
+            'A multi-ending game where you control the protagonist, exploring the theme of "What is the right thing to do?"',
+        },
+        hobby08: {
+          title: 'My Kitchen Illustrated | Cooking Journal',
+          description:
+            'An app for quietly and joyfully keeping a record of your cooking — both the days that turned out well and the ones that burned a little.',
+        },
+        hobby09: {
+          title: 'My Dashboard',
+          description:
+            'A pixel-art personal dashboard where I manage issues and household accounts.',
+        },
+        hobby10: {
+          title: 'Okinawa Marathon Motivation App',
+          description:
+            'An app that lets you feel like you are running the Okinawa Marathon while sharing records with friends.',
+        },
+        hobby11: {
+          title: 'Enjin | Drinking Party Planner',
+          description:
+            'A LINE-integrated drinking-party planner that is fun for both organizers and guests.',
+        },
       },
       skillNames: {
         php: 'PHP (Laravel, CakePHP)',
@@ -412,7 +465,6 @@ export const translations: Translations = {
       tags: {
         teamDevelopment: '#Team Dev',
         personalDevelopment: '#Personal Dev',
-        cursorDevelopment: '#Cursor Dev',
       },
       timeline: {
         year: '',
@@ -456,6 +508,10 @@ export const translations: Translations = {
         notification: 'Notification',
       },
       items: {
+        '2026-09-06': {
+          title: 'Added new works to the portfolio.',
+          linkText: 'Showcase',
+        },
         '2025-09-27': {
           title: 'Added Tanka page.',
           linkText: 'Tanka (Japanese short poem)',

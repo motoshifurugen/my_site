@@ -14,6 +14,15 @@ export interface AnnouncementData {
 
 export const announcementsData: AnnouncementData[] = [
   {
+    date: '2026/09/06',
+    categoryKey: 'notification',
+    titleKey: '2026-09-06',
+    link: {
+      url: 'https://furugen-island.com/my_site/skills',
+      textKey: '2026-09-06',
+    },
+  },
+  {
     date: '2025/08/20',
     categoryKey: 'notification',
     titleKey: '2025-08-20',

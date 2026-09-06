@@ -137,8 +137,78 @@ export const useWorks = () => {
         </a>
       ),
       description: t.skills.works.hobby06.description,
-      tags: ['React Native', 'Expo', t.skills.tags.cursorDevelopment],
+      tags: ['React Native', 'Expo'],
       date: '2025-05',
+    },
+    {
+      src: '/images/works/hobby_07.png',
+      alt: 'hobby07',
+      title: (
+        <a
+          href="https://furugen-island.com/my_site/rpg"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1"
+        >
+          {t.skills.works.hobby07.title}
+          <BiLinkExternal className="inline-block" />
+        </a>
+      ),
+      description: t.skills.works.hobby07.description,
+      tags: ['React', 'Next.js', t.skills.tags.personalDevelopment],
+      date: '2026-01',
+    },
+    {
+      src: '/images/works/hobby_08.png',
+      alt: 'hobby08',
+      title: (
+        <a
+          href="https://my-kitchen.furugen-island.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1"
+        >
+          {t.skills.works.hobby08.title}
+          <BiLinkExternal className="inline-block" />
+        </a>
+      ),
+      description: t.skills.works.hobby08.description,
+      tags: ['React Native', 'Expo', t.skills.tags.personalDevelopment],
+      date: '2026-04',
+    },
+    {
+      src: '/images/works/hobby_09.png',
+      alt: 'hobby09',
+      title: t.skills.works.hobby09.title,
+      description: t.skills.works.hobby09.description,
+      tags: ['AI-CEO', t.skills.tags.personalDevelopment],
+      date: '2026-05',
+    },
+    {
+      src: '/images/works/hobby_10.png',
+      alt: 'hobby10',
+      title: t.skills.works.hobby10.title,
+      description: t.skills.works.hobby10.description,
+      tags: ['API', t.skills.tags.personalDevelopment],
+      date: '2026-08',
+    },
+    {
+      src: '/images/works/hobby_11.png',
+      alt: 'hobby11',
+      title: (
+        <a
+          href="https://enjin.furugen-island.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1"
+        >
+          {t.skills.works.hobby11.title}
+          <BiLinkExternal className="inline-block" />
+        </a>
+      ),
+      description: t.skills.works.hobby11.description,
+      tags: ['LINE', t.skills.tags.personalDevelopment],
+      date: '2026-09',
     },
   ]
 

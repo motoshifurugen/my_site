@@ -96,6 +96,11 @@ export type TranslationKeys = {
       hobby05: { title: string; description: string }
       work04: { title: string; description: string }
       hobby06: { title: string; description: string }
+      hobby07: { title: string; description: string }
+      hobby08: { title: string; description: string }
+      hobby09: { title: string; description: string }
+      hobby10: { title: string; description: string }
+      hobby11: { title: string; description: string }
     }
     skillNames: {
       php: string
@@ -109,7 +114,6 @@ export type TranslationKeys = {
     tags: {
       teamDevelopment: string
       personalDevelopment: string
-      cursorDevelopment: string
     }
     timeline: {
       year: string
@@ -164,6 +168,7 @@ export type AnnouncementItem = { title: string; linkText: string }
 
 // items のキーは有限 union とし、未定義キーをコンパイル時に検出する（index signature を持たせない）。
 export type AnnouncementItems = {
+  '2026-09-06': AnnouncementItem
   '2025-09-27': AnnouncementItem
   '2025-08-20': AnnouncementItem
   '2025-04-22': AnnouncementItem
