@@ -101,6 +101,7 @@ export type TranslationKeys = {
       hobby09: { title: string; description: string }
       hobby10: { title: string; description: string }
       hobby11: { title: string; description: string }
+      hobby12: { title: string; description: string }
     }
     skillNames: {
       php: string

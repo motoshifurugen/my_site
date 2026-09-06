@@ -177,6 +177,11 @@ export const translations: Translations = {
           description:
             '企画する側も参加する側も楽しいLINE連携した飲み会調整アプリを作りました。',
         },
+        hobby12: {
+          title: 'AI活用推進エージェント「Kodama」',
+          description:
+            '「AI入れたけど使われない問題」に終止符を打つための社内Webアプリを開発しました。',
+        },
       },
       skillNames: {
         php: 'PHP（Laravel、CakePHP）',
@@ -451,6 +456,11 @@ export const translations: Translations = {
           title: 'Enjin | Drinking Party Planner',
           description:
             'A LINE-integrated drinking-party planner that is fun for both organizers and guests.',
+        },
+        hobby12: {
+          title: 'AI Adoption Agent "Kodama"',
+          description:
+            'I developed an internal web app to put an end to the "we introduced AI, but nobody uses it" problem.',
         },
       },
       skillNames: {

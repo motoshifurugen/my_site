@@ -210,6 +210,14 @@ export const useWorks = () => {
       tags: ['LINE', t.skills.tags.personalDevelopment],
       date: '2026-09',
     },
+    {
+      src: '/images/works/hobby_12.png',
+      alt: 'hobby12',
+      title: t.skills.works.hobby12.title,
+      description: t.skills.works.hobby12.description,
+      tags: ['Azure', 'AIエージェント', t.skills.tags.teamDevelopment],
+      date: '2026-05',
+    },
   ]
 
   // 日付で降順ソート
