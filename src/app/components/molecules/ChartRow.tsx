@@ -1,16 +1,6 @@
 import React from 'react'
+import type { Skill } from '../../(pages)/skills/skills'
 import { useI18n } from '../../../i18n/context'
-
-interface Period {
-  start: number
-  end: number
-}
-
-interface Skill {
-  name: string
-  periods: Period[]
-  total: number
-}
 
 interface ChartRowProps {
   skill: Skill
