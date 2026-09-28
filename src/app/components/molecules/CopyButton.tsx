@@ -21,7 +21,11 @@ const CopyButton: React.FC<Props> = ({ code }) => {
 
   return (
     <>
-      <button className={styles.button} onClick={handleCopy}>
+      <button
+        className={styles.button}
+        onClick={handleCopy}
+        aria-label={isCopied ? 'コピーしました' : 'コードをコピー'}
+      >
         {isCopied ? <BiCheck /> : <BiCopy />}
       </button>
       {isCopied && <div className={styles.message}>コピーしました</div>}
