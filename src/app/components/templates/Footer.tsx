@@ -67,6 +67,7 @@ export default function Footer() {
                   <Link
                     key={label}
                     href={href}
+                    aria-label={label}
                     rel="noopener noreferrer"
                     target="_blank"
                   >
