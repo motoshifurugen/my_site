@@ -23,7 +23,8 @@ const TextArrowLinkButton: React.FC<TextArrowLinkButtonProps> = ({
       <h3 className="group-hover:underline">{text}</h3>
 
       {/* テキストの右につける矢印 */}
-      <button
+      <span
+        aria-hidden="true"
         className="
           relative ml-5 size-8
           max-h-[32px] max-w-[32px]
@@ -31,12 +32,11 @@ const TextArrowLinkButton: React.FC<TextArrowLinkButtonProps> = ({
           border-main-black border-opacity-20
           align-middle text-xs text-main-black
           dark:border-main-white dark:text-main-white"
-        type="button"
       >
         <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
           <FontAwesomeIcon icon={faArrowRight} />
         </span>
-      </button>
+      </span>
     </a>
   )
 }
