@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getClientIP } from '../utils/clientIp'
 
 // tweet_idを正規化する関数（文字列として扱う）
-function normalizeTweetId(raw: any): string | null {
+function normalizeTweetId(raw: unknown): string | null {
   if (raw === undefined || raw === null) return null
   const s = String(raw).trim()
   if (!/^\d+$/.test(s)) return null

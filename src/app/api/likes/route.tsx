@@ -127,7 +127,7 @@ async function getLikeCount(articleId: string) {
           likeCount: 0,
           issueNumber: newIssue.data.number,
         }
-      } catch (createError: any) {
+      } catch (createError: unknown) {
         // イシュー作成に失敗した場合（例：重複タイトルなど）
         console.error('イシュー作成エラー:', createError)
 
@@ -143,9 +143,11 @@ async function getLikeCount(articleId: string) {
         }
 
         // それでも見つからない場合はエラーを投げる
-        throw new Error(
-          `いいねイシューの作成に失敗しました: ${createError.message}`,
-        )
+        const message =
+          createError instanceof Error
+            ? createError.message
+            : String(createError)
+        throw new Error(`いいねイシューの作成に失敗しました: ${message}`)
       }
     }
   } catch (error) {
