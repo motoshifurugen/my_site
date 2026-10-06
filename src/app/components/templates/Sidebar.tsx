@@ -2,7 +2,7 @@ import React from 'react'
 import ProfileCard from '../molecules/ProfileCard'
 
 export interface SidebarTypes {
-  SidebarComponents?: React.ReactNode[]
+  SidebarComponents: React.ReactNode[]
 }
 
 const Sidebar: React.FC<SidebarTypes> = ({ SidebarComponents }) => {
@@ -10,7 +10,7 @@ const Sidebar: React.FC<SidebarTypes> = ({ SidebarComponents }) => {
     <aside className="hidden lg:block">
       <ProfileCard />
       <div className="w-full">
-        {SidebarComponents!.map((SidebarComponent) => SidebarComponent)}
+        {SidebarComponents.map((SidebarComponent) => SidebarComponent)}
       </div>
     </aside>
   )
