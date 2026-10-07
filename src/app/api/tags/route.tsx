@@ -1,6 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 
+interface TagDictionaryRow {
+  keyword: string
+  match_type: string
+  priority: number
+}
+
 export async function GET(request: NextRequest) {
   try {
     // 環境変数チェック
@@ -71,7 +77,7 @@ export async function GET(request: NextRequest) {
         description: tag.description,
         createdAt: tag.created_at,
         keywords:
-          tag.tag_dictionary?.map((dict: any) => ({
+          tag.tag_dictionary?.map((dict: TagDictionaryRow) => ({
             keyword: dict.keyword,
             matchType: dict.match_type,
             priority: dict.priority,
