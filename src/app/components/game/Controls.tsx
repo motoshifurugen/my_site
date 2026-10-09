@@ -10,10 +10,18 @@ export function Controls() {
   return (
     <div id="controls">
       <div>
-        <button onClick={() => queueMove('forward')}>▲</button>
-        <button onClick={() => queueMove('left')}>◀</button>
-        <button onClick={() => queueMove('backward')}>▼</button>
-        <button onClick={() => queueMove('right')}>▶</button>
+        <button aria-label="forward" onClick={() => queueMove('forward')}>
+          ▲
+        </button>
+        <button aria-label="left" onClick={() => queueMove('left')}>
+          ◀
+        </button>
+        <button aria-label="backward" onClick={() => queueMove('backward')}>
+          ▼
+        </button>
+        <button aria-label="right" onClick={() => queueMove('right')}>
+          ▶
+        </button>
       </div>
     </div>
   )
