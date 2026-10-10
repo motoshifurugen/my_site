@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { FaGithub } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
 import nextConfig from '../../../../next.config.mjs'
+import { externalLinks } from '../../../config/links'
 import { useI18n } from '../../../i18n/context'
 
 const BASE_PATH = nextConfig.basePath || ''
@@ -29,18 +30,20 @@ const ProfileCard = () => {
           </p>
           <div className="mt-4 flex justify-center space-x-4">
             <Link
-              href="https://github.com/motoshifurugen"
+              href={externalLinks.github}
               rel="noopener noreferrer"
               target="_blank"
+              aria-label="GitHub"
             >
               <div className="text-main-black dark:text-night-white">
                 <FaGithub size={24} />
               </div>
             </Link>
             <Link
-              href="https://x.com/cocoahearts21"
+              href={externalLinks.x}
               rel="noopener noreferrer"
               target="_blank"
+              aria-label="X"
             >
               <div className="text-main-black dark:text-night-white">
                 <FaXTwitter size={24} />
