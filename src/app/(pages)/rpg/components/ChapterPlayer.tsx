@@ -1,5 +1,6 @@
 'use client'
 
+import type { StaticImageData } from 'next/image'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
@@ -581,7 +582,7 @@ const ChapterPlayer = () => {
 
   // キャラクター画像を取得
   const getCharacterImage = (imagePath: string) => {
-    const characterImageMap: Record<string, any> = {
+    const characterImageMap: Record<string, StaticImageData> = {
       'aoba_1.png': aoba1,
       'aoba_2.png': aoba2,
       'aoba_3.png': aoba3,
