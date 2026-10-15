@@ -38,6 +38,8 @@ const HeaderDropdownButton: React.FC<HeaderDropdownButtonProps> = ({
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="flex cursor-pointer items-center"
+          aria-haspopup="true"
+          aria-expanded={isOpen}
         >
           <span className="noto-sans-jp select-none text-lg font-bold text-main-black dark:text-night-white md:text-base">
             {text}
