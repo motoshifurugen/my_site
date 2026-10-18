@@ -5,6 +5,9 @@ import { useEffect, useRef } from 'react'
 
 import type { PhotoRows } from '../types'
 
+// 1 枚分の幅。192px (w-48) + 16px (mx-2)
+const ITEM_WIDTH = 208
+
 // 3 行の写真を左右交互に無限スクロールさせるフィルムロール。
 // rAF でスクロール位置を更新する（重い演出のため親側で dynamic import される）。
 const PhotoFilmRoll = ({ photoRows }: { photoRows: PhotoRows }) => {
@@ -17,8 +20,7 @@ const PhotoFilmRoll = ({ photoRows }: { photoRows: PhotoRows }) => {
 
   useEffect(() => {
     // Initialize row2 position for reverse scroll
-    const itemWidth = 208
-    const setWidth = photoRows[1].length * itemWidth
+    const setWidth = photoRows[1].length * ITEM_WIDTH
     row2X.current = -setWidth
     if (row2Ref.current) {
       row2Ref.current.style.transform = `translateX(${row2X.current}px)`
@@ -29,8 +31,7 @@ const PhotoFilmRoll = ({ photoRows }: { photoRows: PhotoRows }) => {
 
     const animate = () => {
       if (row1Ref.current) {
-        const itemWidth = 208 // 192px (w-48) + 16px (mx-2)
-        const setWidth = photoRows[0].length * itemWidth
+        const setWidth = photoRows[0].length * ITEM_WIDTH
         row1X.current -= speed
         if (Math.abs(row1X.current) >= setWidth) {
           row1X.current += setWidth
@@ -39,8 +40,7 @@ const PhotoFilmRoll = ({ photoRows }: { photoRows: PhotoRows }) => {
       }
 
       if (row2Ref.current) {
-        const itemWidth = 208
-        const setWidth = photoRows[1].length * itemWidth
+        const setWidth = photoRows[1].length * ITEM_WIDTH
         row2X.current += speed
         if (row2X.current >= 0) {
           row2X.current -= setWidth
@@ -49,8 +49,7 @@ const PhotoFilmRoll = ({ photoRows }: { photoRows: PhotoRows }) => {
       }
 
       if (row3Ref.current) {
-        const itemWidth = 208
-        const setWidth = photoRows[2].length * itemWidth
+        const setWidth = photoRows[2].length * ITEM_WIDTH
         row3X.current -= speed
         if (Math.abs(row3X.current) >= setWidth) {
           row3X.current += setWidth
