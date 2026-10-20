@@ -17,7 +17,7 @@
     "deploy": "npm run build && touch out/.nojekyll && git add -f out && git commit -m 'Deploy to GitHub Pages' && git push origin `git subtree split --prefix out master`:gh-pages --force"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.107.0",
+    "@anthropic-ai/sdk": "^0.110.0",
     "@fontsource-variable/dm-sans": "^5.2.8",
     "@fontsource-variable/noto-sans-jp": "^5.2.10",
     "@fontsource-variable/noto-serif-jp": "^5.2.9",
