@@ -149,6 +149,7 @@ export type TranslationKeys = {
       zenn: string
       note: string
     }
+    relatedArticles: string
   }
   announcements: {
     title: string
