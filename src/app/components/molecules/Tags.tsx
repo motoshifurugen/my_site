@@ -1,5 +1,6 @@
 'use client'
 
+import { tagFilterHref } from '@/app/components/molecules/tagFilterHref'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
@@ -25,7 +26,7 @@ const Tags: React.FC<TagsProps> = ({ tags }) => {
   const router = useRouter()
 
   const handleClickTag = (tag: string) => {
-    router.push(`/blog?tag=${encodeURIComponent(tag)}`)
+    router.push(tagFilterHref(tag))
   }
 
   return (

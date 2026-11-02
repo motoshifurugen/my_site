@@ -150,6 +150,12 @@ export type TranslationKeys = {
       note: string
     }
     relatedArticles: string
+    search: {
+      label: string
+      placeholder: string
+      noResults: string
+    }
+    tagList: string
   }
   announcements: {
     title: string
