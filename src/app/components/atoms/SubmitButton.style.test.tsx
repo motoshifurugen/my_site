@@ -3,7 +3,7 @@
 // 単体テスト（Issue #225 UI刷新 3/3 / TDD 先行）。
 //
 // SubmitButton は React のみに依存し、CSS Module も next/* も import しないため、
-// 追加の resolve フックは不要。classic JSX runtime のため React をグローバルに渡す。
+// 追加の resolve フックは不要。
 //
 // 実行: プロジェクトルートで `npm test`（node --import tsx --test）。
 // 実装前は inset 影・uppercase tracking-widest・px-20/px-32 のままのため RED、
@@ -13,7 +13,6 @@ import assert from 'node:assert/strict'
 import { before, test } from 'node:test'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-;(globalThis as Record<string, unknown>).React = React
 
 let SubmitButton: React.FC<{ children: React.ReactNode }>
 before(async () => {

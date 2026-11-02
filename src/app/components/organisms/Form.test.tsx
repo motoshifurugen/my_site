@@ -1,14 +1,8 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { I18nProvider } from '../../../i18n/context'
 import Form from './Form'
-
-// 一部のコンポーネントは React を import せず automatic JSX runtime を前提にしている。
-// tsx は JSX を classic な React.createElement に変換するため、グローバルに React を渡す。
-const globalScope = globalThis as Record<string, unknown>
-globalScope.React = React
 
 // useI18n は Provider を要求するので initialLocale を明示してSSR描画する。
 function renderForm(locale: 'ja' | 'en'): string {

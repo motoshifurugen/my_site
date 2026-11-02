@@ -1,12 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import Loading from './loading'
-
-// tsx は JSX を classic な React.createElement に変換するため、グローバルに React を渡す。
-const globalScope = globalThis as Record<string, unknown>
-globalScope.React = React
 
 test('blog/[slug]/loading: スケルトンが例外なく描画される', () => {
   // Given/When/Then: Server Component の純粋スケルトンが SSR 描画で throw しない

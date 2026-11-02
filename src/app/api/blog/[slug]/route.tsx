@@ -7,9 +7,9 @@ import { NextRequest, NextResponse } from 'next/server'
 
 const GET = async (
   req: NextRequest,
-  { params }: { params: { slug: string } },
+  { params }: { params: Promise<{ slug: string }> },
 ) => {
-  const { slug } = params
+  const { slug } = await params
 
   // パストラバーサル対策: 不正な slug は 404
   if (!isValidSlug(slug)) {

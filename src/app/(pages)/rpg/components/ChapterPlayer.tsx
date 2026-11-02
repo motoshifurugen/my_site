@@ -745,7 +745,8 @@ const ChapterPlayer = () => {
             alt={endingBackgroundAlt}
             fill
             className="object-cover"
-            priority
+            preload
+            fetchPriority="high"
             quality={90}
           />
         </div>
@@ -877,7 +878,8 @@ const ChapterPlayer = () => {
             alt="Blue Leaf"
             fill
             className="object-cover"
-            priority
+            preload
+            fetchPriority="high"
             quality={90}
           />
         </div>
@@ -931,7 +933,8 @@ const ChapterPlayer = () => {
             alt="Blue Leaf"
             fill
             className="object-cover"
-            priority
+            preload
+            fetchPriority="high"
             quality={90}
           />
         </div>
@@ -945,7 +948,8 @@ const ChapterPlayer = () => {
             width={800}
             height={400}
             className="w-auto h-auto max-w-[98vw] md:max-w-6xl max-h-[90vh] object-contain"
-            priority
+            preload
+            fetchPriority="high"
             quality={90}
           />
         </div>
@@ -1085,7 +1089,8 @@ const ChapterPlayer = () => {
           alt={currentScene.background}
           fill
           className="object-cover"
-          priority
+          preload
+          fetchPriority="high"
           quality={90}
         />
       </div>
@@ -1141,7 +1146,8 @@ const ChapterPlayer = () => {
                       width={800}
                       height={1200}
                       className="object-contain h-full w-auto"
-                      priority={index === 0}
+                      preload={index === 0}
+                      fetchPriority={index === 0 ? 'high' : undefined}
                       quality={90}
                     />
                   </div>

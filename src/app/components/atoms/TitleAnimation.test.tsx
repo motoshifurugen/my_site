@@ -40,9 +40,6 @@ register(
   import.meta.url,
 )
 
-// tsx は classic JSX runtime へ変換するため React をグローバルに渡す。
-;(globalThis as Record<string, unknown>).React = React
-
 let TitleAnimation: React.FC
 before(async () => {
   TitleAnimation = (await import('./TitleAnimation'))

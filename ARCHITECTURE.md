@@ -40,8 +40,8 @@ Furugen Island is a personal portfolio and blog website built with modern web te
 ### Core Framework
 | Technology | Version | Purpose |
 |-----------|---------|---------|
-| Next.js | 14.2.35 | React framework with App Router |
-| React | 18 | UI library |
+| Next.js | 16.4.4 | React framework with App Router |
+| React | 19 | UI library |
 | TypeScript | 5 | Type-safe JavaScript |
 
 ### Styling
@@ -156,7 +156,7 @@ my_site/
 ├── next.config.mjs
 ├── tailwind.config.ts
 ├── postcss.config.mjs
-├── .eslintrc.json
+├── eslint.config.mjs
 ├── .prettierrc
 └── vercel.json
 ```

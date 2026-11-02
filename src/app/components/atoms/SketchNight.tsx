@@ -3,9 +3,10 @@
 import { P5CanvasInstance } from '@p5-wrapper/react'
 import dynamic from 'next/dynamic'
 import React, { useEffect, useState } from 'react'
+import { pointerPosition } from './p5Pointer'
 
-const ReactP5Wrapper = dynamic(
-  () => import('@p5-wrapper/react').then((mod) => mod.ReactP5Wrapper),
+const P5Canvas = dynamic(
+  () => import('@p5-wrapper/react').then((mod) => mod.P5Canvas),
   {
     ssr: false,
   },
@@ -90,10 +91,14 @@ const SketchNightSky: React.FC<SketchNightSkyProps> = ({ mode }) => {
       shootingStarTimer--
 
       // クリックで星を追加
-      if (p.mouseIsPressed || p.touches.length > 0) {
-        const x = p.mouseIsPressed ? p.mouseX : p.touches[0].x
-        const y = p.mouseIsPressed ? p.mouseY : p.touches[0].y
-        stars.push({ x, y, size: p.random(5, 20), alpha: 255 })
+      const pointer = pointerPosition(p)
+      if (pointer) {
+        stars.push({
+          x: pointer.x,
+          y: pointer.y,
+          size: p.random(5, 20),
+          alpha: 255,
+        })
       }
     }
 
@@ -102,9 +107,7 @@ const SketchNightSky: React.FC<SketchNightSkyProps> = ({ mode }) => {
     }
   }
 
-  return (
-    <ReactP5Wrapper sketch={sketch} className="absolute inset-0 z-0 h-screen" />
-  )
+  return <P5Canvas sketch={sketch} className="absolute inset-0 z-0 h-screen" />
 }
 
 export default SketchNightSky

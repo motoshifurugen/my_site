@@ -40,7 +40,6 @@ register(
   'data:text/javascript,' + encodeURIComponent(resolveHook),
   import.meta.url,
 )
-;(globalThis as Record<string, unknown>).React = React
 
 let Tags: React.FC<{ tags: string[] }>
 before(async () => {

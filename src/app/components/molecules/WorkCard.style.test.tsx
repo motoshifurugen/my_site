@@ -33,7 +33,6 @@ register(
   'data:text/javascript,' + encodeURIComponent(resolveHook),
   import.meta.url,
 )
-;(globalThis as Record<string, unknown>).React = React
 
 type WorkCardProps = {
   src: string

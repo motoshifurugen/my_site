@@ -14,9 +14,6 @@ register(
   import.meta.url,
 )
 
-// tsx は classic JSX runtime へ変換するため React をグローバルに渡す。
-;(globalThis as Record<string, unknown>).React = React
-
 type CopyButtonComponent = React.FC<{ code: string }>
 
 let CopyButton: CopyButtonComponent

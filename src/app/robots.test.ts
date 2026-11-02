@@ -12,7 +12,15 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { test } from 'node:test'
 import { SITE_URL } from '../config/site'
-import robots from './robots'
+import * as robotsRoute from './robots'
+
+const robots = robotsRoute.default
+
+test('robots: dynamic を force-static にして、output: export のビルドで書き出す', () => {
+  // Given/When: robots.ts が公開する route segment config
+  // Then: Next 16 の output: export では、これがないとページデータの収集で止まる（Issue #173）
+  assert.equal(robotsRoute.dynamic, 'force-static')
+})
 
 test('robots: 全クローラーに全体のクロールを許可し、sitemap の絶対 URL を知らせる', () => {
   // Given/When: Next がビルド時に呼ぶ robots() の戻り値

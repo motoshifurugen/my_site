@@ -10,8 +10,11 @@
 // renderToStaticMarkup は effect を実行しないため defaultLocale の翻訳で安定描画される。
 // works.tsx は画像を文字列パスで参照し、バイナリ import が無いため node:test で解決できる。
 //
+// Issue #173（Next 16 / React 19）では React が属性名を fetchPriority のまま出し、
+// preload の <link> にも同じ属性を付ける。だから <img> タグだけを数え、
+// 属性名の大文字小文字は区別しない（WorkCard.test.tsx と同じ）。
+//
 // 実行: プロジェクトルートで `npm test`（node --import tsx --test）。
-// 実装前は WorkCard が priority/sizes を <Image> へ渡さないため RED、実装後に GREEN。
 
 import assert from 'node:assert/strict'
 import { register } from 'node:module'
@@ -38,11 +41,16 @@ register(
   import.meta.url,
 )
 
-// tsx は classic JSX runtime へ変換するため React をグローバルに渡す。
-;(globalThis as Record<string, unknown>).React = React
+// preload の <link> に付く属性を数えないよう、描画結果から <img> タグだけを取り出す。
+function renderedImgs(html: string): string[] {
+  const tags = html.match(/<img\b[^>]*>/g)
+  assert.ok(tags, '<img> を描画する')
+  return tags!
+}
 
-const countOccurrences = (haystack: string, needle: string): number =>
-  haystack.split(needle).length - 1
+const FETCH_PRIORITY_HIGH = /fetchpriority="high"/i
+const LAZY = 'loading="lazy"'
+const SIZES = 'sizes="(min-width: 768px) 33vw, 100vw"'
 
 let WorkList: React.FC
 let I18nProvider: React.FC<{ children: React.ReactNode }>
@@ -62,31 +70,30 @@ const renderList = (): string =>
 test('WorkList: 先頭カードのみ fetchpriority="high"（LCP を 1 枚に限定）', () => {
   // Given: works 一覧
   // When: WorkList を描画する
-  const html = renderList()
+  const imgs = renderedImgs(renderList())
   // Then: preload 競合を避けるため priority は先頭 1 枚のみ
-  assert.equal(countOccurrences(html, 'fetchpriority="high"'), 1)
+  const highIndexes = imgs
+    .map((img, index) => (FETCH_PRIORITY_HIGH.test(img) ? index : -1))
+    .filter((index) => index >= 0)
+  assert.deepEqual(highIndexes, [0])
 })
 
 test('WorkList: 先頭以外のカードは loading="lazy"（複数枚が遅延読み込み）', () => {
   // Given: works は複数件存在する
   // When: WorkList を描画する
-  const html = renderList()
+  const imgs = renderedImgs(renderList())
   // Then: 先頭を除く全カードが遅延読み込みになる（2 枚以上）
-  assert.ok(countOccurrences(html, 'loading="lazy"') >= 2)
+  const rest = imgs.slice(1)
+  assert.ok(rest.length >= 2)
+  assert.ok(rest.every((img) => img.includes(LAZY)))
+  assert.ok(!imgs[0].includes(LAZY))
 })
 
-test('WorkList: 全カードの <Image> に sizes を明示する', () => {
+test('WorkList: 全カードの <img> に sizes を明示する', () => {
   // Given: works 一覧
   // When: WorkList を描画する
-  const html = renderList()
-  // Then: sizes 出力数は画像数（priority + lazy）と一致する
-  const sizesCount = countOccurrences(
-    html,
-    'sizes="(min-width: 768px) 33vw, 100vw"',
-  )
-  const imageCount =
-    countOccurrences(html, 'fetchpriority="high"') +
-    countOccurrences(html, 'loading="lazy"')
-  assert.ok(imageCount >= 2)
-  assert.equal(sizesCount, imageCount)
+  const imgs = renderedImgs(renderList())
+  // Then: どの画像にもグリッド構成に対応した sizes が付く
+  assert.ok(imgs.length >= 2)
+  assert.ok(imgs.every((img) => img.includes(SIZES)))
 })

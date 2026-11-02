@@ -16,12 +16,10 @@
 
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { I18nProvider } from '../../../i18n/context'
 import { translations } from '../../../i18n/translations'
 import MessageBoard from './MessageBoard'
-;(globalThis as Record<string, unknown>).React = React
 
 function renderBoard(locale: 'ja' | 'en'): string {
   return renderToStaticMarkup(
