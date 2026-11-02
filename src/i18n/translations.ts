@@ -231,6 +231,7 @@ export const translations: Translations = {
         zenn: '技術記事は Zenn へ',
         note: 'ラフな雑記は note へ',
       },
+      relatedArticles: '関連記事',
     },
     announcements: {
       title: 'News',
@@ -510,6 +511,7 @@ export const translations: Translations = {
         zenn: 'Tech articles on Zenn',
         note: 'Casual notes on note',
       },
+      relatedArticles: 'Related Articles',
     },
     announcements: {
       title: 'News',

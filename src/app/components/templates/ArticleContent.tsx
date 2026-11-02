@@ -8,10 +8,11 @@ import Highlight from '@/app/components/atoms/Highlight'
 import CodeBlock from '@/app/components/molecules/CodeBlock'
 import LikeButton from '@/app/components/molecules/LikeButton'
 import Tags from '@/app/components/molecules/Tags'
+import RelatedArticles from '@/app/components/organisms/RelatedArticles'
 import Sidebar from '@/app/components/templates/Sidebar'
 
 import EmbedArticle from '@/app/components/molecules/EmbedArticle'
-import type { Post } from '@/types/posts'
+import type { Post, PostMeta } from '@/types/posts'
 import 'prismjs/themes/prism-tomorrow.css'
 import React, { ReactNode } from 'react'
 
@@ -19,6 +20,7 @@ import styles from './ArticleContent.module.css'
 
 interface ArticleContentProps {
   blogArticle: Post
+  relatedPosts: PostMeta[]
   SidebarComponents: React.ReactNode[]
 }
 
@@ -69,6 +71,7 @@ const codeBlockComponents = {
 
 const ArticleContent: React.FC<ArticleContentProps> = ({
   blogArticle,
+  relatedPosts,
   SidebarComponents,
 }) => {
   return (
@@ -109,6 +112,8 @@ const ArticleContent: React.FC<ArticleContentProps> = ({
             }}
           />
         </div>
+        {/* .target-toc の外に置き、関連記事の見出しを目次に混ぜない */}
+        <RelatedArticles posts={relatedPosts} />
       </div>
       <div className="flex-grow lg:ml-10">
         <Sidebar SidebarComponents={SidebarComponents} />

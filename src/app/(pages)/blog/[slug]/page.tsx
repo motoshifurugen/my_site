@@ -1,3 +1,4 @@
+import { getAllPostsMeta } from '@/app/api/utils/getPostData'
 import Toc from '@/app/components/molecules/Toc'
 import ArticleContent from '@/app/components/templates/ArticleContent'
 import { baseOpenGraph } from '@/config/site'
@@ -5,6 +6,7 @@ import { Metadata } from 'next'
 import { buildArticleDescription } from './articleDescription'
 import { buildBlogPostingJsonLd, serializeJsonLd } from './blogPostingJsonLd'
 import { getBlogArticle } from './page.server'
+import { selectRelatedPosts } from './relatedPosts'
 
 // 静的書き出し（output: export）で [slug] を事前生成するため、route セグメントから
 // generateStaticParams を公開する（Next は page.server.tsx 側の export を拾わない）。
@@ -44,6 +46,8 @@ export default async function BlogArticlePage({
   params: { slug: string }
 }) {
   const blogArticle = await getBlogArticle(params.slug)
+  // 関連記事はビルド時にローカルの記事一覧から選ぶ（実行時 API を増やさない）
+  const relatedPosts = selectRelatedPosts(blogArticle, await getAllPostsMeta())
 
   return (
     <section>
@@ -55,6 +59,7 @@ export default async function BlogArticlePage({
       />
       <ArticleContent
         blogArticle={blogArticle}
+        relatedPosts={relatedPosts}
         SidebarComponents={[<Toc key="toc" />]}
       />
     </section>

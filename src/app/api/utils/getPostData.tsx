@@ -58,8 +58,9 @@ export async function getAllPosts(): Promise<Post[]> {
   return posts.filter((post) => !post.tags.includes(LIMITED_TAG))
 }
 
-// 無効な日付は最小値（エポック）として扱い、ソートを安全にする
-const parseDateMs = (value: string): number => {
+// 無効な日付は最小値（エポック）として扱い、ソートを安全にする。
+// 関連記事（blog/[slug]/relatedPosts.ts）の並び順も一覧と同じ解釈にするため公開する。
+export const parseDateMs = (value: string): number => {
   const time = new Date(value).getTime()
   return Number.isNaN(time) ? 0 : time
 }
