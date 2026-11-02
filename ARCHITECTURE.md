@@ -659,3 +659,11 @@ The custom domain (`furugen-island.com`) is configured outside this repository (
 2. **API Validation**: Input validation on all API routes
 3. **CORS**: API routes handle cross-origin appropriately
 4. **Authentication**: Service role keys for database operations
+
+### Supabase keys and Row Level Security
+
+- Use the service-role key (`SUPABASE_SERVICE_ROLE_KEY`) only on the server: the API routes on Vercel and the Python scripts in GitHub Actions. Never give it a `NEXT_PUBLIC_` prefix.
+- Do not use the anon (publishable) key in the frontend. The read policy on `tanka_likes` lets the anon key read every row, including `user_ip`. `src/supabase-rls-migration.test.ts` fails if `NEXT_PUBLIC_SUPABASE` or `SUPABASE_ANON_KEY` appears under `src`.
+- RLS is a second layer. `scripts/migrations/008_enable_rls.sql` enables it on every table. Only `tanka`, `tags`, and `tanka_likes` have a policy, and it allows `SELECT` to `anon` and `authenticated`. No table has a write policy, so only the service role can write.
+- The service role bypasses RLS. RLS does not protect the data if the service-role key leaks.
+- When you add a table, enable RLS on it in the same migration. The test above fails if a table created in `scripts/migrations` lacks `ENABLE ROW LEVEL SECURITY`.
