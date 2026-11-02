@@ -1,13 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import ErrorView from './ErrorView'
-
-// 一部のコンポーネントは React を import せず automatic JSX runtime を前提にしている。
-// tsx は JSX を classic な React.createElement に変換するため、グローバルに React を渡す。
-const globalScope = globalThis as Record<string, unknown>
-globalScope.React = React
 
 // ErrorView は context 非依存（props のみ）で設計される。
 // global-error.tsx は I18nProvider/ThemeProvider/Router context が存在しない crash path で使うため、

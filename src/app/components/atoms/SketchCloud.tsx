@@ -3,10 +3,11 @@
 import { P5CanvasInstance } from '@p5-wrapper/react'
 import dynamic from 'next/dynamic'
 import React, { useEffect, useState } from 'react'
+import { pointerPosition } from './p5Pointer'
 
-// ReactP5Wrapperを動的に読み込み、SSRを無効化
-const ReactP5Wrapper = dynamic(
-  () => import('@p5-wrapper/react').then((mod) => mod.ReactP5Wrapper),
+// p5 は import した時点で navigator などブラウザの API に触るので、サーバーでは読み込まない
+const P5Canvas = dynamic(
+  () => import('@p5-wrapper/react').then((mod) => mod.P5Canvas),
   {
     ssr: false,
   },
@@ -82,11 +83,10 @@ const SketchCloud: React.FC<SketchCloudProps> = ({ mode }) => {
 
       p.noStroke()
 
-      if (p.mouseIsPressed || p.touches.length > 0) {
+      const pointer = pointerPosition(p)
+      if (pointer) {
         clicked = true
-        const x = p.mouseIsPressed ? p.mouseX : p.touches[0].x
-        const y = p.mouseIsPressed ? p.mouseY : p.touches[0].y
-        cloud_box.push({ x, y, size: 75, alpha: 255 })
+        cloud_box.push({ x: pointer.x, y: pointer.y, size: 75, alpha: 255 })
       }
 
       for (let i = 0; i < cloud_box.length; i++) {
@@ -110,9 +110,7 @@ const SketchCloud: React.FC<SketchCloudProps> = ({ mode }) => {
     }
   }
 
-  return (
-    <ReactP5Wrapper sketch={sketch} className="absolute inset-0 z-0 h-screen" />
-  )
+  return <P5Canvas sketch={sketch} className="absolute inset-0 z-0 h-screen" />
 }
 
 export default SketchCloud

@@ -42,7 +42,6 @@ register(
   'data:text/javascript,' + encodeURIComponent(resolveHook),
   import.meta.url,
 )
-;(globalThis as Record<string, unknown>).React = React
 
 const post: PostMeta = {
   slug: 'hello-world',

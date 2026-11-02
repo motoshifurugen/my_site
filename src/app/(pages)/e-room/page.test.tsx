@@ -24,9 +24,6 @@ register(
   import.meta.url,
 )
 
-// tsx は classic JSX runtime へ変換するため React をグローバルに渡す。
-;(globalThis as Record<string, unknown>).React = React
-
 let ThankYouPage: React.FC
 before(async () => {
   ThankYouPage = (await import('./page')).default as unknown as React.FC

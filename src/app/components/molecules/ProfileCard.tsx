@@ -22,7 +22,8 @@ const ProfileCard = () => {
           className="rounded-full"
           width={100}
           height={100}
-          priority
+          preload
+          fetchPriority="high"
         />
         <div className="ml-4">
           <p className="text-lg font-semibold text-main-black dark:text-night-white">

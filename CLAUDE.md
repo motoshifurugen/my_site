@@ -4,7 +4,7 @@ This file provides context for AI assistants working with this project.
 
 ## Project Overview
 
-**Furugen Island** - A personal portfolio and blog website built with Next.js 14 (App Router), featuring:
+**Furugen Island** - A personal portfolio and blog website built with Next.js 16 (App Router), featuring:
 - MDX-based blog system with code highlighting and math rendering
 - 3D game built with Three.js
 - Tanka (Japanese poetry) collection with Supabase backend
@@ -13,7 +13,7 @@ This file provides context for AI assistants working with this project.
 
 ## Tech Stack
 
-- **Framework**: Next.js 14.2.35 (App Router)
+- **Framework**: Next.js 16.4.4 (App Router)
 - **Language**: TypeScript 5 (strict mode)
 - **Styling**: Tailwind CSS 3.4.10
 - **State Management**: Zustand (game), React Context (i18n, theme)

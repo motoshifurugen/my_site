@@ -27,7 +27,8 @@ export default function Home() {
             alt="island"
             width={320}
             height={320}
-            priority
+            preload
+            fetchPriority="high"
           />
         </div>
         <div className="flex w-full items-center md:w-1/2 md:justify-center">

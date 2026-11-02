@@ -22,7 +22,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 
 // next/link を href/className/style/子要素のみ反映する素の <a> へ差し替える。
 // data: URL モジュールは bare specifier 'react' を解決できないため、
-// テストが設定する globalThis.React（classic JSX runtime 用）を参照する。
+// テストが設定する globalThis.React を参照する。
 const linkMock =
   'data:text/javascript,' +
   encodeURIComponent(
@@ -45,7 +45,7 @@ register(
   import.meta.url,
 )
 
-// tsx は classic JSX runtime へ変換するため React をグローバルに渡す。
+// next/link の data: モックが React.createElement を呼ぶため React をグローバルに渡す。
 ;(globalThis as Record<string, unknown>).React = React
 
 type HeaderLinkButtonComponent = React.FC<{

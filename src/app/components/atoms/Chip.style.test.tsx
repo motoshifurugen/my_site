@@ -12,7 +12,6 @@ import assert from 'node:assert/strict'
 import { before, test } from 'node:test'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-;(globalThis as Record<string, unknown>).React = React
 
 let Chip: React.FC<{ children: React.ReactNode; className?: string }>
 before(async () => {

@@ -14,7 +14,7 @@ import Sidebar from '@/app/components/templates/Sidebar'
 import EmbedArticle from '@/app/components/molecules/EmbedArticle'
 import type { Post, PostMeta } from '@/types/posts'
 import 'prismjs/themes/prism-tomorrow.css'
-import React, { ReactNode } from 'react'
+import React, { JSX, ReactNode } from 'react'
 
 import styles from './ArticleContent.module.css'
 

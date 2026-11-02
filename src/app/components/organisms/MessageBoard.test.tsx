@@ -1,15 +1,9 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { I18nProvider } from '../../../i18n/context'
 import { translations } from '../../../i18n/translations'
 import MessageBoard from './MessageBoard'
-
-// 一部のコンポーネントは React を import せず automatic JSX runtime を前提にしている。
-// tsx は JSX を classic な React.createElement に変換するため、グローバルに React を渡す。
-const globalScope = globalThis as Record<string, unknown>
-globalScope.React = React
 
 // `as any` 撤廃後も MessageBoard が翻訳キーを正しく解決して描画できることを保証する統合テスト。
 // MessageBoard + MessageData + translations + i18n context を横断する。

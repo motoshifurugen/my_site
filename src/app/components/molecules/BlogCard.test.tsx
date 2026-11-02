@@ -45,9 +45,6 @@ register(
   import.meta.url,
 )
 
-// tsx は classic JSX runtime へ変換するため React をグローバルに渡す。
-;(globalThis as Record<string, unknown>).React = React
-
 const post: PostMeta = {
   slug: 'hello-world',
   title: 'はじめての記事',

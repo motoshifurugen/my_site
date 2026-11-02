@@ -32,7 +32,8 @@ const WorkCard: React.FC<WorkCardProps> = ({
         height={500}
         className="w-full"
         sizes="(min-width: 768px) 33vw, 100vw"
-        priority={priority}
+        preload={priority}
+        fetchPriority={priority ? 'high' : undefined}
       />
       <div className="my-2 py-2 md:py-4">
         <div className="noto-sans-jp mb-2 text-lg font-bold text-main-black dark:text-night-white md:text-xl">

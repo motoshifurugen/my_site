@@ -29,7 +29,7 @@ import { I18nProvider } from '../../i18n'
 // next/link は AppRouter コンテキストに依存するため、href と children のみを
 // 反映する素の <a> へ差し替える。これにより内部リンクの href を SSR markup で検証できる。
 // data: URL モジュールは bare specifier 'react' を解決できないため import せず、
-// テストが設定する globalThis.React（classic JSX runtime 用）を参照する
+// テストが設定する globalThis.React を参照する
 // （BlogCard.test.tsx の navMock と同じ無 import パターン）。
 const linkMock =
   'data:text/javascript,' +
@@ -50,7 +50,7 @@ register(
   import.meta.url,
 )
 
-// tsx は classic JSX runtime へ変換するため React をグローバルに渡す。
+// next/link の data: モックが React.createElement を呼ぶため React をグローバルに渡す。
 ;(globalThis as Record<string, unknown>).React = React
 
 type YomoyoPageComponent = React.FC

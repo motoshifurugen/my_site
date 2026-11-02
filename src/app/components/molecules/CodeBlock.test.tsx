@@ -15,9 +15,6 @@ register(
   import.meta.url,
 )
 
-// tsx は classic JSX runtime（React.createElement）へ変換するため React をグローバルに渡す。
-;(globalThis as Record<string, unknown>).React = React
-
 type CodeBlockComponent = React.FC<{
   language?: string
   fileName?: string

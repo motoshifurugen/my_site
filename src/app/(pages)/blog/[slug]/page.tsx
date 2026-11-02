@@ -15,9 +15,10 @@ export { generateStaticParams } from './page.server'
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }): Promise<Metadata> {
-  const blogArticle = await getBlogArticle(params.slug)
+  const { slug } = await params
+  const blogArticle = await getBlogArticle(slug)
   const description = buildArticleDescription(blogArticle.content)
 
   // noindexタグが含まれている場合はrobotsにnoindexを追加
@@ -43,9 +44,10 @@ export async function generateMetadata({
 export default async function BlogArticlePage({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
-  const blogArticle = await getBlogArticle(params.slug)
+  const { slug } = await params
+  const blogArticle = await getBlogArticle(slug)
   // 関連記事はビルド時にローカルの記事一覧から選ぶ（実行時 API を増やさない）
   const relatedPosts = selectRelatedPosts(blogArticle, await getAllPostsMeta())
 

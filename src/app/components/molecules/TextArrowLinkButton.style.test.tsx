@@ -7,7 +7,7 @@
 //
 // TextArrowLinkButton は next.config.mjs と FontAwesome に依存するが、いずれも
 // SSR 描画で問題なく解決される。CSS Module も next/navigation も import しないため
-// 追加の resolve フックは不要。classic JSX runtime のため React をグローバルに渡す。
+// 追加の resolve フックは不要。
 //
 // 実行: プロジェクトルートで `npm test`（node --import tsx --test）。
 // 実装前は塗り反転のままのため RED、実装後に GREEN を期待する。
@@ -16,7 +16,6 @@ import assert from 'node:assert/strict'
 import { before, test } from 'node:test'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-;(globalThis as Record<string, unknown>).React = React
 
 let TextArrowLinkButton: React.FC<{ text: string; href: string }>
 before(async () => {

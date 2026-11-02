@@ -43,7 +43,7 @@ register(
   import.meta.url,
 )
 
-// tsx は classic JSX runtime へ変換するため React をグローバルに渡す。
+// next/link の data: モックが React.createElement を呼ぶため React をグローバルに渡す。
 ;(globalThis as Record<string, unknown>).React = React
 
 type HeaderDropdownButtonComponent = React.FC<{

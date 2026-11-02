@@ -1,6 +1,9 @@
 import { getAllPosts } from '@/app/api/utils/getPostData'
 import { MetadataRoute } from 'next'
 
+// output: export ではビルド時に sitemap.xml として書き出す。
+export const dynamic = 'force-static'
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://furugen-island.com/my_site'
   const currentDate = new Date().toISOString()
