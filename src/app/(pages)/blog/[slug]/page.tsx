@@ -2,6 +2,7 @@ import Toc from '@/app/components/molecules/Toc'
 import ArticleContent from '@/app/components/templates/ArticleContent'
 import { baseOpenGraph } from '@/config/site'
 import { Metadata } from 'next'
+import { buildArticleDescription } from './articleDescription'
 import { buildBlogPostingJsonLd, serializeJsonLd } from './blogPostingJsonLd'
 import { getBlogArticle } from './page.server'
 
@@ -15,7 +16,7 @@ export async function generateMetadata({
   params: { slug: string }
 }): Promise<Metadata> {
   const blogArticle = await getBlogArticle(params.slug)
-  const description = blogArticle.content.slice(0, 50)
+  const description = buildArticleDescription(blogArticle.content)
 
   // noindexタグが含まれている場合はrobotsにnoindexを追加
   const robots =

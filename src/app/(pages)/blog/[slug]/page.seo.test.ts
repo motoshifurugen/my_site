@@ -7,7 +7,10 @@
 //       title / description は書かない（ページの値を引き継がせる）。
 //   (2) <section> の先頭に BlogPosting の JSON-LD を <script type="application/ld+json"> で出す。
 //       中身は必ず serializeJsonLd を通す（`<` をエスケープして </script> で抜け出されないようにする）。
-// 既存の title / description（content.slice(0, 50)）/ noindex の robots は変えない。
+// 既存の title / noindex の robots は変えない。description は本文の先頭 50 文字から
+// Markdown 記号や HTML タグを除いた要約文にする（buildArticleDescription）。
+// 理由: content.slice(0, 50) のままだと先頭の空行や `##` 等の記号、埋め込み HTML が
+// そのまま og:description / twitter:description に出てリンクシェアの見た目が崩れる。
 //
 // page.tsx は CSS を import するコンポーネントを読み込むので node test から import できない。
 // layout.font.test.ts と同じく、ソースの静的検査で契約を固定する。空白・改行・末尾カンマは
@@ -118,11 +121,19 @@ test('page: 既存の title（記事タイトル）を変えない', () => {
   )
 })
 
-test('page: 既存の description（本文の先頭 50 文字）を変えない', () => {
+test('page: description は本文から組み立てた要約文を使う', () => {
+  assert.ok(
+    namedImports(page, './articleDescription').includes(
+      'buildArticleDescription',
+    ),
+    'buildArticleDescription を import する',
+  )
   const compact = stripWhitespace(metadataSource)
   assert.ok(
-    compact.includes('constdescription=blogArticle.content.slice(0,50)'),
-    'content.slice(0, 50) を保つ',
+    compact.includes(
+      'constdescription=buildArticleDescription(blogArticle.content)',
+    ),
+    'buildArticleDescription(blogArticle.content) を使う',
   )
   assert.ok(compact.includes('description:description,'), 'description を返す')
 })
