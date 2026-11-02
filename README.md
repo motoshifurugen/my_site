@@ -53,6 +53,7 @@ http://localhost:3000/my_site でサイトが表示されます。
 本番は静的サイトと API の二元構成です。
 
 - **静的サイト**: `main` ブランチへの push をトリガーに、GitHub Actions（`.github/workflows/nextjs.yml`）が静的エクスポートして GitHub Pages へ自動デプロイします。これが正規のデプロイ経路です。
+  - 静的エクスポートは動的な API ルートハンドラをビルドできません。そこで CI はビルドの前に `src/app/api/**/route.ts(x)` を削除します。手順の詳細とローカルでの再現方法は [ARCHITECTURE.md](./ARCHITECTURE.md) の「Deployment」にあります。
 - **API**: Vercel にホスティングしています。静的サイトからは `NEXT_PUBLIC_API_URL` 経由で API を呼び出します。
 
 > `package.json` の `deploy` スクリプト（`gh-pages` ブランチへの手動 subtree push）は旧構成の名残で、現在の `next.config.mjs` では `out/` を生成しないため動作しません。デプロイは上記 CI を使用してください。

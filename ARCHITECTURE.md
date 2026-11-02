@@ -607,10 +607,34 @@ The site is split into two hosting targets:
 ```
 
 **Canonical build & deploy (`.github/workflows/nextjs.yml`)**:
+
 1. Triggered by a push to `main` (or manual `workflow_dispatch`).
 2. `actions/configure-pages` injects `output: export` (via `static_site_generator: next`) so the build produces a static export — `next.config.mjs` keeps `output: "export"` commented out and relies on this.
-3. `NEXT_PUBLIC_API_URL` is set to the Vercel API URL, then `next build` emits the static site to `out/`.
-4. `actions/upload-pages-artifact` uploads `out/`, and `actions/deploy-pages` publishes it to GitHub Pages.
+3. `NEXT_PUBLIC_API_URL` is set to the Vercel API URL.
+4. The step `Exclude API route handlers from static export` deletes every route handler before the build:
+   ```bash
+   find src/app/api \( -name 'route.tsx' -o -name 'route.ts' \) -delete
+   ```
+   `output: export` cannot build `force-dynamic` or request-dependent route handlers (it stops with `export const dynamic = "force-dynamic" on page "/api/og-fetch" cannot be used with "output: export"`). The API runs on Vercel, so the static build does not need them.
+5. `next build` emits the static site to `out/` (no `out/api`).
+6. `actions/upload-pages-artifact` uploads `out/`, and `actions/deploy-pages` publishes it to GitHub Pages.
+
+The exclusion holds only while these rules hold:
+
+- Put dynamic route handlers only in `src/app/api/**/route.ts(x)`. A handler elsewhere survives the delete and breaks the Pages build.
+- Do not import a route file from a page or component. CI deletes it, so the import breaks the build.
+- Non-route modules under `src/app/api` stay in the build. For example, the blog pages and `src/app/sitemap.ts` import `src/app/api/utils/getPostData.tsx`, so it must keep working in a static build.
+
+**Reproducing the Pages build locally**:
+
+Run these steps in a separate worktree, not in your checkout. Steps 3 and 4 edit and delete tracked files, so running them in your checkout would destroy uncommitted changes to `src/app/api` and `next.config.mjs`. The worktree checks out `HEAD`, so commit what you want to test first.
+
+1. `git worktree add --detach ../my_site-pages-build HEAD`, then run steps 2–5 inside `../my_site-pages-build`.
+2. Run `npm ci` so `node_modules` matches the lock file. Stale dependencies can fail the build with type errors unrelated to the export.
+3. Uncomment `// output: "export",` in `next.config.mjs`.
+4. `find src/app/api \( -name 'route.tsx' -o -name 'route.ts' \) -delete`
+5. `npx next build`, then check that `out/` exists and `out/api` does not.
+6. From your checkout, run `git worktree remove --force ../my_site-pages-build`. The worktree has modified tracked files, so `git worktree remove` refuses without `--force`.
 
 The custom domain (`furugen-island.com`) is configured outside this repository (no `CNAME` file is tracked here).
 

@@ -146,6 +146,7 @@ return <h1>{t.blog.title}</h1>
 - **API**: Vercel, reached from the static site via `NEXT_PUBLIC_API_URL`.
 - **Base Path**: `/my_site`
 - **Build**: Prettier formatting runs before build; CI injects `output: export` (`static_site_generator: next`) to produce the static `out/`.
+- **API routes in the static export**: before the build, CI deletes every `src/app/api/**/route.ts(x)` (`output: export` cannot build dynamic route handlers; the API runs on Vercel). Put dynamic route handlers only there, and never import a route file from a page or component. See ARCHITECTURE.md "Deployment" for the local reproduction steps.
 - **Note**: the `deploy` script in `package.json` is legacy and does not work with the current config (`output: "export"` is disabled, so `out/` is not generated).
 
 ## Notes for AI Assistants
