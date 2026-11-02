@@ -232,6 +232,12 @@ export const translations: Translations = {
         note: 'ラフな雑記は note へ',
       },
       relatedArticles: '関連記事',
+      search: {
+        label: '記事を検索',
+        placeholder: 'タイトル・タグ・本文で検索',
+        noResults: '該当する記事がありません',
+      },
+      tagList: 'カテゴリ',
     },
     announcements: {
       title: 'News',
@@ -512,6 +518,12 @@ export const translations: Translations = {
         note: 'Casual notes on note',
       },
       relatedArticles: 'Related Articles',
+      search: {
+        label: 'Search articles',
+        placeholder: 'Search by title, tag, or text',
+        noResults: 'No matching articles',
+      },
+      tagList: 'Categories',
     },
     announcements: {
       title: 'News',

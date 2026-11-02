@@ -196,6 +196,8 @@ tags: ["tag1", "tag2"]
 - Auto-generated table of contents
 - Like counter (GitHub Issues backend)
 - Tag-based filtering
+- Search box on the blog list: filters by title, tag, and the start of the body. The search runs in the browser against `/blog/search-index.json`, which is written at build time.
+- Tag list with post counts: clicking a tag shows only its posts
 
 ### 2. 3D Game
 
@@ -621,7 +623,8 @@ The site is split into two hosting targets:
 
 The exclusion holds only while these rules hold:
 
-- Put dynamic route handlers only in `src/app/api/**/route.ts(x)`. A handler elsewhere survives the delete and breaks the Pages build.
+- Put dynamic route handlers only in `src/app/api/**/route.ts(x)`. A dynamic handler elsewhere survives the delete and breaks the Pages build.
+- A `force-static` route handler may live outside `src/app/api`. It survives the delete, and the Pages build writes its response to `out/` (for example, `src/app/(pages)/blog/search-index.json/route.ts` becomes `out/blog/search-index.json`).
 - Do not import a route file from a page or component. CI deletes it, so the import breaks the build.
 - Non-route modules under `src/app/api` stay in the build. For example, the blog pages and `src/app/sitemap.ts` import `src/app/api/utils/getPostData.tsx`, so it must keep working in a static build.
 

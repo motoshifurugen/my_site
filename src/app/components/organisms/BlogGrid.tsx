@@ -1,20 +1,17 @@
 import BlogCard from '@/app/components/molecules/BlogCard'
-import { useLikeCounts } from '@/app/hooks/useLikeCounts'
 import { useI18n } from '@/i18n'
 import { PostMeta } from '@/types/posts'
 import { useState } from 'react'
 
 interface BlogGridProps {
   blogData: PostMeta[]
+  // 検索で blogData が打鍵ごとに変わるため、いいね数は親が公開記事すべてについて 1 回だけ取って渡す
+  likeCounts: Record<string, number>
 }
 
-const BlogGrid: React.FC<BlogGridProps> = ({ blogData }) => {
+const BlogGrid: React.FC<BlogGridProps> = ({ blogData, likeCounts }) => {
   const { t } = useI18n()
   const [loadIndex, setLoadIndex] = useState(10)
-
-  // 一覧全件のいいね数を 1 リクエストでまとめて取得する（Issue #166: N+1 解消）。
-  // 「もっと見る」で表示が増えても再取得しないよう、currentPost ではなく全 blogData を渡す。
-  const likeCounts = useLikeCounts(blogData.map((post) => post.slug))
 
   // blogData は getAllPostsMeta で日付降順に整列済み。state/useEffect を介すと
   // 静的プリレンダー時に初期HTMLのグリッドが空になるため props から直接派生する。

@@ -12,3 +12,12 @@ export type PostMeta = {
   date: string
   tags: string[]
 }
+
+export type PostSearchEntry = PostMeta & {
+  excerpt: string
+}
+
+export type TagCount = {
+  tag: string
+  count: number
+}

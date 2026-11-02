@@ -1,16 +1,21 @@
 'use client'
 
 import AnimatedLine from '@/app/components/atoms/AnimatedLine'
+import PostSearchBox from '@/app/components/molecules/PostSearchBox'
+import TagCountList from '@/app/components/molecules/TagCountList'
 import BlogGrid from '@/app/components/organisms/BlogGrid'
 import ChannelLinks from '@/app/components/organisms/ChannelLinks'
 import PageFace from '@/app/components/organisms/PageFace'
 import styles from '@/app/components/templates/ArticleContent.module.css'
 import MaintenanceTemplate from '@/app/components/templates/MaintenanceTemplate'
 import Sidebar from '@/app/components/templates/Sidebar'
+import { countTags, searchPosts } from '@/app/components/templates/postSearch'
+import { useLikeCounts } from '@/app/hooks/useLikeCounts'
+import { usePostSearchIndex } from '@/app/hooks/usePostSearchIndex'
 import { useI18n } from '@/i18n'
 import { PostMeta } from '@/types/posts'
 import { useRouter, useSearchParams } from 'next/navigation'
-import React, { Suspense } from 'react'
+import React, { Suspense, useState } from 'react'
 import { FiRefreshCw } from 'react-icons/fi'
 import nextConfig from '../../../../next.config.mjs'
 
@@ -22,13 +27,23 @@ interface ArticleListProps {
 }
 
 interface PostListViewProps {
-  posts: PostMeta[]
+  searchablePosts: PostMeta[]
+  query: string
   selectedTag: string | null
+  likeCounts: Record<string, number>
+  searchControls: React.ReactNode
 }
 
-const PostListView: React.FC<PostListViewProps> = ({ posts, selectedTag }) => {
+const PostListView: React.FC<PostListViewProps> = ({
+  searchablePosts,
+  query,
+  selectedTag,
+  likeCounts,
+  searchControls,
+}) => {
   const { t } = useI18n()
   const router = useRouter()
+  const posts = searchPosts(searchablePosts, { query, tag: selectedTag })
 
   return (
     <div className="flex justify-center">
@@ -50,7 +65,14 @@ const PostListView: React.FC<PostListViewProps> = ({ posts, selectedTag }) => {
               <h2>{t.blog.all}</h2>
             )}
           </div>
-          <BlogGrid blogData={posts} />
+          {searchControls}
+          {posts.length === 0 ? (
+            <p className="text-main-black dark:text-night-white">
+              {t.blog.search.noResults}
+            </p>
+          ) : (
+            <BlogGrid blogData={posts} likeCounts={likeCounts} />
+          )}
         </div>
         <div className="mt-16 flex-grow lg:ml-10">
           <Sidebar SidebarComponents={[]} />
@@ -61,19 +83,22 @@ const PostListView: React.FC<PostListViewProps> = ({ posts, selectedTag }) => {
 }
 
 // useSearchParams は静的書き出しで Suspense 境界が必須のため、
-// タグ絞り込みはこの子コンポーネントに隔離する。
-const FilterablePostList: React.FC<ArticleListProps> = ({ initialPosts }) => {
+// タグの読み取りはこの子コンポーネントに隔離する。
+const TagFilteredPostList: React.FC<Omit<PostListViewProps, 'selectedTag'>> = (
+  props,
+) => {
   const searchParams = useSearchParams()
-  const selectedTag = searchParams.get('tag')
-  const posts = selectedTag
-    ? initialPosts.filter((post) => post.tags.includes(selectedTag))
-    : initialPosts
-
-  return <PostListView posts={posts} selectedTag={selectedTag} />
+  // 空の ?tag= は絞り込みなしとして扱う（見出しの真偽判定と揃える）
+  return (
+    <PostListView {...props} selectedTag={searchParams.get('tag') || null} />
+  )
 }
 
 const ArticleList: React.FC<ArticleListProps> = ({ initialPosts }) => {
   const { t } = useI18n()
+  const [query, setQuery] = useState('')
+  const searchIndex = usePostSearchIndex(`${BASE_PATH}/blog/search-index.json`)
+  const likeCounts = useLikeCounts(initialPosts.map((post) => post.slug))
 
   if (!public_flag) {
     return (
@@ -82,6 +107,19 @@ const ArticleList: React.FC<ArticleListProps> = ({ initialPosts }) => {
         imagePath={`${BASE_PATH}/images/cats/coming_soon.png`}
       />
     )
+  }
+
+  const listProps = {
+    // インデックスの読み込みが終わるまでは excerpt の無い一覧でタイトルとタグだけを検索する
+    searchablePosts: searchIndex ?? initialPosts,
+    query,
+    likeCounts,
+    searchControls: (
+      <>
+        <PostSearchBox value={query} onChange={setQuery} />
+        <TagCountList tagCounts={countTags(initialPosts)} />
+      </>
+    ),
   }
 
   return (
@@ -97,10 +135,8 @@ const ArticleList: React.FC<ArticleListProps> = ({ initialPosts }) => {
       </section>
 
       <section>
-        <Suspense
-          fallback={<PostListView posts={initialPosts} selectedTag={null} />}
-        >
-          <FilterablePostList initialPosts={initialPosts} />
+        <Suspense fallback={<PostListView {...listProps} selectedTag={null} />}>
+          <TagFilteredPostList {...listProps} />
         </Suspense>
       </section>
     </>

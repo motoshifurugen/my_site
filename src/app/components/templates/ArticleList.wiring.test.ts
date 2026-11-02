@@ -65,3 +65,121 @@ test('ArticleList: PageFace に説明文（t.blog.lead / mainMessage）を配線
     'mainMessage を配線しない（空要素の余白を残さない）',
   )
 })
+
+// --- 記事検索とタグ一覧の配線（Issue #7 / TDD 先行） ---
+//
+// ArticleList を描画すると BlogGrid・Sidebar などの重い依存を引き込むため、上と同じくソースを読んで
+// 次の配線契約を固定する（比較前に空白を取り除き、Prettier の整形差に依存しない）:
+//   - PostSearchBox と TagCountList を import し、JSX に置く
+//   - 検索と件数は同じフォルダの postSearch（searchPosts・countTags）で行う。
+//     旧来の initialPosts.filter(... includes(selectedTag)) を残さない（絞り込みの規則を 2 か所に持たない）
+//   - インデックスは usePostSearchIndex で `${BASE_PATH}/blog/search-index.json` から取る
+//     （fetch に basePath /my_site は自動で付かない）
+//   - いいね数は公開記事すべての slug で 1 回だけ取り、BlogGrid に likeCounts で渡す
+//   - 0 件のときは t.blog.search.noResults を出す
+//   - サーバー専用（fs を使う）の searchIndex・getPostData を import しない
+
+const compactSource = source.replace(/\s+/g, '')
+
+const importSpecifiers = Array.from(
+  source.matchAll(/from\s+['"]([^'"]+)['"]/g),
+  (match) => match[1],
+)
+
+test('ArticleList: PostSearchBox を import して JSX に置く', () => {
+  assert.match(
+    source,
+    /import\s+PostSearchBox\s+from\s+['"][^'"]*\/PostSearchBox['"]/,
+  )
+  assert.ok(source.includes('<PostSearchBox'), '<PostSearchBox を含む')
+})
+
+test('ArticleList: TagCountList を import して JSX に置く', () => {
+  assert.match(
+    source,
+    /import\s+TagCountList\s+from\s+['"][^'"]*\/TagCountList['"]/,
+  )
+  assert.ok(source.includes('<TagCountList'), '<TagCountList を含む')
+})
+
+test('ArticleList: searchPosts と countTags を postSearch から import する', () => {
+  const match = source.match(
+    /import\s*\{([^}]*)\}\s*from\s*['"][^'"]*postSearch['"]/,
+  )
+  assert.ok(match, 'postSearch から名前付き import する')
+  const names = match![1].split(',').map((name) => name.trim())
+  assert.ok(names.includes('searchPosts'), 'searchPosts を import する')
+  assert.ok(names.includes('countTags'), 'countTags を import する')
+})
+
+test('ArticleList: searchPosts で絞り込み、タグの完全一致フィルタを別に書かない', () => {
+  assert.ok(compactSource.includes('searchPosts('), 'searchPosts( を呼ぶ')
+  assert.ok(
+    !compactSource.includes('.filter((post)=>post.tags.includes(selectedTag))'),
+    '旧来のタグ絞り込みを残さない',
+  )
+})
+
+test('ArticleList: 空の ?tag= は絞り込みなし（null）として searchPosts に渡す', () => {
+  // Given: searchPosts は tag が null のときだけ絞り込みを外し、'' では 0 件になる
+  // Then: URL から読んだ空文字を null にそろえてから渡す
+  assert.ok(
+    compactSource.includes("selectedTag={searchParams.get('tag')||null}"),
+    "selectedTag={searchParams.get('tag') || null} を渡す",
+  )
+})
+
+test('ArticleList: 公開記事すべてからタグの件数を数える', () => {
+  assert.ok(
+    compactSource.includes('countTags(initialPosts)'),
+    'countTags(initialPosts) を呼ぶ',
+  )
+})
+
+test('ArticleList: 検索インデックスを basePath 付きの URL から読み込む', () => {
+  assert.ok(
+    importSpecifiers.some((specifier) =>
+      specifier.endsWith('/usePostSearchIndex'),
+    ),
+    'usePostSearchIndex を import する',
+  )
+  assert.ok(
+    compactSource.includes(
+      'usePostSearchIndex(`${BASE_PATH}/blog/search-index.json`)',
+    ),
+    'usePostSearchIndex(`${BASE_PATH}/blog/search-index.json`) を呼ぶ',
+  )
+})
+
+test('ArticleList: いいね数は公開記事すべての slug で取り、BlogGrid に渡す', () => {
+  assert.ok(
+    compactSource.includes('useLikeCounts(initialPosts.map('),
+    'useLikeCounts(initialPosts.map(...)) を呼ぶ',
+  )
+  const blogGridTag = compactSource.match(/<BlogGrid[^>]*\/>/)
+  assert.ok(blogGridTag, '<BlogGrid /> を描画する')
+  assert.ok(
+    blogGridTag![0].includes('likeCounts={'),
+    '<BlogGrid> に likeCounts を渡す',
+  )
+})
+
+test('ArticleList: 該当する記事が無いときの文言を出す', () => {
+  assert.ok(
+    source.includes('t.blog.search.noResults'),
+    't.blog.search.noResults を参照する',
+  )
+})
+
+test('ArticleList: サーバー専用のモジュールを import しない', () => {
+  for (const specifier of importSpecifiers) {
+    assert.ok(
+      !specifier.endsWith('/searchIndex'),
+      `searchIndex（fs を使う）を import しない: ${specifier}`,
+    )
+    assert.ok(
+      !specifier.includes('getPostData'),
+      `getPostData（fs を使う）を import しない: ${specifier}`,
+    )
+  }
+})

@@ -9,7 +9,7 @@
 
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { buildArticleDescription } from './articleDescription'
+import { buildArticleDescription, toPlainText } from './articleDescription'
 
 test('buildArticleDescription: 先頭の空行と見出し記号を取り除く', () => {
   // Given: gray-matter が返す本文（frontmatter 直後の空行 + Markdown 見出し）
@@ -54,4 +54,58 @@ test('buildArticleDescription: ハイフンを含む単語をそのまま保つ'
   const description = buildArticleDescription(content)
   // Then: ハイフンを削って単語を融合させない
   assert.equal(description, 'React-dom を使った開発について書きます')
+})
+
+// --- toPlainText（Issue #7: 検索インデックスの excerpt と整形処理を共有する） ---
+//
+// toPlainText(content) は buildArticleDescription の整形処理だけを切り出したもの。
+// 長さで切らない。buildArticleDescription は toPlainText(content).slice(0, 50) と同じ結果を返す。
+
+test('toPlainText: 先頭の空行と見出し記号を取り除く', () => {
+  // Given
+  const content = '\n\n## はじめに\n\n「自分にとって新しい技術を」'
+  // When
+  const text = toPlainText(content)
+  // Then
+  assert.equal(text, 'はじめに 「自分にとって新しい技術を」')
+})
+
+test('toPlainText: 埋め込み HTML タグを取り除く', () => {
+  // Given
+  const content = '<img src="https://example.com/a.jpg" alt="x" />\n本文です。'
+  // When/Then
+  assert.equal(toPlainText(content), '本文です。')
+})
+
+test('toPlainText: Markdown リンクはリンクテキストだけ残す', () => {
+  // Given
+  const content = '[リンクテキスト](https://example.com/path) の説明文です'
+  // When/Then
+  assert.equal(toPlainText(content), 'リンクテキスト の説明文です')
+})
+
+test('toPlainText: 長さで切らない', () => {
+  // Given: 50 文字を超える本文
+  const content = 'あ'.repeat(300)
+  // When
+  const text = toPlainText(content)
+  // Then
+  assert.equal(text.length, 300)
+})
+
+test('toPlainText: 空の本文なら空文字を返す', () => {
+  // Given/When/Then: 境界値
+  assert.equal(toPlainText(''), '')
+  assert.equal(toPlainText('\n\n  \n'), '')
+})
+
+test('buildArticleDescription: toPlainText の先頭 50 文字と同じ結果を返す', () => {
+  // Given: 見出し・HTML・リンク・強調を含む 50 文字超の本文
+  const content =
+    '\n## 見出し\n<div>囲み</div>\n**強調**と[リンク](https://example.com)と`code`。' +
+    'い'.repeat(80)
+  // When
+  const description = buildArticleDescription(content)
+  // Then: 整形処理を 2 か所に持たない
+  assert.equal(description, toPlainText(content).slice(0, 50))
 })
