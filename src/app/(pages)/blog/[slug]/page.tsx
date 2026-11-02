@@ -1,6 +1,8 @@
 import Toc from '@/app/components/molecules/Toc'
 import ArticleContent from '@/app/components/templates/ArticleContent'
+import { baseOpenGraph } from '@/config/site'
 import { Metadata } from 'next'
+import { buildBlogPostingJsonLd, serializeJsonLd } from './blogPostingJsonLd'
 import { getBlogArticle } from './page.server'
 
 // 静的書き出し（output: export）で [slug] を事前生成するため、route セグメントから
@@ -25,6 +27,13 @@ export async function generateMetadata({
     title: blogArticle.title,
     description: description,
     robots,
+    // Next は openGraph を親とマージせず丸ごと置き換えるため、共通部分を展開してから上書きする。
+    openGraph: {
+      ...baseOpenGraph,
+      type: 'article',
+      publishedTime: blogArticle.date,
+      tags: blogArticle.tags,
+    },
   }
 }
 
@@ -37,6 +46,12 @@ export default async function BlogArticlePage({
 
   return (
     <section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd(buildBlogPostingJsonLd(blogArticle)),
+        }}
+      />
       <ArticleContent
         blogArticle={blogArticle}
         SidebarComponents={[<Toc key="toc" />]}
