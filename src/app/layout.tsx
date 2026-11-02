@@ -1,4 +1,5 @@
 import ClientWrapper from '@/app/components/templates/ClientWrapper'
+import { SITE_URL, baseOpenGraph } from '@/config/site'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import type { Metadata } from 'next'
@@ -14,7 +15,13 @@ import '@fontsource-variable/noto-serif-jp'
 import 'tailwindcss/tailwind.css'
 import './globals.css'
 
+// 多くのページは 'use client' で metadata を持てないため、canonical と og:url を './' で
+// ここに置き、Next に表示中ページの URL で解決させる。
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  alternates: { canonical: './' },
+  openGraph: baseOpenGraph,
+  twitter: { card: 'summary' },
   title:
     'Furugen Island | 古堅基史（なんくるないさ系エンジニア）の開発ポートフォリオサイト',
   description:

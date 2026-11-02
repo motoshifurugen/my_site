@@ -1,0 +1,29 @@
+import { AUTHOR_NAME, OG_IMAGE, SITE_URL } from '@/config/site'
+import type { Post } from '@/types/posts'
+
+export function buildBlogPostingJsonLd(post: Post): Record<string, unknown> {
+  const articleUrl = `${SITE_URL}/blog/${post.slug}`
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    datePublished: post.date,
+    url: articleUrl,
+    mainEntityOfPage: articleUrl,
+    author: {
+      '@type': 'Person',
+      name: AUTHOR_NAME,
+      url: `${SITE_URL}/profile`,
+    },
+    image: `${SITE_URL}${OG_IMAGE.url}`,
+    keywords: post.tags,
+    inLanguage: 'ja',
+  }
+}
+
+// dangerouslySetInnerHTML に入れるため、`<` をエスケープして `</script>` で
+// script 要素から抜け出されるのを防ぐ。
+export function serializeJsonLd(data: Record<string, unknown>): string {
+  return JSON.stringify(data).replace(/</g, '\\u003c')
+}
