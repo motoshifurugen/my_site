@@ -238,6 +238,15 @@ export const translations: Translations = {
         noResults: '該当する記事がありません',
       },
       tagList: 'カテゴリ',
+      share: {
+        heading: 'この記事をシェアする',
+        message:
+          '読んでくれてありがとうございます。役に立った・おもしろかったと思ったら、誰かに教えてもらえるとうれしいです。',
+        x: 'X でシェア',
+        hatena: 'はてなブックマーク',
+        copyLink: 'リンクをコピー',
+        copied: 'コピーしました',
+      },
     },
     announcements: {
       title: 'News',
@@ -524,6 +533,15 @@ export const translations: Translations = {
         noResults: 'No matching articles',
       },
       tagList: 'Categories',
+      share: {
+        heading: 'Share this article',
+        message:
+          'Thanks for reading. If you found it useful, please pass it on.',
+        x: 'Share on X',
+        hatena: 'Hatena Bookmark',
+        copyLink: 'Copy link',
+        copied: 'Copied',
+      },
     },
     announcements: {
       title: 'News',

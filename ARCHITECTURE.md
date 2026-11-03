@@ -198,6 +198,8 @@ tags: ["tag1", "tag2"]
 - Tag-based filtering
 - Search box on the blog list: filters by title, tag, and the start of the body. The search runs in the browser against `/blog/search-index.json`, which is written at build time.
 - Tag list with post counts: clicking a tag shows only its posts
+- Per-post OG image: the build writes a 1200×630 PNG with the post title to `/blog/<slug>/og.png` (`src/app/(pages)/blog/[slug]/og.png/route.tsx`). Post pages point `og:image` at it and use `twitter:card` `summary_large_image`. Fonts come from `@fontsource/noto-sans-jp`, and emoji are dropped from the title, so rendering makes no network requests.
+- Share section at the end of each post (before related posts): a closing note, links to share on X and Hatena Bookmark, and a copy-link button
 
 ### 2. 3D Game
 

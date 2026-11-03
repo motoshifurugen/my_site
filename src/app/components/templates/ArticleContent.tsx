@@ -8,10 +8,12 @@ import Highlight from '@/app/components/atoms/Highlight'
 import CodeBlock from '@/app/components/molecules/CodeBlock'
 import LikeButton from '@/app/components/molecules/LikeButton'
 import Tags from '@/app/components/molecules/Tags'
+import ArticleShare from '@/app/components/organisms/ArticleShare'
 import RelatedArticles from '@/app/components/organisms/RelatedArticles'
 import Sidebar from '@/app/components/templates/Sidebar'
 
 import EmbedArticle from '@/app/components/molecules/EmbedArticle'
+import { articleUrl } from '@/config/site'
 import type { Post, PostMeta } from '@/types/posts'
 import 'prismjs/themes/prism-tomorrow.css'
 import React, { JSX, ReactNode } from 'react'
@@ -112,7 +114,11 @@ const ArticleContent: React.FC<ArticleContentProps> = ({
             }}
           />
         </div>
-        {/* .target-toc の外に置き、関連記事の見出しを目次に混ぜない */}
+        {/* .target-toc の外に置き、共有欄と関連記事の見出しを目次に混ぜない */}
+        <ArticleShare
+          title={blogArticle.title}
+          url={articleUrl(blogArticle.slug)}
+        />
         <RelatedArticles posts={relatedPosts} />
       </div>
       <div className="flex-grow lg:ml-10">

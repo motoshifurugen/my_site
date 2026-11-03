@@ -41,10 +41,22 @@ test('buildBlogPostingJsonLd: 記事から schema.org の BlogPosting を組み�
       name: '古堅基史',
       url: 'https://furugen-island.com/my_site/profile',
     },
-    image: 'https://furugen-island.com/my_site/images/island.png',
+    image: 'https://furugen-island.com/my_site/blog/create_my_site/og.png',
     keywords: ['Next.js', 'React'],
     inLanguage: 'ja',
   })
+})
+
+test('buildBlogPostingJsonLd: image は記事ごとの OG 画像を指す（汎用画像ではない）', () => {
+  // Given: slug だけが違う記事。og:image/twitter:image と同じ per-article 画像を参照すべき
+  const other: Post = { ...post, slug: 'another_post' }
+  // When
+  const jsonLd = buildBlogPostingJsonLd(other)
+  // Then
+  assert.equal(
+    jsonLd.image,
+    'https://furugen-island.com/my_site/blog/another_post/og.png',
+  )
 })
 
 test('buildBlogPostingJsonLd: url と mainEntityOfPage は記事の slug ごとに変わる', () => {
