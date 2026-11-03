@@ -13,7 +13,13 @@
 import assert from 'node:assert/strict'
 import { existsSync } from 'node:fs'
 import { test } from 'node:test'
-import { AUTHOR_NAME, OG_IMAGE, SITE_URL, baseOpenGraph } from './site'
+import {
+  AUTHOR_NAME,
+  OG_IMAGE,
+  SITE_URL,
+  articleUrl,
+  baseOpenGraph,
+} from './site'
 
 test('SITE_URL: 公開サイトの basePath 込みの URL である', () => {
   // Given/When/Then: GitHub Pages の公開先（basePath /my_site）を指す
@@ -57,4 +63,23 @@ test('baseOpenGraph: ページごとに解決される url と、サイト共通
     type: 'website',
     images: [{ url: '/images/island.png', width: 500, height: 500 }],
   })
+})
+
+// --- articleUrl（Issue #250）---
+// 記事の正規 URL。BlogPosting の JSON-LD と記事末の共有欄が同じ値を使う。
+
+test('articleUrl: 記事の slug から basePath 込みの絶対 URL を作る', () => {
+  // Given/When/Then
+  assert.equal(
+    articleUrl('create_my_site'),
+    'https://furugen-island.com/my_site/blog/create_my_site',
+  )
+})
+
+test('articleUrl: SITE_URL と /blog/{slug} を二重スラッシュなしでつなぐ', () => {
+  // Given/When
+  const url = articleUrl('second-post')
+  // Then
+  assert.equal(url, `${SITE_URL}/blog/second-post`)
+  assert.ok(!url.slice('https://'.length).includes('//'), `${url} に // がない`)
 })

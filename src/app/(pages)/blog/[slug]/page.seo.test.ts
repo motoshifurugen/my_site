@@ -112,6 +112,72 @@ test('page: openGraph に title / description を書かない（ページの値�
   )
 })
 
+// --- 記事ごとの OG 画像と X の大きいカード（Issue #250） ---
+//
+// og:image は島の共通画像ではなく、記事ごとに作る 1200×630 の画像（/blog/{slug}/og.png）にする。
+// openGraph の中にオブジェクトリテラルを書くと openGraphBlock の抽出がそこで止まるので、
+// 画像は ogImage 変数に組み立ててから images: [ogImage] で渡す。
+// X は既定の summary だと小さい正方形で出すので、記事ページだけ summary_large_image にする。
+// twitter の画像とタイトルは Next が openGraph から引き継ぐので、card だけを書く。
+
+function ogImageDeclaration(source: string): string {
+  const match = source.match(/const\s+ogImage\s*=\s*\{([^}]*)\}/)
+  assert.ok(match, 'generateMetadata で const ogImage = { ... } を組み立てる')
+  return stripWhitespace(match![1])
+}
+
+test('page: OG 画像のパスと大きさを ./ogImage から読み込む', () => {
+  const names = namedImports(page, './ogImage')
+  assert.ok(
+    names.includes('articleOgImagePath'),
+    'articleOgImagePath を import する',
+  )
+  assert.ok(
+    names.includes('ARTICLE_OG_IMAGE_SIZE'),
+    'ARTICLE_OG_IMAGE_SIZE を import する',
+  )
+})
+
+test('page: ogImage の url は記事の slug から作ったパスにする', () => {
+  assert.ok(
+    ogImageDeclaration(metadataSource).includes('url:articleOgImagePath(slug)'),
+    'url: articleOgImagePath(slug) を持つ',
+  )
+})
+
+test('page: ogImage に 1200×630 の大きさを展開する', () => {
+  assert.ok(
+    ogImageDeclaration(metadataSource).includes('...ARTICLE_OG_IMAGE_SIZE'),
+    '...ARTICLE_OG_IMAGE_SIZE を展開する',
+  )
+})
+
+test('page: ogImage の alt は記事タイトルにする', () => {
+  assert.ok(
+    ogImageDeclaration(metadataSource).includes('alt:blogArticle.title'),
+    'alt: blogArticle.title を持つ',
+  )
+})
+
+test('page: openGraph の images を ...baseOpenGraph の後で記事の画像に置き換える', () => {
+  // Given
+  const og = stripWhitespace(openGraphBlock(metadataSource))
+  // When
+  const spreadAt = og.indexOf('...baseOpenGraph')
+  const imagesAt = og.indexOf('images:[ogImage]')
+  // Then: 後に書かないと島の共通画像が残る
+  assert.ok(imagesAt >= 0, 'images: [ogImage] を持つ')
+  assert.ok(spreadAt < imagesAt, '...baseOpenGraph の後に images を書く')
+})
+
+test("page: twitter は card: 'summary_large_image' だけを持つ", () => {
+  // Given/When/Then: 画像・タイトルは Next が openGraph から引き継ぐ
+  assert.match(
+    stripWhitespace(metadataSource),
+    /twitter:\{card:'summary_large_image',?\}/,
+  )
+})
+
 // --- 既存のメタを変えない ---
 
 test('page: 既存の title（記事タイトル）を変えない', () => {

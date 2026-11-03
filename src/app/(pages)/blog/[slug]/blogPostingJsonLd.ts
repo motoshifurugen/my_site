@@ -1,16 +1,16 @@
-import { AUTHOR_NAME, OG_IMAGE, SITE_URL } from '@/config/site'
+import { AUTHOR_NAME, OG_IMAGE, SITE_URL, articleUrl } from '@/config/site'
 import type { Post } from '@/types/posts'
 
 export function buildBlogPostingJsonLd(post: Post): Record<string, unknown> {
-  const articleUrl = `${SITE_URL}/blog/${post.slug}`
+  const url = articleUrl(post.slug)
 
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
     datePublished: post.date,
-    url: articleUrl,
-    mainEntityOfPage: articleUrl,
+    url,
+    mainEntityOfPage: url,
     author: {
       '@type': 'Person',
       name: AUTHOR_NAME,

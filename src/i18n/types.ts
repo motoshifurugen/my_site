@@ -156,6 +156,14 @@ export type TranslationKeys = {
       noResults: string
     }
     tagList: string
+    share: {
+      heading: string
+      message: string
+      x: string
+      hatena: string
+      copyLink: string
+      copied: string
+    }
   }
   announcements: {
     title: string

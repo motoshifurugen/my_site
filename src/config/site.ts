@@ -5,9 +5,11 @@ import type { Metadata } from 'next'
 
 export const SITE_URL = 'https://furugen-island.com/my_site'
 
-const SITE_NAME = 'Furugen Island'
+export const SITE_NAME = 'Furugen Island'
 
 export const AUTHOR_NAME = '古堅基史'
+
+export const articleUrl = (slug: string): string => `${SITE_URL}/blog/${slug}`
 
 export const OG_IMAGE = {
   url: '/images/island.png',

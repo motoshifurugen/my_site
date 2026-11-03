@@ -5,6 +5,7 @@ import { baseOpenGraph } from '@/config/site'
 import { Metadata } from 'next'
 import { buildArticleDescription } from './articleDescription'
 import { buildBlogPostingJsonLd, serializeJsonLd } from './blogPostingJsonLd'
+import { ARTICLE_OG_IMAGE_SIZE, articleOgImagePath } from './ogImage'
 import { getBlogArticle } from './page.server'
 import { selectRelatedPosts } from './relatedPosts'
 
@@ -27,6 +28,12 @@ export async function generateMetadata({
       ? { index: false, follow: false }
       : undefined
 
+  const ogImage = {
+    url: articleOgImagePath(slug),
+    ...ARTICLE_OG_IMAGE_SIZE,
+    alt: blogArticle.title,
+  }
+
   return {
     title: blogArticle.title,
     description: description,
@@ -34,10 +41,13 @@ export async function generateMetadata({
     // Next は openGraph を親とマージせず丸ごと置き換えるため、共通部分を展開してから上書きする。
     openGraph: {
       ...baseOpenGraph,
+      images: [ogImage],
       type: 'article',
       publishedTime: blogArticle.date,
       tags: blogArticle.tags,
     },
+    // 画像とタイトルは Next が openGraph から引き継ぐ。summary だと横長の画像が小さい正方形になる。
+    twitter: { card: 'summary_large_image' },
   }
 }
 
