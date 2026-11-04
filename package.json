@@ -32,7 +32,7 @@
     "@p5-wrapper/react": "5.0.2",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
-    "@supabase/supabase-js": "^2.110.0",
+    "@supabase/supabase-js": "^2.118.0",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.5.0",
     "esprima": "^4.0.1",
