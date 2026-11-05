@@ -665,7 +665,43 @@ The custom domain (`furugen-island.com`) is configured outside this repository (
 ### Supabase keys and Row Level Security
 
 - Use the service-role key (`SUPABASE_SERVICE_ROLE_KEY`) only on the server: the API routes on Vercel and the Python scripts in GitHub Actions. Never give it a `NEXT_PUBLIC_` prefix.
-- Do not use the anon (publishable) key in the frontend. The read policy on `tanka_likes` lets the anon key read every row, including `user_ip`. `src/supabase-rls-migration.test.ts` fails if `NEXT_PUBLIC_SUPABASE` or `SUPABASE_ANON_KEY` appears under `src`.
-- RLS is a second layer. `scripts/migrations/008_enable_rls.sql` enables it on every table. Only `tanka`, `tags`, and `tanka_likes` have a policy, and it allows `SELECT` to `anon` and `authenticated`. No table has a write policy, so only the service role can write.
+- Do not use the anon (publishable) key in the frontend. The frontend has no reason to reach the database directly: only the API on Vercel, using the service role, writes likes and checks whether an IP has liked a tanka. `src/supabase-rls-migration.test.ts` fails if `NEXT_PUBLIC_SUPABASE` or `SUPABASE_ANON_KEY` appears under `src`.
+- RLS is a second layer. `scripts/migrations/008_enable_rls.sql` enables it on every table. Only `tanka` and `tags` have a policy, and it allows `SELECT` to `anon` and `authenticated`. No table has a write policy, so only the service role can write.
+- `tanka_likes` has a `user_ip` column. It has RLS enabled and no policy, and 008 revokes all privileges on it from `anon` and `authenticated`. A direct `SELECT` by either role fails with `permission denied for table tanka_likes`. Without the `REVOKE`, the missing policy would only make the `SELECT` return zero rows.
+- `anon` and `authenticated` can read like counts only through the view `tanka_like_counts` (`tweet_id`, `tanka`, `created_at`, `like_count`). 008 grants `SELECT` on it to both roles. Do not add `user_ip` or `liked_at` to the view.
+- The view does not set `security_invoker`, on purpose. It runs with its owner's privileges, so it counts rows in `tanka_likes` past RLS and the `REVOKE`, but it returns only counts. With `security_invoker = on`, the view would read `tanka_likes` as `anon`, hit the `REVOKE`, and `anon` could no longer read the counts.
+- The site still gets like counts from `/my_site/api/tanka-likes`, which counts rows in `tanka_likes` with the service role. The `REVOKE` does not touch the service role, so the counts on the /tanka page stay the same.
 - The service role bypasses RLS. RLS does not protect the data if the service-role key leaks.
 - When you add a table, enable RLS on it in the same migration. The test above fails if a table created in `scripts/migrations` lacks `ENABLE ROW LEVEL SECURITY`.
+
+### Applying 008_enable_rls.sql and rolling it back
+
+008 is not applied to production yet. Apply it only after the CEO approves. The rollback SQL lives in one place, the header comment of `scripts/migrations/008_enable_rls.sql`; this section points to it instead of copying it.
+
+0. Before you apply it, record the current state.
+   - Run this query and keep the result:
+     ```sql
+     SELECT table_name, grantee, privilege_type
+     FROM information_schema.role_table_grants
+     WHERE table_name IN ('tanka_likes', 'tanka_like_counts')
+       AND grantee IN ('anon', 'authenticated');
+     ```
+   - Pick one tanka. Record `likeCount` from `GET /my_site/api/tanka-likes?tweetId=<id>` on the Vercel API, and the count the /tanka page shows for it.
+1. In the Supabase SQL Editor, run the whole of `008_enable_rls.sql`.
+2. Check the result.
+   - (a) A direct `SELECT` by `anon` fails with `permission denied for table tanka_likes`:
+     ```sql
+     BEGIN; SET LOCAL ROLE anon; SELECT * FROM tanka_likes LIMIT 1; ROLLBACK;
+     ```
+   - (b) The same query with `SET LOCAL ROLE authenticated` fails the same way.
+   - (c) `anon` can read the counts from the view:
+     ```sql
+     BEGIN; SET LOCAL ROLE anon; SELECT tweet_id, like_count FROM tanka_like_counts LIMIT 5; ROLLBACK;
+     ```
+   - (d) An `INSERT` by `anon` fails with `permission denied for table tanka_likes`:
+     ```sql
+     BEGIN; SET LOCAL ROLE anon; INSERT INTO tanka_likes (tweet_id, user_ip) VALUES (<id>, '192.0.2.1'); ROLLBACK;
+     ```
+   - (e) The API and the /tanka page show the same `likeCount` as in step 0.
+   - (f) Like the tanka on the /tanka page: the count goes up by one. Unlike it: the count goes back. This shows that writes by the service role still work.
+3. To roll back, run the rollback SQL in the header comment of `008_enable_rls.sql`. Then run the query from step 0 again and check that the privileges match what you recorded. The rollback SQL assumes the step 0 record shows the Supabase default (`anon` and `authenticated` hold all privileges on `tanka_likes`). If your record differs, change its `GRANT` to match the record. The header also says when to revoke the `SELECT` on `tanka_like_counts`.
