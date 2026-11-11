@@ -97,8 +97,8 @@ const ArticleContent: React.FC<ArticleContentProps> = ({
         )}
         <link
           rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
-          integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+          href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css"
+          integrity="sha384-rdqqrpVNEfmY6hsVFS50HU5L84tWeMdr4XpF+TJPvLR6e8YxPgRyDzzpawPHMQE6"
           crossOrigin="anonymous"
         />
         {/* 目次表示に必要 */}
