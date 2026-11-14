@@ -72,7 +72,8 @@ export default function Footer() {
                     target="_blank"
                   >
                     <div className="text-main-black dark:text-night-white">
-                      <Icon size={24} />
+                      {/* リンク名は aria-label が持つので、アイコンは読み上げから外す */}
+                      <Icon size={24} aria-hidden="true" />
                     </div>
                   </Link>
                 ))}
@@ -87,7 +88,7 @@ export default function Footer() {
                   </div>
                 </Link>
               </div>
-              <p className="select-none self-end opacity-50">
+              <p className="select-none self-end text-main-black/90 dark:text-night-white/80">
                 © {year} {t.footer.copyright}
               </p>
             </div>
