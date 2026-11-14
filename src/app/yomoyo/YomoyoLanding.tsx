@@ -11,6 +11,7 @@ const CONTACT_EMAIL = 'furugenmotoshig@gmail.com'
 const OPERATOR_NAME = 'Furugen Island'
 const TERMS_PATH = '/yomoyo/terms'
 const PRIVACY_PATH = '/yomoyo/privacy'
+const ACCOUNT_DELETION_PATH = '/yomoyo/account-deletion'
 const LINK_CLASS = 'text-teal-500 hover:underline dark:text-night-teal'
 
 const SCREENSHOT_SRCS = [
@@ -43,6 +44,7 @@ const CONTENT = {
     legalHeading: '規約・ポリシー',
     termsLabel: '利用規約',
     privacyLabel: 'プライバシーポリシー',
+    accountDeletionLabel: 'アカウント削除について',
   },
   en: {
     intro:
@@ -68,6 +70,7 @@ const CONTENT = {
     legalHeading: 'Terms & Policies',
     termsLabel: 'Terms of Service',
     privacyLabel: 'Privacy Policy',
+    accountDeletionLabel: 'Account Deletion',
   },
 }
 
@@ -133,6 +136,11 @@ export default function YomoyoLanding() {
           <li>
             <Link href={PRIVACY_PATH} className={LINK_CLASS}>
               {c.privacyLabel}
+            </Link>
+          </li>
+          <li>
+            <Link href={ACCOUNT_DELETION_PATH} className={LINK_CLASS}>
+              {c.accountDeletionLabel}
             </Link>
           </li>
         </ul>
