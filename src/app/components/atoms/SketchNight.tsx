@@ -2,7 +2,7 @@
 
 import { P5CanvasInstance } from '@p5-wrapper/react'
 import dynamic from 'next/dynamic'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { pointerPosition } from './p5Pointer'
 
 const P5Canvas = dynamic(
@@ -17,14 +17,6 @@ interface SketchNightSkyProps {
 }
 
 const SketchNightSky: React.FC<SketchNightSkyProps> = ({ mode }) => {
-  const [isMounted, setIsMounted] = useState(false)
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-  if (!isMounted) {
-    return null
-  }
-
   const sketch = (p: P5CanvasInstance) => {
     let stars: { x: number; y: number; size: number; alpha: number }[] = []
     let shootingStars: {

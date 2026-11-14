@@ -39,10 +39,12 @@ const Header = () => {
     window.scrollTo(0, 0)
   }, [pathname])
 
-  // ページ遷移時にメニューを閉じる
-  useEffect(() => {
+  // ページ遷移時にメニューを閉じる。effect で閉じると、開いたままの描画が一度挟まる
+  const [prevPathname, setPrevPathname] = useState(pathname)
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname)
     setMenuOpen(false)
-  }, [pathname])
+  }
 
   // メニューを開いている間は背後のスクロールをロックする
   useEffect(() => {

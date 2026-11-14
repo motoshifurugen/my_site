@@ -1,8 +1,9 @@
 'use client'
 
+import { useIsDarkMode } from '@/app/hooks/useIsDarkMode'
 import type { TankaTag } from '@/types/tanka'
 import { motion } from 'framer-motion'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import TankaLikeButton from './TankaLikeButton'
 
 interface TankaCardProps {
@@ -22,29 +23,8 @@ const TankaCard: React.FC<TankaCardProps> = ({
 }) => {
   // 波打ち演出の状態管理
   const [isWaving, setIsWaving] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(false)
-
-  // ダークモードの検出（メモ化）
-  const darkModeObserver = useMemo(() => {
-    const checkDarkMode = () => {
-      setIsDarkMode(document.documentElement.classList.contains('dark'))
-    }
-
-    checkDarkMode()
-
-    // MutationObserverでダークモードの変更を監視
-    const observer = new MutationObserver(checkDarkMode)
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class'],
-    })
-
-    return observer
-  }, [])
-
-  useEffect(() => {
-    return () => darkModeObserver.disconnect()
-  }, [darkModeObserver])
+  const isDarkMode = useIsDarkMode()
+  const waveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // 短歌を行に分割（メモ化）
   const tankaLines = useMemo(
@@ -53,13 +33,10 @@ const TankaCard: React.FC<TankaCardProps> = ({
   )
 
   // クリック時の降下演出（デバウンス）
-  const handleClick = useMemo(() => {
-    let timeoutId: NodeJS.Timeout
-    return () => {
-      if (timeoutId) clearTimeout(timeoutId)
-      setIsWaving(true)
-      timeoutId = setTimeout(() => setIsWaving(false), 2500) // 文字アニメーション完了まで待機
-    }
+  const handleClick = useCallback(() => {
+    if (waveTimeoutRef.current) clearTimeout(waveTimeoutRef.current)
+    setIsWaving(true)
+    waveTimeoutRef.current = setTimeout(() => setIsWaving(false), 2500) // 文字アニメーション完了まで待機
   }, [])
 
   // 日付をフォーマット（メモ化）

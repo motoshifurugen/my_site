@@ -8,13 +8,16 @@ export const localeNames: Record<Locale, string> = {
   en: 'English',
 }
 
-// URLパスから言語を判定するヘルパー関数
+export function isLocale(value: unknown): value is Locale {
+  return locales.some((locale) => locale === value)
+}
+
 export function getLocaleFromPath(pathname: string): Locale {
   const segments = pathname.split('/').filter(Boolean)
   const firstSegment = segments[0]
 
-  if (locales.includes(firstSegment as Locale)) {
-    return firstSegment as Locale
+  if (isLocale(firstSegment)) {
+    return firstSegment
   }
 
   return defaultLocale

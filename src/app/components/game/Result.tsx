@@ -6,14 +6,26 @@ export function Result() {
   const status = useStore((state) => state.status)
   const score = useStore((state) => state.score)
   const reset = useStore((state) => state.reset)
+
+  if (status === 'running') return null
+
+  // ゲームオーバーのたびにマウントし直すので、ハイスコアの取得は毎回 loading から始まる
+  return <GameOverPanel score={score} reset={reset} />
+}
+
+interface GameOverPanelProps {
+  score: number
+  reset: () => void
+}
+
+function GameOverPanel({ score, reset }: GameOverPanelProps) {
   const [highScore, setHighScore] = useState<number | null>(null)
   const [isNewRecord, setIsNewRecord] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const apiBase = process.env.NEXT_PUBLIC_API_URL || '/my_site/api'
 
   useEffect(() => {
-    if (status !== 'over') return
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.code === 'Space') {
         event.preventDefault()
@@ -24,11 +36,9 @@ export function Result() {
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [status, reset])
+  }, [reset])
 
   useEffect(() => {
-    if (status !== 'over') return
-    setLoading(true)
     const fetchHighScore = async () => {
       try {
         const res = await fetch(`${apiBase}/highscore`)
@@ -54,9 +64,7 @@ export function Result() {
       }
     }
     fetchHighScore()
-  }, [status, score, apiBase])
-
-  if (status === 'running') return null
+  }, [score, apiBase])
 
   return (
     <div id="result-container">

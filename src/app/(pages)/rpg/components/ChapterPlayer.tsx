@@ -1,5 +1,6 @@
 'use client'
 
+import { useLocalStorageValue } from '@/app/hooks/useLocalStorageValue'
 import type { StaticImageData } from 'next/image'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
@@ -47,8 +48,20 @@ import TapRipple from './TapRipple'
 // 第6章のルート選択を管理するための型
 type Chapter6Route = 'bad_end' | 'true_end' | 'another_end' | null
 
+const isChapter6Route = (
+  choiceId: string,
+): choiceId is NonNullable<Chapter6Route> =>
+  choiceId === 'bad_end' ||
+  choiceId === 'true_end' ||
+  choiceId === 'another_end'
+
 // 言語の型
 type Language = 'ja' | 'en'
+
+const LANGUAGE_STORAGE_KEY = 'rpg_language'
+
+const parseLanguage = (raw: string | null): Language =>
+  raw === 'en' ? 'en' : 'ja'
 
 // プリロードする全画像のリスト（静的なためコンポーネント外に定義）
 const ALL_IMAGES_TO_PRELOAD = [
@@ -124,11 +137,8 @@ const FadeInText = ({
     onCompleteRef.current = onComplete
   }, [onComplete])
 
+  // 行が変わると呼び出し元が key で作り直すので、表示の状態は初期値から始まる
   useEffect(() => {
-    // テキストが変更されたら即座にリセット
-    setVisibleChars(0)
-    setIsReady(false)
-
     let timer: NodeJS.Timeout | null = null
     let timeoutId: NodeJS.Timeout | null = null
     let rafId: number | null = null
@@ -246,7 +256,7 @@ const ChapterPlayer = () => {
     getInitialSceneIndex(),
   )
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
-  const [isTextComplete, setIsTextComplete] = useState(false)
+  const [completedLineKey, setCompletedLineKey] = useState<string | null>(null)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [transitionPhase, setTransitionPhase] = useState<
     'idle' | 'fadeOut' | 'white' | 'waiting' | 'fadeIn'
@@ -255,25 +265,25 @@ const ChapterPlayer = () => {
   const [chapterTitleOpacity, setChapterTitleOpacity] = useState(0)
   const [chapterTitleTransform, setChapterTitleTransform] =
     useState('translateX(100px)')
-  const [selectedChoiceId, setSelectedChoiceId] = useState<string | null>(null)
+  const [selectedChoice, setSelectedChoice] = useState<{
+    lineKey: string
+    choiceId: string
+  } | null>(null)
   const [chapter6Route, setChapter6Route] = useState<Chapter6Route>(null)
-  const [shouldTransitionToChapter6, setShouldTransitionToChapter6] =
-    useState(false)
-  const [showProceedButton, setShowProceedButton] = useState(false)
   const [showEnding, setShowEnding] = useState(false)
-  // サーバーとクライアントで一致させるため、初期値は常に'ja'にする
-  const [language, setLanguage] = useState<Language>('ja')
+  // サーバーとクライアントで一致させるため、サーバーでは常に'ja'にする
+  const [language, setLanguage] = useLocalStorageValue<Language>(
+    LANGUAGE_STORAGE_KEY,
+    parseLanguage,
+    'ja',
+  )
   const [showSettingsModal, setShowSettingsModal] = useState(false)
 
-  // クライアントサイドでのみlocalStorageから言語設定を読み込む
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedLang = localStorage.getItem('rpg_language') as Language
-      if (savedLang === 'en' || savedLang === 'ja') {
-        setLanguage(savedLang)
-      }
-    }
-  }, [])
+  // 完了状態と選択状態は表示中の行に結びつけ、行・章・言語が変わったら外れるようにする
+  const lineKey = `${language}-${currentChapterIndex}-${currentSceneIndex}-${currentLineIndex}`
+  const isTextComplete = completedLineKey === lineKey
+  const selectedChoiceId =
+    selectedChoice?.lineKey === lineKey ? selectedChoice.choiceId : null
   const currentSceneIndexRef = useRef(currentSceneIndex)
   const currentChapterIndexRef = useRef(currentChapterIndex)
   const prevChapterIndexRef = useRef(currentChapterIndex)
@@ -330,9 +340,6 @@ const ChapterPlayer = () => {
   // 言語選択ハンドラー
   const handleLanguageSelect = (lang: Language) => {
     setLanguage(lang)
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('rpg_language', lang)
-    }
     // モーダルは自動で閉じない（×ボタンまたはモーダル外クリックで閉じる）
   }
 
@@ -471,18 +478,10 @@ const ChapterPlayer = () => {
     prevChapterIndexRef.current = currentChapterIndex
   }, [currentChapterIndex])
 
-  // 章、シーン、またはテキストが変更されたら完了状態をリセット
-  useEffect(() => {
-    if (!currentChapter) return
-    const currentScene = currentChapter.scenes[currentSceneIndex]
-    if (!currentScene) return
-    const currentLine =
-      currentScene.lines[currentLineIndex] || currentScene.lines[0]
-    setIsTextComplete(false)
-    // シーンが変わったら選択状態をリセット
-    setSelectedChoiceId(null)
-    setShowProceedButton(false)
-  }, [currentChapterIndex, currentSceneIndex, currentLineIndex, currentChapter])
+  const beginSceneTransition = () => {
+    setIsTransitioning(true)
+    setTransitionPhase('fadeOut')
+  }
 
   // シーン遷移アニメーション
   useEffect(() => {
@@ -493,8 +492,7 @@ const ChapterPlayer = () => {
     const waitDuration = 800 // 無音時間（0.6〜1.0秒の間で0.8秒）
     const fadeInDuration = 400 // 白からのフェードイン時間（ミリ秒）
 
-    // フェーズ1: テキストフェードアウト
-    setTransitionPhase('fadeOut')
+    // フェーズ1（テキストフェードアウト）は beginSceneTransition で始めている
 
     // フェーズ2: 白へのフェード
     setTimeout(() => {
@@ -542,43 +540,23 @@ const ChapterPlayer = () => {
     )
   }, [isTransitioning, chapter6Route])
 
-  // 選択が解除されたら決定ボタンを非表示
-  useEffect(() => {
-    if (!selectedChoiceId) {
-      setShowProceedButton(false)
-    }
-  }, [selectedChoiceId])
-
   // 決定ボタンのクリックハンドラー
   const handleChoiceConfirm = () => {
-    if (selectedChoiceId) {
-      // 第5章の最後のシーンの選択の場合、第6章のルートを決定
-      if (
-        currentChapterIndex === 4 &&
-        currentSceneIndex === currentChapter?.scenes.length - 1
-      ) {
-        if (selectedChoiceId === 'bad_end') {
-          setChapter6Route('bad_end')
-        } else if (selectedChoiceId === 'true_end') {
-          setChapter6Route('true_end')
-        } else if (selectedChoiceId === 'another_end') {
-          setChapter6Route('another_end')
-        }
-        // 選択状態をリセット
-        setSelectedChoiceId(null)
-        // 第6章への遷移フラグを設定
-        setShouldTransitionToChapter6(true)
-      }
+    // 第5章の最後のシーンの選択の場合、第6章のルートを決定
+    const isChapter6Choice =
+      currentChapterIndex === 4 &&
+      currentSceneIndex === currentChapter?.scenes.length - 1
+    if (
+      selectedChoiceId &&
+      isChapter6Choice &&
+      isChapter6Route(selectedChoiceId)
+    ) {
+      setChapter6Route(selectedChoiceId)
+      setSelectedChoice(null)
+      // ルートと同じ描画で遷移を始めるので、遷移の effect は第6章を含む章の一覧を読む
+      beginSceneTransition()
     }
   }
-
-  // chapter6Routeが設定されたら遷移アニメーションを開始
-  useEffect(() => {
-    if (shouldTransitionToChapter6 && chapter6Route) {
-      setShouldTransitionToChapter6(false)
-      setIsTransitioning(true)
-    }
-  }, [chapter6Route, shouldTransitionToChapter6])
 
   // キャラクター画像を取得
   const getCharacterImage = (imagePath: string) => {
@@ -638,7 +616,7 @@ const ChapterPlayer = () => {
         currentSceneIndex < currentChapter.scenes.length - 1 ||
         currentChapterIndex < chapters.length - 1
       ) {
-        setIsTransitioning(true)
+        beginSceneTransition()
       }
       // すべての章が終わった場合は何もしない（エンド画面が表示される）
     }
@@ -773,8 +751,8 @@ const ChapterPlayer = () => {
               setCurrentLineIndex(0)
               setShowEnding(false)
               setChapter6Route(null)
-              setSelectedChoiceId(null)
-              setShowProceedButton(false)
+              setSelectedChoice(null)
+              setCompletedLineKey(null)
             }}
             className="group relative min-h-[52px] px-10 py-3 md:px-12 md:py-3.5 rounded-full font-medium text-sm md:text-base tracking-wide transition-all duration-300 touch-manipulation bg-white/95 text-black hover:bg-white hover:scale-[1.02] active:scale-[0.98] shadow-[0_4px_20px_rgba(255,255,255,0.3)] hover:shadow-[0_6px_30px_rgba(255,255,255,0.4)] backdrop-blur-sm border border-white/20"
             style={{ WebkitTapHighlightColor: 'transparent' }}
@@ -856,9 +834,7 @@ const ChapterPlayer = () => {
 
   // 選択肢ボタンのクリックハンドラー（選択状態を更新）
   const handleChoiceSelect = (choiceId: string) => {
-    setSelectedChoiceId(choiceId)
-    // 選択時に決定ボタンを表示
-    setShowProceedButton(true)
+    setSelectedChoice({ lineKey, choiceId })
   }
 
   // ローディング画面を表示
@@ -1258,17 +1234,8 @@ const ChapterPlayer = () => {
               })}
             </div>
             {/* 決定ボタン（選択時にのみ表示） */}
-            {showProceedButton && selectedChoiceId && (
-              <div
-                className="fixed bottom-6 md:bottom-8 left-0 right-0 px-4 md:px-8 flex justify-center z-20"
-                style={{
-                  opacity: showProceedButton ? 1 : 0,
-                  transform: showProceedButton
-                    ? 'translateY(0)'
-                    : 'translateY(20px)',
-                  transition: 'opacity 0.4s ease-out, transform 0.4s ease-out',
-                }}
-              >
+            {selectedChoiceId && (
+              <div className="fixed bottom-6 md:bottom-8 left-0 right-0 px-4 md:px-8 flex justify-center z-20">
                 <button
                   onClick={(e) => {
                     e.stopPropagation()
@@ -1310,9 +1277,10 @@ const ChapterPlayer = () => {
                 {/* テキスト */}
                 <div className="text-sm md:text-base leading-relaxed text-white">
                   <FadeInText
+                    key={lineKey}
                     text={currentLine.text}
                     delay={20}
-                    onComplete={() => setIsTextComplete(true)}
+                    onComplete={() => setCompletedLineKey(lineKey)}
                   />
                 </div>
               </div>
