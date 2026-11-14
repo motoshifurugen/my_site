@@ -40,7 +40,7 @@ Furugen Island is a personal portfolio and blog website built with modern web te
 ### Core Framework
 | Technology | Version | Purpose |
 |-----------|---------|---------|
-| Next.js | 16.4.4 | React framework with App Router |
+| Next.js | 16.4.5 | React framework with App Router |
 | React | 19 | UI library |
 | TypeScript | 5 | Type-safe JavaScript |
 

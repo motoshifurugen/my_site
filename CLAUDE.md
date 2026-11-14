@@ -13,7 +13,7 @@ This file provides context for AI assistants working with this project.
 
 ## Tech Stack
 
-- **Framework**: Next.js 16.4.4 (App Router)
+- **Framework**: Next.js 16.4.5 (App Router)
 - **Language**: TypeScript 5 (strict mode)
 - **Styling**: Tailwind CSS 3.4.10
 - **State Management**: Zustand (game), React Context (i18n, theme)
