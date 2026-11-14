@@ -136,6 +136,8 @@ my_site/
 │   │   ├── globals.css           # Global styles
 │   │   ├── not-found.tsx         # 404 page
 │   │   └── sitemap.ts            # SEO sitemap
+│   ├── data/
+│   │   └── works.json            # Portfolio works (see Core Features)
 │   ├── i18n/                     # Internationalization
 │   │   ├── config.ts             # Locale configuration
 │   │   ├── context.tsx           # i18n React context
@@ -146,6 +148,7 @@ my_site/
 │   │   └── *.mdx                 # Individual posts
 │   └── types/                    # TypeScript definitions
 │       ├── posts.ts              # Blog post types
+│       ├── works.ts              # Portfolio work entry type
 │       └── game-objects.ts       # Game entity types
 ├── public/                       # Static assets
 ├── img/                          # Image assets
@@ -247,6 +250,18 @@ Game Components:
 - localStorage persistence
 - URL path detection fallback
 - Comprehensive translation keys
+
+### 5. Works (Portfolio)
+
+**Location**: `src/data/works.json`, `src/app/(pages)/skills/works.tsx`
+
+`useWorks` reads `works.json`, picks the text for the current locale, and sorts the works by `date`, newest first.
+
+**Adding a work** (one JSON entry and one image):
+1. Put the image at `public/images/works/<id>.png`.
+2. Add an entry to `src/data/works.json` with `id`, `image` (`/images/works/<id>.png`), `title` and `description` (each with `ja` and `en`), `tags`, `date` (`YYYY-MM`), and an optional `url`. With `url`, the title becomes an external link.
+3. In `tags`, write `tag:<key>` to use the translation at `skills.tags.<key>` in `src/i18n/translations.ts` (for example `tag:personalDevelopment`). Other tags are shown as written.
+4. Run `npm test`. `src/data/works.test.ts` checks the required fields, duplicate `id`s, the `date` format, that the image file exists, that `image` is `/images/works/<id>.png`, and that every `tag:` key has a translation.
 
 ---
 

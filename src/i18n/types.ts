@@ -82,27 +82,6 @@ export type TranslationKeys = {
     title: string
     projects: string
     skills: string
-    works: {
-      work01: { title: string; description: string }
-      work02: { title: string; description: string }
-      work03: { title: string; description: string }
-      hackathon01: { title: string; description: string }
-      hackathon02: { title: string; description: string }
-      hackathon03: { title: string; description: string }
-      hobby01: { title: string; description: string }
-      hobby02: { title: string; description: string }
-      hobby03: { title: string; description: string }
-      hobby04: { title: string; description: string }
-      hobby05: { title: string; description: string }
-      work04: { title: string; description: string }
-      hobby06: { title: string; description: string }
-      hobby07: { title: string; description: string }
-      hobby08: { title: string; description: string }
-      hobby09: { title: string; description: string }
-      hobby10: { title: string; description: string }
-      hobby11: { title: string; description: string }
-      hobby12: { title: string; description: string }
-    }
     skillNames: {
       php: string
       react: string

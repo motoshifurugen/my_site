@@ -1,0 +1,273 @@
+[
+  {
+    "id": "work_01",
+    "image": "/images/works/work_01.png",
+    "title": {
+      "ja": "ホームページ（地元スーパー）",
+      "en": "Homepage (Local Supermarket)"
+    },
+    "description": {
+      "ja": "地元スーパーのホームページを作成しました。スマホユーザーを主なターゲットとし、レスポンシブデザインを採用しました。",
+      "en": "I created a homepage for a local supermarket. I adopted a responsive design targeting smartphone users as the main target."
+    },
+    "tags": ["Vue.js", "Laravel"],
+    "date": "2022-12"
+  },
+  {
+    "id": "work_02",
+    "image": "/images/works/work_02.png",
+    "title": {
+      "ja": "ホームページ（デイサービス施設）",
+      "en": "Homepage (Day Service Facility)"
+    },
+    "description": {
+      "ja": "エンジニアでなくても運用できるようにとの要望を受け、WordPressを使って新たにホームページを作成しました。",
+      "en": "Based on the request to make it operable even by non-engineers, I created a new homepage using WordPress."
+    },
+    "tags": ["WordPress"],
+    "date": "2023-01"
+  },
+  {
+    "id": "work_03",
+    "image": "/images/works/work_03.png",
+    "title": {
+      "ja": "ホームページ（ウォーターサーバー）",
+      "en": "Homepage (Water Server)"
+    },
+    "description": {
+      "ja": "既存のサイトを刷新し、YouTube埋め込みやスライドショーなど新しい要素を取り入れました。",
+      "en": "I refreshed the existing site and incorporated new elements such as YouTube embeds and slideshows."
+    },
+    "tags": ["HTML", "CSS"],
+    "date": "2020-12"
+  },
+  {
+    "id": "hackathon_01",
+    "image": "/images/works/hackathon_01.png",
+    "title": {
+      "ja": "今日の飯決めアプリ",
+      "en": "Today's Meal Decision App"
+    },
+    "description": {
+      "ja": "その日の気分に合ったレシピを提案するアプリを開発しました。楽天レシピAPIのレスポンス時間を考慮しながら実装を進めました。",
+      "en": "I developed an app that suggests recipes that match the mood of the day. I proceeded with implementation while considering the response time of the Rakuten Recipe API."
+    },
+    "tags": ["Vue.js", "Docker", "tag:teamDevelopment"],
+    "date": "2021-05"
+  },
+  {
+    "id": "hackathon_02",
+    "image": "/images/works/hackathon_02.png",
+    "title": {
+      "ja": "チーム開発チュートリアルアプリ",
+      "en": "Team Development Tutorial App"
+    },
+    "description": {
+      "ja": "ハッカソンでのチームビルディングの課題を基に、役割分担やタスク共有を簡単に行えるアプリを開発しました。",
+      "en": "Based on team building challenges in hackathons, I developed an app that makes role assignment and task sharing easy."
+    },
+    "tags": ["Laravel", "Docker", "tag:teamDevelopment"],
+    "date": "2021-10"
+  },
+  {
+    "id": "hackathon_03",
+    "image": "/images/works/hackathon_03.png",
+    "title": {
+      "ja": "Pythonで作るトランプゲーム",
+      "en": "Card Game Made with Python"
+    },
+    "description": {
+      "ja": "Pythonでローカル環境で動作するトランプゲームを開発し、それを配布するためのWebサイトを構築しました。",
+      "en": "I developed a card game that works in a local environment with Python and built a website to distribute it."
+    },
+    "tags": ["Laravel", "Python", "tag:teamDevelopment"],
+    "date": "2021-05"
+  },
+  {
+    "id": "hobby_01",
+    "image": "/images/works/hobby_01.png",
+    "title": {
+      "ja": "自己探究プログラム振り返りサイト",
+      "en": "Self-Exploration Program Reflection Site"
+    },
+    "description": {
+      "ja": "参加したプログラムの内容やメンバー情報などをまとめたサイトを作成しました。動くドット絵の背景が好評でした。",
+      "en": "I created a site that summarizes the content of the program I participated in and member information. The animated pixel art background was well received."
+    },
+    "tags": ["Vue.js", "tag:personalDevelopment"],
+    "date": "2021-11"
+  },
+  {
+    "id": "hobby_02",
+    "image": "/images/works/hobby_02.png",
+    "title": {
+      "ja": "あのシーンの吹き出し加工ツール",
+      "en": "Speech Bubble Processing Tool for That Scene"
+    },
+    "description": {
+      "ja": "あの名シーンの感動を他の場面でも応用できるよう、吹き出しを自分好みに書き換えるツールを開発しました。",
+      "en": "I developed a tool to rewrite speech bubbles to my liking so that the emotion of that famous scene can be applied to other situations."
+    },
+    "tags": ["HTML", "CSS", "tag:personalDevelopment"],
+    "date": "2023-05"
+  },
+  {
+    "id": "hobby_03",
+    "image": "/images/works/hobby_03.png",
+    "title": {
+      "ja": "あのシーンの緊迫感体験ゲーム",
+      "en": "Tension Experience Game for That Scene"
+    },
+    "description": {
+      "ja": "某アニメの名シーンを再現して世界崩壊の緊迫感を体験できる、ヌメロン形式のパスワード推測ゲームを作成しました。",
+      "en": "I created a password guessing game in the Numeron format that recreates a famous scene from a certain anime and allows you to experience the tension of world destruction."
+    },
+    "tags": ["Vue.js", "tag:personalDevelopment"],
+    "date": "2023-08"
+  },
+  {
+    "id": "hobby_04",
+    "image": "/images/works/hobby_04.png",
+    "title": {
+      "ja": "ユニティちゃんのマリオ風ゲーム",
+      "en": "Unity-chan Mario-style Game"
+    },
+    "description": {
+      "ja": "Unityの基礎を学ぶために、2Dのマリオ風ゲームを作成しました。ゲーム開発者の凄さを強く実感しました。",
+      "en": "To learn the basics of Unity, I created a 2D Mario-style game. I strongly felt the greatness of game developers."
+    },
+    "tags": ["Unity", "tag:personalDevelopment"],
+    "date": "2021-08"
+  },
+  {
+    "id": "hobby_05",
+    "image": "/images/works/hobby_05.png",
+    "title": {
+      "ja": "開発ポートフォリオサイト",
+      "en": "Development Portfolio Site"
+    },
+    "description": {
+      "ja": "Reactを使ったブログサイト構築を目指し、ジェネラティブアートの使用やゲーム画面など、遊び心もこめて作成しました。",
+      "en": "Aiming to build a blog site with React, I created it with playfulness including the use of generative art and game screens."
+    },
+    "tags": ["React", "Next.js", "Vercel"],
+    "date": "2025-01"
+  },
+  {
+    "id": "work_04",
+    "image": "/images/works/work_04.png",
+    "url": "https://kobayashi2103.co.jp/",
+    "title": {
+      "ja": "ホームページ（不動産会社）",
+      "en": "Homepage (Real Estate Company)"
+    },
+    "description": {
+      "ja": "Figmaでのデザイン作成から機能提案まで、依頼者の要望を反映したホームページを作成しました。",
+      "en": "I created a homepage that reflects the client's requests, from design creation in Figma to functional proposals."
+    },
+    "tags": ["Figma", "Next.js", "Vercel"],
+    "date": "2025-03"
+  },
+  {
+    "id": "hobby_06",
+    "image": "/images/works/hobby_06.png",
+    "url": "https://apps.apple.com/us/app/hugmi-%E3%83%8F%E3%82%B0%E3%83%9F%E3%83%BC/id6745621864",
+    "title": {
+      "ja": "朝のルーティン スマホアプリ",
+      "en": "Morning Routine Smartphone App"
+    },
+    "description": {
+      "ja": "朝が苦手な自分を救うために、名言で始まる朝のルーティンアプリを作成しました。",
+      "en": "To save myself who is not good at mornings, I created a morning routine app that starts with famous quotes."
+    },
+    "tags": ["React Native", "Expo"],
+    "date": "2025-05"
+  },
+  {
+    "id": "hobby_07",
+    "image": "/images/works/hobby_07.png",
+    "url": "https://furugen-island.com/my_site/rpg",
+    "title": {
+      "ja": "短編ストーリー型RPG",
+      "en": "Short Story RPG"
+    },
+    "description": {
+      "ja": "「正しさとは何か」をテーマに、主人公を操作するマルチエンディング型ゲームを制作しました。",
+      "en": "A multi-ending game where you control the protagonist, exploring the theme of \"What is the right thing to do?\""
+    },
+    "tags": ["React", "Next.js", "tag:personalDevelopment"],
+    "date": "2026-01"
+  },
+  {
+    "id": "hobby_08",
+    "image": "/images/works/hobby_08.png",
+    "url": "https://my-kitchen.furugen-island.com/",
+    "title": {
+      "ja": "わたしの台所図鑑 | 料理記録アプリ",
+      "en": "My Kitchen Illustrated | Cooking Journal"
+    },
+    "description": {
+      "ja": "うまくできた日も 少し焦げた日も、料理の記録を、楽しく静かに残すアプリです。",
+      "en": "An app for quietly and joyfully keeping a record of your cooking — both the days that turned out well and the ones that burned a little."
+    },
+    "tags": ["React Native", "Expo", "tag:personalDevelopment"],
+    "date": "2026-04"
+  },
+  {
+    "id": "hobby_09",
+    "image": "/images/works/hobby_09.png",
+    "title": {
+      "ja": "マイダッシュボード",
+      "en": "My Dashboard"
+    },
+    "description": {
+      "ja": "ピクセル調の自分向けダッシュボードを作成し、イシューや家計簿を管理しています。",
+      "en": "A pixel-art personal dashboard where I manage issues and household accounts."
+    },
+    "tags": ["AI-CEO", "tag:personalDevelopment"],
+    "date": "2026-05"
+  },
+  {
+    "id": "hobby_10",
+    "image": "/images/works/hobby_10.png",
+    "title": {
+      "ja": "沖縄マラソンモチベ上げアプリ",
+      "en": "Okinawa Marathon Motivation App"
+    },
+    "description": {
+      "ja": "友人たちと記録をシェアしながらおきなわマラソンを走っているような気持ちになれるアプリです。",
+      "en": "An app that lets you feel like you are running the Okinawa Marathon while sharing records with friends."
+    },
+    "tags": ["API", "tag:personalDevelopment"],
+    "date": "2026-08"
+  },
+  {
+    "id": "hobby_11",
+    "image": "/images/works/hobby_11.png",
+    "url": "https://enjin.furugen-island.com/",
+    "title": {
+      "ja": "宴陣 | 飲み会調整アプリ",
+      "en": "Enjin | Drinking Party Planner"
+    },
+    "description": {
+      "ja": "企画する側も参加する側も楽しいLINE連携した飲み会調整アプリを作りました。",
+      "en": "A LINE-integrated drinking-party planner that is fun for both organizers and guests."
+    },
+    "tags": ["LINE", "tag:personalDevelopment"],
+    "date": "2026-09"
+  },
+  {
+    "id": "hobby_12",
+    "image": "/images/works/hobby_12.png",
+    "title": {
+      "ja": "AI活用推進エージェント「Kodama」",
+      "en": "AI Adoption Agent \"Kodama\""
+    },
+    "description": {
+      "ja": "「AI入れたけど使われない問題」に終止符を打つための社内Webアプリを開発しました。",
+      "en": "I developed an internal web app to put an end to the \"we introduced AI, but nobody uses it\" problem."
+    },
+    "tags": ["Azure", "AIエージェント", "tag:teamDevelopment"],
+    "date": "2026-05"
+  }
+]
