@@ -59,6 +59,32 @@ const clearCache = (): void => {
   })
 }
 
+const TANKA_PAGE_LIMIT = 12
+
+const loadTankaPage = async (page: number): Promise<TankaResponse> => {
+  const cacheKey = getCacheKey(page, TANKA_PAGE_LIMIT)
+  const cachedData = getFromCache(cacheKey)
+  if (cachedData) {
+    return cachedData
+  }
+
+  const response = await fetch(
+    `/my_site/api/tanka?page=${page}&limit=${TANKA_PAGE_LIMIT}`,
+    {
+      headers: {
+        'Cache-Control': 'max-age=300', // ブラウザキャッシュも5分
+      },
+    },
+  )
+  if (!response.ok) {
+    throw new Error('短歌データの取得に失敗しました')
+  }
+
+  const data: TankaResponse = await response.json()
+  setCache(cacheKey, data)
+  return data
+}
+
 interface InfiniteScrollState {
   currentPage: number
   totalItems: number
@@ -86,97 +112,62 @@ const TankaPage: React.FC = () => {
   const loadMoreRef = useRef<HTMLDivElement | null>(null)
   const scrollStateRef = useRef(scrollState)
 
-  const fetchTankaData = useCallback(
-    async (page: number = 1, isLoadMore: boolean = false) => {
-      try {
-        if (isLoadMore) {
-          setScrollState((prev) => ({ ...prev, isLoadingMore: true }))
-        } else {
-          setScrollState((prev) => ({ ...prev, isLoading: true }))
-        }
-        setError(null)
-
-        // キャッシュキーを生成
-        const cacheKey = getCacheKey(page, 12)
-
-        // キャッシュからデータを取得
-        const cachedData = getFromCache(cacheKey)
-        if (cachedData) {
-          // キャッシュからデータを取得した場合
-          if (isLoadMore) {
-            setTankaList((prev) => [...prev, ...cachedData.tanka])
-          } else {
-            setTankaList(cachedData.tanka)
-          }
-
-          setScrollState((prev) => ({
-            ...prev,
-            currentPage: page,
-            totalItems: cachedData.pagination.totalItems,
-            hasNext: cachedData.pagination.hasNext,
-            isLoading: false,
-            isLoadingMore: false,
-          }))
-          return
-        }
-
-        // キャッシュにない場合はAPIから取得
-        const response = await fetch(
-          `/my_site/api/tanka?page=${page}&limit=12`,
-          {
-            headers: {
-              'Cache-Control': 'max-age=300', // ブラウザキャッシュも5分
-            },
-          },
-        )
-        if (!response.ok) {
-          throw new Error('短歌データの取得に失敗しました')
-        }
-
-        const data = await response.json()
-
-        // データをキャッシュに保存
-        setCache(cacheKey, data)
-
-        if (isLoadMore) {
-          // 既存のデータに追加
-          setTankaList((prev) => [...prev, ...data.tanka])
-        } else {
-          // 初期データとして設定
-          setTankaList(data.tanka)
-        }
-
-        setScrollState((prev) => ({
-          ...prev,
-          currentPage: page,
-          totalItems: data.pagination.totalItems,
-          hasNext: data.pagination.hasNext,
-          isLoading: false,
-          isLoadingMore: false,
-        }))
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : '予期しないエラーが発生しました',
-        )
-        setScrollState((prev) => ({
-          ...prev,
-          isLoading: false,
-          isLoadingMore: false,
-        }))
-      }
+  const applyPage = useCallback(
+    (data: TankaResponse, page: number, isLoadMore: boolean) => {
+      setTankaList((prev) =>
+        isLoadMore ? [...prev, ...data.tanka] : data.tanka,
+      )
+      setScrollState((prev) => ({
+        ...prev,
+        currentPage: page,
+        totalItems: data.pagination.totalItems,
+        hasNext: data.pagination.hasNext,
+        isLoading: false,
+        isLoadingMore: false,
+      }))
     },
     [],
-  ) // 依存関係を空にして、関数の再作成を防ぐ
+  )
+
+  const applyError = useCallback((err: unknown) => {
+    setError(
+      err instanceof Error ? err.message : '予期しないエラーが発生しました',
+    )
+    setScrollState((prev) => ({
+      ...prev,
+      isLoading: false,
+      isLoadingMore: false,
+    }))
+  }, [])
+
+  const fetchTankaData = useCallback(
+    async (page: number, isLoadMore: boolean) => {
+      setScrollState((prev) =>
+        isLoadMore
+          ? { ...prev, isLoadingMore: true }
+          : { ...prev, isLoading: true },
+      )
+      setError(null)
+      try {
+        applyPage(await loadTankaPage(page), page, isLoadMore)
+      } catch (err) {
+        applyError(err)
+      }
+    },
+    [applyPage, applyError],
+  )
 
   // scrollStateRefを更新
   useEffect(() => {
     scrollStateRef.current = scrollState
   }, [scrollState])
 
-  // 初期データ読み込み
+  // 初期データ読み込み。loading とエラーの初期値は useState で済ませてある
   useEffect(() => {
-    fetchTankaData(1)
-  }, [fetchTankaData])
+    loadTankaPage(1)
+      .then((data) => applyPage(data, 1, false))
+      .catch(applyError)
+  }, [applyPage, applyError])
 
   // ページの可視性が変わった時のキャッシュ管理
   useEffect(() => {
@@ -289,7 +280,7 @@ const TankaPage: React.FC = () => {
             whileTap={{ scale: 0.95 }}
             onClick={() => {
               clearCache() // キャッシュをクリアしてから再試行
-              fetchTankaData(scrollState.currentPage)
+              fetchTankaData(scrollState.currentPage, false)
             }}
           >
             再試行

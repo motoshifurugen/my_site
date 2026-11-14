@@ -2,7 +2,7 @@
 
 import { P5CanvasInstance } from '@p5-wrapper/react'
 import dynamic from 'next/dynamic'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { pointerPosition } from './p5Pointer'
 
 // p5 は import した時点で navigator などブラウザの API に触るので、サーバーでは読み込まない
@@ -18,14 +18,6 @@ interface SketchCloudProps {
 }
 
 const SketchCloud: React.FC<SketchCloudProps> = ({ mode }) => {
-  const [isMounted, setIsMounted] = useState(false)
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-  if (!isMounted) {
-    return null
-  }
-
   const sketch = (p: P5CanvasInstance) => {
     let cloud_box: { x: number; y: number; size: number; alpha: number }[] = []
     let contrail = { x1: 0, y1: 0, x2: 0, y2: 0, alpha: 255 }

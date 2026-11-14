@@ -58,11 +58,6 @@ export default [
           ],
         },
       ],
-      // react-hooks v7（eslint-config-next 16 から入る）の新ルール。既存コードの 17 件を
-      // #286 で直すまで warn にする。
-      'react-hooks/set-state-in-effect': 'warn',
-      'react-hooks/immutability': 'warn',
-      'react-hooks/set-state-in-render': 'warn',
     },
   },
 ]

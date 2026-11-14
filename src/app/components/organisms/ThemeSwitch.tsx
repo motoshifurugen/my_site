@@ -1,35 +1,27 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useIsDarkMode } from '@/app/hooks/useIsDarkMode'
+import { useEffect } from 'react'
 import { FiMoon, FiSun } from 'react-icons/fi'
 
+const THEME_STORAGE_KEY = 'theme'
+
+// 表示は html の dark クラスから導く。ここではクラスと保存値を書き換えるだけ
 const ThemeSwitch = () => {
-  const [theme, setTheme] = useState('light')
+  const theme = useIsDarkMode() ? 'dark' : 'light'
 
   useEffect(() => {
-    if (
-      localStorage.theme === 'dark' ||
-      (!('theme' in localStorage) &&
+    const prefersDark =
+      localStorage.getItem(THEME_STORAGE_KEY) === 'dark' ||
+      (!(THEME_STORAGE_KEY in localStorage) &&
         window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
-      document.documentElement.classList.add('dark')
-      setTheme('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-      setTheme('light')
-    }
+    document.documentElement.classList.toggle('dark', prefersDark)
   }, [])
 
   const toggleTheme = () => {
-    if (theme === 'light') {
-      document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
-      setTheme('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
-      setTheme('light')
-    }
+    const nextTheme = theme === 'light' ? 'dark' : 'light'
+    document.documentElement.classList.toggle('dark', nextTheme === 'dark')
+    localStorage.setItem(THEME_STORAGE_KEY, nextTheme)
   }
 
   return (

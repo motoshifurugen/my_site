@@ -1,15 +1,12 @@
 'use client'
 
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
-import { defaultLocale, getLocaleFromPath } from './config'
+import { useLocalStorageValue } from '@/app/hooks/useLocalStorageValue'
+import { createContext, ReactNode, useContext } from 'react'
+import { defaultLocale, getLocaleFromPath, isLocale } from './config'
 import { translations } from './translations'
 import { Locale, TranslationKeys } from './types'
+
+const LOCALE_STORAGE_KEY = 'locale'
 
 interface I18nContextType {
   locale: Locale
@@ -25,30 +22,16 @@ interface I18nProviderProps {
 }
 
 export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
-  const [locale, setLocaleState] = useState<Locale>(
+  const parseStoredLocale = (raw: string | null): Locale =>
+    isLocale(raw)
+      ? raw
+      : initialLocale || getLocaleFromPath(window.location.pathname)
+
+  const [locale, setLocale] = useLocalStorageValue<Locale>(
+    LOCALE_STORAGE_KEY,
+    parseStoredLocale,
     initialLocale || defaultLocale,
   )
-
-  // ローカルストレージから言語設定を読み込み
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedLocale = localStorage.getItem('locale') as Locale
-      if (savedLocale && (savedLocale === 'ja' || savedLocale === 'en')) {
-        setLocaleState(savedLocale)
-      } else if (!initialLocale) {
-        // URLパスから言語を判定
-        const pathLocale = getLocaleFromPath(window.location.pathname)
-        setLocaleState(pathLocale)
-      }
-    }
-  }, [initialLocale])
-
-  const setLocale = (newLocale: Locale) => {
-    setLocaleState(newLocale)
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('locale', newLocale)
-    }
-  }
 
   const value: I18nContextType = {
     locale,
