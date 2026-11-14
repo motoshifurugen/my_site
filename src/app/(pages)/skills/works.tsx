@@ -1,7 +1,9 @@
-// works.ts
+import worksData from '@/data/works.json'
+import { WorkEntry } from '@/types/works'
 import { ReactElement } from 'react'
 import { BiLinkExternal } from 'react-icons/bi'
 import { useI18n } from '../../../i18n/context'
+import { Locale, TranslationKeys } from '../../../i18n/types'
 
 type Work = {
   src: string
@@ -12,220 +14,68 @@ type Work = {
   date: string
 }
 
-export const useWorks = () => {
-  const { t } = useI18n()
+type TagTranslations = TranslationKeys['skills']['tags']
 
-  const works: Work[] = [
-    {
-      src: '/images/works/work_01.png',
-      alt: 'work01',
-      title: t.skills.works.work01.title,
-      description: t.skills.works.work01.description,
-      tags: ['Vue.js', 'Laravel'],
-      date: '2022-12',
-    },
-    {
-      src: '/images/works/work_02.png',
-      alt: 'work02',
-      title: t.skills.works.work02.title,
-      description: t.skills.works.work02.description,
-      tags: ['WordPress'],
-      date: '2023-01',
-    },
-    {
-      src: '/images/works/work_03.png',
-      alt: 'work03',
-      title: t.skills.works.work03.title,
-      description: t.skills.works.work03.description,
-      tags: ['HTML', 'CSS'],
-      date: '2020-12',
-    },
-    {
-      src: '/images/works/hackathon_01.png',
-      alt: 'hackathon01',
-      title: t.skills.works.hackathon01.title,
-      description: t.skills.works.hackathon01.description,
-      tags: ['Vue.js', 'Docker', t.skills.tags.teamDevelopment],
-      date: '2021-05',
-    },
-    {
-      src: '/images/works/hackathon_02.png',
-      alt: 'hackathon02',
-      title: t.skills.works.hackathon02.title,
-      description: t.skills.works.hackathon02.description,
-      tags: ['Laravel', 'Docker', t.skills.tags.teamDevelopment],
-      date: '2021-10',
-    },
-    {
-      src: '/images/works/hackathon_03.png',
-      alt: 'hackathon03',
-      title: t.skills.works.hackathon03.title,
-      description: t.skills.works.hackathon03.description,
-      tags: ['Laravel', 'Python', t.skills.tags.teamDevelopment],
-      date: '2021-05',
-    },
-    {
-      src: '/images/works/hobby_01.png',
-      alt: 'hobby01',
-      title: t.skills.works.hobby01.title,
-      description: t.skills.works.hobby01.description,
-      tags: ['Vue.js', t.skills.tags.personalDevelopment],
-      date: '2021-11',
-    },
-    {
-      src: '/images/works/hobby_02.png',
-      alt: 'hobby02',
-      title: t.skills.works.hobby02.title,
-      description: t.skills.works.hobby02.description,
-      tags: ['HTML', 'CSS', t.skills.tags.personalDevelopment],
-      date: '2023-05',
-    },
-    {
-      src: '/images/works/hobby_03.png',
-      alt: 'hobby03',
-      title: t.skills.works.hobby03.title,
-      description: t.skills.works.hobby03.description,
-      tags: ['Vue.js', t.skills.tags.personalDevelopment],
-      date: '2023-08',
-    },
-    {
-      src: '/images/works/hobby_04.png',
-      alt: 'hobby04',
-      title: t.skills.works.hobby04.title,
-      description: t.skills.works.hobby04.description,
-      tags: ['Unity', t.skills.tags.personalDevelopment],
-      date: '2021-08',
-    },
-    {
-      src: '/images/works/hobby_05.png',
-      alt: 'hobby05',
-      title: t.skills.works.hobby05.title,
-      description: t.skills.works.hobby05.description,
-      tags: ['React', 'Next.js', 'Vercel'],
-      date: '2025-01',
-    },
-    {
-      src: '/images/works/work_04.png',
-      alt: 'work04',
-      title: (
-        <a
-          href="https://kobayashi2103.co.jp/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1"
-        >
-          {t.skills.works.work04.title}
-          <BiLinkExternal className="inline-block" />
-        </a>
-      ),
-      description: t.skills.works.work04.description,
-      tags: ['Figma', 'Next.js', 'Vercel'],
-      date: '2025-03',
-    },
-    {
-      src: '/images/works/hobby_06.png',
-      alt: 'hobby06',
-      title: (
-        <a
-          href="https://apps.apple.com/us/app/hugmi-%E3%83%8F%E3%82%B0%E3%83%9F%E3%83%BC/id6745621864"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1"
-        >
-          {t.skills.works.hobby06.title}
-          <BiLinkExternal className="inline-block" />
-        </a>
-      ),
-      description: t.skills.works.hobby06.description,
-      tags: ['React Native', 'Expo'],
-      date: '2025-05',
-    },
-    {
-      src: '/images/works/hobby_07.png',
-      alt: 'hobby07',
-      title: (
-        <a
-          href="https://furugen-island.com/my_site/rpg"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1"
-        >
-          {t.skills.works.hobby07.title}
-          <BiLinkExternal className="inline-block" />
-        </a>
-      ),
-      description: t.skills.works.hobby07.description,
-      tags: ['React', 'Next.js', t.skills.tags.personalDevelopment],
-      date: '2026-01',
-    },
-    {
-      src: '/images/works/hobby_08.png',
-      alt: 'hobby08',
-      title: (
-        <a
-          href="https://my-kitchen.furugen-island.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1"
-        >
-          {t.skills.works.hobby08.title}
-          <BiLinkExternal className="inline-block" />
-        </a>
-      ),
-      description: t.skills.works.hobby08.description,
-      tags: ['React Native', 'Expo', t.skills.tags.personalDevelopment],
-      date: '2026-04',
-    },
-    {
-      src: '/images/works/hobby_09.png',
-      alt: 'hobby09',
-      title: t.skills.works.hobby09.title,
-      description: t.skills.works.hobby09.description,
-      tags: ['AI-CEO', t.skills.tags.personalDevelopment],
-      date: '2026-05',
-    },
-    {
-      src: '/images/works/hobby_10.png',
-      alt: 'hobby10',
-      title: t.skills.works.hobby10.title,
-      description: t.skills.works.hobby10.description,
-      tags: ['API', t.skills.tags.personalDevelopment],
-      date: '2026-08',
-    },
-    {
-      src: '/images/works/hobby_11.png',
-      alt: 'hobby11',
-      title: (
-        <a
-          href="https://enjin.furugen-island.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1"
-        >
-          {t.skills.works.hobby11.title}
-          <BiLinkExternal className="inline-block" />
-        </a>
-      ),
-      description: t.skills.works.hobby11.description,
-      tags: ['LINE', t.skills.tags.personalDevelopment],
-      date: '2026-09',
-    },
-    {
-      src: '/images/works/hobby_12.png',
-      alt: 'hobby12',
-      title: t.skills.works.hobby12.title,
-      description: t.skills.works.hobby12.description,
-      tags: ['Azure', 'AIエージェント', t.skills.tags.teamDevelopment],
-      date: '2026-05',
-    },
-  ]
+const TRANSLATED_TAG_PREFIX = 'tag:'
 
-  // 日付で降順ソート
-  const sortedWorks = works.sort((a, b) => {
-    const dateA = new Date(a.date).getTime()
-    const dateB = new Date(b.date).getTime()
-    return dateB - dateA
-  })
+const workEntries: WorkEntry[] = worksData
 
-  return sortedWorks
+const isTagKey = (
+  tags: TagTranslations,
+  key: string,
+): key is keyof TagTranslations => Object.hasOwn(tags, key)
+
+export const resolveWorkTag = (tag: string, tags: TagTranslations): string => {
+  if (!tag.startsWith(TRANSLATED_TAG_PREFIX)) {
+    return tag
+  }
+  const key = tag.slice(TRANSLATED_TAG_PREFIX.length)
+  if (!isTagKey(tags, key)) {
+    throw new Error(`Unknown tag key in works.json: ${tag}`)
+  }
+  return tags[key]
+}
+
+const renderTitle = (
+  entry: WorkEntry,
+  locale: Locale,
+): string | ReactElement => {
+  const title = entry.title[locale]
+  if (entry.url === undefined) {
+    return title
+  }
+  return (
+    <a
+      href={entry.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center gap-1"
+    >
+      {title}
+      <BiLinkExternal className="inline-block" />
+    </a>
+  )
+}
+
+const toWork = (
+  entry: WorkEntry,
+  locale: Locale,
+  tags: TagTranslations,
+): Work => ({
+  src: entry.image,
+  alt: entry.id,
+  title: renderTitle(entry, locale),
+  description: entry.description[locale],
+  tags: entry.tags.map((tag) => resolveWorkTag(tag, tags)),
+  date: entry.date,
+})
+
+const byDateDesc = (a: Work, b: Work): number =>
+  new Date(b.date).getTime() - new Date(a.date).getTime()
+
+export const useWorks = (): Work[] => {
+  const { locale, t } = useI18n()
+  return workEntries
+    .map((entry) => toWork(entry, locale, t.skills.tags))
+    .sort(byDateDesc)
 }
