@@ -601,14 +601,22 @@ The site is split into two hosting targets:
 - **Static site**: deployed to GitHub Pages by CI.
 - **API**: hosted on Vercel; the static site reaches it via `NEXT_PUBLIC_API_URL`.
 
-**vercel.json** only configures a redirect (not a framework preset):
+**vercel.json** configures a redirect and `git.deploymentEnabled` (not a framework preset):
 ```json
 {
   "redirects": [
     { "source": "/", "destination": "/my_site", "permanent": true }
-  ]
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "dependabot/**": false,
+      "feat/issue-*-overnight": false
+    }
+  }
 }
 ```
+
+`git.deploymentEnabled` stops Vercel from creating deployments for `dependabot/**` and `feat/issue-*-overnight` branches (Issue #318). Their preview deployments filled the free Deployment Storage quota, and nobody uses them: overnight PRs are checked by the local gate (`npm ci` and `npm run build`) before merge. Vercel deploys every branch not listed, so `main` production deploys and other previews stay on. The keys use minimatch syntax; see https://vercel.com/docs/project-configuration/git-configuration#git.deploymentenabled.
 
 **Canonical build & deploy (`.github/workflows/nextjs.yml`)**:
 

@@ -5,5 +5,11 @@
       "destination": "/my_site",
       "permanent": true
     }
-  ]
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "dependabot/**": false,
+      "feat/issue-*-overnight": false
+    }
+  }
 }
