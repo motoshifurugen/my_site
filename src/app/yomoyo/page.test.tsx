@@ -152,3 +152,9 @@ test('yomoyo/page: 未生成の gray-<数値> ユーティリティを使わな�
   const html = renderPage()
   assert.doesNotMatch(html, /\bgray-\d/)
 })
+
+test('yomoyo/page: アカウント削除 /yomoyo/account-deletion への内部リンクを表示する', () => {
+  // Google Play 用の削除ページへ LP からたどれることを固定する。
+  const html = renderPage()
+  assert.match(html, /href="[^"]*\/yomoyo\/account-deletion"/)
+})
