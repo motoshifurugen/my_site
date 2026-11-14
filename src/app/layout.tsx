@@ -1,7 +1,7 @@
 import ClientWrapper from '@/app/components/templates/ClientWrapper'
 import { SITE_URL, baseOpenGraph } from '@/config/site'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 // フォントは Google Fonts へのビルド時フェッチをやめ @fontsource で自己ホストする
@@ -66,7 +66,6 @@ export default function RootLayout({
           <ClientWrapper>{children}</ClientWrapper>
         </ThemeProvider>
       </body>
-      <GoogleTagManager gtmId="G-3B88D979NP" />
       <GoogleAnalytics gaId="G-3B88D979NP" />
     </html>
   )
