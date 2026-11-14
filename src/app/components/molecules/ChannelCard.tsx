@@ -17,7 +17,9 @@ const ChannelCard: React.FC<ChannelCardProps> = ({ href, icon, label }) => {
       rel="noopener noreferrer"
       className="flex items-center gap-3 rounded-lg border border-gray bg-white p-4 text-main-black transition-colors duration-300 hover:border-teal dark:border-night-gray dark:bg-night-gray dark:text-night-white dark:hover:border-night-teal"
     >
-      <span className="text-2xl">{icon}</span>
+      <span className="text-2xl" aria-hidden="true">
+        {icon}
+      </span>
       <span className="flex-grow font-bold">{label}</span>
       <FiExternalLink className="opacity-60" aria-hidden />
     </a>

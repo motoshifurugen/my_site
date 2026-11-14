@@ -102,7 +102,9 @@ const SketchCloud: React.FC<SketchCloudProps> = ({ mode }) => {
 
       cloud_box = cloud_box.filter((cloud) => cloud.alpha > 0)
 
-      p.filter(p.BLUR, 3)
+      // ぼかしは p5 の filter(BLUR) をやめ、下の CSS の blur で掛ける。
+      // p5 の filter は全画面のピクセルを毎フレーム読み書きし、メインスレッドの
+      // 8 割をこの 1 行が使っていた。CSS の filter は GPU の合成で済む。
     }
 
     p.windowResized = () => {
@@ -110,7 +112,12 @@ const SketchCloud: React.FC<SketchCloudProps> = ({ mode }) => {
     }
   }
 
-  return <P5Canvas sketch={sketch} className="absolute inset-0 z-0 h-screen" />
+  return (
+    <P5Canvas
+      sketch={sketch}
+      className="absolute inset-0 z-0 h-screen blur-[6px]"
+    />
+  )
 }
 
 export default SketchCloud

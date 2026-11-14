@@ -28,11 +28,12 @@ export default function TitleAnimation() {
     )
     gsap.fromTo(
       lines,
-      { opacity: 0, y: 16, filter: 'blur(8px)' },
+      // filter: blur はアニメ中ずっと再描画を起こし LCP の見出しを遅らせるので使わない。
+      // opacity と transform だけなら GPU の合成で済む。
+      { opacity: 0, y: 16 },
       {
         opacity: 1,
         y: 0,
-        filter: 'blur(0px)',
         duration: 1,
         ease: 'power2.out',
         stagger: 0.15,
