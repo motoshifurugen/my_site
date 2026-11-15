@@ -27,26 +27,14 @@ import kise3 from '../../../../../img/rpg/person/kise_3.png'
 import saegusa1 from '../../../../../img/rpg/person/saegusa_1.png'
 import rainRoad from '../../../../../img/rpg/rain_road.png'
 import stationMorning from '../../../../../img/rpg/station_morning.png'
-import { chapter1 } from '../data/chapter1'
-import { chapter1 as chapter1Eng } from '../data/chapter1_eng'
-import { chapter2 } from '../data/chapter2'
-import { chapter2 as chapter2Eng } from '../data/chapter2_eng'
-import { chapter3 } from '../data/chapter3'
-import { chapter3 as chapter3Eng } from '../data/chapter3_eng'
-import { chapter4 } from '../data/chapter4'
-import { chapter4 as chapter4Eng } from '../data/chapter4_eng'
 import { chapter5 } from '../data/chapter5'
 import { chapter5 as chapter5Eng } from '../data/chapter5_eng'
-import { chapter6a } from '../data/chapter6a'
-import { chapter6a as chapter6aEng } from '../data/chapter6a_eng'
-import { chapter6b } from '../data/chapter6b'
-import { chapter6b as chapter6bEng } from '../data/chapter6b_eng'
-import { chapter6c } from '../data/chapter6c'
-import { chapter6c as chapter6cEng } from '../data/chapter6c_eng'
+import {
+  type Chapter6Route,
+  getChapters,
+  type Language,
+} from '../data/chapters'
 import TapRipple from './TapRipple'
-
-// 第6章のルート選択を管理するための型
-type Chapter6Route = 'bad_end' | 'true_end' | 'another_end' | null
 
 const isChapter6Route = (
   choiceId: string,
@@ -54,9 +42,6 @@ const isChapter6Route = (
   choiceId === 'bad_end' ||
   choiceId === 'true_end' ||
   choiceId === 'another_end'
-
-// 言語の型
-type Language = 'ja' | 'en'
 
 const LANGUAGE_STORAGE_KEY = 'rpg_language'
 
@@ -286,43 +271,12 @@ const ChapterPlayer = () => {
     selectedChoice?.lineKey === lineKey ? selectedChoice.choiceId : null
   const currentSceneIndexRef = useRef(currentSceneIndex)
   const currentChapterIndexRef = useRef(currentChapterIndex)
+  const languageRef = useRef(language)
   const prevChapterIndexRef = useRef(currentChapterIndex)
   const isMountedRef = useRef(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  // 第6章のルートに応じて章を動的に構築
-  const getChapters = () => {
-    // 言語に応じて適切な章データを選択
-    if (language === 'en') {
-      const baseChapters = [
-        chapter1Eng,
-        chapter2Eng,
-        chapter3Eng,
-        chapter4Eng,
-        chapter5Eng,
-      ]
-      if (chapter6Route === 'bad_end') {
-        return [...baseChapters, chapter6aEng]
-      } else if (chapter6Route === 'true_end') {
-        return [...baseChapters, chapter6bEng]
-      } else if (chapter6Route === 'another_end') {
-        return [...baseChapters, chapter6cEng]
-      }
-      return baseChapters
-    } else {
-      const baseChapters = [chapter1, chapter2, chapter3, chapter4, chapter5]
-      if (chapter6Route === 'bad_end') {
-        return [...baseChapters, chapter6a]
-      } else if (chapter6Route === 'true_end') {
-        return [...baseChapters, chapter6b]
-      } else if (chapter6Route === 'another_end') {
-        return [...baseChapters, chapter6c]
-      }
-      return baseChapters
-    }
-  }
-
-  const chapters = getChapters()
+  const chapters = getChapters(language, chapter6Route)
 
   // 現在の章を取得
   const currentChapter = chapters[currentChapterIndex]
@@ -336,6 +290,11 @@ const ChapterPlayer = () => {
   useEffect(() => {
     currentChapterIndexRef.current = currentChapterIndex
   }, [currentChapterIndex])
+
+  // 遷移 effect が言語の変更で走り直すと、シーンが 2 回進むので ref で読む
+  useEffect(() => {
+    languageRef.current = language
+  }, [language])
 
   // 言語選択ハンドラー
   const handleLanguageSelect = (lang: Language) => {
@@ -507,7 +466,7 @@ const ChapterPlayer = () => {
       const sceneIndex = currentSceneIndexRef.current
       const chapterIndex = currentChapterIndexRef.current
       // 最新のchapters配列を取得
-      const currentChapters = getChapters()
+      const currentChapters = getChapters(languageRef.current, chapter6Route)
       const chapter = currentChapters[chapterIndex]
 
       if (chapter && sceneIndex < chapter.scenes.length - 1) {

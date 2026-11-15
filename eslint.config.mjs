@@ -34,6 +34,7 @@ export default [
       'prettier/prettier': 'error',
       'tailwindcss/classnames-order': 'error',
       'tailwindcss/enforces-shorthand': 'error',
+      'react-hooks/exhaustive-deps': 'error',
       'tailwindcss/no-custom-classname': [
         'warn',
         {

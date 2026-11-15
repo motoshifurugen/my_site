@@ -6,6 +6,8 @@
 //
 // tailwindcss の 2 ルールを warn から error に上げたことも固定する（Issue #328）。
 //
+// react-hooks/exhaustive-deps を warn から error に上げたことも固定する（Issue #331）。
+//
 // 実行: プロジェクトルートで `npm test`（node --import tsx --test）。
 
 import { ESLint, type Linter } from 'eslint'
@@ -32,6 +34,12 @@ const TAILWIND_RULES = [
 ] as const
 
 type TailwindRule = (typeof TAILWIND_RULES)[number]
+
+// RULES と分けるのは、RULES を「設定で上書きしない」前提のテストが使っているため。
+// このルールは eslint.config.mjs で error に上書きする。
+const HOOKS_ERROR_RULES = ['react-hooks/exhaustive-deps'] as const
+
+type HooksErrorRule = (typeof HOOKS_ERROR_RULES)[number]
 
 const ERROR = 2
 
@@ -97,9 +105,21 @@ const TAILWIND_VIOLATIONS: Record<TailwindRule, string> = {
 `,
 }
 
-const PROBES: Record<Rule | TailwindRule, string> = {
+const HOOKS_ERROR_VIOLATIONS: Record<HooksErrorRule, string> = {
+  'react-hooks/exhaustive-deps': `import { useEffect } from 'react'
+export function Probe({ value }: { value: number }) {
+  useEffect(() => {
+    console.log(value)
+  }, [])
+  return <p>{value}</p>
+}
+`,
+}
+
+const PROBES: Record<Rule | TailwindRule | HooksErrorRule, string> = {
   ...VIOLATIONS,
   ...TAILWIND_VIOLATIONS,
+  ...HOOKS_ERROR_VIOLATIONS,
 }
 
 const eslint = new ESLint({ cwd: ROOT })
@@ -161,6 +181,16 @@ test('eslint: src/app/page.tsx で tailwindcss の 2 ルールが error にな�
   const severities = await severitiesIn('src/app/page.tsx', TAILWIND_RULES)
   // Then
   assert.deepEqual(severities, allError(TAILWIND_RULES))
+})
+
+test('eslint: src/app/components/game/Player.tsx で react-hooks/exhaustive-deps が error になっている', async () => {
+  // Given/When
+  const severities = await severitiesIn(
+    'src/app/components/game/Player.tsx',
+    HOOKS_ERROR_RULES,
+  )
+  // Then
+  assert.deepEqual(severities, allError(HOOKS_ERROR_RULES))
 })
 
 for (const [rule, code] of Object.entries(PROBES)) {
