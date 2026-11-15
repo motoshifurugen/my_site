@@ -5,6 +5,7 @@ This file provides context for AI assistants working with this project.
 ## Project Overview
 
 **Furugen Island** - A personal portfolio and blog website built with Next.js 16 (App Router), featuring:
+
 - MDX-based blog system with code highlighting and math rendering
 - 3D game built with Three.js
 - Tanka (Japanese poetry) collection with Supabase backend
@@ -63,6 +64,7 @@ npm run fix      # Auto-fix linting issues
 ## Component Architecture
 
 This project follows **Atomic Design** methodology:
+
 - **Atoms**: TitleAnimation, SubmitButton, Highlight, LoadingCircle
 - **Molecules**: BlogCard, InputText, Tags, LikeButton, CodeBlock
 - **Organisms**: BlogGrid, MessageBoard, SkillTimeline, WorkList
@@ -70,35 +72,39 @@ This project follows **Atomic Design** methodology:
 
 ## Important Files
 
-| File | Purpose |
-|------|---------|
-| `src/app/layout.tsx` | Root layout with providers |
-| `src/app/components/templates/ClientWrapper.tsx` | Client-side wrapper with i18n/theme |
-| `src/i18n/translations.ts` | All translation strings |
-| `tailwind.config.ts` | Custom theme colors and animations |
-| `next.config.mjs` | Next.js config with basePath `/my_site` |
+| File                                             | Purpose                                 |
+| ------------------------------------------------ | --------------------------------------- |
+| `src/app/layout.tsx`                             | Root layout with providers              |
+| `src/app/components/templates/ClientWrapper.tsx` | Client-side wrapper with i18n/theme     |
+| `src/i18n/translations.ts`                       | All translation strings                 |
+| `tailwind.config.ts`                             | Custom theme colors and animations      |
+| `next.config.mjs`                                | Next.js config with basePath `/my_site` |
 
 ## Coding Conventions
 
 ### TypeScript
+
 - Strict mode enabled
 - Use interfaces for component props
 - Types defined in `src/types/`
 - Avoid `any` type
 
 ### Components
+
 - Use `'use client'` directive when needed (state, effects, context)
 - PascalCase for component names
 - camelCase for functions and variables
 - Props interface named `{ComponentName}Props`
 
 ### Styling
+
 - Tailwind utility classes first
 - CSS Modules for component-specific styles (`.module.css`)
 - Dark mode: use `dark:` prefix
 - Custom colors: `main-white`, `main-black`, `night-*`, `teal-*`
 
 ### File Naming
+
 - Components: PascalCase (`BlogCard.tsx`)
 - Hooks: camelCase with `use` prefix (`useLikeCount.ts`)
 - Utils: camelCase (`formatDate.ts`)
@@ -118,6 +124,7 @@ ANTHROPIC_API_KEY=         # Claude API key
 ## Common Patterns
 
 ### Data Fetching
+
 ```typescript
 // Server component
 const res = await fetch(`${apiUrl}/blog/`, { cache: 'force-cache' })
@@ -129,6 +136,7 @@ useEffect(() => {
 ```
 
 ### i18n Usage
+
 ```typescript
 'use client'
 const { locale, setLocale, t } = useI18n()
@@ -136,6 +144,7 @@ return <h1>{t.blog.title}</h1>
 ```
 
 ### Dark Mode
+
 ```tsx
 <div className="bg-main-white dark:bg-main-black">
 ```

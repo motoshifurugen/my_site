@@ -144,7 +144,12 @@ describe('api/likes/bulk/route.tsx GET（Issue #166: バルク取得契約）', 
 
   after(() => {
     delete globalThis.__LIKES_BULK_FIXTURE__
-    for (const f of [ROUTE_BUILD, GITHUB_LIKES_BUILD, OCTOKIT_MOCK, NEXT_MOCK]) {
+    for (const f of [
+      ROUTE_BUILD,
+      GITHUB_LIKES_BUILD,
+      OCTOKIT_MOCK,
+      NEXT_MOCK,
+    ]) {
       if (fs.existsSync(f)) fs.rmSync(f)
     }
   })

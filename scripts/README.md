@@ -31,12 +31,12 @@ Supabaseのダッシュボードで以下のSQLを実行してください：
 
 リポジトリの Settings > Secrets and variables > Actions で以下のシークレットを設定してください：
 
-| シークレット名 | 説明 |
-|---|---|
-| `X_BEARER_TOKEN` | X API v2のBearer Token |
-| `X_USER_ID` | 収集対象のTwitterユーザーID（数値） |
-| `SUPABASE_URL` | SupabaseプロジェクトのURL |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabaseのサービスロールキー |
+| シークレット名              | 説明                                |
+| --------------------------- | ----------------------------------- |
+| `X_BEARER_TOKEN`            | X API v2のBearer Token              |
+| `X_USER_ID`                 | 収集対象のTwitterユーザーID（数値） |
+| `SUPABASE_URL`              | SupabaseプロジェクトのURL           |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabaseのサービスロールキー        |
 
 #### X API認証情報の取得方法
 
@@ -58,6 +58,7 @@ Supabaseのダッシュボードで以下のSQLを実行してください：
 3. **その他**: 投稿全体
 
 抽出例：
+
 ```
 【お題：春】
 桜咲く
@@ -123,7 +124,7 @@ python test_extract.py
 ## 実行頻度の推奨設定
 
 - **推奨頻度**: 1日1回（現在の設定）
-- **理由**: 
+- **理由**:
   - X APIのレート制限（User Timeline: 75 requests/15分）
   - 短歌投稿の頻度を考慮
   - GitHub Actionsの使用量節約
@@ -132,30 +133,30 @@ python test_extract.py
 
 ```yaml
 schedule:
-  - cron: '0 */6 * * *'  # 6時間ごと
-  - cron: '0 0 * * 0'    # 週1回（日曜日）
+  - cron: '0 */6 * * *' # 6時間ごと
+  - cron: '0 0 * * 0' # 週1回（日曜日）
 ```
 
 ## データベーススキーマ
 
 ### tankaテーブル
 
-| カラム名 | 型 | 説明 |
-|---|---|---|
-| tweet_id | BIGINT (PK) | ツイートID |
-| author_id | BIGINT | 投稿者のユーザーID |
-| created_at | TIMESTAMP WITH TIME ZONE | ツイート投稿日時 |
-| original_text | TEXT | 元の投稿テキスト |
-| tanka | TEXT | 抽出された短歌 |
-| extracted_at | TIMESTAMP WITH TIME ZONE | 抽出処理日時 |
+| カラム名      | 型                       | 説明               |
+| ------------- | ------------------------ | ------------------ |
+| tweet_id      | BIGINT (PK)              | ツイートID         |
+| author_id     | BIGINT                   | 投稿者のユーザーID |
+| created_at    | TIMESTAMP WITH TIME ZONE | ツイート投稿日時   |
+| original_text | TEXT                     | 元の投稿テキスト   |
+| tanka         | TEXT                     | 抽出された短歌     |
+| extracted_at  | TIMESTAMP WITH TIME ZONE | 抽出処理日時       |
 
 ### metadataテーブル
 
-| カラム名 | 型 | 説明 |
-|---|---|---|
-| key | VARCHAR(255) (PK) | メタデータのキー |
-| value | TEXT | メタデータの値 |
-| updated_at | TIMESTAMP WITH TIME ZONE | 更新日時 |
+| カラム名   | 型                       | 説明             |
+| ---------- | ------------------------ | ---------------- |
+| key        | VARCHAR(255) (PK)        | メタデータのキー |
+| value      | TEXT                     | メタデータの値   |
+| updated_at | TIMESTAMP WITH TIME ZONE | 更新日時         |
 
 ## トラブルシューティング
 

@@ -29,6 +29,7 @@ Furugen Island is a personal portfolio and blog website built with modern web te
 - **Generative Art**: Interactive visualizations with p5.js
 
 ### Live Site
+
 - **URL**: https://furugen-island.com/my_site
 - **Hosting**: GitHub Pages (static export) for the site, Vercel for the API
 - **Base Path**: `/my_site`
@@ -38,58 +39,65 @@ Furugen Island is a personal portfolio and blog website built with modern web te
 ## Technology Stack
 
 ### Core Framework
-| Technology | Version | Purpose |
-|-----------|---------|---------|
-| Next.js | 16.4.6 | React framework with App Router |
-| React | 19 | UI library |
-| TypeScript | 5 | Type-safe JavaScript |
+
+| Technology | Version | Purpose                         |
+| ---------- | ------- | ------------------------------- |
+| Next.js    | 16.4.6  | React framework with App Router |
+| React      | 19      | UI library                      |
+| TypeScript | 5       | Type-safe JavaScript            |
 
 ### Styling
-| Technology | Purpose |
-|-----------|---------|
+
+| Technology          | Purpose                     |
+| ------------------- | --------------------------- |
 | Tailwind CSS 3.4.10 | Utility-first CSS framework |
-| PostCSS | CSS processing |
-| CSS Modules | Component-scoped styles |
+| PostCSS             | CSS processing              |
+| CSS Modules         | Component-scoped styles     |
 
 ### Content & Blog
-| Technology | Purpose |
-|-----------|---------|
-| next-mdx-remote | MDX rendering |
-| gray-matter | YAML frontmatter parsing |
-| remark-gfm | GitHub Flavored Markdown |
-| remark-math + rehype-katex | LaTeX math support |
-| prismjs (server-side highlighting) | Syntax highlighting |
-| tocbot | Table of contents generation |
+
+| Technology                         | Purpose                      |
+| ---------------------------------- | ---------------------------- |
+| next-mdx-remote                    | MDX rendering                |
+| gray-matter                        | YAML frontmatter parsing     |
+| remark-gfm                         | GitHub Flavored Markdown     |
+| remark-math + rehype-katex         | LaTeX math support           |
+| prismjs (server-side highlighting) | Syntax highlighting          |
+| tocbot                             | Table of contents generation |
 
 ### 3D & Animation
-| Technology | Purpose |
-|-----------|---------|
-| Three.js (@react-three/fiber, @react-three/drei) | 3D graphics |
-| GSAP | Complex animations |
-| Framer Motion | React animations |
-| tsparticles | Particle effects |
-| p5.js (@p5-wrapper/react) | Generative art |
+
+| Technology                                       | Purpose            |
+| ------------------------------------------------ | ------------------ |
+| Three.js (@react-three/fiber, @react-three/drei) | 3D graphics        |
+| GSAP                                             | Complex animations |
+| Framer Motion                                    | React animations   |
+| tsparticles                                      | Particle effects   |
+| p5.js (@p5-wrapper/react)                        | Generative art     |
 
 ### State Management
-| Technology | Purpose |
-|-----------|---------|
-| Zustand | Game state management |
-| React Context | i18n, theme state |
-| next-themes | Dark mode management |
+
+| Technology    | Purpose               |
+| ------------- | --------------------- |
+| Zustand       | Game state management |
+| React Context | i18n, theme state     |
+| next-themes   | Dark mode management  |
 
 ### Backend & Data
-| Technology | Purpose |
-|-----------|---------|
-| Supabase | Database for tanka poems |
-| GitHub Issues API (@octokit/rest) | Like counter storage |
-| Anthropic SDK | Claude AI integration |
+
+| Technology                        | Purpose                  |
+| --------------------------------- | ------------------------ |
+| Supabase                          | Database for tanka poems |
+| GitHub Issues API (@octokit/rest) | Like counter storage     |
+| Anthropic SDK                     | Claude AI integration    |
 
 ### Development Tools
-| Tool | Purpose |
-|------|---------|
-| ESLint | Code linting |
-| Prettier | Code formatting |
-| TypeScript | Type checking |
+
+| Tool       | Purpose         |
+| ---------- | --------------- |
+| ESLint     | Code linting    |
+| Prettier   | Code formatting |
+| TypeScript | Type checking   |
 
 ---
 
@@ -173,6 +181,7 @@ my_site/
 **Location**: `src/app/(pages)/blog/`, `src/posts/`
 
 **Architecture**:
+
 ```
 Blog Post Flow:
 1. MDX files in /src/posts/
@@ -184,15 +193,17 @@ Blog Post Flow:
 ```
 
 **MDX Frontmatter Schema**:
+
 ```yaml
 ---
-title: "Post Title"
-date: "2024-01-01"
-tags: ["tag1", "tag2"]
+title: 'Post Title'
+date: '2024-01-01'
+tags: ['tag1', 'tag2']
 ---
 ```
 
 **Features**:
+
 - GitHub Flavored Markdown
 - Code syntax highlighting
 - LaTeX math equations
@@ -209,6 +220,7 @@ tags: ["tag1", "tag2"]
 **Location**: `src/app/(pages)/game/`, `src/app/components/game/`
 
 **Architecture**:
+
 ```
 Game Components:
 ├── Game.tsx         # Main game container
@@ -221,6 +233,7 @@ Game Components:
 ```
 
 **Features**:
+
 - Crossy Road-style gameplay
 - Keyboard controls
 - Score tracking
@@ -234,6 +247,7 @@ Game Components:
 **Backend**: Supabase
 
 **Features**:
+
 - CRUD operations
 - Tag filtering
 - Like system (per user)
@@ -246,6 +260,7 @@ Game Components:
 **Supported Locales**: Japanese (ja), English (en)
 
 **Features**:
+
 - Context-based locale management
 - localStorage persistence
 - URL path detection fallback
@@ -258,6 +273,7 @@ Game Components:
 `useWorks` reads `works.json`, picks the text for the current locale, and sorts the works by `date`, newest first.
 
 **Adding a work** (one JSON entry and one image):
+
 1. Put the image at `public/images/works/<id>.png`.
 2. Add an entry to `src/data/works.json` with `id`, `image` (`/images/works/<id>.png`), `title` and `description` (each with `ja` and `en`), `tags`, `date` (`YYYY-MM`), and an optional `url`. With `url`, the title becomes an external link.
 3. In `tags`, write `tag:<key>` to use the translation at `skills.tags.<key>` in `src/i18n/translations.ts` (for example `tag:personalDevelopment`). Other tags are shown as written.
@@ -288,45 +304,49 @@ Game Components:
 ```
 
 ### Atoms (Basic Elements)
-| Component | Purpose |
-|-----------|---------|
-| TitleAnimation | Animated title text |
-| SubmitButton | Form submit button |
-| Highlight | Text highlighter |
-| LoadingCircle | Loading spinner |
-| GoogleAnalytics | Analytics script |
+
+| Component        | Purpose             |
+| ---------------- | ------------------- |
+| TitleAnimation   | Animated title text |
+| SubmitButton     | Form submit button  |
+| Highlight        | Text highlighter    |
+| LoadingCircle    | Loading spinner     |
+| GoogleAnalytics  | Analytics script    |
 | TocScrollManager | TOC scroll handling |
 
 ### Molecules (Combined Components)
-| Component | Purpose |
-|-----------|---------|
-| BlogCard | Blog post preview card |
-| InputText | Form input with label |
-| Tags | Tag list display |
-| LikeButton | Like interaction button |
-| CodeBlock | Syntax-highlighted code |
-| UrlCard | URL preview card |
-| SnsIcon | Social media icon button |
+
+| Component  | Purpose                  |
+| ---------- | ------------------------ |
+| BlogCard   | Blog post preview card   |
+| InputText  | Form input with label    |
+| Tags       | Tag list display         |
+| LikeButton | Like interaction button  |
+| CodeBlock  | Syntax-highlighted code  |
+| UrlCard    | URL preview card         |
+| SnsIcon    | Social media icon button |
 
 ### Organisms (Complex Sections)
-| Component | Purpose |
-|-----------|---------|
-| BlogGrid | Grid of blog cards |
-| MessageBoard | Contact form |
-| SkillTimeline | Skills display |
-| WorkList | Work history |
-| ThemeSwitch | Dark/light toggle |
-| TopSection | Hero section |
+
+| Component     | Purpose            |
+| ------------- | ------------------ |
+| BlogGrid      | Grid of blog cards |
+| MessageBoard  | Contact form       |
+| SkillTimeline | Skills display     |
+| WorkList      | Work history       |
+| ThemeSwitch   | Dark/light toggle  |
+| TopSection    | Hero section       |
 
 ### Templates (Page Layouts)
-| Component | Purpose |
-|-----------|---------|
-| Header | Site navigation |
-| Footer | Site footer |
-| Sidebar | Page sidebar |
-| ClientWrapper | Client-side provider wrapper |
-| ArticleContent | Blog article layout |
-| BackgroundWrapper | Background decorations |
+
+| Component         | Purpose                      |
+| ----------------- | ---------------------------- |
+| Header            | Site navigation              |
+| Footer            | Site footer                  |
+| Sidebar           | Page sidebar                 |
+| ClientWrapper     | Client-side provider wrapper |
+| ArticleContent    | Blog article layout          |
+| BackgroundWrapper | Background decorations       |
 
 ---
 
@@ -368,6 +388,7 @@ Game Components:
 **Endpoint**: `GET /api/blog/[slug]`
 
 **Response**:
+
 ```typescript
 {
   slug: string
@@ -381,6 +402,7 @@ Game Components:
 ### Likes API (GitHub Issues)
 
 **Endpoints**:
+
 - `GET /api/likes?articleId={id}` - Get like count
 - `POST /api/likes` - Increment like count
 
@@ -389,6 +411,7 @@ Game Components:
 ### Tanka API (Supabase)
 
 **Endpoints**:
+
 - `GET /api/tanka` - List poems (with pagination)
 - `POST /api/tanka` - Create poem
 - `GET /api/tanka-likes` - Get like status
@@ -446,6 +469,7 @@ interface I18nContextType {
 ### Theme Context
 
 Managed by `next-themes`:
+
 - `theme`: 'light' | 'dark' | 'system'
 - Persisted to localStorage
 - System preference detection
@@ -587,24 +611,24 @@ animation: {
 
 ### Environment Variables
 
-| Variable | Scope | Purpose |
-|----------|-------|---------|
-| `NEXT_PUBLIC_API_URL` | Public (build-time) | API base URL |
-| `GITHUB_TOKEN` | Server | GitHub API auth |
-| `GITHUB_OWNER` | Server | Repository owner |
-| `GITHUB_REPO` | Server | Repository name |
-| `SUPABASE_URL` | Server | Supabase project URL |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server | Supabase auth |
-| `ANTHROPIC_API_KEY` | Server | Claude API key |
+| Variable                    | Scope               | Purpose              |
+| --------------------------- | ------------------- | -------------------- |
+| `NEXT_PUBLIC_API_URL`       | Public (build-time) | API base URL         |
+| `GITHUB_TOKEN`              | Server              | GitHub API auth      |
+| `GITHUB_OWNER`              | Server              | Repository owner     |
+| `GITHUB_REPO`               | Server              | Repository name      |
+| `SUPABASE_URL`              | Server              | Supabase project URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server              | Supabase auth        |
+| `ANTHROPIC_API_KEY`         | Server              | Claude API key       |
 
 `NEXT_PUBLIC_API_URL` is inlined at build time and points the static site at the API host. Its value differs per environment:
 
-| Environment | Value | Source |
-|-------------|-------|--------|
-| Local (`npm run dev`) | unset → code fallback (`http://localhost:3000/my_site/api` or `/my_site/api`) | `.env.local` (commented out) |
-| Production | `https://furugen-island.com/my_site/api` | `.env.production` |
-| CI (GitHub Pages build) | `https://my-site-nine-opal.vercel.app/my_site/api` | `.github/workflows/nextjs.yml` |
-| Docker | `/my_site/api` | `docker-compose.yml` |
+| Environment             | Value                                                                         | Source                         |
+| ----------------------- | ----------------------------------------------------------------------------- | ------------------------------ |
+| Local (`npm run dev`)   | unset → code fallback (`http://localhost:3000/my_site/api` or `/my_site/api`) | `.env.local` (commented out)   |
+| Production              | `https://furugen-island.com/my_site/api`                                      | `.env.production`              |
+| CI (GitHub Pages build) | `https://my-site-nine-opal.vercel.app/my_site/api`                            | `.github/workflows/nextjs.yml` |
+| Docker                  | `/my_site/api`                                                                | `docker-compose.yml`           |
 
 > `API_URL` is declared in `docker-compose.yml` only and is **not referenced anywhere in the source** (`process.env.API_URL` has zero usages); it has no effect on the running app.
 
@@ -613,10 +637,12 @@ animation: {
 **Platform**: GitHub Pages (static site) + Vercel (API)
 
 The site is split into two hosting targets:
+
 - **Static site**: deployed to GitHub Pages by CI.
 - **API**: hosted on Vercel; the static site reaches it via `NEXT_PUBLIC_API_URL`.
 
 **vercel.json** configures a redirect and `git.deploymentEnabled` (not a framework preset):
+
 ```json
 {
   "redirects": [

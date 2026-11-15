@@ -14,7 +14,7 @@
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import path from 'node:path'
-import { after, before, beforeEach, describe, it } from 'node:test'
+import { after, before, describe, it } from 'node:test'
 import { fileURLToPath } from 'node:url'
 import ts from 'typescript'
 
@@ -23,7 +23,10 @@ const ROUTE_SRC = path.join(__dirname, 'route.tsx')
 const SCORE_VALIDATION_SRC = path.join(__dirname, 'scoreValidation.ts')
 
 const ROUTE_BUILD = path.join(__dirname, '.route.test-build.mjs')
-const SCORE_VALIDATION_BUILD = path.join(__dirname, '.scoreValidation.test-build.mjs')
+const SCORE_VALIDATION_BUILD = path.join(
+  __dirname,
+  '.scoreValidation.test-build.mjs',
+)
 const OCTOKIT_MOCK = path.join(__dirname, '.octokit.test-mock.mjs')
 const NEXT_MOCK = path.join(__dirname, '.next-server.test-mock.mjs')
 const CLIENTIP_MOCK = path.join(__dirname, '.clientIp.test-mock.mjs')
@@ -132,7 +135,12 @@ describe('api/highscore/route.tsx POST（Issue #158: 検証 + レート制限）
     }
     const request =
       body === '__BAD_JSON__'
-        ? { json: async () => { throw new Error('invalid json') }, headers: new Headers() }
+        ? {
+            json: async () => {
+              throw new Error('invalid json')
+            },
+            headers: new Headers(),
+          }
         : { json: async () => body, headers: new Headers() }
     const response = await POST(request)
     return {

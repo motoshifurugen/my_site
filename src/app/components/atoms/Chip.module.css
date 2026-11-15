@@ -32,4 +32,4 @@
 
 :global(.dark) .selected {
   background-color: var(--night-teal);
-} 
+}

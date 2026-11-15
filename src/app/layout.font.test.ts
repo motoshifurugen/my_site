@@ -60,15 +60,15 @@ test('layout: 3ファミリーを @fontsource-variable で自己ホストする'
 
 test('globals.css: --font-* 変数を @fontsource の生成ファミリー名へ割り当てる', () => {
   assert.ok(
-    globals.includes("--font-dm-sans: 'DM Sans Variable'"),
+    globals.includes('--font-dm-sans: "DM Sans Variable"'),
     '--font-dm-sans を定義する',
   )
   assert.ok(
-    globals.includes("--font-noto-sans-jp: 'Noto Sans JP Variable'"),
+    globals.includes('--font-noto-sans-jp: "Noto Sans JP Variable"'),
     '--font-noto-sans-jp を定義する',
   )
   assert.ok(
-    globals.includes("--font-noto-serif-jp: 'Noto Serif JP Variable'"),
+    globals.includes('--font-noto-serif-jp: "Noto Serif JP Variable"'),
     '--font-noto-serif-jp を定義する',
   )
 })

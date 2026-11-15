@@ -24,7 +24,7 @@
 }
 
 :global(.dark) .articleContent h2 {
-  border-bottom: 2px solid #80CBC4;
+  border-bottom: 2px solid #80cbc4;
 }
 
 .articleContent h3 {
@@ -84,7 +84,7 @@
 }
 
 :global(.dark) .articleContent blockquote {
-  border-left: 4px solid #80CBC4;
+  border-left: 4px solid #80cbc4;
   color: #e0e0e0;
 }
 
@@ -96,7 +96,7 @@
 }
 
 :global(.dark) .articleContent blockquote blockquote {
-  border-left: 4px solid #80CBC4;
+  border-left: 4px solid #80cbc4;
   color: #e0e0e0;
 }
 

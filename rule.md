@@ -18,10 +18,12 @@ This document defines the coding standards and architectural patterns for this p
 ## TypeScript Rules
 
 ### Strict Mode
+
 - TypeScript strict mode is enabled (`strict: true`)
 - All code must pass strict type checking
 
 ### Type Definitions
+
 ```typescript
 // Good: Interface for props
 interface BlogCardProps {
@@ -41,14 +43,16 @@ const data: Post[] = fetchData() // Good
 ```
 
 ### Naming Conventions
-| Type | Convention | Example |
-|------|------------|---------|
-| Interface | PascalCase | `BlogCardProps` |
-| Type | PascalCase | `PostType` |
-| Enum | PascalCase | `Direction` |
-| Generic | Single uppercase | `T`, `K`, `V` |
+
+| Type      | Convention       | Example         |
+| --------- | ---------------- | --------------- |
+| Interface | PascalCase       | `BlogCardProps` |
+| Type      | PascalCase       | `PostType`      |
+| Enum      | PascalCase       | `Direction`     |
+| Generic   | Single uppercase | `T`, `K`, `V`   |
 
 ### Import Order (enforced by Prettier)
+
 1. React imports
 2. Next.js imports
 3. External libraries
@@ -80,6 +84,7 @@ export default function InteractiveComponent() {
 ```
 
 ### When to Use `'use client'`
+
 - Using React hooks (useState, useEffect, useContext, etc.)
 - Using browser APIs (window, document, localStorage)
 - Event handlers (onClick, onChange, etc.)
@@ -87,6 +92,7 @@ export default function InteractiveComponent() {
 - Animation libraries (GSAP, Framer Motion)
 
 ### Component Structure
+
 ```typescript
 'use client' // Only if needed
 
@@ -124,6 +130,7 @@ export default function Component({ title, children }: ComponentProps) {
 ```
 
 ### Custom Hooks
+
 ```typescript
 // File: src/app/hooks/useLikeCount.ts
 export const useLikeCount = (articleId: string) => {
@@ -156,6 +163,7 @@ components/
 ```
 
 ### Atoms
+
 - Single responsibility
 - No internal state (unless necessary)
 - Receive all data via props
@@ -183,18 +191,21 @@ export default function SubmitButton({ label, disabled, onClick }: SubmitButtonP
 ```
 
 ### Molecules
+
 - Compose multiple atoms
 - May have local state
 - Handle simple interactions
 - Examples: BlogCard, InputText, Tags
 
 ### Organisms
+
 - Complex, self-contained sections
 - Can fetch their own data
 - May use context
 - Examples: BlogGrid, Header, Footer
 
 ### Templates
+
 - Define page layouts
 - Handle global state
 - Wrap with providers
@@ -205,6 +216,7 @@ export default function SubmitButton({ label, disabled, onClick }: SubmitButtonP
 ## Styling Guidelines
 
 ### Tailwind CSS First
+
 ```tsx
 // Good: Use Tailwind utilities
 <div className="flex items-center gap-4 p-4 bg-main-white dark:bg-main-black">
@@ -214,6 +226,7 @@ export default function SubmitButton({ label, disabled, onClick }: SubmitButtonP
 ```
 
 ### Dark Mode
+
 ```tsx
 // Always consider dark mode
 <p className="text-main-black dark:text-main-white">
@@ -223,7 +236,9 @@ export default function SubmitButton({ label, disabled, onClick }: SubmitButtonP
 ```
 
 ### Custom Theme Colors
+
 Use defined colors from `tailwind.config.ts`:
+
 - `main-white`, `main-black` - Primary backgrounds
 - `night-white`, `night-black` - Night theme
 - `night-teal`, `night-gray`, `night-orange` - Accents
@@ -232,6 +247,7 @@ Use defined colors from `tailwind.config.ts`:
 - `like-pink` - Like button color
 
 ### Responsive Design
+
 ```tsx
 // Mobile first approach
 <div className="px-4 md:px-8 xl:px-16">
@@ -239,7 +255,9 @@ Use defined colors from `tailwind.config.ts`:
 ```
 
 ### CSS Modules (When Needed)
+
 Use for component-specific styles that can't be achieved with Tailwind:
+
 ```typescript
 import styles from './ArticleContent.module.css'
 
@@ -247,7 +265,9 @@ import styles from './ArticleContent.module.css'
 ```
 
 ### Animation Classes
+
 Custom animations defined in Tailwind config:
+
 - `animate-cloud-*` - Cloud movement
 - `animate-twinkle-*` - Star twinkling
 - `animate-shooting-star-*` - Shooting stars
@@ -257,18 +277,24 @@ Custom animations defined in Tailwind config:
 ## State Management
 
 ### Local State (useState)
+
 Use for component-specific state:
+
 ```typescript
 const [isOpen, setIsOpen] = useState(false)
 ```
 
 ### Context (Global Settings)
+
 Use for app-wide settings:
+
 - `useI18n()` - Locale and translations
 - `useTheme()` - Dark/Light mode
 
 ### Zustand (Complex State)
+
 Use for complex, shared state (e.g., game):
+
 ```typescript
 // stores/game.ts
 import { create } from 'zustand'
@@ -293,6 +319,7 @@ export const useGameStore = create<GameStore>((set) => ({
 ## API & Data Fetching
 
 ### API Route Structure
+
 ```typescript
 // src/app/api/[resource]/route.ts
 import { NextRequest, NextResponse } from 'next/server'
@@ -302,10 +329,7 @@ export async function GET(request: NextRequest) {
     const data = await fetchData()
     return NextResponse.json(data)
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to fetch' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Failed to fetch' }, { status: 500 })
   }
 }
 
@@ -315,15 +339,13 @@ export async function POST(request: NextRequest) {
     const result = await saveData(body)
     return NextResponse.json(result, { status: 201 })
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to save' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Failed to save' }, { status: 500 })
   }
 }
 ```
 
 ### Server-Side Fetching
+
 ```typescript
 // In Server Components
 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog`, {
@@ -333,6 +355,7 @@ const data = await res.json()
 ```
 
 ### Client-Side Fetching
+
 ```typescript
 // In Client Components
 useEffect(() => {
@@ -357,16 +380,18 @@ useEffect(() => {
 ## File & Folder Structure
 
 ### Naming Conventions
-| Type | Convention | Example |
-|------|------------|---------|
-| Component | PascalCase | `BlogCard.tsx` |
-| Hook | camelCase with `use` | `useLikeCount.ts` |
-| Utility | camelCase | `formatDate.ts` |
-| Type file | camelCase | `posts.ts` |
+
+| Type       | Convention            | Example                     |
+| ---------- | --------------------- | --------------------------- |
+| Component  | PascalCase            | `BlogCard.tsx`              |
+| Hook       | camelCase with `use`  | `useLikeCount.ts`           |
+| Utility    | camelCase             | `formatDate.ts`             |
+| Type file  | camelCase             | `posts.ts`                  |
 | CSS Module | PascalCase.module.css | `ArticleContent.module.css` |
-| API route | route.ts | `api/blog/route.ts` |
+| API route  | route.ts              | `api/blog/route.ts`         |
 
 ### Page Files
+
 ```
 (pages)/
 ├── blog/
@@ -377,6 +402,7 @@ useEffect(() => {
 ```
 
 ### Component Files
+
 ```
 components/
 ├── atoms/
@@ -392,7 +418,9 @@ components/
 ## Git & Version Control
 
 ### Commit Messages
+
 Follow conventional commits:
+
 ```
 feat: add dark mode toggle
 fix: resolve blog pagination issue
@@ -403,6 +431,7 @@ test: add unit tests for hooks
 ```
 
 ### Branch Naming
+
 ```
 feature/add-comment-system
 fix/blog-loading-error
@@ -410,6 +439,7 @@ refactor/component-structure
 ```
 
 ### Pre-commit
+
 - Prettier formatting runs automatically
 - ESLint checks must pass
 
@@ -418,6 +448,7 @@ refactor/component-structure
 ## Internationalization (i18n)
 
 ### Adding Translations
+
 1. Add keys to `src/i18n/translations.ts`
 2. Add both Japanese (ja) and English (en) values
 3. Use in components:
@@ -428,6 +459,7 @@ return <h1>{t.blog.title}</h1>
 ```
 
 ### Translation Structure
+
 ```typescript
 // src/i18n/translations.ts
 export const translations = {
@@ -451,12 +483,15 @@ export const translations = {
 ## Performance Guidelines
 
 ### Image Optimization
+
 - Use Next.js `<Image>` component
 - Provide width and height
 - Use appropriate formats (WebP preferred)
 
 ### Code Splitting
+
 - Use dynamic imports for heavy components:
+
 ```typescript
 const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
   loading: () => <LoadingSpinner />,
@@ -464,6 +499,7 @@ const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
 ```
 
 ### Caching
+
 - Use appropriate cache strategies in fetch
 - Leverage Next.js static generation where possible
 
@@ -472,11 +508,13 @@ const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
 ## Security
 
 ### Environment Variables
+
 - Never commit secrets to git
 - Use `.env.local` for local development
 - Prefix public variables with `NEXT_PUBLIC_`
 
 ### API Security
+
 - Validate all inputs
 - Use appropriate authentication for protected routes
 - Sanitize user-generated content
