@@ -1,4 +1,5 @@
-// getAllPostsMeta() の振る舞い契約を検証する単体テスト（Issue #157 / TDD 先行）。
+// getPostData.tsx の公開関数（getAllPostsMeta / getAllPosts / isValidSlug / getPostBySlug /
+// parseDateMs / getAllSlugs）の振る舞い契約を検証する単体テスト（Issue #157, #347）。
 //
 // 本リポジトリには JS テストランナー（jest/vitest 等）が未導入で、SoT は新規テスト基盤の
 // 立ち上げを不要としている。そのため Node v20 組み込みの `node:test` と、既存 devDependency の
@@ -9,7 +10,6 @@
 // （src/posts/*.mdx）を fixtures として契約の不変条件を検証する。
 //
 // 実行: プロジェクトルートで `node --test src/app/api/utils/getPostData.test.mjs`
-// 実装前は `getAllPostsMeta` が未定義のため失敗する（TDD 上想定どおり）。
 
 import matter from 'gray-matter'
 import assert from 'node:assert/strict'
@@ -40,42 +40,43 @@ const loadModule = async () => {
   return import(`${BUILD_PATH}?t=${process.pid}`)
 }
 
-// fixtures から「限定公開を除いた」期待メタを gray-matter で独立に算出するオラクル。
-// getAllPostsMeta の実装ロジックに依存せず、期待値を別経路で求める。
-const readExpectedMeta = () => {
-  const files = fs
-    .readdirSync(POSTS_DIR)
-    .filter((name) => name.endsWith('.mdx'))
-  return files
-    .map((name) => {
-      const slug = name.replace(/\.mdx$/, '')
-      const { data } = matter(
-        fs.readFileSync(path.join(POSTS_DIR, name), 'utf8'),
-      )
-      return {
-        slug,
-        title: data.title,
-        date: data.date,
-        tags: data.tags || [],
-      }
-    })
-    .filter((meta) => !meta.tags.includes(LIMITED_TAG))
+// 1 記事ぶんの期待値を gray-matter で独立に算出するオラクル。
+// getPostData の実装ロジックに依存せず、期待値を別経路で求める。
+const readExpectedPost = (fileName) => {
+  const { data, content } = matter(
+    fs.readFileSync(path.join(POSTS_DIR, fileName), 'utf8'),
+  )
+  return {
+    slug: fileName.replace(/\.mdx$/, ''),
+    title: data.title,
+    date: data.date,
+    tags: data.tags || [],
+    content,
+  }
 }
 
-const parseDateMs = (value) => {
-  const time = new Date(value).getTime()
-  return Number.isNaN(time) ? new Date(0).getTime() : time
-}
+// fixtures から「限定公開を除いた」期待メタ（content なし）を求める。
+const readExpectedMeta = () =>
+  fs
+    .readdirSync(POSTS_DIR)
+    .filter((name) => name.endsWith('.mdx'))
+    .map((name) => {
+      const { content: _content, ...meta } = readExpectedPost(name)
+      return meta
+    })
+    .filter((meta) => !meta.tags.includes(LIMITED_TAG))
 
 describe('getAllPostsMeta()', () => {
   let getAllPostsMeta
   let getAllPosts
+  let parseDateMs
   let result
 
   before(async () => {
     const mod = await loadModule()
     getAllPostsMeta = mod.getAllPostsMeta
     getAllPosts = mod.getAllPosts
+    parseDateMs = mod.parseDateMs
     if (typeof getAllPostsMeta === 'function') {
       result = await getAllPostsMeta()
     }
@@ -176,5 +177,138 @@ describe('getAllPostsMeta()', () => {
     // Then: 一致する
     const full = await getAllPosts()
     assert.equal(result.length, full.length)
+  })
+})
+
+// Issue #347: getAllPostsMeta / getAllPosts 以外の公開関数の契約を検証する。
+// 期待値は実装を通さず、src/posts と gray-matter から別に求める。
+describe('getPostData の slug 検査と記事読み込み', () => {
+  let mod
+
+  before(async () => {
+    mod = await loadModule()
+  })
+
+  after(() => {
+    if (fs.existsSync(BUILD_PATH)) fs.rmSync(BUILD_PATH)
+  })
+
+  describe('isValidSlug()', () => {
+    it('英数字・ハイフン・アンダースコアだけの slug で true を返す', () => {
+      // Given: 許可された文字だけの slug
+      const slugs = ['create_my_site', 'abc-123', 'A_b-9']
+      // When: isValidSlug に渡す
+      // Then: すべて true
+      for (const slug of slugs) {
+        assert.equal(mod.isValidSlug(slug), true, slug)
+      }
+    })
+
+    it('.mdx を付けた slug で true を返す', () => {
+      // Given: 許可された slug に拡張子 .mdx を付けたもの
+      // When: isValidSlug に渡す
+      // Then: true
+      assert.equal(mod.isValidSlug('create_my_site.mdx'), true)
+    })
+
+    it('パス区切り・ドット・空文字・空白を含む slug で false を返す', () => {
+      // Given: パストラバーサルや不正な文字を含む slug
+      const slugs = ['../secret', 'a/b', 'a.b', '', 'a b']
+      // When: isValidSlug に渡す
+      // Then: すべて false
+      for (const slug of slugs) {
+        assert.equal(mod.isValidSlug(slug), false, JSON.stringify(slug))
+      }
+    })
+  })
+
+  describe('getPostBySlug()', () => {
+    const firstPostFile = () =>
+      fs
+        .readdirSync(POSTS_DIR)
+        .filter((name) => name.endsWith('.mdx'))
+        .sort()[0]
+
+    it('src/posts にある記事の slug で slug/title/date/tags/content を返す', async () => {
+      // Given: src/posts に実在する記事
+      const fileName = firstPostFile()
+      const expected = readExpectedPost(fileName)
+      // When: 拡張子なしの slug で取得する
+      const post = await mod.getPostBySlug(expected.slug)
+      // Then: 5 つのキーを持ち、値が gray-matter で求めた期待値と一致する
+      assert.deepEqual(Object.keys(post).sort(), [
+        'content',
+        'date',
+        'slug',
+        'tags',
+        'title',
+      ])
+      assert.deepEqual(post, expected)
+    })
+
+    it('.mdx を付けて渡しても slug は拡張子の無い形で返す', async () => {
+      // Given: src/posts に実在する記事のファイル名（.mdx 付き）
+      const fileName = firstPostFile()
+      const expected = readExpectedPost(fileName)
+      // When: .mdx 付きで取得する
+      const post = await mod.getPostBySlug(fileName)
+      // Then: slug は拡張子なしで、内容も同じ記事のもの
+      assert.equal(post.slug, fileName.replace(/\.mdx$/, ''))
+      assert.deepEqual(post, expected)
+    })
+
+    it('不正な slug で Invalid slug を含む例外を投げる', async () => {
+      // Given: パストラバーサルを含む slug
+      // When: getPostBySlug に渡す
+      // Then: Invalid slug で reject される
+      await assert.rejects(() => mod.getPostBySlug('../secret'), /Invalid slug/)
+    })
+
+    it('形は正しいが存在しない slug で File not found を含む例外を投げる', async () => {
+      // Given: 許可された文字だけで、src/posts に対応ファイルが無い slug
+      const slug = 'no_such_post_issue_347'
+      assert.equal(fs.existsSync(path.join(POSTS_DIR, `${slug}.mdx`)), false)
+      // When: getPostBySlug に渡す
+      // Then: File not found で reject される
+      await assert.rejects(() => mod.getPostBySlug(slug), /File not found/)
+    })
+  })
+
+  describe('parseDateMs()', () => {
+    it('有効な日付で new Date(値).getTime() と同じ値を返す', () => {
+      // Given: 日付だけの文字列と、時刻付きの ISO 文字列
+      const values = ['2024-10-27', '2024-10-27T12:34:56Z']
+      // When: parseDateMs に渡す
+      // Then: new Date(値).getTime() と一致する
+      for (const value of values) {
+        assert.equal(mod.parseDateMs(value), new Date(value).getTime(), value)
+      }
+    })
+
+    it('無効な文字列で 0 を返す', () => {
+      // Given: 日付として解釈できない文字列
+      const values = ['not-a-date', '']
+      // When: parseDateMs に渡す
+      // Then: 0 を返す
+      for (const value of values) {
+        assert.equal(mod.parseDateMs(value), 0, JSON.stringify(value))
+      }
+    })
+  })
+
+  describe('getAllSlugs()', () => {
+    it('src/posts の .mdx のファイル名から拡張子を外した集合を返す', async () => {
+      // Given: src/posts の .mdx ファイル
+      const expected = new Set(
+        fs
+          .readdirSync(POSTS_DIR)
+          .filter((name) => name.endsWith('.mdx'))
+          .map((name) => name.replace(/\.mdx$/, '')),
+      )
+      // When: getAllSlugs を呼ぶ
+      const slugs = await mod.getAllSlugs()
+      // Then: 拡張子を外した slug の集合と一致する
+      assert.deepEqual(new Set(slugs), expected)
+    })
   })
 })
