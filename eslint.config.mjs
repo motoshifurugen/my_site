@@ -32,6 +32,8 @@ export default [
       'tailwindcss/migration-from-tailwind-2': 'off',
       '@next/next/no-page-custom-font': 'off',
       'prettier/prettier': 'error',
+      'tailwindcss/classnames-order': 'error',
+      'tailwindcss/enforces-shorthand': 'error',
       'tailwindcss/no-custom-classname': [
         'warn',
         {

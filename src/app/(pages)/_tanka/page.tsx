@@ -252,7 +252,7 @@ const TankaPage: React.FC = () => {
 
         <section className="content-wrapper container mx-auto">
           {/* スケルトンローディング */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-8 lg:gap-12 mb-12 max-w-5xl mx-auto px-6 md:px-0">
+          <div className="mx-auto mb-12 grid max-w-5xl grid-cols-1 gap-8 px-6 md:grid-cols-2 md:gap-8 md:px-0 lg:grid-cols-3 lg:gap-12">
             {Array.from({ length: 12 }, (_, index) => (
               <MemoizedTankaSkeleton key={index} />
             ))}
@@ -264,18 +264,18 @@ const TankaPage: React.FC = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <motion.div
-          className="text-center p-8 bg-white rounded-2xl shadow-lg"
+          className="rounded-2xl bg-white p-8 text-center shadow-lg"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
         >
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          <h2 className="text-gray-800 mb-2 text-2xl font-bold">
             エラーが発生しました
           </h2>
           <p className="text-gray-600 mb-6">{error}</p>
           <motion.button
-            className="px-6 py-3 bg-main-black text-white rounded-lg font-medium hover:shadow-lg transition-shadow"
+            className="rounded-lg bg-main-black px-6 py-3 font-medium text-white transition-shadow hover:shadow-lg"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => {
@@ -301,11 +301,11 @@ const TankaPage: React.FC = () => {
       <section className="content-wrapper container mx-auto">
         {tankaList.length === 0 ? (
           <motion.div
-            className="text-center py-20"
+            className="py-20 text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h2 className="text-2xl font-bold text-gray-700 mb-2">
+            <h2 className="text-gray-700 mb-2 text-2xl font-bold">
               短歌がまだありません
             </h2>
             <p className="text-gray-500">
@@ -315,7 +315,7 @@ const TankaPage: React.FC = () => {
         ) : (
           <>
             {/* 短歌カードグリッド */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-8 lg:gap-12 mb-12 max-w-5xl mx-auto px-6 md:px-0">
+            <div className="mx-auto mb-12 grid max-w-5xl grid-cols-1 gap-8 px-6 md:grid-cols-2 md:gap-8 md:px-0 lg:grid-cols-3 lg:gap-12">
               {tankaList.map((tanka, index) => (
                 <MemoizedTankaCard
                   key={tanka.id} // indexを削除してidのみ使用
@@ -342,7 +342,7 @@ const TankaPage: React.FC = () => {
                 className="py-8"
               >
                 {scrollState.isLoadingMore ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-8 lg:gap-12 max-w-5xl mx-auto px-6 md:px-0">
+                  <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-6 md:grid-cols-2 md:gap-8 md:px-0 lg:grid-cols-3 lg:gap-12">
                     {Array.from(
                       { length: 3 },
                       (
@@ -354,7 +354,7 @@ const TankaPage: React.FC = () => {
                     )}
                   </div>
                 ) : (
-                  <div className="text-center text-gray-400">
+                  <div className="text-gray-400 text-center">
                     <p>スクロールして続きを読み込む</p>
                   </div>
                 )}
@@ -364,7 +364,7 @@ const TankaPage: React.FC = () => {
             {/* 全データ読み込み完了 */}
             {!scrollState.hasNext && tankaList.length > 0 && (
               <motion.div
-                className="text-center py-8"
+                className="py-8 text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >

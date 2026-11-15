@@ -83,7 +83,7 @@ const TankaLikeButton: React.FC<TankaLikeButtonProps> = ({
           className={`transition-all duration-300 ${
             isLiked
               ? 'fill-like-pink text-like-pink'
-              : 'fill-none text-gray-400 group-hover:text-like-pink dark:text-slate-300 dark:group-hover:text-like-pink'
+              : 'text-gray-400 fill-none group-hover:text-like-pink dark:text-slate-300 dark:group-hover:text-like-pink'
           }`}
         />
         {isAnimating && (

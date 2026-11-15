@@ -54,7 +54,7 @@ const ScoreChart = ({ config }: { config: ScoreChartConfig }) => {
           return (
             <div key={skill} className="flex items-center gap-1">
               <div
-                className="h-3 w-3 rounded-full"
+                className="size-3 rounded-full"
                 style={{
                   backgroundColor: colors[skill],
                   opacity: isOverall ? 1 : 0.4,

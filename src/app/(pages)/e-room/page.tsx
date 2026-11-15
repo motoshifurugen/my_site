@@ -34,7 +34,7 @@ export default function ThankYouPage() {
       {!showIntro && (
         <main className="mx-auto max-w-md overflow-hidden pb-20 pt-12">
           {/* Header */}
-          <Section className="text-center !mb-4">
+          <Section className="!mb-4 text-center">
             <h1 className="mb-2 text-3xl font-bold tracking-tight text-teal">
               <div>
                 {'Memories'.split('').map((char, index) => (

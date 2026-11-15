@@ -4,6 +4,8 @@
 // #173 で 3 ルールを warn に下げ、既存コードの 17 か所を #286 で直した。CI は lint を
 // 実行しないので、warn への逆戻りと、直した場所での再発をここで止める。
 //
+// tailwindcss の 2 ルールを warn から error に上げたことも固定する（Issue #328）。
+//
 // 実行: プロジェクトルートで `npm test`（node --import tsx --test）。
 
 import { ESLint, type Linter } from 'eslint'
@@ -21,6 +23,15 @@ const RULES = [
 ] as const
 
 type Rule = (typeof RULES)[number]
+
+// RULES と分けるのは、RULES を「設定で上書きしない」前提のテストが使っているため。
+// この 2 ルールは eslint.config.mjs で error に上書きする。
+const TAILWIND_RULES = [
+  'tailwindcss/classnames-order',
+  'tailwindcss/enforces-shorthand',
+] as const
+
+type TailwindRule = (typeof TAILWIND_RULES)[number]
 
 const ERROR = 2
 
@@ -75,6 +86,22 @@ export function Probe() {
 `,
 }
 
+const TAILWIND_VIOLATIONS: Record<TailwindRule, string> = {
+  'tailwindcss/classnames-order': `export function Probe() {
+  return <p className="p-2 flex">probe</p>
+}
+`,
+  'tailwindcss/enforces-shorthand': `export function Probe() {
+  return <p className="h-4 w-4">probe</p>
+}
+`,
+}
+
+const PROBES: Record<Rule | TailwindRule, string> = {
+  ...VIOLATIONS,
+  ...TAILWIND_VIOLATIONS,
+}
+
 const eslint = new ESLint({ cwd: ROOT })
 
 const severityOf = (
@@ -87,6 +114,17 @@ const severityOf = (
   if (level === 'off') return 0
   return level
 }
+
+const severitiesIn = async (
+  file: string,
+  rules: readonly string[],
+): Promise<[string, number | undefined][]> => {
+  const config = await eslint.calculateConfigForFile(file)
+  return rules.map((rule) => [rule, severityOf(config.rules?.[rule])])
+}
+
+const allError = (rules: readonly string[]): [string, number][] =>
+  rules.map((rule) => [rule, ERROR])
 
 const isTargetRule = (ruleId: string | null): boolean =>
   ruleId !== null && (RULES as readonly string[]).includes(ruleId)
@@ -112,23 +150,22 @@ test('eslint.config.mjs: 3 ルールの重大度を上書きしていない', ()
 for (const file of FIXED_FILES) {
   test(`eslint: ${file} で 3 ルールが error になっている`, async () => {
     // Given/When
-    const config = await eslint.calculateConfigForFile(file)
-    const severities = RULES.map((rule) => [
-      rule,
-      severityOf(config.rules?.[rule]),
-    ])
+    const severities = await severitiesIn(file, RULES)
     // Then
-    assert.deepEqual(
-      severities,
-      RULES.map((rule) => [rule, ERROR]),
-    )
+    assert.deepEqual(severities, allError(RULES))
   })
 }
 
-for (const rule of RULES) {
+test('eslint: src/app/page.tsx で tailwindcss の 2 ルールが error になっている', async () => {
+  // Given/When
+  const severities = await severitiesIn('src/app/page.tsx', TAILWIND_RULES)
+  // Then
+  assert.deepEqual(severities, allError(TAILWIND_RULES))
+})
+
+for (const [rule, code] of Object.entries(PROBES)) {
   test(`eslint: ${rule} は違反するコードを error で指摘する`, async () => {
-    // Given
-    const code = VIOLATIONS[rule]
+    // Given: ループ変数の code（そのルールが必ず指摘するコード）
     // When
     const [result] = await eslint.lintText(code, { filePath: PROBE_PATH })
     const reported = result.messages.filter(

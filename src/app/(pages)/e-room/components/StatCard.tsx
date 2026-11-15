@@ -26,7 +26,7 @@ const StatCard = ({ stat, index }: { stat: StatItem; index: number }) => {
       style={{ perspective: '1000px' }}
     >
       <motion.div
-        className="relative w-full h-full"
+        className="relative size-full"
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ duration: 0.6, ease: 'easeInOut' }}
         style={{ transformStyle: 'preserve-3d' }}

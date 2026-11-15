@@ -37,7 +37,7 @@ const BookmarkPage = ({ bookmark }: { bookmark: BookmarkData }) => {
 
   return (
     <div
-      className="relative flex h-full w-full items-center justify-center"
+      className="relative flex size-full items-center justify-center"
       style={{
         writingMode: 'vertical-rl',
         textOrientation: 'upright',
@@ -51,7 +51,7 @@ const BookmarkPage = ({ bookmark }: { bookmark: BookmarkData }) => {
       {/* STEP3B: 栞エリア（本の間に挟まっている感覚） */}
       <div
         ref={bookmarkRef}
-        className="flex items-center justify-center cursor-pointer"
+        className="flex cursor-pointer items-center justify-center"
         style={{
           width: '80px',
           height: '60%',
@@ -102,7 +102,7 @@ const BookmarkPage = ({ bookmark }: { bookmark: BookmarkData }) => {
           }}
         >
           <div
-            className="text-main-black dark:text-night-white relative w-full h-full flex items-center justify-center"
+            className="relative flex size-full items-center justify-center text-main-black dark:text-night-white"
             style={{
               fontFamily: 'var(--font-noto-sans-jp), sans-serif',
               fontSize: '0.65rem',
@@ -447,7 +447,7 @@ export default function BookPage() {
         width: '100vw',
       }}
     >
-      <div className="flex min-h-full w-full items-start justify-center px-4 pt-2 pb-4">
+      <div className="flex min-h-full w-full items-start justify-center px-4 pb-4 pt-2">
         {/* 本の形の枠（縦横比2:3.5、紙の質感） */}
         <div
           className="relative flex items-center justify-center"
@@ -481,7 +481,7 @@ export default function BookPage() {
           {pageType === 'content' &&
           currentPageInfo.chapterIndex !== undefined ? (
             <div
-              className="absolute top-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+              className="absolute left-1/2 top-4 flex -translate-x-1/2 transform flex-col items-center"
               style={{
                 fontFamily:
                   '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", var(--font-noto-serif-jp), "BIZ UDPMincho", serif',
@@ -506,7 +506,7 @@ export default function BookPage() {
             </div>
           ) : pageType === 'table-of-contents' ? (
             <div
-              className="absolute top-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+              className="absolute left-1/2 top-4 flex -translate-x-1/2 transform flex-col items-center"
               style={{
                 fontFamily:
                   '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", var(--font-noto-serif-jp), "BIZ UDPMincho", serif',
@@ -535,7 +535,7 @@ export default function BookPage() {
           pageType !== 'bookmark' &&
           pageType !== 'back-cover' ? (
             <div
-              className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 transform"
               style={{
                 fontFamily:
                   '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", var(--font-noto-serif-jp), "BIZ UDPMincho", serif',
@@ -548,13 +548,13 @@ export default function BookPage() {
             </div>
           ) : null}
 
-          <div className="relative w-full h-full flex items-center justify-center">
+          <div className="relative flex size-full items-center justify-center">
             {/* STEP2: 縦書き表示エリア */}
             {/* STEP3A: ページタイプに応じて表示を切り替え */}
             {pageType === 'cover' ? (
               // STEP3A: 表紙ページ（横書き）
               <div
-                className="relative flex h-full w-full flex-col items-center justify-center"
+                className="relative flex size-full flex-col items-center justify-center"
                 style={{
                   fontFamily:
                     '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", var(--font-noto-serif-jp), "BIZ UDPMincho", serif',
@@ -621,7 +621,7 @@ export default function BookPage() {
             ) : pageType === 'table-of-contents' ? (
               // STEP3A: 目次ページ
               <div
-                className="flex h-full w-full items-center justify-center"
+                className="flex size-full items-center justify-center"
                 style={{
                   writingMode: 'vertical-rl',
                   textOrientation: 'upright',
@@ -658,7 +658,7 @@ export default function BookPage() {
             ) : pageType === 'content' ? (
               // STEP4: 章本文ページ
               <div
-                className="flex h-full w-full"
+                className="flex size-full"
                 style={{
                   writingMode: 'vertical-rl',
                   textOrientation: 'upright',
@@ -713,7 +713,7 @@ export default function BookPage() {
               </div>
             ) : pageType === 'back-cover' ? (
               // 裏表紙ページ（何も表示しない）
-              <div className="relative h-full w-full">
+              <div className="relative size-full">
                 {/* 右開きの本を表現する縦線（左側） */}
                 <div
                   style={{

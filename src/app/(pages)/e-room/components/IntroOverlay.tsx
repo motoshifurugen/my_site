@@ -61,7 +61,7 @@ const IntroOverlay = ({ onComplete }: { onComplete: () => void }) => {
         Day {count}
       </div>
       <motion.div
-        className="mt-8 text-2xl font-medium opacity-0 text-main-black dark:text-night-white"
+        className="mt-8 text-2xl font-medium text-main-black opacity-0 dark:text-night-white"
         animate={{ opacity: 1 }}
         transition={{ delay: 2.2, duration: 0.8 }}
       >
