@@ -133,7 +133,12 @@ describe('api/likes/route.tsx POST（Issue #158: 入力検証 + レート制限�
     }
     const request =
       body === '__BAD_JSON__'
-        ? { json: async () => { throw new Error('invalid json') }, headers: new Headers() }
+        ? {
+            json: async () => {
+              throw new Error('invalid json')
+            },
+            headers: new Headers(),
+          }
         : { json: async () => body, headers: new Headers() }
     const response = await POST(request)
     return {

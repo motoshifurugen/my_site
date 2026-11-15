@@ -26,9 +26,9 @@ base_branch: main
 
 pipeline:
   # 自動生成ブランチの接頭辞（例: feat/blog-list-ssg-...）。
-  default_branch_prefix: "feat/"
+  default_branch_prefix: 'feat/'
   # commit / PR ともイシュー由来で短く収める（テンプレ変数: {title} {issue}）。
-  commit_message_template: "feat: {title} (#{issue})"
+  commit_message_template: 'feat: {title} (#{issue})'
   # PR 本文テンプレ（変数: {title} {issue} {issue_body} {report}）。
   # Closes でマージ時にイシューを自動クローズする。
   pr_body_template: |

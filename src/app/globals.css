@@ -7,15 +7,15 @@
   .perspective-1000 {
     perspective: 1000px;
   }
-  
+
   .preserve-3d {
     transform-style: preserve-3d;
   }
-  
+
   .backface-hidden {
     backface-visibility: hidden;
   }
-  
+
   .rotateY-180 {
     transform: rotateY(180deg);
   }
@@ -26,9 +26,9 @@
      ファミリー名は @fontsource-variable/*（layout.tsx で import）の生成名。
      旧 next/font/google が body className で注入していた変数を :root で定義する */
   :root {
-    --font-dm-sans: 'DM Sans Variable';
-    --font-noto-sans-jp: 'Noto Sans JP Variable';
-    --font-noto-serif-jp: 'Noto Serif JP Variable';
+    --font-dm-sans: "DM Sans Variable";
+    --font-noto-sans-jp: "Noto Sans JP Variable";
+    --font-noto-serif-jp: "Noto Serif JP Variable";
   }
 
   .noto-sans-jp {
@@ -73,7 +73,10 @@
     p {
       @apply text-sm md:text-base leading-relaxed md:leading-loose noto-sans-jp;
     }
-    .dark & h1, .dark & h2, .dark & h3, .dark & p {
+    .dark & h1,
+    .dark & h2,
+    .dark & h3,
+    .dark & p {
       @apply text-night-white;
     }
 

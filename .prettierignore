@@ -10,3 +10,16 @@ package-lock.json
 yarn.lock
 pnpm-lock.yaml
 next.config.mjs
+
+# 実行の記録。git が追っていない
+.takt/runs/
+.takt/session-state.json
+.takt/persona_sessions.json
+.yomiyasu/
+
+# 記事とシナリオの本文は書き換えない
+src/posts/
+src/app/(pages)/rpg/data/*.md
+
+# デプロイと定期実行の定義は書き換えない
+.github/workflows/
