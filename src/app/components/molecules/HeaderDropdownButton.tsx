@@ -57,7 +57,7 @@ const HeaderDropdownButton: React.FC<HeaderDropdownButtonProps> = ({
                 <Link
                   key={subIndex}
                   href={item.href}
-                  className="hover:bg-gray-100 block w-full px-4 py-3 text-right text-base font-bold text-black dark:text-night-white dark:hover:bg-night-gray md:text-center"
+                  className="block w-full px-4 py-3 text-right text-base font-bold text-black dark:text-night-white dark:hover:bg-night-gray md:text-center"
                   onClick={() => setIsOpen(false)}
                 >
                   {item.text}

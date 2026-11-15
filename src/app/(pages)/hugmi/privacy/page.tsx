@@ -41,7 +41,7 @@ export default function PrivacyPage() {
         <p>
           本ポリシーの内容は、ユーザーへの通知なく変更される場合があります。重要な変更がある場合は、アプリ内でお知らせします。
         </p>
-        <p className="text-gray-500 mt-8 text-sm">制定日: 2024年6月</p>
+        <p className="mt-8 text-sm">制定日: 2024年6月</p>
       </section>
     </main>
   )

@@ -442,8 +442,8 @@ export default function TermsPage() {
             </li>
           </ol>
 
-          <div className="border-gray-300 dark:border-gray-700 mt-8 border-t pt-6">
-            <p className="text-gray-500 text-sm">Enacted: June 26, 2026</p>
+          <div className="mt-8 border-t pt-6">
+            <p className="text-sm">Enacted: June 26, 2026</p>
           </div>
         </section>
       ) : (
@@ -744,8 +744,8 @@ export default function TermsPage() {
             </li>
           </ol>
 
-          <div className="border-gray-300 dark:border-gray-700 mt-8 border-t pt-6">
-            <p className="text-gray-500 text-sm">制定日: 2026年6月26日</p>
+          <div className="mt-8 border-t pt-6">
+            <p className="text-sm">制定日: 2026年6月26日</p>
           </div>
         </section>
       )}

@@ -8,6 +8,8 @@
 //
 // react-hooks/exhaustive-deps を warn から error に上げたことも固定する（Issue #331）。
 //
+// tailwindcss/no-custom-classname を warn から error に上げたことも固定する（Issue #335）。
+//
 // 実行: プロジェクトルートで `npm test`（node --import tsx --test）。
 
 import { ESLint, type Linter } from 'eslint'
@@ -27,10 +29,11 @@ const RULES = [
 type Rule = (typeof RULES)[number]
 
 // RULES と分けるのは、RULES を「設定で上書きしない」前提のテストが使っているため。
-// この 2 ルールは eslint.config.mjs で error に上書きする。
+// この 3 ルールは eslint.config.mjs で error に上書きする。
 const TAILWIND_RULES = [
   'tailwindcss/classnames-order',
   'tailwindcss/enforces-shorthand',
+  'tailwindcss/no-custom-classname',
 ] as const
 
 type TailwindRule = (typeof TAILWIND_RULES)[number]
@@ -103,7 +106,18 @@ const TAILWIND_VIOLATIONS: Record<TailwindRule, string> = {
   return <p className="h-4 w-4">probe</p>
 }
 `,
+  // #335 で消した gray-数字 と同じ形。tailwind.config.ts に段階色が無いので CSS を生まない。
+  'tailwindcss/no-custom-classname': `export function Probe() {
+  return <p className="text-gray-500">probe</p>
 }
+`,
+}
+
+// Result.tsx:98 の score-spinner は CSS の定義が無いが、#335 でクラス名を残して whitelist に足した。
+const WHITELISTED_CUSTOM_CLASS = `export function Probe() {
+  return <p className="score-spinner">probe</p>
+}
+`
 
 const HOOKS_ERROR_VIOLATIONS: Record<HooksErrorRule, string> = {
   'react-hooks/exhaustive-deps': `import { useEffect } from 'react'
@@ -176,7 +190,7 @@ for (const file of FIXED_FILES) {
   })
 }
 
-test('eslint: src/app/page.tsx で tailwindcss の 2 ルールが error になっている', async () => {
+test('eslint: src/app/page.tsx で tailwindcss の 3 ルールが error になっている', async () => {
   // Given/When
   const severities = await severitiesIn('src/app/page.tsx', TAILWIND_RULES)
   // Then
@@ -206,6 +220,19 @@ for (const [rule, code] of Object.entries(PROBES)) {
     assert.ok(reported.every((message) => message.severity === ERROR))
   })
 }
+
+test('eslint: whitelist の score-spinner は tailwindcss/no-custom-classname で指摘されない', async () => {
+  // Given: WHITELISTED_CUSTOM_CLASS（score-spinner だけを持つコード）
+  // When
+  const [result] = await eslint.lintText(WHITELISTED_CUSTOM_CLASS, {
+    filePath: PROBE_PATH,
+  })
+  const reported = result.messages.filter(
+    (message) => message.ruleId === 'tailwindcss/no-custom-classname',
+  )
+  // Then
+  assert.deepEqual(reported, [])
+})
 
 test('eslint: #286 で直したファイルは構文エラーなく lint できる', async () => {
   // Given/When

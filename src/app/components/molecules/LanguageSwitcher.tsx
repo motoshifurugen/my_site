@@ -21,7 +21,7 @@ export default function LanguageSwitcher() {
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 flex cursor-pointer items-center space-x-1 rounded-lg p-2 text-sm font-medium transition-colors sm:space-x-2 sm:px-3"
+        className="flex cursor-pointer items-center space-x-1 rounded-lg p-2 text-sm font-medium transition-colors sm:space-x-2 sm:px-3"
         aria-label={t.common.language}
         aria-haspopup="true"
         aria-expanded={isOpen}
@@ -51,10 +51,10 @@ export default function LanguageSwitcher() {
               <button
                 key={lang}
                 onClick={() => handleLanguageChange(lang)}
-                className={`hover:bg-gray-100 block w-full px-4 py-2 text-right text-sm transition-colors dark:hover:bg-night-gray md:text-center ${
+                className={`block w-full px-4 py-2 text-right text-sm transition-colors dark:hover:bg-night-gray md:text-center ${
                   locale === lang
-                    ? 'bg-gray-100 text-gray-900 font-medium dark:bg-night-gray dark:text-night-white'
-                    : 'text-gray-700 dark:text-night-white'
+                    ? 'font-medium dark:bg-night-gray dark:text-night-white'
+                    : 'dark:text-night-white'
                 }`}
               >
                 {localeNames[lang]}

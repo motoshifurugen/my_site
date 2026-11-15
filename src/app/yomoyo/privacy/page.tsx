@@ -30,19 +30,19 @@ export default function PrivacyPage() {
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm">
               <tbody>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <th className="w-1/3 py-2 pr-4 text-left align-top font-semibold">
                     Operator
                   </th>
                   <td className="py-2">Furugen Island</td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <th className="py-2 pr-4 text-left align-top font-semibold">
                     App Name
                   </th>
                   <td className="py-2">Yomoyo</td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <th className="py-2 pr-4 text-left align-top font-semibold">
                     Contact
                   </th>
@@ -234,7 +234,7 @@ export default function PrivacyPage() {
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm">
               <thead>
-                <tr className="border-gray-300 dark:border-gray-700 border-b-2">
+                <tr className="border-b-2">
                   <th className="py-2 pr-4 text-left font-semibold">
                     External Service
                   </th>
@@ -245,39 +245,39 @@ export default function PrivacyPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <td className="py-2 pr-4">Firebase Authentication</td>
                   <td className="py-2 pr-4">Google LLC</td>
                   <td className="py-2">Authentication</td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <td className="py-2 pr-4">Cloud Firestore</td>
                   <td className="py-2 pr-4">Google LLC</td>
                   <td className="py-2">Data storage</td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <td className="py-2 pr-4">Cloud Functions</td>
                   <td className="py-2 pr-4">Google LLC</td>
                   <td className="py-2">
                     Server-side processing such as notification delivery
                   </td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <td className="py-2 pr-4">Google AdMob</td>
                   <td className="py-2 pr-4">Google LLC</td>
                   <td className="py-2">Ad delivery</td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <td className="py-2 pr-4">Google Books API</td>
                   <td className="py-2 pr-4">Google LLC</td>
                   <td className="py-2">Retrieving book information</td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <td className="py-2 pr-4">Expo (Push Notifications)</td>
                   <td className="py-2 pr-4">Expo (650 Industries, Inc.)</td>
                   <td className="py-2">Push notification delivery</td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <td className="py-2 pr-4">Sign in with Apple</td>
                   <td className="py-2 pr-4">Apple Inc.</td>
                   <td className="py-2">Authentication</td>
@@ -397,8 +397,8 @@ export default function PrivacyPage() {
             </li>
           </ul>
 
-          <div className="border-gray-300 dark:border-gray-700 mt-8 border-t pt-6">
-            <p className="text-gray-500 text-sm">Enacted: June 26, 2026</p>
+          <div className="mt-8 border-t pt-6">
+            <p className="text-sm">Enacted: June 26, 2026</p>
           </div>
         </section>
       ) : (
@@ -412,19 +412,19 @@ export default function PrivacyPage() {
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm">
               <tbody>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <th className="w-1/3 py-2 pr-4 text-left align-top font-semibold">
                     運営者
                   </th>
                   <td className="py-2">Furugen Island</td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <th className="py-2 pr-4 text-left align-top font-semibold">
                     アプリ名
                   </th>
                   <td className="py-2">Yomoyo</td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <th className="py-2 pr-4 text-left align-top font-semibold">
                     問い合わせ先
                   </th>
@@ -567,7 +567,7 @@ export default function PrivacyPage() {
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm">
               <thead>
-                <tr className="border-gray-300 dark:border-gray-700 border-b-2">
+                <tr className="border-b-2">
                   <th className="py-2 pr-4 text-left font-semibold">
                     外部サービス
                   </th>
@@ -578,37 +578,37 @@ export default function PrivacyPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <td className="py-2 pr-4">Firebase Authentication</td>
                   <td className="py-2 pr-4">Google LLC</td>
                   <td className="py-2">認証</td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <td className="py-2 pr-4">Cloud Firestore</td>
                   <td className="py-2 pr-4">Google LLC</td>
                   <td className="py-2">データの保存</td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <td className="py-2 pr-4">Cloud Functions</td>
                   <td className="py-2 pr-4">Google LLC</td>
                   <td className="py-2">通知配信等のサーバー処理</td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <td className="py-2 pr-4">Google AdMob</td>
                   <td className="py-2 pr-4">Google LLC</td>
                   <td className="py-2">広告配信</td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <td className="py-2 pr-4">Google Books API</td>
                   <td className="py-2 pr-4">Google LLC</td>
                   <td className="py-2">書籍情報の取得</td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <td className="py-2 pr-4">Expo（プッシュ通知）</td>
                   <td className="py-2 pr-4">Expo（650 Industries, Inc.）</td>
                   <td className="py-2">プッシュ通知の配信</td>
                 </tr>
-                <tr className="border-gray-300 dark:border-gray-700 border-b">
+                <tr className="border-b">
                   <td className="py-2 pr-4">Apple サインイン</td>
                   <td className="py-2 pr-4">Apple Inc.</td>
                   <td className="py-2">認証</td>
@@ -709,8 +709,8 @@ export default function PrivacyPage() {
             </li>
           </ul>
 
-          <div className="border-gray-300 dark:border-gray-700 mt-8 border-t pt-6">
-            <p className="text-gray-500 text-sm">制定日: 2026年6月26日</p>
+          <div className="mt-8 border-t pt-6">
+            <p className="text-sm">制定日: 2026年6月26日</p>
           </div>
         </section>
       )}
