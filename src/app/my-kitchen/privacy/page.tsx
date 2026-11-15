@@ -1,15 +1,15 @@
 export default function PrivacyPage() {
   return (
-    <main className="max-w-2xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-6">プライバシーポリシー</h1>
+    <main className="mx-auto max-w-2xl px-4 py-12">
+      <h1 className="mb-6 text-3xl font-bold">プライバシーポリシー</h1>
       <section className="space-y-4 text-base leading-relaxed">
         <p>
           本プライバシーポリシーは、アプリ「わたしの台所図鑑」（以下「本アプリ」）における、ユーザー情報の取り扱いについて定めるものです。
         </p>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">1. 取得する情報</h2>
+        <h2 className="mb-2 mt-6 text-xl font-semibold">1. 取得する情報</h2>
         <p>本アプリでは、以下の情報を取得する場合があります。</p>
-        <ul className="list-disc pl-6 mb-4 space-y-1">
+        <ul className="mb-4 list-disc space-y-1 pl-6">
           <li>
             ユーザーが入力する情報：料理名、メモ、カテゴリ補助選択、その他ユーザーが本アプリ内で入力する内容
           </li>
@@ -24,9 +24,9 @@ export default function PrivacyPage() {
           </li>
         </ul>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">2. 利用目的</h2>
+        <h2 className="mb-2 mt-6 text-xl font-semibold">2. 利用目的</h2>
         <p>取得した情報は、以下の目的で利用します。</p>
-        <ul className="list-disc pl-6 mb-4 space-y-1">
+        <ul className="mb-4 list-disc space-y-1 pl-6">
           <li>本アプリの提供、維持、改善のため</li>
           <li>
             料理記録・表示・図鑑登録など、本アプリの主要機能を実現するため
@@ -37,7 +37,7 @@ export default function PrivacyPage() {
           <li>不具合対応・お問い合わせ対応のため</li>
         </ul>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">
+        <h2 className="mb-2 mt-6 text-xl font-semibold">
           3. 外部サービスの利用
         </h2>
         <p>
@@ -52,13 +52,13 @@ export default function PrivacyPage() {
             href="https://www.revenuecat.com/privacy/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-teal-500 dark:text-night-teal hover:underline ml-1"
+            className="ml-1 text-teal-500 hover:underline dark:text-night-teal"
           >
             https://www.revenuecat.com/privacy/
           </a>
         </p>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">4. 第三者提供</h2>
+        <h2 className="mb-2 mt-6 text-xl font-semibold">4. 第三者提供</h2>
         <p>
           当方は、法令に基づく場合を除き、ユーザー情報を第三者に提供しません。
         </p>
@@ -66,7 +66,7 @@ export default function PrivacyPage() {
           ただし、前項の外部サービス（RevenueCat、Apple/Google）に対しては、課金機能の提供に必要な範囲で情報が共有されます。
         </p>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">5. 保存期間</h2>
+        <h2 className="mb-2 mt-6 text-xl font-semibold">5. 保存期間</h2>
         <p>
           ユーザーが本アプリに入力した記録は、原則としてユーザーの端末内（またはユーザーが利用するバックアップ等）に保存されます。
         </p>
@@ -74,7 +74,7 @@ export default function PrivacyPage() {
           課金に関する情報は、Apple/GoogleおよびRevenueCat側でも必要な期間保存される場合があります。
         </p>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">
+        <h2 className="mb-2 mt-6 text-xl font-semibold">
           6. ユーザーの権利（削除等）
         </h2>
         <p>本アプリ内の記録は、ユーザー操作により削除できます。</p>
@@ -83,19 +83,19 @@ export default function PrivacyPage() {
           Play）側の手続きに従ってください。
         </p>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">7. セキュリティ</h2>
+        <h2 className="mb-2 mt-6 text-xl font-semibold">7. セキュリティ</h2>
         <p>
           当方は、ユーザー情報の漏えい・滅失・毀損の防止など、適切な安全管理措置に努めます。
         </p>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">
+        <h2 className="mb-2 mt-6 text-xl font-semibold">
           8. プライバシーポリシーの変更
         </h2>
         <p>
           本ポリシーの内容は、必要に応じて改定されることがあります。重要な変更がある場合は、適切な方法で告知します。
         </p>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">9. お問い合わせ</h2>
+        <h2 className="mb-2 mt-6 text-xl font-semibold">9. お問い合わせ</h2>
         <p>本ポリシーに関するお問い合わせは、以下までご連絡ください。</p>
         <p className="mt-2">連絡先：my-kitchen-support@furugen-island.com</p>
       </section>

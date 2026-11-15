@@ -6,7 +6,7 @@ const WorkList: React.FC = () => {
   const works = useWorks()
 
   return (
-    <div className="work-list grid grid-cols-1 items-center justify-items-center gap-8 md:grid-cols-3">
+    <div className="work-list grid grid-cols-1 place-items-center gap-8 md:grid-cols-3">
       {works.map((work, index) => (
         <WorkCard
           key={index}

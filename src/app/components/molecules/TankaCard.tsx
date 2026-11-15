@@ -79,7 +79,7 @@ const TankaCard: React.FC<TankaCardProps> = ({
 
   return (
     <div
-      className="bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-700 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-3 sm:p-4 lg:p-6 relative overflow-hidden flex flex-col justify-between min-h-[200px] sm:min-h-[220px] lg:min-h-[280px] cursor-pointer"
+      className="via-gray-50 to-gray-100 relative flex min-h-[200px] cursor-pointer flex-col justify-between overflow-hidden rounded-xl bg-gradient-to-br from-white p-3 shadow-lg transition-all duration-300 hover:shadow-2xl dark:from-slate-900 dark:via-slate-800 dark:to-slate-700 sm:min-h-[220px] sm:p-4 lg:min-h-[280px] lg:p-6"
       style={
         !isDarkMode
           ? {
@@ -93,24 +93,24 @@ const TankaCard: React.FC<TankaCardProps> = ({
       onClick={handleClick}
     >
       {/* 上部コンテナ */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex flex-1 flex-col">
         {/* 上部の装飾線 */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-gradient-to-r from-transparent via-gray-300 dark:via-slate-400 to-transparent"></div>
+        <div className="via-gray-300 absolute left-1/2 top-0 h-1 w-12 -translate-x-1/2 transform bg-gradient-to-r from-transparent to-transparent dark:via-slate-400 sm:w-16"></div>
 
         {/* 右上のいいねボタン */}
         {tweetId && (
-          <div className="absolute top-3 right-3 z-10">
+          <div className="absolute right-3 top-3 z-10">
             <TankaLikeButton tweetId={tweetId} />
           </div>
         )}
 
         {/* 短歌テキスト（縦書き・中央揃え） */}
-        <div className="flex-1 flex justify-center items-center py-6 sm:py-8">
-          <div className="flex flex-row-reverse space-x-reverse space-x-2 sm:space-x-3 lg:space-x-4 select-none">
+        <div className="flex flex-1 items-center justify-center py-6 sm:py-8">
+          <div className="flex select-none flex-row-reverse space-x-2 space-x-reverse sm:space-x-3 lg:space-x-4">
             {tankaLines.map((line, lineIndex) => (
               <div
                 key={lineIndex}
-                className="text-xs sm:text-sm lg:text-base text-main-black dark:text-night-white leading-relaxed sm:leading-tight font-medium tracking-wider select-none"
+                className="select-none text-xs font-medium leading-relaxed tracking-wider text-main-black dark:text-night-white sm:text-sm sm:leading-tight lg:text-base"
                 style={{
                   writingMode: 'vertical-rl',
                   textOrientation: 'upright',
@@ -172,18 +172,18 @@ const TankaCard: React.FC<TankaCardProps> = ({
       {/* 下部固定エリア */}
       <div className="mt-auto">
         {/* 下部の装飾線 */}
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-slate-400 to-transparent mb-3"></div>
+        <div className="via-gray-300 mb-3 h-px w-full bg-gradient-to-r from-transparent to-transparent dark:via-slate-400"></div>
 
         {/* タグ表示エリア */}
         {tags.length > 0 && (
           <div className="mb-3">
-            <div className="flex flex-wrap gap-1 justify-center">
+            <div className="flex flex-wrap justify-center gap-1">
               {Object.entries(groupedTags).map(([category, categoryTags]) => (
                 <div key={category} className="flex flex-wrap gap-1">
                   {categoryTags.map((tag) => (
                     <span
                       key={tag.id}
-                      className={`px-1.5 py-0.5 sm:px-2 sm:py-1 text-xs rounded-md font-medium ${getTagColor()} transition-all duration-200 hover:scale-105 shadow-sm opacity-60`}
+                      className={`rounded-md px-1.5 py-0.5 text-xs font-medium sm:px-2 sm:py-1 ${getTagColor()} opacity-60 shadow-sm transition-all duration-200 hover:scale-105`}
                       title={`${getCategoryDisplayName(category)}: ${tag.description || tag.name}`}
                     >
                       #{tag.name}
@@ -197,7 +197,7 @@ const TankaCard: React.FC<TankaCardProps> = ({
 
         {/* 日付とサイト名 */}
         <div
-          className="text-center text-xs sm:text-xs lg:text-xs text-gray-400 dark:text-slate-300 font-light opacity-60"
+          className="text-gray-400 text-center text-xs font-light opacity-60 dark:text-slate-300 sm:text-xs lg:text-xs"
           style={{ fontSize: '10px' }}
         >
           {formattedDate} / Motoshi
@@ -205,7 +205,7 @@ const TankaCard: React.FC<TankaCardProps> = ({
       </div>
 
       {/* 微細な光沢エフェクト */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/20 dark:from-slate-200/10 to-transparent pointer-events-none rounded-xl"></div>
+      <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 to-transparent dark:from-slate-200/10"></div>
     </div>
   )
 }

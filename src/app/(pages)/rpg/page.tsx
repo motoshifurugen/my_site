@@ -54,12 +54,12 @@ export default function Rpg() {
   if (isMobile && isPortrait) {
     return (
       <div
-        className="fixed inset-0 w-screen flex items-center justify-center bg-black text-white"
+        className="fixed inset-0 flex w-screen items-center justify-center bg-black text-white"
         style={{ height: 'calc(var(--vh, 1vh) * 100)' }}
       >
-        <div className="text-center px-4">
-          <h2 className="text-xl font-bold mb-2">画面を横にしてください</h2>
-          <p className="text-sm opacity-80 mb-2">
+        <div className="px-4 text-center">
+          <h2 className="mb-2 text-xl font-bold">画面を横にしてください</h2>
+          <p className="mb-2 text-sm opacity-80">
             このゲームは横画面でプレイできます
           </p>
           <p className="text-sm opacity-60">Please rotate to landscape</p>
@@ -75,7 +75,7 @@ export default function Rpg() {
     >
       <Suspense
         fallback={
-          <div className="flex items-center justify-center h-full">
+          <div className="flex h-full items-center justify-center">
             <div className="text-white">読み込み中...</div>
           </div>
         }

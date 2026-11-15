@@ -76,7 +76,7 @@ const PhotoFilmRoll = ({ photoRows }: { photoRows: PhotoRows }) => {
         {[...photoRows[0], ...photoRows[0]].map((photo, i) => (
           <div
             key={i}
-            className="relative mx-2 h-48 w-48 flex-shrink-0 overflow-hidden rounded-lg shadow-md"
+            className="relative mx-2 size-48 flex-shrink-0 overflow-hidden rounded-lg shadow-md"
           >
             <Image
               src={photo}
@@ -93,7 +93,7 @@ const PhotoFilmRoll = ({ photoRows }: { photoRows: PhotoRows }) => {
         {[...photoRows[1], ...photoRows[1]].map((photo, i) => (
           <div
             key={`reverse-${i}`}
-            className="relative mx-2 h-48 w-48 flex-shrink-0 overflow-hidden rounded-lg shadow-md"
+            className="relative mx-2 size-48 flex-shrink-0 overflow-hidden rounded-lg shadow-md"
           >
             <Image
               src={photo}
@@ -110,7 +110,7 @@ const PhotoFilmRoll = ({ photoRows }: { photoRows: PhotoRows }) => {
         {[...photoRows[2], ...photoRows[2]].map((photo, i) => (
           <div
             key={`third-${i}`}
-            className="relative mx-2 h-48 w-48 flex-shrink-0 overflow-hidden rounded-lg shadow-md"
+            className="relative mx-2 size-48 flex-shrink-0 overflow-hidden rounded-lg shadow-md"
           >
             <Image
               src={photo}

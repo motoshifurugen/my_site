@@ -711,7 +711,7 @@ const ChapterPlayer = () => {
     return (
       <div
         ref={containerRef}
-        className="relative h-full w-full overflow-hidden flex items-center justify-center"
+        className="relative flex size-full items-center justify-center overflow-hidden"
       >
         {/* タップエフェクト */}
         <TapRipple containerRef={containerRef} />
@@ -732,11 +732,11 @@ const ChapterPlayer = () => {
         <div className="absolute inset-0 bg-black/40" />
 
         {/* エンディングコンテンツ */}
-        <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-3xl md:text-5xl font-bold mb-2 md:mb-4 tracking-wide text-white">
+        <div className="relative z-10 px-4 text-center text-white">
+          <h1 className="mb-2 text-3xl font-bold tracking-wide text-white md:mb-4 md:text-5xl">
             {endingLabel}
           </h1>
-          <p className="text-lg md:text-2xl mb-8 md:mb-12 opacity-90 font-light text-white">
+          <p className="mb-8 text-lg font-light text-white opacity-90 md:mb-12 md:text-2xl">
             Thank you for playing
           </p>
 
@@ -754,11 +754,11 @@ const ChapterPlayer = () => {
               setSelectedChoice(null)
               setCompletedLineKey(null)
             }}
-            className="group relative min-h-[52px] px-10 py-3 md:px-12 md:py-3.5 rounded-full font-medium text-sm md:text-base tracking-wide transition-all duration-300 touch-manipulation bg-white/95 text-black hover:bg-white hover:scale-[1.02] active:scale-[0.98] shadow-[0_4px_20px_rgba(255,255,255,0.3)] hover:shadow-[0_6px_30px_rgba(255,255,255,0.4)] backdrop-blur-sm border border-white/20"
+            className="group relative min-h-[52px] touch-manipulation rounded-full border border-white/20 bg-white/95 px-10 py-3 text-sm font-medium tracking-wide text-black shadow-[0_4px_20px_rgba(255,255,255,0.3)] backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:bg-white hover:shadow-[0_6px_30px_rgba(255,255,255,0.4)] active:scale-[0.98] md:px-12 md:py-3.5 md:text-base"
             style={{ WebkitTapHighlightColor: 'transparent' }}
           >
             <span className="relative z-10">Return to the Choice</span>
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white to-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white to-white/90 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
           </button>
         </div>
       </div>
@@ -768,10 +768,10 @@ const ChapterPlayer = () => {
   // 章が存在しない場合はエンド画面を表示
   if (!currentChapter) {
     return (
-      <div className="relative h-full w-full overflow-hidden flex items-center justify-center bg-black">
+      <div className="relative flex size-full items-center justify-center overflow-hidden bg-black">
         <div className="text-center text-white">
-          <h1 className="text-2xl md:text-4xl font-bold mb-4">つづく</h1>
-          <p className="text-sm md:text-base opacity-70">
+          <h1 className="mb-4 text-2xl font-bold md:text-4xl">つづく</h1>
+          <p className="text-sm opacity-70 md:text-base">
             遊んでいただきありがとうございます
           </p>
         </div>
@@ -782,10 +782,10 @@ const ChapterPlayer = () => {
   // シーンが存在しない場合はエンド画面を表示
   if (!currentChapter.scenes[currentSceneIndex]) {
     return (
-      <div className="relative h-full w-full overflow-hidden flex items-center justify-center bg-black">
+      <div className="relative flex size-full items-center justify-center overflow-hidden bg-black">
         <div className="text-center text-white">
-          <h1 className="text-2xl md:text-4xl font-bold mb-4">つづく</h1>
-          <p className="text-sm md:text-base opacity-70">
+          <h1 className="mb-4 text-2xl font-bold md:text-4xl">つづく</h1>
+          <p className="text-sm opacity-70 md:text-base">
             遊んでいただきありがとうございます
           </p>
         </div>
@@ -842,7 +842,7 @@ const ChapterPlayer = () => {
     return (
       <div
         ref={containerRef}
-        className="relative h-full w-full overflow-hidden select-none"
+        className="relative size-full select-none overflow-hidden"
       >
         {/* タップエフェクト */}
         <TapRipple containerRef={containerRef} />
@@ -863,22 +863,22 @@ const ChapterPlayer = () => {
         <div className="absolute inset-0 bg-black/50" />
 
         {/* ローディングコンテンツ */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-8">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-8">
           {/* ローディングテキスト */}
-          <p className="text-white text-lg md:text-xl font-medium mb-6 tracking-wide">
+          <p className="mb-6 text-lg font-medium tracking-wide text-white md:text-xl">
             Now Loading...
           </p>
 
           {/* プログレスバー */}
           <div className="w-full max-w-xs md:max-w-sm">
-            <div className="h-2 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm">
+            <div className="h-2 overflow-hidden rounded-full bg-white/20 backdrop-blur-sm">
               <div
-                className="h-full bg-white rounded-full transition-all duration-200 ease-out"
+                className="h-full rounded-full bg-white transition-all duration-200 ease-out"
                 style={{ width: `${loadingProgress}%` }}
               />
             </div>
             {/* パーセンテージ表示 */}
-            <p className="text-white/80 text-sm mt-3 text-center">
+            <p className="mt-3 text-center text-sm text-white/80">
               {loadingProgress}%
             </p>
           </div>
@@ -892,7 +892,7 @@ const ChapterPlayer = () => {
     return (
       <div
         ref={containerRef}
-        className="relative h-full w-full overflow-hidden select-none cursor-pointer"
+        className="relative size-full cursor-pointer select-none overflow-hidden"
         onClick={handleTitleScreenClick}
         style={{
           opacity: titleScreenOpacity,
@@ -917,13 +917,13 @@ const ChapterPlayer = () => {
         {/* オーバーレイ（テキストの視認性向上） */}
         <div className="absolute inset-0 bg-black/30" />
         {/* ロゴ画像（画面中央に完全に配置） */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 px-4 py-8 md:py-12">
+        <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 transform px-4 py-8 md:py-12">
           <Image
             src={blueLeafLogo}
             alt="Blue Leaf Logo"
             width={800}
             height={400}
-            className="w-auto h-auto max-w-[98vw] md:max-w-6xl max-h-[90vh] object-contain"
+            className="size-auto max-h-[90vh] max-w-[98vw] object-contain md:max-w-6xl"
             preload
             fetchPriority="high"
             quality={90}
@@ -935,13 +935,13 @@ const ChapterPlayer = () => {
             e.stopPropagation()
             setShowSettingsModal(true)
           }}
-          className="absolute top-6 md:top-8 right-4 md:right-8 z-30 min-h-[48px] px-6 py-2.5 md:px-8 md:py-3 rounded-full font-medium text-sm md:text-base tracking-wide transition-all duration-300 touch-manipulation bg-black/70 text-white border-2 border-white/20 hover:bg-black/80 hover:border-white/30 backdrop-blur-sm"
+          className="absolute right-4 top-6 z-30 min-h-[48px] touch-manipulation rounded-full border-2 border-white/20 bg-black/70 px-6 py-2.5 text-sm font-medium tracking-wide text-white backdrop-blur-sm transition-all duration-300 hover:border-white/30 hover:bg-black/80 md:right-8 md:top-8 md:px-8 md:py-3 md:text-base"
           style={{ WebkitTapHighlightColor: 'transparent' }}
           aria-label="Settings"
         >
           <span className="relative z-10 flex items-center gap-2">
             <svg
-              className="w-5 h-5"
+              className="size-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -963,15 +963,15 @@ const ChapterPlayer = () => {
           </span>
         </button>
         {/* クリックして開始テキスト（画面下部に固定） */}
-        <div className="absolute bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 z-20 flex items-end justify-center gap-2 pointer-events-none">
+        <div className="pointer-events-none absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 transform items-end justify-center gap-2 md:bottom-12">
           <p
-            className="text-lg md:text-xl font-semibold animate-pulse"
+            className="animate-pulse text-lg font-semibold md:text-xl"
             style={{ color: '#000000' }}
           >
             Press to Start
           </p>
           <div
-            className="w-3 h-1.5 m-1 rounded-sm animate-pulse"
+            className="m-1 h-1.5 w-3 animate-pulse rounded-sm"
             style={{ backgroundColor: '#000000' }}
           />
         </div>
@@ -985,21 +985,21 @@ const ChapterPlayer = () => {
             }}
           >
             <div
-              className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl shadow-2xl border border-slate-600/50 p-8 md:p-10 max-w-md w-full mx-4"
+              className="relative mx-4 w-full max-w-md rounded-3xl border border-slate-600/50 bg-gradient-to-br from-slate-800 to-slate-900 p-8 shadow-2xl md:p-10"
               onClick={(e) => e.stopPropagation()}
             >
               {/* モーダルヘッダー */}
-              <div className="flex items-center justify-between mb-10">
-                <h2 className="text-xl md:text-2xl font-bold text-white tracking-tight">
+              <div className="mb-10 flex items-center justify-between">
+                <h2 className="text-xl font-bold tracking-tight text-white md:text-2xl">
                   Settings
                 </h2>
                 <button
                   onClick={() => setShowSettingsModal(false)}
-                  className="text-slate-400 hover:text-white transition-colors p-2 -mr-2"
+                  className="-mr-2 p-2 text-slate-400 transition-colors hover:text-white"
                   aria-label="Close"
                 >
                   <svg
-                    className="w-6 h-6"
+                    className="size-6"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -1015,26 +1015,26 @@ const ChapterPlayer = () => {
               </div>
               {/* 言語選択セクション */}
               <div>
-                <label className="block text-sm font-medium text-slate-400 mb-6 tracking-wide uppercase">
+                <label className="mb-6 block text-sm font-medium uppercase tracking-wide text-slate-400">
                   Language / 言語
                 </label>
-                <div className="flex gap-1 bg-slate-700/30 p-1 rounded-2xl">
+                <div className="flex gap-1 rounded-2xl bg-slate-700/30 p-1">
                   <button
                     onClick={() => handleLanguageSelect('ja')}
-                    className={`flex-1 px-6 py-4 rounded-xl text-sm md:text-base font-medium transition-colors duration-300 border-2 ${
+                    className={`flex-1 rounded-xl border-2 px-6 py-4 text-sm font-medium transition-colors duration-300 md:text-base ${
                       language === 'ja'
-                        ? 'text-white border-white/30 bg-slate-600/40'
-                        : 'text-slate-400 border-transparent hover:text-slate-300'
+                        ? 'border-white/30 bg-slate-600/40 text-white'
+                        : 'border-transparent text-slate-400 hover:text-slate-300'
                     }`}
                   >
                     日本語
                   </button>
                   <button
                     onClick={() => handleLanguageSelect('en')}
-                    className={`flex-1 px-6 py-4 rounded-xl text-sm md:text-base font-medium transition-colors duration-300 border-2 ${
+                    className={`flex-1 rounded-xl border-2 px-6 py-4 text-sm font-medium transition-colors duration-300 md:text-base ${
                       language === 'en'
-                        ? 'text-white border-white/30 bg-slate-600/40'
-                        : 'text-slate-400 border-transparent hover:text-slate-300'
+                        ? 'border-white/30 bg-slate-600/40 text-white'
+                        : 'border-transparent text-slate-400 hover:text-slate-300'
                     }`}
                   >
                     English
@@ -1052,7 +1052,7 @@ const ChapterPlayer = () => {
   return (
     <div
       ref={containerRef}
-      className="relative h-full w-full overflow-hidden select-none cursor-pointer"
+      className="relative size-full cursor-pointer select-none overflow-hidden"
       onClick={handleClick}
     >
       {/* タップエフェクト */}
@@ -1121,7 +1121,7 @@ const ChapterPlayer = () => {
                       alt={character.image}
                       width={800}
                       height={1200}
-                      className="object-contain h-full w-auto"
+                      className="h-full w-auto object-contain"
                       preload={index === 0}
                       fetchPriority={index === 0 ? 'high' : undefined}
                       quality={90}
@@ -1137,7 +1137,7 @@ const ChapterPlayer = () => {
       {/* 章タイトル表示（右上） */}
       {showChapterTitle && (
         <div
-          className="absolute top-4 right-4 md:top-6 md:right-6 z-40 px-5 py-2.5 md:px-8 md:py-3 bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm border border-slate-600/50 rounded-lg shadow-[0_2px_12px_rgba(0,0,0,0.4)]"
+          className="absolute right-4 top-4 z-40 rounded-lg border border-slate-600/50 bg-gradient-to-br from-slate-800/95 to-slate-900/95 px-5 py-2.5 shadow-[0_2px_12px_rgba(0,0,0,0.4)] backdrop-blur-sm md:right-6 md:top-6 md:px-8 md:py-3"
           style={{
             opacity: chapterTitleOpacity,
             transform: chapterTitleTransform,
@@ -1148,11 +1148,11 @@ const ChapterPlayer = () => {
           }}
         >
           <div className="flex items-center gap-3">
-            <div className="text-[10px] md:text-xs font-medium text-slate-400 tracking-widest uppercase whitespace-nowrap">
+            <div className="whitespace-nowrap text-[10px] font-medium uppercase tracking-widest text-slate-400 md:text-xs">
               Chapter {currentChapterIndex + 1}
             </div>
             <div className="h-4 w-px bg-slate-600/50"></div>
-            <div className="text-sm md:text-base font-semibold text-slate-200 whitespace-nowrap">
+            <div className="whitespace-nowrap text-sm font-semibold text-slate-200 md:text-base">
               {currentChapter.title}
             </div>
           </div>
@@ -1160,11 +1160,11 @@ const ChapterPlayer = () => {
       )}
 
       {/* ゲーム画面のコンテンツエリア */}
-      <div className="relative z-10 flex h-full w-full flex-col">
+      <div className="relative z-10 flex size-full flex-col">
         {/* 選択肢ボタン表示エリア（全画面表示） */}
         {shouldShowChoices ? (
-          <div className="flex-1 flex flex-col items-center justify-center px-4 md:px-8 py-8 md:py-12 overflow-y-auto">
-            <div className="container mx-auto max-w-xl w-full flex flex-col gap-3 md:gap-4 pb-20 md:pb-4">
+          <div className="flex flex-1 flex-col items-center justify-center overflow-y-auto px-4 py-8 md:px-8 md:py-12">
+            <div className="container mx-auto flex w-full max-w-xl flex-col gap-3 pb-20 md:gap-4 md:pb-4">
               {choices.map((choice, index) => {
                 const isSelected = selectedChoiceId === choice.choiceId
                 return (
@@ -1174,16 +1174,16 @@ const ChapterPlayer = () => {
                       e.stopPropagation()
                       handleChoiceSelect(choice.choiceId || '')
                     }}
-                    className={`group relative w-full min-h-[56px] px-5 py-4 md:px-6 md:py-4 backdrop-blur-md border rounded-lg text-left transition-all duration-200 touch-manipulation ${
+                    className={`group relative min-h-[56px] w-full touch-manipulation rounded-lg border px-5 py-4 text-left backdrop-blur-md transition-all duration-200 md:px-6 md:py-4 ${
                       isSelected
-                        ? 'bg-white/20 border-white/40 shadow-[0_0_20px_rgba(255,255,255,0.2)]'
-                        : 'bg-black/70 border-white/20 hover:bg-black/80 hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]'
+                        ? 'border-white/40 bg-white/20 shadow-[0_0_20px_rgba(255,255,255,0.2)]'
+                        : 'border-white/20 bg-black/70 hover:border-white/30 hover:bg-black/80 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]'
                     } active:scale-[0.97]`}
                     style={{ WebkitTapHighlightColor: 'transparent' }}
                   >
                     <div className="flex items-center justify-between">
                       <div
-                        className={`text-base md:text-base leading-relaxed font-medium transition-colors drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] pr-8 ${
+                        className={`pr-8 text-base font-medium leading-relaxed drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] transition-colors md:text-base ${
                           isSelected
                             ? 'text-white'
                             : 'text-white group-hover:text-white'
@@ -1192,15 +1192,15 @@ const ChapterPlayer = () => {
                         {choice.text}
                       </div>
                       <div
-                        className={`ml-4 transition-opacity duration-200 flex-shrink-0 ${
+                        className={`ml-4 flex-shrink-0 transition-opacity duration-200 ${
                           isSelected
                             ? 'opacity-100'
-                            : 'opacity-0 md:opacity-0 group-hover:opacity-100 md:group-hover:opacity-100'
+                            : 'opacity-0 group-hover:opacity-100 md:opacity-0 md:group-hover:opacity-100'
                         }`}
                       >
                         {isSelected ? (
                           <svg
-                            className="w-5 h-5 md:w-4 md:h-4 text-white"
+                            className="size-5 text-white md:size-4"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -1214,7 +1214,7 @@ const ChapterPlayer = () => {
                           </svg>
                         ) : (
                           <svg
-                            className="w-5 h-5 md:w-4 md:h-4 text-white"
+                            className="size-5 text-white md:size-4"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -1235,17 +1235,17 @@ const ChapterPlayer = () => {
             </div>
             {/* 決定ボタン（選択時にのみ表示） */}
             {selectedChoiceId && (
-              <div className="fixed bottom-6 md:bottom-8 left-0 right-0 px-4 md:px-8 flex justify-center z-20">
+              <div className="fixed inset-x-0 bottom-6 z-20 flex justify-center px-4 md:bottom-8 md:px-8">
                 <button
                   onClick={(e) => {
                     e.stopPropagation()
                     handleChoiceConfirm()
                   }}
-                  className="group relative min-h-[52px] px-10 py-3 md:px-12 md:py-3.5 rounded-full font-medium text-sm md:text-base tracking-wide transition-all duration-300 touch-manipulation bg-white/95 text-black hover:bg-white hover:scale-[1.02] active:scale-[0.98] shadow-[0_4px_20px_rgba(255,255,255,0.3)] hover:shadow-[0_6px_30px_rgba(255,255,255,0.4)] backdrop-blur-sm border border-white/20"
+                  className="group relative min-h-[52px] touch-manipulation rounded-full border border-white/20 bg-white/95 px-10 py-3 text-sm font-medium tracking-wide text-black shadow-[0_4px_20px_rgba(255,255,255,0.3)] backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:bg-white hover:shadow-[0_6px_30px_rgba(255,255,255,0.4)] active:scale-[0.98] md:px-12 md:py-3.5 md:text-base"
                   style={{ WebkitTapHighlightColor: 'transparent' }}
                 >
                   <span className="relative z-10">Proceed</span>
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white to-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white to-white/90 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 </button>
               </div>
             )}
@@ -1257,25 +1257,25 @@ const ChapterPlayer = () => {
 
             {/* 下部エリア：テキストボックス */}
             <div
-              className="relative h-32 mb-4 bg-gradient-to-br from-slate-800 to-slate-900 border-t-2 border-white/20"
+              className="relative mb-4 h-32 border-t-2 border-white/20 bg-gradient-to-br from-slate-800 to-slate-900"
               style={getTextBoxStyle()}
             >
               {/* 話者名（左上に飛び出した領域） */}
               {currentLine.speaker && (
-                <div className="absolute bottom-full left-4 md:left-6 px-6 py-1.5 bg-gradient-to-br from-slate-800 to-slate-900 border-2 border-white/20 rounded-t-md">
+                <div className="absolute bottom-full left-4 rounded-t-md border-2 border-white/20 bg-gradient-to-br from-slate-800 to-slate-900 px-6 py-1.5 md:left-6">
                   {/* 振り仮名 */}
-                  <div className="text-[9px] text-white/70 leading-tight">
+                  <div className="text-[9px] leading-tight text-white/70">
                     {getFurigana(currentLine.speaker)}
                   </div>
                   {/* 話者名 */}
-                  <div className="text-base md:text-lg font-bold text-white">
+                  <div className="text-base font-bold text-white md:text-lg">
                     {currentLine.speaker}
                   </div>
                 </div>
               )}
               <div className="container mx-auto px-4 py-6">
                 {/* テキスト */}
-                <div className="text-sm md:text-base leading-relaxed text-white">
+                <div className="text-sm leading-relaxed text-white md:text-base">
                   <FadeInText
                     key={lineKey}
                     text={currentLine.text}
@@ -1287,7 +1287,7 @@ const ChapterPlayer = () => {
               {/* クリックを促す■（右下） */}
               {isTextComplete && !isTransitioning && (
                 <div className="absolute bottom-6 right-4 md:bottom-4 md:right-6">
-                  <div className="w-3 h-1.5 bg-white/60 rounded-sm" />
+                  <div className="h-1.5 w-3 rounded-sm bg-white/60" />
                 </div>
               )}
             </div>

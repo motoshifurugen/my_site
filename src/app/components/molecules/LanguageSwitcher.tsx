@@ -21,16 +21,16 @@ export default function LanguageSwitcher() {
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-1 rounded-lg bg-gray-200 px-2 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 sm:space-x-2 sm:px-3 cursor-pointer"
+        className="bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 flex cursor-pointer items-center space-x-1 rounded-lg p-2 text-sm font-medium transition-colors sm:space-x-2 sm:px-3"
         aria-label={t.common.language}
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
-        <FaGlobe className="h-4 w-4" />
+        <FaGlobe className="size-4" />
         <span className="hidden sm:inline">{localeNames[locale]}</span>
         <span className="sm:hidden">{locale.toUpperCase()}</span>
         <svg
-          className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          className={`size-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -51,9 +51,9 @@ export default function LanguageSwitcher() {
               <button
                 key={lang}
                 onClick={() => handleLanguageChange(lang)}
-                className={`block w-full px-4 py-2 text-right md:text-center text-sm transition-colors hover:bg-gray-100 dark:hover:bg-night-gray ${
+                className={`hover:bg-gray-100 block w-full px-4 py-2 text-right text-sm transition-colors dark:hover:bg-night-gray md:text-center ${
                   locale === lang
-                    ? 'bg-gray-100 font-medium text-gray-900 dark:bg-night-gray dark:text-night-white'
+                    ? 'bg-gray-100 text-gray-900 font-medium dark:bg-night-gray dark:text-night-white'
                     : 'text-gray-700 dark:text-night-white'
                 }`}
               >

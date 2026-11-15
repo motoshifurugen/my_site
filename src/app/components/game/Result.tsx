@@ -91,7 +91,7 @@ function GameOverPanel({ score, reset }: GameOverPanelProps) {
         >
           {loading ? (
             <span
-              className="inline-block mr-2"
+              className="mr-2 inline-block"
               style={{ width: 20, height: 20 }}
             >
               <span

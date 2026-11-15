@@ -36,7 +36,7 @@ const codeBlockComponents = {
     // インラインコードの場合（preタグでラップされていない場合）
     if (!props.className) {
       return (
-        <code className="bg-slate-100 text-rose-600 dark:bg-slate-800 dark:text-rose-400 rounded px-1.5 py-0.5 text-sm font-mono">
+        <code className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-sm text-rose-600 dark:bg-slate-800 dark:text-rose-400">
           {String(props.children)}
         </code>
       )

@@ -1,15 +1,15 @@
 export default function TermsPage() {
   return (
-    <main className="max-w-2xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-6">利用規約（Terms of Service）</h1>
+    <main className="mx-auto max-w-2xl px-4 py-12">
+      <h1 className="mb-6 text-3xl font-bold">利用規約（Terms of Service）</h1>
       <section className="space-y-4 text-base leading-relaxed">
         <p>
           本利用規約（以下「本規約」といいます。）は、運営者名：Motoshi
           Furugen（以下「当方」といいます。）が提供するアプリケーション「わたしの台所図鑑」（以下「本サービス」といいます。）の利用条件を定めるものです。ユーザーは本規約に同意のうえ本サービスを利用するものとします。
         </p>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">1. 適用</h2>
-        <ol className="list-decimal pl-6 mb-4 space-y-2">
+        <h2 className="mb-2 mt-6 text-xl font-semibold">1. 適用</h2>
+        <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li>
             本規約は、ユーザーと当方との間の本サービスの利用に関わる一切の関係に適用されます。
           </li>
@@ -18,16 +18,16 @@ export default function TermsPage() {
           </li>
         </ol>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">2. 本サービスの内容</h2>
-        <ol className="list-decimal pl-6 mb-4 space-y-2">
+        <h2 className="mb-2 mt-6 text-xl font-semibold">2. 本サービスの内容</h2>
+        <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li>本サービスは、料理の記録・整理・閲覧等の機能を提供します。</li>
           <li>
             当方は、ユーザーへの事前通知なく、本サービスの内容を追加・変更・停止することがあります。
           </li>
         </ol>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">3. 利用環境</h2>
-        <ol className="list-decimal pl-6 mb-4 space-y-2">
+        <h2 className="mb-2 mt-6 text-xl font-semibold">3. 利用環境</h2>
+        <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li>
             本サービスの利用に必要な端末、通信回線、ソフトウェア等はユーザーの費用と責任で準備するものとします。
           </li>
@@ -36,10 +36,10 @@ export default function TermsPage() {
           </li>
         </ol>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">
+        <h2 className="mb-2 mt-6 text-xl font-semibold">
           4. アカウント・データ
         </h2>
-        <ol className="list-decimal pl-6 mb-4 space-y-2">
+        <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li>
             本サービス上で作成された記録データ等（以下「ユーザーデータ」）の管理責任はユーザーにあります。
           </li>
@@ -51,11 +51,11 @@ export default function TermsPage() {
           </li>
         </ol>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">5. 禁止事項</h2>
+        <h2 className="mb-2 mt-6 text-xl font-semibold">5. 禁止事項</h2>
         <p className="mb-2">
           ユーザーは、本サービスの利用にあたり、以下の行為をしてはなりません。
         </p>
-        <ol className="list-decimal pl-6 mb-4 space-y-1">
+        <ol className="mb-4 list-decimal space-y-1 pl-6">
           <li>法令または公序良俗に違反する行為</li>
           <li>本サービスの運営を妨害する行為</li>
           <li>本サービスまたは当方のサーバー等に過度な負荷をかける行為</li>
@@ -66,8 +66,8 @@ export default function TermsPage() {
           <li>その他、当方が不適切と判断する行為</li>
         </ol>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">6. 知的財産権</h2>
-        <ol className="list-decimal pl-6 mb-4 space-y-2">
+        <h2 className="mb-2 mt-6 text-xl font-semibold">6. 知的財産権</h2>
+        <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li>
             本サービスに関するプログラム、デザイン、UI、文章、画像等の知的財産権は当方または正当な権利者に帰属します。
           </li>
@@ -76,10 +76,10 @@ export default function TermsPage() {
           </li>
         </ol>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">
+        <h2 className="mb-2 mt-6 text-xl font-semibold">
           7. 有料機能・サブスクリプション
         </h2>
-        <ol className="list-decimal pl-6 mb-4 space-y-2">
+        <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li>
             本サービスには有料機能（サブスクリプション）を含む場合があります。価格、課金単位、提供内容はアプリ内またはストア上の表示に従います。
           </li>
@@ -98,8 +98,8 @@ export default function TermsPage() {
           </li>
         </ol>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">8. 免責事項</h2>
-        <ol className="list-decimal pl-6 mb-4 space-y-2">
+        <h2 className="mb-2 mt-6 text-xl font-semibold">8. 免責事項</h2>
+        <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li>
             当方は、本サービスの完全性、正確性、確実性、特定目的への適合性等について、明示または黙示を問わず保証しません。
           </li>
@@ -111,17 +111,17 @@ export default function TermsPage() {
           </li>
         </ol>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">9. 通知</h2>
+        <h2 className="mb-2 mt-6 text-xl font-semibold">9. 通知</h2>
         <p>
           本サービスに関する通知は、本サービス内の表示、プッシュ通知、または当方が適切と判断する方法により行います。
         </p>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">10. 規約の変更</h2>
+        <h2 className="mb-2 mt-6 text-xl font-semibold">10. 規約の変更</h2>
         <p>
           当方は、必要に応じて本規約を変更できます。変更後の規約は、本サービス内または当方のウェブサイト等で掲示した時点から効力を生じます。
         </p>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">
+        <h2 className="mb-2 mt-6 text-xl font-semibold">
           11. 個人情報等の取扱い
         </h2>
         <p>
@@ -133,31 +133,31 @@ export default function TermsPage() {
             href="https://furugen-island.com/my_site/my-kitchen/privacy"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-teal-500 dark:text-night-teal hover:underline ml-1"
+            className="ml-1 text-teal-500 hover:underline dark:text-night-teal"
           >
             https://furugen-island.com/my_site/my-kitchen/privacy
           </a>
         </p>
 
-        <h2 className="text-xl font-semibold mt-6 mb-2">
+        <h2 className="mb-2 mt-6 text-xl font-semibold">
           12. 準拠法・裁判管轄
         </h2>
-        <ol className="list-decimal pl-6 mb-4 space-y-2">
+        <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li>本規約の解釈には日本法を準拠法とします。</li>
           <li>
             本サービスに関して紛争が生じた場合、地方裁判所を第一審の専属的合意管轄裁判所とします。
           </li>
         </ol>
 
-        <div className="mt-8 pt-6 border-t border-gray-300 dark:border-gray-700">
-          <h2 className="text-xl font-semibold mb-4">事業者情報</h2>
+        <div className="border-gray-300 dark:border-gray-700 mt-8 border-t pt-6">
+          <h2 className="mb-4 text-xl font-semibold">事業者情報</h2>
           <div className="space-y-2">
             <p>運営者：Motoshi Furugen</p>
             <p>
               連絡先：
               <a
                 href="mailto:my-kitchen-support@furugen-island.com"
-                className="text-teal-500 dark:text-night-teal hover:underline ml-1"
+                className="ml-1 text-teal-500 hover:underline dark:text-night-teal"
               >
                 my-kitchen-support@furugen-island.com
               </a>
