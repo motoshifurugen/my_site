@@ -9,7 +9,7 @@
     "start:api": "next dev -p 3001",
     "test": "node --import tsx --test $(find src \\( -name '*.test.ts' -o -name '*.test.tsx' -o -name '*.test.mjs' \\))",
     "lint": "run-p -l -c --aggregate-output lint:*",
-    "lint:eslint": "eslint .",
+    "lint:eslint": "eslint . --max-warnings 0",
     "lint:prettier": "prettier --check .",
     "fix": "run-s fix:prettier fix:eslint",
     "fix:eslint": "npm run lint:eslint -- --fix",

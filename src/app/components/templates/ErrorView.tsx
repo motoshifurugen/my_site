@@ -27,6 +27,7 @@ const ErrorView: React.FC<ErrorViewProps> = ({
       <PageFace title={title} subtitle={message} />
 
       <div className="mt-10 flex w-full justify-center">
+        {/* eslint-disable-next-line @next/next/no-img-element -- crash path では next/image のランタイム/loader に依存しない */}
         <img
           src={`${BASE_PATH}/images/cats/page_not_found.png`}
           alt={title}
