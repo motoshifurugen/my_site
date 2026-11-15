@@ -82,3 +82,18 @@ test('ErrorView: 既存の猫画像アセットを表示する', () => {
   //       （next/image による URL エンコードや素の <img> 切替のどちらでもファイル名は残る）
   assert.match(html, /(page_not_found|coming_soon)\.png/)
 })
+
+test('ErrorView: 猫画像は素の <img> で、属性とクラスを変えない（Issue #339）', () => {
+  // Given: 表示用の文言
+  // When: ErrorView を描画する
+  const html = renderErrorView({
+    title: 'タイトル',
+    message: 'メッセージ本文',
+    retryLabel: '再試行',
+  })
+  // Then: next/image に置き換えず、#339 より前と同じ <img> を出す
+  const images = html.match(/<img[^>]*>/g) ?? []
+  assert.deepEqual(images, [
+    '<img src="/my_site/images/cats/page_not_found.png" alt="タイトル" width="500" height="500" class="rounded-2xl"/>',
+  ])
+})
