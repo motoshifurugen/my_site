@@ -79,7 +79,7 @@ const TankaCard: React.FC<TankaCardProps> = ({
 
   return (
     <div
-      className="via-gray-50 to-gray-100 relative flex min-h-[200px] cursor-pointer flex-col justify-between overflow-hidden rounded-xl bg-gradient-to-br from-white p-3 shadow-lg transition-all duration-300 hover:shadow-2xl dark:from-slate-900 dark:via-slate-800 dark:to-slate-700 sm:min-h-[220px] sm:p-4 lg:min-h-[280px] lg:p-6"
+      className="relative flex min-h-[200px] cursor-pointer flex-col justify-between overflow-hidden rounded-xl bg-gradient-to-br from-white p-3 shadow-lg transition-all duration-300 hover:shadow-2xl dark:from-slate-900 dark:via-slate-800 dark:to-slate-700 sm:min-h-[220px] sm:p-4 lg:min-h-[280px] lg:p-6"
       style={
         !isDarkMode
           ? {
@@ -95,7 +95,7 @@ const TankaCard: React.FC<TankaCardProps> = ({
       {/* 上部コンテナ */}
       <div className="flex flex-1 flex-col">
         {/* 上部の装飾線 */}
-        <div className="via-gray-300 absolute left-1/2 top-0 h-1 w-12 -translate-x-1/2 transform bg-gradient-to-r from-transparent to-transparent dark:via-slate-400 sm:w-16"></div>
+        <div className="absolute left-1/2 top-0 h-1 w-12 -translate-x-1/2 transform bg-gradient-to-r from-transparent to-transparent dark:via-slate-400 sm:w-16"></div>
 
         {/* 右上のいいねボタン */}
         {tweetId && (
@@ -172,7 +172,7 @@ const TankaCard: React.FC<TankaCardProps> = ({
       {/* 下部固定エリア */}
       <div className="mt-auto">
         {/* 下部の装飾線 */}
-        <div className="via-gray-300 mb-3 h-px w-full bg-gradient-to-r from-transparent to-transparent dark:via-slate-400"></div>
+        <div className="mb-3 h-px w-full bg-gradient-to-r from-transparent to-transparent dark:via-slate-400"></div>
 
         {/* タグ表示エリア */}
         {tags.length > 0 && (
@@ -197,7 +197,7 @@ const TankaCard: React.FC<TankaCardProps> = ({
 
         {/* 日付とサイト名 */}
         <div
-          className="text-gray-400 text-center text-xs font-light opacity-60 dark:text-slate-300 sm:text-xs lg:text-xs"
+          className="text-center text-xs font-light opacity-60 dark:text-slate-300 sm:text-xs lg:text-xs"
           style={{ fontSize: '10px' }}
         >
           {formattedDate} / Motoshi

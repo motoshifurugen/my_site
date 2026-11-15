@@ -36,7 +36,7 @@ export default [
       'tailwindcss/enforces-shorthand': 'error',
       'react-hooks/exhaustive-deps': 'error',
       'tailwindcss/no-custom-classname': [
-        'warn',
+        'error',
         {
           whitelist: [
             'rightFooter',
@@ -58,6 +58,7 @@ export default [
             'right-wing',
             'circle',
             'night-circle',
+            'score-spinner',
           ],
         },
       ],

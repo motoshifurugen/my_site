@@ -149,7 +149,7 @@ export default function TermsPage() {
           </li>
         </ol>
 
-        <div className="border-gray-300 dark:border-gray-700 mt-8 border-t pt-6">
+        <div className="mt-8 border-t pt-6">
           <h2 className="mb-4 text-xl font-semibold">事業者情報</h2>
           <div className="space-y-2">
             <p>運営者：Motoshi Furugen</p>

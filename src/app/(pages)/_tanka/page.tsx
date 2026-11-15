@@ -270,10 +270,8 @@ const TankaPage: React.FC = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
         >
-          <h2 className="text-gray-800 mb-2 text-2xl font-bold">
-            エラーが発生しました
-          </h2>
-          <p className="text-gray-600 mb-6">{error}</p>
+          <h2 className="mb-2 text-2xl font-bold">エラーが発生しました</h2>
+          <p className="mb-6">{error}</p>
           <motion.button
             className="rounded-lg bg-main-black px-6 py-3 font-medium text-white transition-shadow hover:shadow-lg"
             whileHover={{ scale: 1.05 }}
@@ -305,12 +303,8 @@ const TankaPage: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h2 className="text-gray-700 mb-2 text-2xl font-bold">
-              短歌がまだありません
-            </h2>
-            <p className="text-gray-500">
-              短歌収集システムが動作すると、ここに短歌が表示されます。
-            </p>
+            <h2 className="mb-2 text-2xl font-bold">短歌がまだありません</h2>
+            <p>短歌収集システムが動作すると、ここに短歌が表示されます。</p>
           </motion.div>
         ) : (
           <>
@@ -354,7 +348,7 @@ const TankaPage: React.FC = () => {
                     )}
                   </div>
                 ) : (
-                  <div className="text-gray-400 text-center">
+                  <div className="text-center">
                     <p>スクロールして続きを読み込む</p>
                   </div>
                 )}
@@ -368,7 +362,7 @@ const TankaPage: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <p className="text-gray-500">すべての短歌を表示しました</p>
+                <p>すべての短歌を表示しました</p>
               </motion.div>
             )}
           </>
