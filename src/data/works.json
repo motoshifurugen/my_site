@@ -269,5 +269,49 @@
     },
     "tags": ["Azure", "AIエージェント", "tag:teamDevelopment"],
     "date": "2026-05"
+  },
+  {
+    "id": "hobby_13",
+    "image": "/images/works/hobby_13.png",
+    "title": {
+      "ja": "声で話せる卓上アシスタント",
+      "en": "Desktop Voice Assistant"
+    },
+    "description": {
+      "ja": "呼びかけると声で答える、自宅用の音声アシスタントを作りました。呼びかけの聞き分けから読み上げまで、音声を外へ送らずに自宅のサーバーで動かしています。",
+      "en": "I built a voice assistant for my desk that answers when called. From wake-word detection to speech synthesis, it runs on my home server without sending audio outside."
+    },
+    "tags": ["Python", "VOICEVOX", "tag:personalDevelopment"],
+    "date": "2026-11"
+  },
+  {
+    "id": "hobby_14",
+    "image": "/images/works/hobby_14.png",
+    "url": "https://cocoa-he.art/",
+    "title": {
+      "ja": "cocoa heart | 写真と短歌のサイト",
+      "en": "cocoa heart | Photos and Tanka"
+    },
+    "description": {
+      "ja": "自分で撮った写真 1 枚に、自分で詠んだ短歌を 1 首添えて載せるサイトを作りました。",
+      "en": "A site where each photo I took is paired with one tanka I wrote."
+    },
+    "tags": ["Cloudflare Workers", "tag:personalDevelopment"],
+    "date": "2026-11"
+  },
+  {
+    "id": "hobby_15",
+    "image": "/images/works/hobby_15.png",
+    "url": "https://earth-pulse.furugen.workers.dev/",
+    "title": {
+      "ja": "Earth Pulse | 3D 地球儀で見る世界のいま",
+      "en": "Earth Pulse | The World on a 3D Globe"
+    },
+    "description": {
+      "ja": "世界で起きている紛争のデータを、3D の地球儀の上で眺められるサイトを作りました。数字の出典と確かさを画面に書いています。",
+      "en": "A site for looking at data on conflicts around the world on a 3D globe. Sources and the certainty of each figure are shown on screen."
+    },
+    "tags": ["React", "globe.gl", "tag:personalDevelopment"],
+    "date": "2026-11"
   }
 ]
