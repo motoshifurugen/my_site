@@ -26,20 +26,33 @@ import ts from 'typescript'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROUTE_SRC = path.join(__dirname, 'route.tsx')
+const PAGINATION_VALIDATION_SRC = path.join(
+  __dirname,
+  'paginationValidation.ts',
+)
 const ROUTE_BUILD = path.join(__dirname, '.route.test-build.mjs')
+const PAGINATION_VALIDATION_BUILD = path.join(
+  __dirname,
+  '.paginationValidation.test-build.mjs',
+)
 const SUPABASE_MOCK = path.join(__dirname, '.supabase.test-mock.mjs')
 const NEXT_MOCK = path.join(__dirname, '.next-server.test-mock.mjs')
 
 // Supabase クライアントのモック。チェーン（from→select→order→range）の終端 range が
 // グローバル fixture を解決する。fixture を差し替えることで data/error/count を制御する。
+// Issue #355: 不正な page/limit で Supabase を呼ばないことを確かめるため、
+// createClient と range の呼び出し回数、range の引数を fixture に記録する。
 const SUPABASE_MOCK_CODE = `
 export function createClient() {
+  const fx = globalThis.__TANKA_TEST_FIXTURE__
+  fx.createClientCalls = (fx.createClientCalls || 0) + 1
   const builder = {
     from() { return builder },
     select() { return builder },
     order() { return builder },
-    range() {
-      const fx = globalThis.__TANKA_TEST_FIXTURE__
+    range(from, to) {
+      fx.rangeCalls = (fx.rangeCalls || 0) + 1
+      fx.rangeArgs = [from, to]
       return Promise.resolve({ data: fx.data, error: fx.error, count: fx.count })
     },
   }
@@ -76,9 +89,16 @@ const loadModule = async () => {
   fs.writeFileSync(SUPABASE_MOCK, SUPABASE_MOCK_CODE)
   fs.writeFileSync(NEXT_MOCK, NEXT_MOCK_CODE)
 
+  // paginationValidation は実物を通す（外部依存なし）。
+  fs.writeFileSync(
+    PAGINATION_VALIDATION_BUILD,
+    transpile(PAGINATION_VALIDATION_SRC),
+  )
+
   const code = transpile(ROUTE_SRC)
     .replaceAll('@supabase/supabase-js', toRel(SUPABASE_MOCK))
     .replaceAll('next/server', toRel(NEXT_MOCK))
+    .replaceAll('./paginationValidation', toRel(PAGINATION_VALIDATION_BUILD))
   fs.writeFileSync(ROUTE_BUILD, code)
 
   return import(`${ROUTE_BUILD}?t=${process.pid}`)
@@ -117,7 +137,11 @@ describe('api/tanka/route.tsx GET（Issue #163: 整形契約の固定）', () =>
     globalThis.__TANKA_TEST_FIXTURE__ = fixture
     const request = { url: `http://localhost/api/tanka${query}` }
     const response = await GET(request)
-    return { status: response.status, body: await response.json() }
+    return {
+      status: response.status,
+      body: await response.json(),
+      fixture: globalThis.__TANKA_TEST_FIXTURE__,
+    }
   }
 
   before(async () => {
@@ -129,7 +153,12 @@ describe('api/tanka/route.tsx GET（Issue #163: 整形契約の固定）', () =>
 
   after(() => {
     delete globalThis.__TANKA_TEST_FIXTURE__
-    for (const f of [ROUTE_BUILD, SUPABASE_MOCK, NEXT_MOCK]) {
+    for (const f of [
+      ROUTE_BUILD,
+      PAGINATION_VALIDATION_BUILD,
+      SUPABASE_MOCK,
+      NEXT_MOCK,
+    ]) {
       if (fs.existsSync(f)) fs.rmSync(f)
     }
   })
@@ -311,5 +340,112 @@ describe('api/tanka/route.tsx GET（Issue #163: 整形契約の固定）', () =>
       process.env.SUPABASE_URL = savedUrl
       process.env.SUPABASE_SERVICE_ROLE_KEY = savedKey
     }
+  })
+
+  // Issue #355: page/limit の検査。不正な値は 400 を返し、Supabase を呼ばない。
+  const okFixture = () => ({ data: [buildRow()], error: null, count: 1 })
+
+  const assertRejectedWithoutSupabase = ({ status, body, fixture }) => {
+    assert.equal(status, 400)
+    assert.equal(typeof body.error, 'string')
+    assert.deepEqual(Object.keys(body), ['error'])
+    assert.equal(fixture.createClientCalls ?? 0, 0)
+    assert.equal(fixture.rangeCalls ?? 0, 0)
+  }
+
+  for (const page of ['abc', '0', '-1', '1.5', '2abc']) {
+    it(`page=${page} は 400 を返し Supabase を呼ばない（Issue #355）`, async () => {
+      // Given: 数字だけでない、または 1 未満の page
+      // When: クエリパラメータの page に渡して GET を呼ぶ
+      // Then: 400 と { error }、createClient も range も呼ばれない
+      const result = await callGet(
+        `?page=${encodeURIComponent(page)}&limit=12`,
+        okFixture(),
+      )
+      assertRejectedWithoutSupabase(result)
+      assert.match(result.body.error, /page/)
+    })
+  }
+
+  for (const limit of ['abc', '0', '-1', '101', '5x']) {
+    it(`limit=${limit} は 400 を返し Supabase を呼ばない（Issue #355）`, async () => {
+      // Given: 数字だけでない、または 1〜100 の外の limit
+      // When: クエリパラメータの limit に渡して GET を呼ぶ
+      // Then: 400 と { error }、createClient も range も呼ばれない
+      const result = await callGet(
+        `?page=1&limit=${encodeURIComponent(limit)}`,
+        okFixture(),
+      )
+      assertRejectedWithoutSupabase(result)
+      assert.match(result.body.error, /limit/)
+    })
+  }
+
+  it('page だけを不正にしても limit 未指定のまま 400 を返す（Issue #355）', async () => {
+    // Given: limit を付けず page=abc だけ渡す
+    // When: GET を呼ぶ
+    // Then: 400 で Supabase を呼ばない
+    assertRejectedWithoutSupabase(await callGet('?page=abc', okFixture()))
+  })
+
+  it('limit だけを不正にしても page 未指定のまま 400 を返す（Issue #355）', async () => {
+    // Given: page を付けず limit=101 だけ渡す
+    // When: GET を呼ぶ
+    // Then: 400 で Supabase を呼ばない
+    assertRejectedWithoutSupabase(await callGet('?limit=101', okFixture()))
+  })
+
+  it('Supabase 設定が無くても不正な page には 400 を返す（検査は env チェックより先）', async () => {
+    // Given: 環境変数が欠落し、page=0
+    // When: GET を呼ぶ
+    // Then: 500 ではなく 400（入力の誤りを先に返す）
+    const savedUrl = process.env.SUPABASE_URL
+    const savedKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+    delete process.env.SUPABASE_URL
+    delete process.env.SUPABASE_SERVICE_ROLE_KEY
+    try {
+      assertRejectedWithoutSupabase(await callGet('?page=0', okFixture()))
+    } finally {
+      process.env.SUPABASE_URL = savedUrl
+      process.env.SUPABASE_SERVICE_ROLE_KEY = savedKey
+    }
+  })
+
+  it('limit=100 は 200 を返し range(0, 99) で Supabase を呼ぶ（上限の境界値）', async () => {
+    // Given: limit=100（上限ちょうど）
+    // When: GET を呼ぶ
+    // Then: 200 で range は 0〜99
+    const { status, fixture } = await callGet('?limit=100', okFixture())
+    assert.equal(status, 200)
+    assert.equal(fixture.createClientCalls, 1)
+    assert.deepEqual(fixture.rangeArgs, [0, 99])
+  })
+
+  it('limit=1 は 200 を返し range(0, 0) で Supabase を呼ぶ（下限の境界値）', async () => {
+    // Given: limit=1（下限ちょうど）
+    // When: GET を呼ぶ
+    // Then: 200 で range は 0〜0
+    const { status, fixture } = await callGet('?limit=1', okFixture())
+    assert.equal(status, 200)
+    assert.equal(fixture.createClientCalls, 1)
+    assert.deepEqual(fixture.rangeArgs, [0, 0])
+  })
+
+  it('page=3&limit=5 は range(10, 14) で Supabase を呼ぶ（offset の算出）', async () => {
+    // Given: page=3・limit=5
+    // When: GET を呼ぶ
+    // Then: offset=10 から 5 件ぶんの range
+    const { status, fixture } = await callGet('?page=3&limit=5', okFixture())
+    assert.equal(status, 200)
+    assert.deepEqual(fixture.rangeArgs, [10, 14])
+  })
+
+  it('クエリ未指定は range(0, 11) で Supabase を呼ぶ（既定値 page=1・limit=12）', async () => {
+    // Given: クエリ無し
+    // When: GET を呼ぶ
+    // Then: 既定値の 12 件ぶんの range
+    const { status, fixture } = await callGet('', okFixture())
+    assert.equal(status, 200)
+    assert.deepEqual(fixture.rangeArgs, [0, 11])
   })
 })
