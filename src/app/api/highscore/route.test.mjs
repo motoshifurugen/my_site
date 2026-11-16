@@ -56,6 +56,7 @@ export class Octokit {
         const f = fx()
         f.updateCalls = (f.updateCalls || 0) + 1
         f.updateArgs = args
+        if (f.updateError) throw f.updateError
         return { data: {} }
       },
     }
@@ -268,6 +269,61 @@ describe('api/highscore/route.tsx POST（Issue #158: 検証 + レート制限）
     // Then: 400（500 でクラッシュさせない）
     const { status } = await callPost('__BAD_JSON__', {})
     assert.equal(status, 400)
+  })
+
+  it('最高スコアの取得が失敗したら 500 を返し Issue を更新しない（Issue #356）', async () => {
+    // Given: listForRepo が例外を投げる
+    // When: 有効スコア 200 を投稿する
+    // Then: 500 で更新失敗のメッセージを返す。Issue は作らず、更新もしない
+    const { status, body, fixture } = await callPost(
+      { score: 200 },
+      { throwError: true },
+    )
+    assert.equal(status, 500)
+    assert.deepEqual(body, { error: '最高スコアの更新に失敗しました' })
+    assert.deepEqual(fixture.createArgs, [])
+    assert.equal(fixture.updateCalls, 0)
+  })
+
+  it('Issue の更新が失敗したら 500 を返す（Issue #356）', async () => {
+    // Given: 現在の最高スコア 100、issues.update が例外を投げる
+    // When: 200 を投稿する
+    // Then: 500 で更新失敗のメッセージを返す。更新は 1 回だけ試みる
+    const { status, body, fixture } = await callPost(
+      { score: 200 },
+      { updateError: new Error('github boom') },
+    )
+    assert.equal(status, 500)
+    assert.deepEqual(body, { error: '最高スコアの更新に失敗しました' })
+    assert.equal(fixture.updateCalls, 1)
+  })
+
+  it('highscore-game の Issue が無ければ 1 回作ってから更新する（Issue #356）', async () => {
+    // Given: highscore-game の Issue が無い（作ると number 999 が返る）
+    // When: 200 を投稿する
+    // Then: Issue を 1 回作り、作った Issue 999 の body を '200' に更新して updated:true を返す
+    const { status, body, fixture } = await callPost(
+      { score: 200 },
+      { issues: [] },
+    )
+    assert.deepEqual(fixture.createArgs, [
+      {
+        owner: 'test-owner',
+        repo: 'test-repo',
+        title: 'highscore-game',
+        body: '0',
+        labels: ['highscore'],
+      },
+    ])
+    assert.equal(fixture.updateCalls, 1)
+    assert.deepEqual(fixture.updateArgs, {
+      owner: 'test-owner',
+      repo: 'test-repo',
+      issue_number: 999,
+      body: '200',
+    })
+    assert.equal(status, 200)
+    assert.deepEqual(body, { highScore: 200, updated: true })
   })
 })
 

@@ -34,6 +34,7 @@ const RATELIMIT_MOCK = path.join(__dirname, '.rateLimit.test-mock.mjs')
 // likeIssueTitle / LIKES_ISSUE_LABEL を提供し、octokit の戻り値と失敗を fixture から切り替え、
 // 呼び出しを method と args の組で fixture.calls に記録する。
 // issuesAfterCreate は「作成に失敗している間に、別のリクエストが同じ Issue を作った」状況を表す。
+// updateError は「いいね数を Issue に書き込む段で GitHub が失敗した」状況を表す（Issue #356）。
 const GITHUB_LIKES_MOCK_CODE = `
 export const LIKES_ISSUE_LABEL = 'blog-likes'
 export const likeIssueTitle = (articleId) => 'likes-' + articleId
@@ -67,7 +68,8 @@ export const octokit = {
       return { data: f.getIssue }
     },
     update: async (args) => {
-      record('issues.update', args)
+      const f = record('issues.update', args)
+      if (f.updateError) throw f.updateError
       return { data: {} }
     },
   },
@@ -289,6 +291,39 @@ describe('api/likes/route.tsx POST（Issue #158: 入力検証 + レート制限�
     // Then: 400（500 でクラッシュさせない）
     const { status } = await callPost('__BAD_JSON__', {})
     assert.equal(status, 400)
+  })
+
+  it('0 いいねの取り消しは 0 のまま Issue を更新する（Issue #356）', async () => {
+    // Given: 現在 0 いいね
+    // When: liked=false を投稿する
+    // Then: 200 で likeCount:0、Issue 3 の body を '0' に 1 回だけ更新する（負にしない）
+    const { status, body, fixture } = await callPost(
+      { articleId: 'hello-world', liked: false },
+      { issues: [{ title: 'likes-hello-world', number: 3, body: '0' }] },
+    )
+    assert.equal(status, 200)
+    assert.equal(body.likeCount, 0)
+    assert.deepEqual(argsOf(fixture, 'issues.update'), [
+      {
+        owner: 'test-owner',
+        repo: 'test-repo',
+        issue_number: 3,
+        body: '0',
+      },
+    ])
+  })
+
+  it('Issue の更新が失敗したら 500 を返す（Issue #356）', async () => {
+    // Given: 現在 5 いいね、issues.update が例外を投げる
+    // When: liked=true を投稿する
+    // Then: 500 で更新失敗のメッセージを返す。更新は 1 回だけ試みる
+    const { status, body, fixture } = await callPost(
+      { articleId: 'hello-world', liked: true },
+      { updateError: new Error('github boom') },
+    )
+    assert.equal(status, 500)
+    assert.deepEqual(body, { error: 'いいね数の更新に失敗しました' })
+    assert.equal(argsOf(fixture, 'issues.update').length, 1)
   })
 })
 
