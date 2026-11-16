@@ -40,9 +40,10 @@ export class Octokit {
   constructor() {
     const fx = () => globalThis.__HIGHSCORE_FIXTURE__
     this.issues = {
-      listForRepo: async () => {
+      listForRepo: async (args) => {
         const f = fx()
         f.listForRepoCalls = (f.listForRepoCalls || 0) + 1
+        f.listForRepoArgs = args
         if (f.throwError) throw new Error('github boom')
         return { data: f.issues }
       },
@@ -312,6 +313,21 @@ describe('api/highscore/route.tsx GET（Issue #352: 最高スコアの取得）'
     assert.equal(status, 200)
     assert.deepEqual(body, { highScore: 100, issueNumber: 7 })
     assert.deepEqual(fixture.createArgs, [])
+  })
+
+  it('ラベル highscore の open の Issue を、env の owner と repo で 1 回だけ探す', async () => {
+    // Given: 一覧に highscore-game の Issue がある
+    const issues = [{ title: 'highscore-game', number: 7, body: '100' }]
+    // When: 最高スコアを取得する
+    const { fixture } = await callGet({ issues })
+    // Then: 決まった owner・repo・ラベル・state で 1 回だけ一覧を取る
+    assert.equal(fixture.listForRepoCalls, 1)
+    assert.deepEqual(fixture.listForRepoArgs, {
+      owner: 'test-owner',
+      repo: 'test-repo',
+      labels: 'highscore',
+      state: 'open',
+    })
   })
 
   it('highscore-game の Issue の body が数でなければ highScore は 0', async () => {
