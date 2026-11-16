@@ -1,6 +1,7 @@
 import type { TankaData, TankaResponse } from '@/types/tanka'
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
+import { parsePagination } from './paginationValidation'
 
 // Supabase から返る行の形（snake_case・ネストした tanka_tags）。インフラの実装詳細のため
 // ここに閉じ込め、ドメイン型（TankaData 等）とは分離する。
@@ -29,6 +30,18 @@ type SupabaseTankaRow = {
 
 export async function GET(request: NextRequest) {
   try {
+    // 不正な入力はサーバー設定に関係なくクライアントの誤りなので、env チェックより先に返す
+    const { searchParams } = new URL(request.url)
+    const pagination = parsePagination(
+      searchParams.get('page'),
+      searchParams.get('limit'),
+    )
+    if (!pagination.ok) {
+      return NextResponse.json({ error: pagination.error }, { status: 400 })
+    }
+    const { page, limit } = pagination
+    const offset = (page - 1) * limit
+
     // 環境変数チェック
     if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
       return NextResponse.json(
@@ -44,12 +57,6 @@ export async function GET(request: NextRequest) {
       process.env.SUPABASE_URL,
       process.env.SUPABASE_SERVICE_ROLE_KEY,
     )
-
-    // クエリパラメータ取得
-    const { searchParams } = new URL(request.url)
-    const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || '12')
-    const offset = (page - 1) * limit
 
     // 短歌データを取得（作成日時の降順、タグ情報も含む）
     // tweet_idを文字列として取得するため、::textを使用
