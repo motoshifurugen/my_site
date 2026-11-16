@@ -2,6 +2,11 @@
 
 import { Heart } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import {
+  ARTICLE_LIKES_STORAGE_KEY,
+  isArticleLiked,
+  nextArticleLikes,
+} from './articleLikesStorage'
 
 interface LikeButtonProps {
   articleId: string
@@ -17,13 +22,24 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   const [isLoading, setIsLoading] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
 
+  const saveArticleLiked = (liked: boolean) => {
+    localStorage.setItem(
+      ARTICLE_LIKES_STORAGE_KEY,
+      nextArticleLikes(
+        localStorage.getItem(ARTICLE_LIKES_STORAGE_KEY),
+        articleId,
+        liked,
+      ),
+    )
+  }
+
   useEffect(() => {
     const fetchLikeInfo = async () => {
       try {
-        const userLikes = JSON.parse(
-          localStorage.getItem('article_likes') || '{}',
+        const hasLiked = isArticleLiked(
+          localStorage.getItem(ARTICLE_LIKES_STORAGE_KEY),
+          articleId,
         )
-        const hasLiked = !!userLikes[articleId]
         setIsLiked(hasLiked)
 
         // APIからいいね数を取得
@@ -51,16 +67,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
       const newLikedState = !isLiked
 
       // ローカルストレージにいいね状態を保存
-      const userLikes = JSON.parse(
-        localStorage.getItem('article_likes') || '{}',
-      )
-      if (newLikedState) {
-        userLikes[articleId] = true
-      } else {
-        delete userLikes[articleId]
-      }
-
-      localStorage.setItem('article_likes', JSON.stringify(userLikes))
+      saveArticleLiked(newLikedState)
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/likes`, {
         method: 'POST',
@@ -79,15 +86,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
       console.error(error)
 
       // 失敗時にローカルストレージを元に戻す
-      const userLikes = JSON.parse(
-        localStorage.getItem('article_likes') || '{}',
-      )
-      if (isLiked) {
-        userLikes[articleId] = true
-      } else {
-        delete userLikes[articleId]
-      }
-      localStorage.setItem('article_likes', JSON.stringify(userLikes))
+      saveArticleLiked(isLiked)
     } finally {
       setIsLoading(false)
       // アニメーション終了後に状態をリセット
