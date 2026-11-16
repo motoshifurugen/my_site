@@ -10,6 +10,9 @@
 //
 // 実行: `node --test src/app/api/highscore/route.test.mjs`
 // 実装前は route/scoreValidation/utils が未配線のため RED、実装後に GREEN を期待する。
+//
+// Issue #352: GET は Issue を作るため、探し方が変わって見つからなくなると同じ題の
+// Issue が増える。GET の describe で「探す → 無ければ 1 回だけ作る」流れを固定する。
 
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
@@ -43,9 +46,9 @@ export class Octokit {
         if (f.throwError) throw new Error('github boom')
         return { data: f.issues }
       },
-      create: async () => {
+      create: async (args) => {
         const f = fx()
-        f.createCalls = (f.createCalls || 0) + 1
+        f.createArgs.push(args)
         return { data: { number: 999 } }
       },
       update: async (args) => {
@@ -119,6 +122,28 @@ const loadModule = async () => {
   return import(`${ROUTE_BUILD}?t=${process.pid}`)
 }
 
+// route.tsx は GITHUB_OWNER / GITHUB_REPO をモジュール読み込み時に確定するため、env を先に設定する。
+const setupRoute = async () => {
+  process.env.GITHUB_TOKEN = 'test-token'
+  process.env.GITHUB_OWNER = 'test-owner'
+  process.env.GITHUB_REPO = 'test-repo'
+  return loadModule()
+}
+
+const cleanupBuildFiles = () => {
+  delete globalThis.__HIGHSCORE_FIXTURE__
+  for (const f of [
+    ROUTE_BUILD,
+    SCORE_VALIDATION_BUILD,
+    OCTOKIT_MOCK,
+    NEXT_MOCK,
+    CLIENTIP_MOCK,
+    RATELIMIT_MOCK,
+  ]) {
+    if (fs.existsSync(f)) fs.rmSync(f)
+  }
+}
+
 describe('api/highscore/route.tsx POST（Issue #158: 検証 + レート制限）', () => {
   let POST
 
@@ -128,7 +153,7 @@ describe('api/highscore/route.tsx POST（Issue #158: 検証 + レート制限）
       issues: [{ title: 'highscore-game', number: 7, body: '100' }],
       allow: true,
       listForRepoCalls: 0,
-      createCalls: 0,
+      createArgs: [],
       updateCalls: 0,
       throwError: false,
       ...fixture,
@@ -151,26 +176,11 @@ describe('api/highscore/route.tsx POST（Issue #158: 検証 + レート制限）
   }
 
   before(async () => {
-    process.env.GITHUB_TOKEN = 'test-token'
-    process.env.GITHUB_OWNER = 'test-owner'
-    process.env.GITHUB_REPO = 'test-repo'
-    const mod = await loadModule()
+    const mod = await setupRoute()
     POST = mod.POST
   })
 
-  after(() => {
-    delete globalThis.__HIGHSCORE_FIXTURE__
-    for (const f of [
-      ROUTE_BUILD,
-      SCORE_VALIDATION_BUILD,
-      OCTOKIT_MOCK,
-      NEXT_MOCK,
-      CLIENTIP_MOCK,
-      RATELIMIT_MOCK,
-    ]) {
-      if (fs.existsSync(f)) fs.rmSync(f)
-    }
-  })
+  after(cleanupBuildFiles)
 
   it('POST が関数としてエクスポートされている', () => {
     assert.equal(typeof POST, 'function')
@@ -257,5 +267,118 @@ describe('api/highscore/route.tsx POST（Issue #158: 検証 + レート制限）
     // Then: 400（500 でクラッシュさせない）
     const { status } = await callPost('__BAD_JSON__', {})
     assert.equal(status, 400)
+  })
+})
+
+describe('api/highscore/route.tsx GET（Issue #352: 最高スコアの取得）', () => {
+  let GET
+
+  // GET は request を読まない。fixture には GitHub 側の状態だけを書く。
+  const callGet = async (fixture) => {
+    globalThis.__HIGHSCORE_FIXTURE__ = {
+      issues: [],
+      createArgs: [],
+      throwError: false,
+      ...fixture,
+    }
+    const response = await GET({ headers: new Headers() })
+    return {
+      status: response.status,
+      body: await response.json(),
+      fixture: globalThis.__HIGHSCORE_FIXTURE__,
+    }
+  }
+
+  before(async () => {
+    const mod = await setupRoute()
+    GET = mod.GET
+  })
+
+  after(cleanupBuildFiles)
+
+  it('GET が関数としてエクスポートされている', () => {
+    assert.equal(typeof GET, 'function')
+  })
+
+  it('題が highscore-game の Issue があれば、body の数と番号を 200 で返し、Issue を作らない', async () => {
+    // Given: 一覧に題の違う Issue と highscore-game の Issue がある
+    const issues = [
+      { title: 'other-title', number: 5, body: '300' },
+      { title: 'highscore-game', number: 7, body: '100' },
+    ]
+    // When: 最高スコアを取得する
+    const { status, body, fixture } = await callGet({ issues })
+    // Then: highscore-game の Issue の値を返し、Issue は作らない
+    assert.equal(status, 200)
+    assert.deepEqual(body, { highScore: 100, issueNumber: 7 })
+    assert.deepEqual(fixture.createArgs, [])
+  })
+
+  it('highscore-game の Issue の body が数でなければ highScore は 0', async () => {
+    // Given: highscore-game の Issue の body が数でない
+    const issues = [{ title: 'highscore-game', number: 7, body: 'abc' }]
+    // When: 最高スコアを取得する
+    const { status, body, fixture } = await callGet({ issues })
+    // Then: 200 で highScore 0、番号は一覧の Issue のもの、Issue は作らない
+    assert.equal(status, 200)
+    assert.deepEqual(body, { highScore: 0, issueNumber: 7 })
+    assert.deepEqual(fixture.createArgs, [])
+  })
+
+  it('highscore-game の Issue の body が null なら highScore は 0', async () => {
+    // Given: highscore-game の Issue の body が null（GitHub は本文が空の Issue で null を返す）
+    const issues = [{ title: 'highscore-game', number: 7, body: null }]
+    // When: 最高スコアを取得する
+    const { status, body, fixture } = await callGet({ issues })
+    // Then: 200 で highScore 0、Issue は作らない
+    assert.equal(status, 200)
+    assert.deepEqual(body, { highScore: 0, issueNumber: 7 })
+    assert.deepEqual(fixture.createArgs, [])
+  })
+
+  it('同じラベルで題の違う Issue しか無ければ、それを使わずに Issue を作る', async () => {
+    // Given: 一覧には題の違う Issue だけがある
+    const issues = [{ title: 'other-title', number: 5, body: '300' }]
+    // When: 最高スコアを取得する
+    const { status, body, fixture } = await callGet({ issues })
+    // Then: 題の違う Issue の番号と body を使わず、作った Issue の番号と highScore 0 を返す
+    assert.equal(status, 200)
+    assert.deepEqual(body, { highScore: 0, issueNumber: 999 })
+    assert.equal(fixture.createArgs.length, 1)
+  })
+
+  it('Issue が無ければ、題 highscore-game・body 0・ラベル highscore で Issue を 1 回だけ作る', async () => {
+    // Given: 一覧が空
+    // When: 最高スコアを取得する
+    const { fixture } = await callGet({ issues: [] })
+    // Then: 決まった題・body・ラベルで 1 回だけ作る
+    assert.deepEqual(fixture.createArgs, [
+      {
+        owner: 'test-owner',
+        repo: 'test-repo',
+        title: 'highscore-game',
+        body: '0',
+        labels: ['highscore'],
+      },
+    ])
+  })
+
+  it('Issue が無ければ、作った Issue の番号と highScore 0 を 200 で返す', async () => {
+    // Given: 一覧が空、作成するとモックは番号 999 を返す
+    // When: 最高スコアを取得する
+    const { status, body } = await callGet({ issues: [] })
+    // Then: 作った Issue の番号と highScore 0
+    assert.equal(status, 200)
+    assert.deepEqual(body, { highScore: 0, issueNumber: 999 })
+  })
+
+  it('listForRepo が例外を投げたら 500 とエラーメッセージを返し、Issue を作らない', async () => {
+    // Given: listForRepo が throw する
+    // When: 最高スコアを取得する
+    const { status, body, fixture } = await callGet({ throwError: true })
+    // Then: 500 で決まったエラーメッセージ、Issue は作らない
+    assert.equal(status, 500)
+    assert.deepEqual(body, { error: '最高スコアの取得に失敗しました' })
+    assert.deepEqual(fixture.createArgs, [])
   })
 })
