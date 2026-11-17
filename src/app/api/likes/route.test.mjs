@@ -13,6 +13,9 @@
 //
 // Issue #351: GET は Issue を作るため、探し方が変わって見つからなくなると同じ題の
 // Issue が増える。GET の describe で「探す → 無ければ 1 回だけ作る」流れを固定する。
+//
+// Issue #386: GET と POST は形式に合わない articleId を 400 で拒否し、octokit も
+// checkRateLimit も呼ばない。articleIdValidation は外部に依存しないので、本物を JS へ変換して通す。
 
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
@@ -23,8 +26,13 @@ import ts from 'typescript'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROUTE_SRC = path.join(__dirname, 'route.tsx')
+const ARTICLE_ID_VALIDATION_SRC = path.join(__dirname, 'articleIdValidation.ts')
 
 const ROUTE_BUILD = path.join(__dirname, '.route.test-build.mjs')
+const ARTICLE_ID_VALIDATION_BUILD = path.join(
+  __dirname,
+  '.articleIdValidation.test-build.mjs',
+)
 const GITHUB_LIKES_MOCK = path.join(__dirname, '.githubLikes.test-mock.mjs')
 const NEXT_MOCK = path.join(__dirname, '.next-server.test-mock.mjs')
 const CLIENTIP_MOCK = path.join(__dirname, '.clientIp.test-mock.mjs')
@@ -127,12 +135,17 @@ const loadModule = async () => {
   fs.writeFileSync(NEXT_MOCK, NEXT_MOCK_CODE)
   fs.writeFileSync(CLIENTIP_MOCK, CLIENTIP_MOCK_CODE)
   fs.writeFileSync(RATELIMIT_MOCK, RATELIMIT_MOCK_CODE)
+  fs.writeFileSync(
+    ARTICLE_ID_VALIDATION_BUILD,
+    transpile(ARTICLE_ID_VALIDATION_SRC),
+  )
 
   const routeCode = transpile(ROUTE_SRC)
     .replaceAll('next/server', toRel(NEXT_MOCK))
     .replaceAll('./githubLikes', toRel(GITHUB_LIKES_MOCK))
     .replaceAll('../utils/clientIp', toRel(CLIENTIP_MOCK))
     .replaceAll('../utils/rateLimit', toRel(RATELIMIT_MOCK))
+    .replaceAll('./articleIdValidation', toRel(ARTICLE_ID_VALIDATION_BUILD))
   fs.writeFileSync(ROUTE_BUILD, routeCode)
 
   return import(`${ROUTE_BUILD}?t=${process.pid}`)
@@ -150,6 +163,7 @@ const cleanupBuildFiles = () => {
   delete globalThis.__LIKES_FIXTURE__
   for (const f of [
     ROUTE_BUILD,
+    ARTICLE_ID_VALIDATION_BUILD,
     GITHUB_LIKES_MOCK,
     NEXT_MOCK,
     CLIENTIP_MOCK,
@@ -161,6 +175,15 @@ const cleanupBuildFiles = () => {
 
 const argsOf = (fixture, method) =>
   fixture.calls.filter((c) => c.method === method).map((c) => c.args)
+
+// ^[A-Za-z0-9_-]{1,100}$ に合わない articleId（Issue #386）。
+const MALFORMED_ARTICLE_IDS = [
+  ['空白', 'a b'],
+  ['"', 'a"b'],
+  [',', 'a,b'],
+  ['101 文字', 'a'.repeat(101)],
+]
+const FORMAT_ERROR = '記事IDの形式が不正です'
 
 describe('api/likes/route.tsx POST（Issue #158: 入力検証 + レート制限）', () => {
   let POST
@@ -242,6 +265,64 @@ describe('api/likes/route.tsx POST（Issue #158: 入力検証 + レート制限�
     const { status, fixture } = await callPost({ liked: true }, {})
     assert.equal(status, 400)
     assert.deepEqual(argsOf(fixture, 'issues.update'), [])
+  })
+
+  for (const [label, articleId] of MALFORMED_ARTICLE_IDS) {
+    it(`articleId が形式に合わない（${label}）なら 400 を返し、octokit も checkRateLimit も呼ばない（Issue #386）`, async () => {
+      // Given: liked は正しいが、articleId が ^[A-Za-z0-9_-]{1,100}$ に合わない
+      // When: 投稿する
+      // Then: 400 で形式違いの error、GitHub へもレート制限へも触れない
+      const { status, body, fixture } = await callPost(
+        { articleId, liked: true },
+        {},
+      )
+      assert.equal(status, 400)
+      assert.equal(body.error, FORMAT_ERROR)
+      assert.deepEqual(fixture.calls, [])
+      assert.equal(fixture.rateLimitArgs, undefined)
+    })
+  }
+
+  it('articleId が文字列でなければ 400 を返し、octokit も checkRateLimit も呼ばない（Issue #386）', async () => {
+    // Given: articleId が数値
+    // When: 投稿する
+    // Then: 400 で「記事IDが必要です」、GitHub へもレート制限へも触れない
+    const { status, body, fixture } = await callPost(
+      { articleId: 123, liked: true },
+      {},
+    )
+    assert.equal(status, 400)
+    assert.equal(body.error, '記事IDが必要です')
+    assert.deepEqual(fixture.calls, [])
+    assert.equal(fixture.rateLimitArgs, undefined)
+  })
+
+  it('articleId が形式に合わず liked も不正なら、articleId の error を返す（Issue #386）', async () => {
+    // Given: articleId も liked も不正
+    // When: 投稿する
+    // Then: 検査の順序は articleId → liked なので、articleId の形式違いを返す
+    const { status, body, fixture } = await callPost(
+      { articleId: 'a b', liked: 'true' },
+      {},
+    )
+    assert.equal(status, 400)
+    assert.equal(body.error, FORMAT_ERROR)
+    assert.equal(fixture.rateLimitArgs, undefined)
+  })
+
+  it('形式に合う最長（100 文字）の articleId は今どおり更新して 200 を返す（Issue #386）', async () => {
+    // Given: 100 文字の articleId、その Issue は 5 いいね
+    const articleId = 'a'.repeat(100)
+    // When: liked=true を投稿する
+    const { status, body, fixture } = await callPost(
+      { articleId, liked: true },
+      { issues: [{ title: `likes-${articleId}`, number: 3, body: '5' }] },
+    )
+    // Then: 200 で likeCount:6、レート制限を通る
+    assert.equal(status, 200)
+    assert.equal(body.articleId, articleId)
+    assert.equal(body.likeCount, 6)
+    assert.equal(fixture.rateLimitArgs.endpoint, 'likes')
   })
 
   it('liked が boolean でなければ 400（改ざん入力の拒否）', async () => {
@@ -379,6 +460,34 @@ describe('api/likes/route.tsx GET（Issue #351: 記事 ID の検査といいね�
     const { status, body, fixture } = await callGet('?articleId=', {})
     assert.equal(status, 400)
     assert.equal(body.error, '記事IDが必要です')
+    assert.deepEqual(fixture.calls, [])
+  })
+
+  for (const [label, articleId] of MALFORMED_ARTICLE_IDS) {
+    it(`articleId が形式に合わない（${label}）なら 400 を返し、octokit を呼ばない（Issue #386）`, async () => {
+      // Given: query の articleId が ^[A-Za-z0-9_-]{1,100}$ に合わない
+      // When: GET を呼ぶ
+      // Then: 400 で形式違いの error、GitHub へは 1 度も問い合わせない（Issue を作らない）
+      const { status, body, fixture } = await callGet(
+        `?articleId=${encodeURIComponent(articleId)}`,
+        {},
+      )
+      assert.equal(status, 400)
+      assert.equal(body.error, FORMAT_ERROR)
+      assert.deepEqual(fixture.calls, [])
+    })
+  }
+
+  it('Search クエリを閉じる " を含む articleId は 400 を返し、Search API を呼ばない（Issue #386）', async () => {
+    // Given: "likes-<articleId>" の " を閉じて条件を足そうとする値
+    const articleId = 'x" OR "likes-hello-world'
+    // When: GET を呼ぶ
+    const { status, fixture } = await callGet(
+      `?articleId=${encodeURIComponent(articleId)}`,
+      {},
+    )
+    // Then: 400、GitHub へは 1 度も問い合わせない
+    assert.equal(status, 400)
     assert.deepEqual(fixture.calls, [])
   })
 
