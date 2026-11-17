@@ -3,37 +3,24 @@
 import { Bookmark } from 'lucide-react'
 import React, { useRef, useState } from 'react'
 
+import {
+  type BookmarkData,
+  type ChapterContent,
+  buildPageMapping,
+  splitTextIntoPages,
+} from './bookPages'
+
 // STEP1: 本をめくる機能の最小実装（完了）
 // STEP2: 縦書き・明朝体フォントの導入（完了）
 // STEP3A: 表紙・目次ページの追加（完了）
 // STEP3B: 栞ページの追加（完了）
 // STEP4: 章本文ページの追加（完了）
 
-// STEP3B: 栞データ構造
-type BookmarkData = {
-  title: string // 表：栞タイトル
-  content: string // 裏：コンテンツ
-}
-
-// STEP4: 章本文データ構造
-type ChapterContent = {
-  title: string // 章タイトル（例：「第1章」「はじめに」）
-  pages: string[] // 章内の各ページのテキスト
-  bookmark?: BookmarkData | null // 章末の栞（オプション）
-}
-
 // STEP3B: 栞コンポーネント（表/裏反転機能付き）
 // STEP6: 裏返しアクションに最小限のトランジションを追加
 const BookmarkPage = ({ bookmark }: { bookmark: BookmarkData }) => {
   const [isFlipped, setIsFlipped] = useState(false)
   const bookmarkRef = useRef<HTMLDivElement>(null)
-
-  const handleBookmarkClick = (e: React.MouseEvent | React.TouchEvent) => {
-    // ページ遷移を妨げないため、イベント伝播とデフォルト動作を停止
-    e.stopPropagation()
-    e.preventDefault()
-    setIsFlipped((prev) => !prev)
-  }
 
   return (
     <div
@@ -218,38 +205,6 @@ export default function BookPage() {
     }
   }
 
-  // STEP3A: ページタイプの定義
-  const PAGE_TYPE = {
-    COVER: 0, // 表紙
-    TABLE_OF_CONTENTS: 1, // 目次
-    CONTENT: 2, // 本文開始
-  } as const
-
-  // STEP5: 本文を10行ごとに分割する関数
-  const splitTextIntoPages = (
-    text: string,
-    maxLines: number = 10,
-  ): string[] => {
-    const lines = text.split('\n')
-    const pages: string[] = []
-    let currentPage: string[] = []
-
-    for (const line of lines) {
-      currentPage.push(line)
-      if (currentPage.length >= maxLines) {
-        pages.push(currentPage.join('\n'))
-        currentPage = []
-      }
-    }
-
-    // 残りの行がある場合は最後のページに追加
-    if (currentPage.length > 0) {
-      pages.push(currentPage.join('\n'))
-    }
-
-    return pages
-  }
-
   // STEP5: 章ごとの本文データ（実際のコンテンツ、改行を保持）
   // 各章の本文を1つの文字列として保持し、10行ごとに自動分割
   const chaptersRaw: Array<{
@@ -382,49 +337,7 @@ export default function BookPage() {
     bookmark: chapter.bookmark,
   }))
 
-  // STEP4: ページマッピングを生成（表紙→目次→各章→栞→裏表紙の順）
-  const buildPageMapping = () => {
-    const mapping: Array<{
-      type:
-        'cover' | 'table-of-contents' | 'content' | 'bookmark' | 'back-cover'
-      chapterIndex?: number
-      pageIndex?: number
-      bookmark?: BookmarkData
-    }> = []
-
-    // 表紙
-    mapping.push({ type: 'cover' })
-
-    // 目次
-    mapping.push({ type: 'table-of-contents' })
-
-    // 各章の本文ページと栞
-    chapters.forEach((chapter, chapterIndex) => {
-      // 章の本文ページ
-      chapter.pages.forEach((_, pageIndex) => {
-        mapping.push({
-          type: 'content',
-          chapterIndex,
-          pageIndex,
-        })
-      })
-
-      // 章末の栞（存在する場合）
-      if (chapter.bookmark) {
-        mapping.push({
-          type: 'bookmark',
-          bookmark: chapter.bookmark,
-        })
-      }
-    })
-
-    // 裏表紙
-    mapping.push({ type: 'back-cover' })
-
-    return mapping
-  }
-
-  const pageMapping = buildPageMapping()
+  const pageMapping = buildPageMapping(chapters)
   const totalPages = pageMapping.length
 
   // STEP3A: 目次項目（STEP5: 実際の章タイトルから生成）
