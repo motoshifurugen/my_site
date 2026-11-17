@@ -40,6 +40,7 @@ import {
   isChapter6Route,
   parseLanguage,
 } from '../data/chapterStart'
+import { getClickResult, getNextScenePosition } from '../data/sceneProgress'
 import TapRipple from './TapRipple'
 
 const LANGUAGE_STORAGE_KEY = 'rpg_language'
@@ -432,20 +433,14 @@ const ChapterPlayer = () => {
       setTransitionPhase('waiting')
       // 次のシーンに切り替え（白画面で覆われているので見えない）
       // refを使用して最新の値を参照
-      const sceneIndex = currentSceneIndexRef.current
-      const chapterIndex = currentChapterIndexRef.current
-      // 最新のchapters配列を取得
-      const currentChapters = getChapters(languageRef.current, chapter6Route)
-      const chapter = currentChapters[chapterIndex]
-
-      if (chapter && sceneIndex < chapter.scenes.length - 1) {
-        // 同じ章内の次のシーンへ
-        setCurrentSceneIndex(sceneIndex + 1)
-        setCurrentLineIndex(0)
-      } else if (chapter && chapterIndex < currentChapters.length - 1) {
-        // 次の章の最初のシーンへ
-        setCurrentChapterIndex(chapterIndex + 1)
-        setCurrentSceneIndex(0)
+      const nextPosition = getNextScenePosition(
+        getChapters(languageRef.current, chapter6Route),
+        currentChapterIndexRef.current,
+        currentSceneIndexRef.current,
+      )
+      if (nextPosition) {
+        setCurrentChapterIndex(nextPosition.chapterIndex)
+        setCurrentSceneIndex(nextPosition.sceneIndex)
         setCurrentLineIndex(0)
       }
     }, fadeOutDuration + whiteFadeDuration)
@@ -525,28 +520,19 @@ const ChapterPlayer = () => {
     // 選択肢が表示されている場合は、通常のクリック処理を無視
     if (shouldShowChoices) return
 
-    // 現在のシーンのテキストがまだ残っている場合
-    if (currentLineIndex < currentScene.lines.length - 1) {
-      setCurrentLineIndex(currentLineIndex + 1)
-    } else {
-      // 第6章の最後のシーンの最後の行がクリックされたらエンディングページを表示
-      if (
-        currentChapterIndex === 5 &&
-        currentSceneIndex === currentChapter.scenes.length - 1
-      ) {
-        setShowEnding(true)
-        return
-      }
-
-      // 現在のシーンのテキストが最後の場合、遷移アニメーションを開始
+    const result = getClickResult(
+      chapters,
+      currentChapterIndex,
+      currentSceneIndex,
+      currentLineIndex,
+    )
+    if (result.type === 'nextLine') {
+      setCurrentLineIndex(result.lineIndex)
+    } else if (result.type === 'ending') {
+      setShowEnding(true)
+    } else if (result.type === 'startTransition') {
       // シーンの切り替えは遷移アニメーション中（白画面で覆われている間）に行う
-      if (
-        currentSceneIndex < currentChapter.scenes.length - 1 ||
-        currentChapterIndex < chapters.length - 1
-      ) {
-        beginSceneTransition()
-      }
-      // すべての章が終わった場合は何もしない（エンド画面が表示される）
+      beginSceneTransition()
     }
   }
 
