@@ -34,19 +34,15 @@ import {
   getChapters,
   type Language,
 } from '../data/chapters'
+import {
+  getInitialChapterIndex,
+  getInitialSceneIndex,
+  isChapter6Route,
+  parseLanguage,
+} from '../data/chapterStart'
 import TapRipple from './TapRipple'
 
-const isChapter6Route = (
-  choiceId: string,
-): choiceId is NonNullable<Chapter6Route> =>
-  choiceId === 'bad_end' ||
-  choiceId === 'true_end' ||
-  choiceId === 'another_end'
-
 const LANGUAGE_STORAGE_KEY = 'rpg_language'
-
-const parseLanguage = (raw: string | null): Language =>
-  raw === 'en' ? 'en' : 'ja'
 
 // プリロードする全画像のリスト（静的なためコンポーネント外に定義）
 const ALL_IMAGES_TO_PRELOAD = [
@@ -201,44 +197,17 @@ const ChapterPlayer = () => {
   const searchParams = useSearchParams()
   const chapterParam = searchParams.get('chapter')
 
-  // クエリパラメータから章番号を取得（1-6、無効な値の場合は0）
-  const getInitialChapterIndex = () => {
-    if (!chapterParam) return 0
-    const chapterNum = parseInt(chapterParam, 10)
-    // 1-5の範囲で、かつ有効な数値の場合のみ
-    if (!isNaN(chapterNum) && chapterNum >= 1 && chapterNum <= 5) {
-      return chapterNum - 1 // 0ベースのインデックスに変換
-    }
-    // 第6章が指定された場合、第5章の最後のシーンから開始
-    if (chapterNum === 6) {
-      return 4 // 第5章のインデックス
-    }
-    return 0
-  }
-
-  const initialChapterIndex = getInitialChapterIndex()
-  // 第6章が指定された場合、第5章の最後のシーンから開始
-  const getInitialSceneIndex = () => {
-    if (chapterParam) {
-      const chapterNum = parseInt(chapterParam, 10)
-      if (chapterNum === 6) {
-        // 第5章の最後のシーン（選択肢があるシーン）から開始
-        return chapter5.scenes.length - 1
-      }
-    }
-    return 0
-  }
-
   const [showTitleScreen, setShowTitleScreen] = useState(!chapterParam) // クエリパラメータがある場合はタイトル画面をスキップ
   const [titleScreenOpacity, setTitleScreenOpacity] = useState(
     !chapterParam ? 1 : 0,
   )
   const [showLoading, setShowLoading] = useState(false)
   const [loadingProgress, setLoadingProgress] = useState(0)
-  const [currentChapterIndex, setCurrentChapterIndex] =
-    useState(initialChapterIndex)
+  const [currentChapterIndex, setCurrentChapterIndex] = useState(
+    getInitialChapterIndex(chapterParam),
+  )
   const [currentSceneIndex, setCurrentSceneIndex] = useState(
-    getInitialSceneIndex(),
+    getInitialSceneIndex(chapterParam),
   )
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
   const [completedLineKey, setCompletedLineKey] = useState<string | null>(null)
