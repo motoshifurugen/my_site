@@ -1,47 +1,27 @@
 'use client'
 
 import OpenGraphFetcher from '@/app/components/atoms/OpenGraphFetcher'
+import type { OpenGraphData } from '@/types/openGraph'
 import Image from 'next/image'
 import React, { useState } from 'react'
 
 import styles from './EmbedArticle.module.css'
+import {
+  embedFaviconUrl,
+  embedLinkUrl,
+  embedOgImageUrl,
+} from './embedArticleUrls'
 
 interface EmbedArticleProps {
   url: string
 }
 
-interface OpenGraphData {
-  ogTitle?: string
-  ogDescription?: string
-  ogImage?: { url: string }
-  ogUrl?: string
-  requestUrl?: string
-  favicon?: string
-}
-
 const EmbedArticle: React.FC<EmbedArticleProps> = ({ url }) => {
   const [ogData, setOgData] = useState<OpenGraphData | null>(null)
 
-  const srcUrl = ogData?.ogUrl || ogData?.requestUrl
-  const faviconUrl =
-    ogData?.favicon && srcUrl
-      ? (() => {
-          try {
-            return new URL(ogData.favicon, srcUrl).toString()
-          } catch (error) {
-            // Base URLが無効な場合、faviconが絶対URLかチェック
-            try {
-              return new URL(ogData.favicon).toString()
-            } catch {
-              // 両方とも失敗した場合はnullを返す
-              return null
-            }
-          }
-        })()
-      : null
-  const ogImageUrl = Array.isArray(ogData?.ogImage)
-    ? ogData?.ogImage[0].url
-    : ogData?.ogImage?.url
+  const srcUrl = embedLinkUrl(ogData?.ogUrl, ogData?.requestUrl)
+  const faviconUrl = embedFaviconUrl(ogData?.favicon, srcUrl)
+  const ogImageUrl = embedOgImageUrl(ogData?.ogImage)
 
   return (
     <>
@@ -63,7 +43,7 @@ const EmbedArticle: React.FC<EmbedArticleProps> = ({ url }) => {
             <div className={`${styles.embedArticle_meta}`}>
               {faviconUrl && (
                 <Image
-                  src={faviconUrl || ''}
+                  src={faviconUrl}
                   alt={ogData?.ogTitle || 'Image'}
                   width={14}
                   height={14}
