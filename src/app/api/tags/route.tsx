@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
+import { parseSearch } from './searchValidation'
 
 interface TagDictionaryRow {
   keyword: string
@@ -9,6 +10,15 @@ interface TagDictionaryRow {
 
 export async function GET(request: NextRequest) {
   try {
+    // 不正な入力はサーバー設定に関係なくクライアントの誤りなので、env チェックより先に返す
+    const { searchParams } = new URL(request.url)
+    const searchResult = parseSearch(searchParams.get('search'))
+    if (!searchResult.ok) {
+      return NextResponse.json({ error: searchResult.error }, { status: 400 })
+    }
+    const { search } = searchResult
+    const category = searchParams.get('category')
+
     // 環境変数チェック
     if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
       return NextResponse.json(
@@ -24,11 +34,6 @@ export async function GET(request: NextRequest) {
       process.env.SUPABASE_URL,
       process.env.SUPABASE_SERVICE_ROLE_KEY,
     )
-
-    // クエリパラメータ取得
-    const { searchParams } = new URL(request.url)
-    const category = searchParams.get('category')
-    const search = searchParams.get('search')
 
     // タグデータを取得
     let query = supabase
