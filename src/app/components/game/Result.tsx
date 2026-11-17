@@ -1,4 +1,5 @@
 import useStore from '@/app/components/game/stores/game'
+import { resolveHighScore } from '@/app/components/game/utilities/resolveHighScore'
 import { useEffect, useState } from 'react'
 import './Result.css'
 
@@ -39,31 +40,15 @@ function GameOverPanel({ score, reset }: GameOverPanelProps) {
   }, [reset])
 
   useEffect(() => {
-    const fetchHighScore = async () => {
-      try {
-        const res = await fetch(`${apiBase}/highscore`)
-        const data = await res.json()
-        let high = data.highScore || 0
-        if (score > high) {
-          setIsNewRecord(true)
-          const postRes = await fetch(`${apiBase}/highscore`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ score }),
-          })
-          const postData = await postRes.json()
-          high = postData.highScore || score
-        } else {
-          setIsNewRecord(false)
-        }
-        setHighScore(high)
-      } catch (e) {
+    resolveHighScore(apiBase, score).then((resolved) => {
+      if (resolved === null) {
         setHighScore(null)
-      } finally {
-        setLoading(false)
+      } else {
+        setHighScore(resolved.highScore)
+        setIsNewRecord(resolved.isNewRecord)
       }
-    }
-    fetchHighScore()
+      setLoading(false)
+    })
   }, [score, apiBase])
 
   return (
