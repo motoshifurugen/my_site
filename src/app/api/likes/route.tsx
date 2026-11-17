@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getClientIP } from '../utils/clientIp'
 import { checkRateLimit } from '../utils/rateLimit'
+import { parseArticleId } from './articleIdValidation'
 import {
   LIKES_ISSUE_LABEL,
   likeIssueTitle,
@@ -15,14 +16,17 @@ const GITHUB_REPO = process.env.GITHUB_REPO || ''
 export async function GET(request: NextRequest) {
   try {
     const url = new URL(request.url)
-    const articleId = url.searchParams.get('articleId')
+    const parsedArticleId = parseArticleId(url.searchParams.get('articleId'))
 
-    if (!articleId) {
-      return NextResponse.json({ error: '記事IDが必要です' }, { status: 400 })
+    if (!parsedArticleId.ok) {
+      return NextResponse.json(
+        { error: parsedArticleId.error },
+        { status: 400 },
+      )
     }
 
     // GitHub Issueからいいね数を取得
-    const likeData = await getLikeCount(articleId)
+    const likeData = await getLikeCount(parsedArticleId.articleId)
     return NextResponse.json(likeData)
   } catch (error) {
     console.error('いいね取得エラー:', error)
@@ -44,13 +48,14 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const { articleId, liked } = (body ?? {}) as {
+  const { articleId: rawArticleId, liked } = (body ?? {}) as {
     articleId?: unknown
     liked?: unknown
   }
 
-  if (typeof articleId !== 'string' || articleId.length === 0) {
-    return NextResponse.json({ error: '記事IDが必要です' }, { status: 400 })
+  const parsedArticleId = parseArticleId(rawArticleId)
+  if (!parsedArticleId.ok) {
+    return NextResponse.json({ error: parsedArticleId.error }, { status: 400 })
   }
 
   // 改ざん入力を拒否する（liked は boolean のみ受理）
@@ -72,7 +77,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // いいねを更新
-    const likeData = await updateLike(articleId, liked)
+    const likeData = await updateLike(parsedArticleId.articleId, liked)
     return NextResponse.json(likeData)
   } catch (error) {
     console.error('いいね更新エラー:', error)
