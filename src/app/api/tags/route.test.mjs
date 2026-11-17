@@ -5,6 +5,7 @@
 // tanka-likes/route.test.mjs と同じく route.tsx を typescript で JS へ変換し、
 // @supabase/supabase-js・next/server をモックへ張り替えて読み込む
 // （node:test + typescript のみ。新しいパッケージ無し、本物の Supabase へつながない）。
+// searchValidation（Issue #378）は外部に依存しないので、本物を JS へ変換して通す。
 //
 // 実行: `node --import tsx --test src/app/api/tags/route.test.mjs`
 
@@ -17,7 +18,12 @@ import ts from 'typescript'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROUTE_SRC = path.join(__dirname, 'route.tsx')
+const SEARCH_VALIDATION_SRC = path.join(__dirname, 'searchValidation.ts')
 const ROUTE_BUILD = path.join(__dirname, '.route.test-build.mjs')
+const SEARCH_VALIDATION_BUILD = path.join(
+  __dirname,
+  '.searchValidation.test-build.mjs',
+)
 const SUPABASE_MOCK = path.join(__dirname, '.supabase.test-mock.mjs')
 const NEXT_MOCK = path.join(__dirname, '.next-server.test-mock.mjs')
 
@@ -87,10 +93,12 @@ const toRel = (target) =>
 const loadModule = async () => {
   fs.writeFileSync(SUPABASE_MOCK, SUPABASE_MOCK_CODE)
   fs.writeFileSync(NEXT_MOCK, NEXT_MOCK_CODE)
+  fs.writeFileSync(SEARCH_VALIDATION_BUILD, transpile(SEARCH_VALIDATION_SRC))
 
   const code = transpile(ROUTE_SRC)
     .replaceAll('@supabase/supabase-js', toRel(SUPABASE_MOCK))
     .replaceAll('next/server', toRel(NEXT_MOCK))
+    .replaceAll('./searchValidation', toRel(SEARCH_VALIDATION_BUILD))
   fs.writeFileSync(ROUTE_BUILD, code)
 
   return import(`${ROUTE_BUILD}?t=${process.pid}`)
@@ -130,7 +138,12 @@ describe('api/tags/route.tsx（Issue #340: 絞り込みと応答の固定）', (
 
   after(() => {
     delete globalThis.__TAGS_TEST_FIXTURE__
-    for (const f of [ROUTE_BUILD, SUPABASE_MOCK, NEXT_MOCK]) {
+    for (const f of [
+      ROUTE_BUILD,
+      SEARCH_VALIDATION_BUILD,
+      SUPABASE_MOCK,
+      NEXT_MOCK,
+    ]) {
       if (fs.existsSync(f)) fs.rmSync(f)
     }
   })
@@ -302,8 +315,8 @@ describe('api/tags/route.tsx（Issue #340: 絞り込みと応答の固定）', (
     // Given: クエリに search=react
     // When: GET を呼ぶ
     // Then: or は ['name.ilike.%react%,description.ilike.%react%']・eq は呼ばれない
-    // search の値はエスケープされずにそのまま文字列へ入る。直しは別の Issue で扱い、
-    // ここでは今の組み立て方を固定する。
+    // searchValidation が , ( ) " \ を含む値と 100 文字を超える値を 400 で拒否するので、
+    // 検査を通った値だけがそのまま or の文字列へ入る。
     const { status, fixture } = await callGet({ search: 'react' })
     assert.equal(status, 200)
     assert.equal(fixture.calls.length, 1)
@@ -311,6 +324,77 @@ describe('api/tags/route.tsx（Issue #340: 絞り込みと応答の固定）', (
       'name.ilike.%react%,description.ilike.%react%',
     ])
     assert.deepEqual(fixture.calls[0].eqs, [])
+  })
+
+  // Issue #378: search の検査。不正な値は 400 を返し、Supabase を呼ばない。
+  const assertRejectedWithoutSupabase = ({ status, body, fixture }) => {
+    assert.equal(status, 400)
+    assert.equal(typeof body.error, 'string')
+    assert.deepEqual(Object.keys(body), ['error'])
+    assert.equal(fixture.calls.length, 0)
+  }
+
+  it('search=a,b は 400 を返し from を呼ばない（Issue #378）', async () => {
+    // Given: クエリに , を含む search
+    // When: GET を呼ぶ
+    // Then: status 400・{ error } だけを返し、from() は呼ばれない
+    assertRejectedWithoutSupabase(await callGet({ search: 'a,b' }))
+  })
+
+  for (const [label, search] of [
+    ['a(b', 'a(b'],
+    ['a)b', 'a)b'],
+    ['a"b', 'a"b'],
+    ['a\\b', 'a\\b'],
+    ['101 文字', 'a'.repeat(101)],
+    ['a%,id.gt.0,name.ilike.%b', 'a%,id.gt.0,name.ilike.%b'],
+  ]) {
+    it(`search=${label} は 400 を返し from を呼ばない（Issue #378）`, async () => {
+      // Given: .or() の構文に使う文字を含む search、または 100 文字を超える search
+      // When: GET を呼ぶ
+      // Then: status 400・{ error } だけを返し、from() は呼ばれない
+      assertRejectedWithoutSupabase(await callGet({ search }))
+    })
+  }
+
+  it('search が不正なら category があっても 400 を返す（Issue #378）', async () => {
+    // Given: 正しい category と、, を含む search
+    // When: GET を呼ぶ
+    // Then: status 400 で from() は呼ばれない
+    assertRejectedWithoutSupabase(
+      await callGet({ category: 'frontend', search: 'a,b' }),
+    )
+  })
+
+  it('search が不正なら env が無くても 500 ではなく 400 を返す（Issue #378）', async () => {
+    // Given: SUPABASE_URL が無く、search に , を含む
+    // When: GET を呼ぶ
+    // Then: 入力の誤りを先に返すので status 400、from() は呼ばれない
+    await withoutEnv('SUPABASE_URL', async () => {
+      assertRejectedWithoutSupabase(await callGet({ search: 'a,b' }))
+    })
+  })
+
+  it('search が空文字なら絞り込み無しとして 200 を返し、or は呼ばない（Issue #378）', async () => {
+    // Given: クエリに search=（値が空）
+    // When: GET を呼ぶ
+    // Then: status 200・or は呼ばれない
+    const { status, fixture } = await callGet({ search: '' })
+    assert.equal(status, 200)
+    assert.equal(fixture.calls.length, 1)
+    assert.deepEqual(fixture.calls[0].ors, [])
+  })
+
+  it('search が 100 文字なら 200 を返し、その値で or を組み立てる（Issue #378）', async () => {
+    // Given: 上限ちょうどの search
+    // When: GET を呼ぶ
+    // Then: status 200・or の引数に値がそのまま入る
+    const search = 'a'.repeat(100)
+    const { status, fixture } = await callGet({ search })
+    assert.equal(status, 200)
+    assert.deepEqual(fixture.calls[0].ors, [
+      `name.ilike.%${search}%,description.ilike.%${search}%`,
+    ])
   })
 
   it('category も search も無いときは eq も or も呼ばない', async () => {

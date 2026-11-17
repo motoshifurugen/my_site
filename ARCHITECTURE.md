@@ -421,6 +421,11 @@ Game Components:
 
 **Endpoint**: `GET /api/tags`
 
+**Query parameters**:
+
+- `category` - Exact match on the tag category
+- `search` - Partial match on `name` or `description`. An empty value means no filter. A value containing any of `,` `(` `)` `"` `\`, or longer than 100 characters, gets 400 with `{ error }` and Supabase is not queried (`src/app/api/tags/searchValidation.ts`)
+
 **Response**: Array of tag objects
 
 ---
