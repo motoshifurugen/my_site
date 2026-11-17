@@ -1,13 +1,5 @@
+import type { OpenGraphData } from '@/types/openGraph'
 import React, { useEffect } from 'react'
-
-interface OpenGraphData {
-  ogTitle?: string
-  ogDescription?: string
-  ogImage?: { url: string }
-  ogUrl?: string
-  requestUrl?: string
-  favicon?: string
-}
 
 interface OpenGraphFetcherProps {
   url: string
