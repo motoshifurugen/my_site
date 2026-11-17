@@ -40,10 +40,49 @@ import {
   isChapter6Route,
   parseLanguage,
 } from '../data/chapterStart'
+import {
+  type BackgroundKey,
+  type CharacterImageKey,
+  getFurigana,
+  isBackgroundKey,
+  isCharacterImageKey,
+} from '../data/sceneAssets'
 import { getClickResult, getNextScenePosition } from '../data/sceneProgress'
 import TapRipple from './TapRipple'
 
 const LANGUAGE_STORAGE_KEY = 'rpg_language'
+
+const BACKGROUND_IMAGES: Record<BackgroundKey, StaticImageData> = {
+  station_morning: stationMorning,
+  office_morning: officeMorning,
+  meeting_room: meetingRoom,
+  bar_night: barNight,
+  cafe_lunch: cafeLunch,
+  blue_leaf: blueLeaf,
+  rain_road: rainRoad,
+  night_coffee: nightCoffee,
+  aoba_room: aobaRoom,
+  after_cafe: afterCafe,
+  client_room: clientRoom,
+  night_platform: nightPlatform,
+}
+
+const CHARACTER_IMAGES: Record<CharacterImageKey, StaticImageData> = {
+  'aoba_1.png': aoba1,
+  'aoba_2.png': aoba2,
+  'aoba_3.png': aoba3,
+  'aoba_4.png': aoba4,
+  'kise_1.png': kise1,
+  'kise_2.png': kise2,
+  'kise_3.png': kise3,
+  'saegusa_1.png': saegusa1,
+}
+
+const getBackgroundImage = (background: string): StaticImageData =>
+  isBackgroundKey(background) ? BACKGROUND_IMAGES[background] : stationMorning
+
+const getCharacterImage = (image: string): StaticImageData | null =>
+  isCharacterImageKey(image) ? CHARACTER_IMAGES[image] : null
 
 // プリロードする全画像のリスト（静的なためコンポーネント外に定義）
 const ALL_IMAGES_TO_PRELOAD = [
@@ -481,32 +520,6 @@ const ChapterPlayer = () => {
     }
   }
 
-  // キャラクター画像を取得
-  const getCharacterImage = (imagePath: string) => {
-    const characterImageMap: Record<string, StaticImageData> = {
-      'aoba_1.png': aoba1,
-      'aoba_2.png': aoba2,
-      'aoba_3.png': aoba3,
-      'aoba_4.png': aoba4,
-      'kise_1.png': kise1,
-      'kise_2.png': kise2,
-      'kise_3.png': kise3,
-      'saegusa_1.png': saegusa1,
-    }
-    return characterImageMap[imagePath] || null
-  }
-
-  // 話者名から振り仮名を取得
-  const getFurigana = (speaker: string): string => {
-    const furiganaMap: Record<string, string> = {
-      赤羽: 'あかばね',
-      青葉: 'あおば',
-      黄瀬: 'きせ',
-      三枝: 'さえぐさ',
-    }
-    return furiganaMap[speaker] || ''
-  }
-
   const handleClick = () => {
     // タイトル画面が表示されている場合は、タイトル画面のクリックハンドラーを呼ぶ
     if (showTitleScreen) {
@@ -708,32 +721,7 @@ const ChapterPlayer = () => {
   }
 
   const currentScene = currentChapter.scenes[currentSceneIndex]
-  const currentBackground =
-    currentScene.background === 'station_morning'
-      ? stationMorning
-      : currentScene.background === 'office_morning'
-        ? officeMorning
-        : currentScene.background === 'meeting_room'
-          ? meetingRoom
-          : currentScene.background === 'bar_night'
-            ? barNight
-            : currentScene.background === 'cafe_lunch'
-              ? cafeLunch
-              : currentScene.background === 'blue_leaf'
-                ? blueLeaf
-                : currentScene.background === 'rain_road'
-                  ? rainRoad
-                  : currentScene.background === 'night_coffee'
-                    ? nightCoffee
-                    : currentScene.background === 'aoba_room'
-                      ? aobaRoom
-                      : currentScene.background === 'after_cafe'
-                        ? afterCafe
-                        : currentScene.background === 'client_room'
-                          ? clientRoom
-                          : currentScene.background === 'night_platform'
-                            ? nightPlatform
-                            : stationMorning
+  const currentBackground = getBackgroundImage(currentScene.background)
 
   const currentLine =
     currentScene.lines[currentLineIndex] || currentScene.lines[0]
