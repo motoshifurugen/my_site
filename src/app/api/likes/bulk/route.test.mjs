@@ -8,6 +8,7 @@
 //   - GitHub への問い合わせ（listForRepo）は要求件数に依らず 1 回（サーバ側 N+1 を作らない）
 //   - 読み取り専用（一覧表示で Issue を量産しない＝ issues.create を呼ばない）
 //   - articleIds 未指定 → 400 / GitHub 例外 → 500
+//   - Issue #390: 形式に合わない ID と 101 件以上 → 400（listForRepo を呼ばない）
 //
 // 既存の tanka/route.test.mjs と同様に、Node 組み込み node:test と devDependency の
 // typescript のみで構成する（新規パッケージ無し）。route は githubLikes.ts 経由で
@@ -28,9 +29,20 @@ import ts from 'typescript'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROUTE_SRC = path.join(__dirname, 'route.tsx')
 const GITHUB_LIKES_SRC = path.join(__dirname, '..', 'githubLikes.ts')
+const ARTICLE_ID_VALIDATION_SRC = path.join(
+  __dirname,
+  '..',
+  'articleIdValidation.ts',
+)
 
 const ROUTE_BUILD = path.join(__dirname, '.route.test-build.mjs')
 const GITHUB_LIKES_BUILD = path.join(__dirname, '.githubLikes.test-build.mjs')
+// likes/route.test.mjs も likes/ に同じ名前のビルドを書いて消す。npm test は
+// テストファイルを別プロセスで同時に動かすので、ぶつからないよう bulk/ に書く。
+const ARTICLE_ID_VALIDATION_BUILD = path.join(
+  __dirname,
+  '.articleIdValidation.test-build.mjs',
+)
 const OCTOKIT_MOCK = path.join(__dirname, '.octokit.test-mock.mjs')
 const NEXT_MOCK = path.join(__dirname, '.next-server.test-mock.mjs')
 
@@ -96,11 +108,16 @@ const loadModule = async () => {
     toRel(OCTOKIT_MOCK),
   )
   fs.writeFileSync(GITHUB_LIKES_BUILD, githubLikesCode)
+  fs.writeFileSync(
+    ARTICLE_ID_VALIDATION_BUILD,
+    transpile(ARTICLE_ID_VALIDATION_SRC),
+  )
 
-  // route（next/server と ../githubLikes 依存）を張り替えて出力。
+  // route（next/server・../githubLikes・../articleIdValidation 依存）を張り替えて出力。
   const routeCode = transpile(ROUTE_SRC)
     .replaceAll('next/server', toRel(NEXT_MOCK))
     .replaceAll('../githubLikes', toRel(GITHUB_LIKES_BUILD))
+    .replaceAll('../articleIdValidation', toRel(ARTICLE_ID_VALIDATION_BUILD))
   fs.writeFileSync(ROUTE_BUILD, routeCode)
 
   return import(`${ROUTE_BUILD}?t=${process.pid}`)
@@ -147,6 +164,7 @@ describe('api/likes/bulk/route.tsx GET（Issue #166: バルク取得契約）', 
     for (const f of [
       ROUTE_BUILD,
       GITHUB_LIKES_BUILD,
+      ARTICLE_ID_VALIDATION_BUILD,
       OCTOKIT_MOCK,
       NEXT_MOCK,
     ]) {
@@ -246,6 +264,84 @@ describe('api/likes/bulk/route.tsx GET（Issue #166: バルク取得契約）', 
     // Then: status 400
     const { status } = await callGet('?articleIds=', { issues: issuesFixture })
     assert.equal(status, 400)
+  })
+
+  // Issue #390: articleIds の形式と件数の検査。拒否するときは GitHub へ問い合わせない。
+  const MAX_ARTICLE_IDS = 100
+  const articleIdsQuery = (count) =>
+    '?articleIds=' +
+    Array.from({ length: count }, (_, i) => `post-${i}`).join(',')
+
+  // クエリ上はパーセントエンコードで送る。searchParams.get で元の文字に戻る。
+  const MALFORMED_QUERIES = [
+    ['" を含む ID', '?articleIds=hello-world,a%22b'],
+    ['空白を挟む ID', '?articleIds=hello-world,a%20b'],
+    ['/ を含む ID', '?articleIds=hello-world,a%2Fb'],
+    ['日本語の ID', `?articleIds=hello-world,${encodeURIComponent('記事')}`],
+    ['101 文字の ID', `?articleIds=hello-world,${'a'.repeat(101)}`],
+  ]
+
+  for (const [label, query] of MALFORMED_QUERIES) {
+    it(`${label}があれば 400 と形式違いの error を返す`, async () => {
+      // Given: 形式に合う ID と、^[A-Za-z0-9_-]{1,100}$ に合わない ID
+      // When: GET を呼ぶ
+      // Then: status 400 で「記事IDの形式が不正です」を返す
+      const { status, body } = await callGet(query, { issues: issuesFixture })
+      assert.equal(status, 400)
+      assert.deepEqual(body, { error: '記事IDの形式が不正です' })
+    })
+
+    it(`${label}があれば listForRepo を呼ばない`, async () => {
+      // Given: 形式に合わない ID を含む要求
+      // When: GET を呼ぶ
+      // Then: GitHub へ問い合わせない
+      const { fixture } = await callGet(query, { issues: issuesFixture })
+      assert.equal(fixture.listForRepoCalls, 0)
+    })
+  }
+
+  it('101 件の ID は 400 と件数超過の error を返す', async () => {
+    // Given: 形式に合う ID が MAX_ARTICLE_IDS + 1 件
+    // When: GET を呼ぶ
+    // Then: status 400 で「記事IDが多すぎます」を返す
+    const { status, body } = await callGet(
+      articleIdsQuery(MAX_ARTICLE_IDS + 1),
+      { issues: issuesFixture },
+    )
+    assert.equal(status, 400)
+    assert.deepEqual(body, { error: '記事IDが多すぎます' })
+  })
+
+  it('101 件の ID では listForRepo を呼ばない', async () => {
+    // Given: 形式に合う ID が MAX_ARTICLE_IDS + 1 件
+    // When: GET を呼ぶ
+    // Then: GitHub へ問い合わせない
+    const { fixture } = await callGet(articleIdsQuery(MAX_ARTICLE_IDS + 1), {
+      issues: issuesFixture,
+    })
+    assert.equal(fixture.listForRepoCalls, 0)
+  })
+
+  it('100 件の ID は 200 で全件のいいね数を返す（件数の境界値）', async () => {
+    // Given: 形式に合う ID がちょうど MAX_ARTICLE_IDS 件
+    // When: GET を呼ぶ
+    // Then: status 200 で 100 件分のキーを返し、listForRepo は 1 回だけ呼ぶ
+    const { status, body, fixture } = await callGet(
+      articleIdsQuery(MAX_ARTICLE_IDS),
+      { issues: issuesFixture },
+    )
+    assert.equal(status, 200)
+    assert.equal(Object.keys(body.likes).length, MAX_ARTICLE_IDS)
+    assert.equal(fixture.listForRepoCalls, 1)
+  })
+
+  it('articleIds 未指定なら listForRepo を呼ばない', async () => {
+    // Given: articleIds クエリ無し
+    // When: GET を呼ぶ
+    // Then: status 400 で「記事IDが必要です」を返し、GitHub へ問い合わせない
+    const { body, fixture } = await callGet('', { issues: issuesFixture })
+    assert.deepEqual(body, { error: '記事IDが必要です' })
+    assert.equal(fixture.listForRepoCalls, 0)
   })
 
   it('GitHub 取得で例外が起きたら 500 を返す', async () => {

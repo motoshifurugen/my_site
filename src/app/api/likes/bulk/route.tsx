@@ -3,23 +3,19 @@
 // GET /api/likes/bulk?articleIds=slug1,slug2,... → { likes: { [slug]: number } }
 // 読み取り専用。listForRepo を 1 回だけ呼び、サーバ側 N+1 を作らない。
 import { NextRequest, NextResponse } from 'next/server'
+import { parseArticleIds } from '../articleIdValidation'
 import { getLikeCountsForSlugs } from '../githubLikes'
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url)
-  const articleIdsParam = url.searchParams.get('articleIds')
+  const parsedArticleIds = parseArticleIds(url.searchParams.get('articleIds'))
 
-  const articleIds = (articleIdsParam || '')
-    .split(',')
-    .map((id) => id.trim())
-    .filter((id) => id.length > 0)
-
-  if (articleIds.length === 0) {
-    return NextResponse.json({ error: '記事IDが必要です' }, { status: 400 })
+  if (!parsedArticleIds.ok) {
+    return NextResponse.json({ error: parsedArticleIds.error }, { status: 400 })
   }
 
   try {
-    const likes = await getLikeCountsForSlugs(articleIds)
+    const likes = await getLikeCountsForSlugs(parsedArticleIds.articleIds)
     return NextResponse.json({ likes })
   } catch (error) {
     console.error('いいね数の一括取得に失敗しました:', error)
