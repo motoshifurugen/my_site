@@ -9,6 +9,7 @@ import {
   buildPageMapping,
   splitTextIntoPages,
 } from './bookPages'
+import { getPageAfterSwipe, getPageAfterTap } from './pageNavigation'
 
 // STEP1: 本をめくる機能の最小実装（完了）
 // STEP2: 縦書き・明朝体フォントの導入（完了）
@@ -146,7 +147,6 @@ export default function BookPage() {
 
   // 縦スクロールを許可するため、このuseEffectは削除
 
-  // スワイプ検出（誤爆防止のため閾値設定）
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX
     touchStartY.current = e.touches[0].clientY
@@ -160,49 +160,23 @@ export default function BookPage() {
     const deltaX = touchEndX - touchStartX.current
     const deltaY = touchEndY - touchStartY.current
 
-    // 縦方向の動きが横方向より大きい場合は無視（縦スクロールと誤認しないため）
-    if (Math.abs(deltaY) > Math.abs(deltaX)) {
-      touchStartX.current = null
-      touchStartY.current = null
-      return
-    }
-
-    // スワイプの閾値（50px以上で有効）
-    const swipeThreshold = 50
-    if (Math.abs(deltaX) < swipeThreshold) {
-      touchStartX.current = null
-      touchStartY.current = null
-      return
-    }
-
-    // 右開きの本：左→右で次ページ、右→左で前ページ
-    if (deltaX > swipeThreshold) {
-      // 左→右スワイプ：次ページ
-      setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
-    } else if (deltaX < -swipeThreshold) {
-      // 右→左スワイプ：前ページ
-      setCurrentPage((prev) => Math.max(prev - 1, 0))
-    }
+    setCurrentPage((prev) =>
+      getPageAfterSwipe(prev, deltaX, deltaY, totalPages),
+    )
 
     touchStartX.current = null
     touchStartY.current = null
   }
 
-  // タップ検出（画面左側で次ページ、右側で前ページ）
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return
 
     const rect = containerRef.current.getBoundingClientRect()
     const clickX = e.clientX - rect.left
-    const screenWidth = rect.width
-    const leftHalf = screenWidth / 2
 
-    // 左側タップ：次ページ、右側タップ：前ページ
-    if (clickX < leftHalf) {
-      setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
-    } else {
-      setCurrentPage((prev) => Math.max(prev - 1, 0))
-    }
+    setCurrentPage((prev) =>
+      getPageAfterTap(prev, clickX, rect.width, totalPages),
+    )
   }
 
   // STEP5: 章ごとの本文データ（実際のコンテンツ、改行を保持）
