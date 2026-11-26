@@ -16,7 +16,7 @@ MDX対応ブログで日々を記録しながら、ジェネラティブアー�
 
 | Light Mode                                                                   | Dark Mode                                                                   |
 | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| ![Light Mode Home](https://i.gyazo.com/e2c179796cda9378c02dcf1b8c9e2619.gif) | ![Dark Mode Home](https://i.gyazo.com/a6b92492c40d4f53a3f93e8158bdd4bf.gif) |
+| ![Light Mode Home](public/images/posts/readme/e2c179796cda9378c02dcf1b8c9e2619.gif) | ![Dark Mode Home](public/images/posts/readme/a6b92492c40d4f53a3f93e8158bdd4bf.gif) |
 
 ## 🛠️ 主な使用技術
 
